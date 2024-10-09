@@ -1,19 +1,14 @@
 namespace ClassLibrary;
 
+//Esta clase tiene la responsabilidad de acceder a los distintos atributos de los pokemones un catálogo de pokemones
 public class PokemonCatalog
 {
-    private List<Pokemon> pokemons = new List<Pokemon>();
-
-    public PokemonCatalog()
-    {
-        Pokemon pikachu = new Pokemon();
-        pikachu.Name = "Pikachu";
-        this.pokemons.Add(pikachu);
-    }
-    
+    static PokemonCatalogBuilder catalogo = new PokemonCatalogBuilder();
+    public List<Pokemon> pokemons = catalogo.GetPokemonList();
+ 
     public Pokemon FindPokemonByName(string pokemonName)
     {
-        foreach (Pokemon pokemon in this.pokemons)
+        foreach (Pokemon pokemon in catalogo.pokemons)
         {
             if (pokemon.Name == pokemonName)
             {
