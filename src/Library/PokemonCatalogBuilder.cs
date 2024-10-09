@@ -4,7 +4,7 @@ namespace ClassLibrary;
 
 public class PokemonCatalogBuilder
 {
-    public List<Pokemon> pokemons = new List<Pokemon>();
+    public List<Pokemon> Pokemons = new List<Pokemon>();
 
     public PokemonCatalogBuilder()
     {
@@ -100,11 +100,11 @@ public class PokemonCatalogBuilder
         pokemon.HealthPoints = 100;
         pokemon.SpecialMove = specialMove;
         pokemon.Moves = moves;
-        this.pokemons.Add(pokemon);
+        this.Pokemons.Add(pokemon);
     }
 
     public List<Pokemon> GetPokemonList()
     {
-        return pokemons;
+        return Pokemons;
     }
 }

@@ -1,6 +1,8 @@
 namespace ClassLibrary;
 
-//Esta clase tiene la responsabilidad de conocer los atributos de un pokemom, sus ataques, su ataque especial, puntos de salud, y nombre
+//Esta clase tiene la responsabilidad de conocer los atributos de un pokemom, sus ataques, su ataque especial, puntos de salud, y nombre.
+//También tiene la responsabilidad de agregar un movimiento a un pokemon
+
 public class Pokemon
 {
     public string Name { get; set; }

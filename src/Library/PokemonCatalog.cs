@@ -8,7 +8,7 @@ public class PokemonCatalog
  
     public Pokemon FindPokemonByName(string pokemonName)
     {
-        foreach (Pokemon pokemon in catalogo.pokemons)
+        foreach (Pokemon pokemon in catalogo.Pokemons)
         {
             if (pokemon.Name == pokemonName)
             {
