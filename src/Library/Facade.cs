@@ -2,7 +2,7 @@ namespace ClassLibrary;
 
 public class Facade
 {
-    Game game = new Game();
+    Game game = new Game(new Player(), new Player());
 
     public List<string> ChoosePokemons(int playerId, string[] pokemonNames)
     {
@@ -92,7 +92,6 @@ public class Facade
     }
     public List<string> GetPokemonsHealth(int playerId)
     {
-        Game game = new Game();
         Player player;
         Player opponent;
         UserInterface userInterface = new UserInterface();

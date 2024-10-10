@@ -8,8 +8,8 @@ public class TurnTests
     [Test]
     public void TurnInitialization_ReturnsPlayer1()
     {
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
+        Player player1 = new Player();
+        Player player2 = new Player();
 
         Turn turn = new Turn(player1, player2);
 
