@@ -7,6 +7,7 @@ public class Facade
     public List<string> ChoosePokemons(int playerId, string[] pokemonNames)
     {
         List<string> result = new List<string>();
+        result.Add($"Pokémons seleccionados por el jugador {playerId}.");
         PokemonCatalog catalog = new PokemonCatalog();
 
         Player player;
@@ -26,7 +27,6 @@ public class Facade
             player.AddPokemon(pokemon);
         }
         
-        result.Add($"Pokémons seleccionados por el jugador {playerId}.");
         return result;
     }
 
@@ -125,5 +125,5 @@ public class Facade
     // {
     //     ChangePokemon();
     // }
-}
+
 
