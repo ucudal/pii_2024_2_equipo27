@@ -64,7 +64,7 @@
             Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
             </summary>
         </member>
-        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.Move},ClassLibrary.Move)">
+        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.Move},ClassLibrary.Move,ClassLibrary.PokemonType.Type)">
             <summary>
             Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
             </summary>

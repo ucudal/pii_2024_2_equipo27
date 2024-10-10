@@ -19,6 +19,9 @@ namespace ClassLibrary
 
         // Movimiento especial que puede realizar el Pokémon.
         public Move SpecialMove { get; set; }
+        
+        //tipo de pokemon
+        public PokemonType.Type Type { get; set; }
 
         // Lista de movimientos regulares que el Pokémon puede realizar.
         public List<Move> Moves { get; set; }
