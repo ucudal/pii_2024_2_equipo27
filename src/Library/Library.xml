@@ -4,5 +4,79 @@
         <name>Library</name>
     </assembly>
     <members>
+        <member name="T:ClassLibrary.Pokemon">
+            <summary>
+            La clase Pokemon es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
+            Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente los datos y comportamientos
+            de cada Pokémon. Utiliza el patrón Expert, ya que conoce toda la información relevante para administrar
+            sus atributos, como la salud y los movimientos. También permite aplicar polimorfismo y respetar el principio
+            de sustitución de Liskov (LSP) si se crean subclases de Pokémon con comportamientos más especializados
+            o específicos.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Pokemon.#ctor">
+            <summary>
+            Constructor que inicializa la lista de movimientos del Pokémon.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Pokemon.AddMove(ClassLibrary.Move)">
+            <summary>
+            Añade un movimiento a la lista de movimientos regulares del Pokémon.
+            </summary>
+            <param name="move">Movimiento a añadir a la lista de movimientos.</param>
+        </member>
+        <member name="T:ClassLibrary.PokemonCatalog">
+             <summary>
+             La clase PokemonCatalog tiene la responsabilidad de acceder a los atributos de los Pokémons y gestionar 
+             un catálogo de Pokémons. Permite buscar un Pokémon por su nombre.
+            
+             Esta clase está separada para cumplir con el principio de responsabilidad única (SRP), ya que está especializada
+             en conocer y gestionar únicamente el catálogo de Pokémons. Cualquier cambio en cómo se almacenan
+             o gestionan los datos de los Pokémons se realizaría únicamente aquí.
+             
+             Tener esta clase como experta en la gestión del catálogo de Pokémons facilita futuras expansiones, como cambiar
+             la forma de almacenar los datos, añadir nuevas formas de búsqueda o modificar la fuente del catálogo, minimizando 
+             así las razones de cambio y centralizando la responsabilidad.
+             </summary>
+        </member>
+        <member name="M:ClassLibrary.PokemonCatalog.FindPokemonByName(System.String)">
+            <summary>
+            Encuentra un Pokémon por su nombre en el catálogo.
+            Recorre la lista de Pokémon y devuelve el objeto correspondiente si encuentra una coincidencia.
+            Si no encuentra el Pokémon, retorna null.
+            </summary>
+            <param name="pokemonName">Nombre del Pokémon a buscar.</param>
+            <returns>El objeto Pokemon si se encuentra, de lo contrario null.</returns>
+        </member>
+        <member name="T:ClassLibrary.PokemonCatalogBuilder">
+            <summary>
+            La clase PokemonCatalogBuilder se encarga de la creación y configuración de un catálogo de Pokémon,
+            gestionando la asignación de atributos y movimientos para cada Pokémon. 
+            Aplica el principio de responsabilidad única (SRP) al dedicarse exclusivamente a construir el catálogo
+            de Pokémon, separando la lógica de creación de los Pokémon del resto de la aplicación. 
+            Utiliza el patrón Expert, ya que es la clase que mejor conoce cómo crear un Pokémon con sus movimientos
+            y atributos. También sigue el principio de sustitución de Liskov (LSP), ya que puede ser extendida
+            o modificada sin afectar el funcionamiento del catálogo en otras clases.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.PokemonCatalogBuilder.#ctor">
+            <summary>
+            Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.Move},ClassLibrary.Move)">
+            <summary>
+            Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
+            </summary>
+            <param name="name">Nombre del Pokémon.</param>
+            <param name="moves">Lista de movimientos del Pokémon.</param>
+            <param name="specialMove">Movimiento especial del Pokémon.</param>
+        </member>
+        <member name="M:ClassLibrary.PokemonCatalogBuilder.GetPokemonList">
+            <summary>
+            Devuelve la lista de todos los Pokémon creados en el catálogo.
+            </summary>
+            <returns>Lista de Pokémon.</returns>
+        </member>
     </members>
 </doc>

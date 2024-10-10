@@ -1,27 +1,81 @@
 using ClassLibrary;
 using NUnit.Framework;
 
-namespace Tests;
-
-public class PokemonCatalogTests
+namespace Tests
 {
-    [Test]
-    public void FindPokemonByName_NameDoesNotExists_ReturnsNull()
+    public class PokemonCatalogTests
     {
-        PokemonCatalog catalog = new PokemonCatalog();
+        [Test]
+        public void FindPokemonByName_ReturnsPokemonWithSpecialMove()
+        {
+            // Arrange
+            PokemonCatalog catalog = new PokemonCatalog();
+    
+            // Act
+            Pokemon pokemon = catalog.FindPokemonByName("Blaziken");
 
-        Pokemon pokemon = catalog.FindPokemonByName("#$%&");
+            // Assert
+            Assert.That(pokemon, Is.Not.Null);
+            Assert.That(pokemon.SpecialMove.Name, Is.EqualTo("Anillo Ígneo"));
+        }
         
-        Assert.That(pokemon, Is.Null);
-    }
+        [Test]
+        public void FindPokemonByName_NameWithSpaces_ReturnsCorrectPokemon()
+        {
+            // Arrange
+            PokemonCatalog catalog = new PokemonCatalog();
+    
+            // Act
+            Pokemon pokemon = catalog.FindPokemonByName("Rayquaza");
 
-    [Test]
-    public void FindPokemonByName_WhenPokemonExists_ReturnsPokemon()
-    {
-        PokemonCatalog catalog = new PokemonCatalog();
+            // Assert
+            Assert.That(pokemon, Is.Not.Null);
+            Assert.That(pokemon.Name, Is.EqualTo("Rayquaza"));
+        }
 
-        Pokemon pokemon = catalog.FindPokemonByName("Pikachu");
+        [Test]
+        public void FindPokemonByName_PokemonNotFound_ReturnsNull()
+        {
+            // Arrange
+            PokemonCatalog catalog = new PokemonCatalog();
+    
+            // Act
+            Pokemon pokemon = catalog.FindPokemonByName("Pikachu");
+
+            // Assert
+            Assert.That(pokemon, Is.Null);
+        }
         
-        Assert.That(pokemon.Name, Is.EqualTo("Pikachu")); 
+        [Test]
+        public void FindPokemonByName_CaseInsensitive_ReturnsCorrectPokemon()
+        {
+            // Arrange
+            PokemonCatalog catalog = new PokemonCatalog();
+    
+            // Act
+            Pokemon pokemon = catalog.FindPokemonByName("blaziken");
+
+            // Assert
+            Assert.That(pokemon, Is.Not.Null);
+            Assert.That(pokemon.Name, Is.EqualTo("Blaziken"));
+        }
+        
+        [Test]
+        public void FindPokemonByName_ExactMatchWithCase_ReturnsCorrectPokemon()
+        {
+            // Arrange
+            PokemonCatalog catalog = new PokemonCatalog();
+    
+            // Act
+            Pokemon pokemon = catalog.FindPokemonByName("Blaziken");
+
+            // Assert
+            Assert.That(pokemon, Is.Not.Null);
+            Assert.That(pokemon.Name, Is.EqualTo("Blaziken"));
+        }
+
+
+
+
     }
 }

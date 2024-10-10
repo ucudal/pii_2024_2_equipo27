@@ -1,21 +1,47 @@
-namespace ClassLibrary;
-
-//Esta clase tiene la responsabilidad de acceder a los distintos atributos de los pokemones un catálogo de pokemones
-public class PokemonCatalog
+namespace ClassLibrary
 {
-    static PokemonCatalogBuilder catalogo = new PokemonCatalogBuilder();
-    public List<Pokemon> pokemons = catalogo.GetPokemonList();
- 
-    public Pokemon FindPokemonByName(string pokemonName)
+    /// <summary>
+    /// La clase PokemonCatalog tiene la responsabilidad de acceder a los atributos de los Pokémons y gestionar 
+    /// un catálogo de Pokémons. Permite buscar un Pokémon por su nombre.
+    ///
+    /// Esta clase está separada para cumplir con el principio de responsabilidad única (SRP), ya que está especializada
+    /// en conocer y gestionar únicamente el catálogo de Pokémons. Cualquier cambio en cómo se almacenan
+    /// o gestionan los datos de los Pokémons se realizaría únicamente aquí.
+    /// 
+    /// Tener esta clase como experta en la gestión del catálogo de Pokémons facilita futuras expansiones, como cambiar
+    /// la forma de almacenar los datos, añadir nuevas formas de búsqueda o modificar la fuente del catálogo, minimizando 
+    /// así las razones de cambio y centralizando la responsabilidad.
+    /// </summary>
+    
+    public class PokemonCatalog
     {
-        foreach (Pokemon pokemon in catalogo.Pokemons)
-        {
-            if (pokemon.Name == pokemonName)
-            {
-                return pokemon;
-            }
-        }
+        // El builder crea y gestiona la lista de Pokémon del catálogo.
+        static PokemonCatalogBuilder catalog = new PokemonCatalogBuilder();
+        
+        // Lista de Pokémon obtenida a través del builder.
+        public List<Pokemon> pokemons = catalog.GetPokemonList();
 
-        return null;
+        /// <summary>
+        /// Encuentra un Pokémon por su nombre en el catálogo.
+        /// Recorre la lista de Pokémon y devuelve el objeto correspondiente si encuentra una coincidencia.
+        /// Si no encuentra el Pokémon, retorna null.
+        /// </summary>
+        /// <param name="pokemonName">Nombre del Pokémon a buscar.</param>
+        /// <returns>El objeto Pokemon si se encuentra, de lo contrario null.</returns>
+        
+        public Pokemon FindPokemonByName(string pokemonName)
+        {
+            // Recorre la lista de Pokémons en busca del nombre proporcionado.
+            foreach (Pokemon pokemon in catalog.Pokemons)
+            {
+                if (pokemon.Name.ToLower() == pokemonName.ToLower())
+                {
+                    return pokemon; // Retorna el Pokémon si encuentra coincidencia en el nombre.
+                }
+            }
+    
+            // Si no se encuentra ningún Pokémon, retorna null después de recorrer todo el catálogo.
+            return null;
+        }
     }
 }
