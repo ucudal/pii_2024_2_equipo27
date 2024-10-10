@@ -1,5 +1,8 @@
 namespace ClassLibrary;
-
+/// <summary>
+/// La clase <c>Facade</c> actúa como una interfaz simplificada para interactuar con el juego,
+/// permitiendo a los jugadores elegir Pokémon, mostrar movimientos, activar ataques y obtener información sobre la salud de los Pokémon.
+/// </summary>
 public class Facade
 {
     Game game = new Game();
@@ -29,7 +32,11 @@ public class Facade
         result.Add($"Pokémons seleccionados por el jugador {playerId}.");
         return result;
     }
-
+    /// <summary>
+    /// Muestra los movimientos disponibles de los Pokémon del jugador seleccionado.
+    /// </summary>
+    /// <param name="playerId">El ID del jugador (1 o 2).</param>
+    /// <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
     public List<string> ShowMoves(int playerId)
     {
         Player player;
@@ -62,7 +69,12 @@ public class Facade
 
         return pokemonsWithMoves;
     }
-    
+    /// <summary>
+    /// Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
+    /// </summary>
+    /// <param name="playerId">El ID del jugador (1 o 2).</param>
+    /// <param name="moveName">El nombre del movimiento a utilizar.</param>
+    /// <param name="pokemonName">El nombre del Pokémon que realizará el ataque.</param>
     public void ChoosePokemonAndMoveToAttack(int playerId, string moveName, string pokemonName)
     {
         List<string> result = new List<string>();
@@ -90,6 +102,11 @@ public class Facade
             player.ActivateMoveInActivePokemon(moveIndex);
         }
     }
+    /// <summary>
+    /// Obtiene la salud de los Pokémon de un jugador en comparación con el oponente.
+    /// </summary>
+    /// <param name="playerId">El ID del jugador (1 o 2).</param>
+    /// <returns>Una lista de cadenas que muestra la salud de los Pokémon del jugador y del oponente.</returns>
     public List<string> GetPokemonsHealth(int playerId)
     {
         Game game = new Game();
