@@ -1,21 +1,43 @@
-namespace ClassLibrary;
-
-//Esta clase tiene la responsabilidad de conocer los atributos de un pokemom, sus ataques, su ataque especial, puntos de salud, y nombre
-public class Pokemon
+namespace ClassLibrary
 {
-    public string Name { get; set; }
-    public int HealthPoints { get; set; }
-    public Move SpecialMove { get; set; } 
-    public List<Move> Moves { get; set; }
+    /// <summary>
+    /// La clase Pokemon es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
+    /// Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente los datos y comportamientos
+    /// de cada Pokémon. Utiliza el patrón Expert, ya que conoce toda la información relevante para administrar
+    /// sus atributos, como la salud y los movimientos. También permite aplicar polimorfismo y respetar el principio
+    /// de sustitución de Liskov (LSP) si se crean subclases de Pokémon con comportamientos más especializados
+    /// o específicos.
+    /// </summary>
     
-    public Pokemon()
+    public class Pokemon
     {
-        Moves = new List<Move>(); 
-    }
+        // Nombre del Pokémon.
+        public string Name { get; set; }
 
-    public void AddMove(Move move)
-    {
-        Moves.Add(move);
+        // Puntos de vida del Pokémon.
+        public int HealthPoints { get; set; }
+
+        // Movimiento especial que puede realizar el Pokémon.
+        public Move SpecialMove { get; set; }
+
+        // Lista de movimientos regulares que el Pokémon puede realizar.
+        public List<Move> Moves { get; set; }
+
+        /// <summary>
+        /// Constructor que inicializa la lista de movimientos del Pokémon.
+        /// </summary>
+        public Pokemon()
+        {
+            Moves = new List<Move>(); // Inicializa la lista de movimientos vacía.
+        }
+
+        /// <summary>
+        /// Añade un movimiento a la lista de movimientos regulares del Pokémon.
+        /// </summary>
+        /// <param name="move">Movimiento a añadir a la lista de movimientos.</param>
+        public void AddMove(Move move)
+        {
+            Moves.Add(move); // Agrega el movimiento a la lista de movimientos.
+        }
     }
-    
 }
