@@ -8,3 +8,6 @@ dotnet_diagnostic.CA1303.severity = none
 dotnet_diagnostic.CA1623.severity = none
 dotnet_diagnostic.SA1623.severity = none
 dotnet_diagnostic.CA1303.severity = none
+
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = silent

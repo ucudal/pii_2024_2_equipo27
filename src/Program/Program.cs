@@ -8,7 +8,6 @@ namespace ConsoleApplication
     {
         public static void Main(string[] args)
         {
-            // Punto de entrada del programa
         }
     }
 }
