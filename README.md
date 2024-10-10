@@ -14,7 +14,7 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 - Visualización del HP (puntos de vida) de los Pokémon en combate.
 - Sistema de efectividad de ataques según los tipos de Pokémon (fuego, agua, planta, etc.).
 - Cambio de Pokémon que implica la pérdida del turno.
-- La batalla termina cuando los Pokémon del oponente llegan a 0 HP.
+- La batalla termina cuando los Pokémon de un jugador llegan a 0 HP.
 
 ## Requisitos Técnicos
 
@@ -30,7 +30,7 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 - **API de WhatsApp**: Para enviar y recibir mensajes en el bot.
 
 ## Estructura del Proyecto
-- `src`: Contiene el código fuente del proyecto, con las clases de dominio como `Pokemon`, `Move`, y `Battle y proóximamente la integración con la API de WhatsApp.
+- `src`: Contiene el código fuente del proyecto, con las clases de dominio como `Pokemon`, `Move`, y `Turn` y próximamente la integración con la API de WhatsApp.
 - `tests`: Contiene las pruebas unitarias para verificar la lógica del juego.
 - `docs`: Contiene documentación del proyecto, como el diagrama de clases y Doxify.
 
@@ -54,9 +54,7 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 
 ## Notas de Reflexión
 
-Uno de los mayores desafíos que enfrentamos fue avanzar en el proyecto cuando todas las clases dependían entre sí, pero debíamos desarrollarlas por separado. Esto nos obligó a planificar con mucho cuidado para que todo encajara al final. También tuvimos dificultades implementando algunas partes del código, como la gestión de los turnos y la lógica de los tipos de Pokémon, que fue más compleja de lo que esperábamos.
+Uno de los mayores desafíos que enfrentamos fue avanzar en el proyecto cuando todas las clases dependían entre sí, pero debíamos desarrollarlas por separado. Esto nos obligó a planificar con mucho cuidado para que todo encajara al final. También tuvimos dificultades implementando algunas partes del código, como la gestión de los turnos y la lógica de los tipos de Pokémon, que fue más compleja de lo que esperábamos. Además, tuvimos que aprender a organizarnos bien como equipo, especialmente para llegar a la fecha límite y asegurarnos de que todo estuviera alineado. Resolver conflictos en Git fue otro reto que enfrentamos durante el proceso.
 
-Además, tuvimos que aprender a organizarnos bien como equipo, especialmente para llegar a la fecha límite y asegurarnos de que todo estuviera alineado. Resolver conflictos en Git fue otro reto que enfrentamos durante el proceso.
-
-Para esta entrega, fue importante pensar en todo el código sin enfocarnos todavía en la interacción con el usuario, lo que nos hizo replantear algunas decisiones y descartar algunas ideas y código iniciales. Investigamos recursos adicionales sobre C#, especialmente para implementar diccionarios, y mejorar nuestro entendimiento de ciertas especificaciones del juego y comentarios XML. Algunas historias de usuario eran bastante abiertas, lo que generó varias discusiones hasta que logramos ponernos de acuerdo en cómo implementarlas.
+Para esta entrega, fue importante pensar en todo el código sin enfocarnos todavía en la interacción con el usuario y la forma de mostrar los datos, lo que nos hizo replantear algunas decisiones y descartar algunas ideas y código iniciales. Investigamos recursos adicionales sobre C#, especialmente para implementar diccionarios, y mejorar nuestro entendimiento de ciertas especificaciones del juego y comentarios XML. Algunas historias de usuario eran bastante abiertas, lo que generó varias discusiones hasta que logramos ponernos de acuerdo en cómo implementarlas.
 
