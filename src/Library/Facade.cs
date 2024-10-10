@@ -109,6 +109,29 @@ public class Facade
 
         return userInterface.ShowPokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
     }
+
+    //historia de usuario 7
+    public string ChangePokemon(int playerId,string newPokemonName){
+        Player player;
+        if(playerId==1)
+        {
+            player=game.Player1;
+        }
+        else
+        {
+            player=game.Player2;
+        }
+        int pokemonIndex=player.GetIndexOfPokemon(newPokemonName);
+        if(pokemonIndex<0)
+        {
+            return $"El Pokemon {newPokemonName} no esta disponible para el jugador {playerId}";
+        }
+        player.ActivatePokemon(pokemonIndex);
+        game.TurnPlayer=game.TurnPlayer==game.Player1 ? game.Player2:game.Player1;
+        game.CheckIfGameEnds();
+        return $"{player.Name} cambio a {player.ActivePokemon.Name} y perdio su turn";
+    }
+
 }
     
     
