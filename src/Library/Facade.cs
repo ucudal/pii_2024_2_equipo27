@@ -90,6 +90,27 @@ public class Facade
             player.ActivateMoveInActivePokemon(moveIndex);
         }
     }
+    public List<string> GetPokemonsHealth(int playerId)
+    {
+        Game game = new Game();
+        Player player;
+        Player opponent;
+        UserInterface userInterface = new UserInterface();
+        
+        if (playerId == 1)
+        {
+            player = game.Player1;
+            opponent = game.Player2;
+        }
+        else
+        {
+            player = game.Player2;
+            opponent = game.Player1;
+        }
+
+        return userInterface.ShowPokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
+    }
+}
     
     
 
