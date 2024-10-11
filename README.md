@@ -1,4 +1,4 @@
-# Pokémon Battle Simulator Chatbot 🤖
+# Pokemon Battle Chatbot 🤖
 
 Este proyecto consiste en el desarrollo de un chatbot multijugador por turnos que simula batallas de Pokémon, desarrollado como parte del segundo semestre de 2024 en el curso de programación. El chatbot permitirá a los jugadores seleccionar sus Pokémon, atacar, cambiar de Pokémon y realizar todas las acciones típicas de una batalla de Pokémon mediante mensajes, sin necesidad de una interfaz gráfica.
 
