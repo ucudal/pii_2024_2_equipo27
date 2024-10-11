@@ -110,7 +110,6 @@ public class Facade
         return userInterface.ShowPokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
     }
 
-    //historia de usuario 7
     public string ChangePokemon(int playerId,string newPokemonName){
         Player player;
         if(playerId==1)
@@ -133,19 +132,5 @@ public class Facade
     }
 
 }
-    
-    
-
-    // Para implementar la clase de cambiar al pokemon y que te saca turnos hacerlo aca algo asi creo
-    //
-    // public void ChangePokemon()
-    // {
-    //     
-    // }
-    
-    // if (pokemonName != player.ActivePokemon.Name)
-    // {
-    //     ChangePokemon();
-    // }
 
 

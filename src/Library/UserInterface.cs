@@ -46,18 +46,16 @@ public class UserInterface
         List<string> healthInfo = new List<string>();
         healthInfo.Add("💓 Salud de los Pokémon:");
 
-        // Mostrar la salud de los Pokémon del jugador
         healthInfo.Add("Pokémon propios:");
         foreach (Pokemon pokemon in playerPokemons)
         {
-            healthInfo.Add($"{pokemon.Name}: {pokemon.HealthPoints}/{pokemon.HealthPoints}"); // Muestra HP actual / HP total
+            healthInfo.Add($"{pokemon.Name}: {pokemon.HealthPoints}/{pokemon.HealthPoints}"); 
         }
 
-        // Mostrar la salud de los Pokémon del oponente
         healthInfo.Add("Pokémon oponentes:");
         foreach (Pokemon pokemon in opponentPokemons)
         {
-            healthInfo.Add($"{pokemon.Name}: {pokemon.HealthPoints}/{pokemon.HealthPoints}"); // Muestra HP actual / HP total);
+            healthInfo.Add($"{pokemon.Name}: {pokemon.HealthPoints}/{pokemon.HealthPoints}"); 
         }
 
         return healthInfo;
