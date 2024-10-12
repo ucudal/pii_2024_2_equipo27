@@ -4,6 +4,34 @@
         <name>Library</name>
     </assembly>
     <members>
+        <member name="T:ClassLibrary.Facade">
+            <summary>
+            La clase <c>Facade</c> actúa como una interfaz simplificada para interactuar con el juego,
+            permitiendo a los jugadores elegir Pokémon, mostrar movimientos, activar ataques y obtener información sobre la salud de los Pokémon.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Facade.ShowMoves(System.Int32)">
+            <summary>
+            Muestra los movimientos disponibles de los Pokémon del jugador seleccionado.
+            </summary>
+            <param name="playerId">El ID del jugador (1 o 2).</param>
+            <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
+        </member>
+        <member name="M:ClassLibrary.Facade.ChoosePokemonAndMoveToAttack(System.Int32,System.String,System.String)">
+            <summary>
+            Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
+            </summary>
+            <param name="playerId">El ID del jugador (1 o 2).</param>
+            <param name="moveName">El nombre del movimiento a utilizar.</param>
+            <param name="pokemonName">El nombre del Pokémon que realizará el ataque.</param>
+        </member>
+        <member name="M:ClassLibrary.Facade.GetPokemonsHealth(System.Int32)">
+            <summary>
+            Obtiene la salud de los Pokémon de un jugador en comparación con el oponente.
+            </summary>
+            <param name="playerId">El ID del jugador (1 o 2).</param>
+            <returns>Una lista de cadenas que muestra la salud de los Pokémon del jugador y del oponente.</returns>
+        </member>
         <member name="T:ClassLibrary.Game">
             <summary>
             La clase <c>Game</c> tiene la responsabilidad de conocer a los jugadores y verificar si el juego está activo o ha terminado.
@@ -156,7 +184,7 @@
             Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
             </summary>
         </member>
-        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.Move},ClassLibrary.Move)">
+        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.Move},ClassLibrary.Move,ClassLibrary.PokemonType.Type)">
             <summary>
             Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
             </summary>
@@ -169,6 +197,29 @@
             Devuelve la lista de todos los Pokémon creados en el catálogo.
             </summary>
             <returns>Lista de Pokémon.</returns>
+        </member>
+        <member name="T:ClassLibrary.PokemonType">
+            <summary>
+            La clase <c>PokemonType</c> gestiona los tipos de Pokémon y su efectividad en combates.
+            Proporciona una enumeración para definir los tipos de Pokémon y un método para calcular
+            la efectividad de un ataque basado en los tipos del atacante y del defensor.
+            </summary>
+        </member>
+        <member name="T:ClassLibrary.PokemonType.Type">
+            <summary>
+            Enumeración que define los tipos de Pokémon.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.PokemonType.GetEffectiveness(ClassLibrary.PokemonType.Type,ClassLibrary.PokemonType.Type)">
+            <summary>
+            Método que devuelve la efectividad entre tipos.
+            </summary>
+            <param name="attackingType">Tipo del Pokémon atacante.</param>
+            <param name="defendingType">Tipo del Pokémon defensor.</param>
+            <returns>
+            El multiplicador de daño según la efectividad entre tipos. 
+            Devuelve 1.0 si no hay ventaja o desventaja.
+            </returns>
         </member>
     </members>
 </doc>
