@@ -59,11 +59,26 @@ namespace ClassLibrary
         public void CheckIfGameEnds()
         {
             // Verificamos si todos los Pokémon del jugador 1 tienen 0 puntos de vida
-            bool todosSonCeroPlayer1 = Player1.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
+            bool todosSonCeroPlayer1 = true; // = Player1.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
+            foreach (Pokemon pokemon in Player1.AvailablePokemons)
+            {
+                if (pokemon.HealthPoints > 0)
+                {
+                    todosSonCeroPlayer1 = false;
+                }
+            }
+            
             
             // Verificamos si todos los Pokémon del jugador 2 tienen 0 puntos de vida
-            bool todosSonCeroPlayer2 = Player2.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
-
+            bool todosSonCeroPlayer2 = true; // Player2.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
+            foreach (Pokemon pokemon in Player2.AvailablePokemons)
+            {
+                if (pokemon.HealthPoints > 0)
+                {
+                    todosSonCeroPlayer2 = false;
+                }
+            }
+            
             // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
             if (todosSonCeroPlayer1)
             {
