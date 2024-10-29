@@ -15,11 +15,11 @@ namespace ClassLibrary
     
     public class PokemonCatalog
     {
-        // El builder crea y gestiona la lista de Pokémon del catálogo.
-        static PokemonCatalogBuilder catalog = new PokemonCatalogBuilder();
+        // El builder crea y gestiona la lista de Pokémon del catálogo. Esta variable es estática porque el catállogo de pokemon es único y no cambainte en la solución.  
+        private static PokemonCatalogBuilder _catalog = new PokemonCatalogBuilder();
         
         // Lista de Pokémon obtenida a través del builder.
-        public List<Pokemon> pokemons = catalog.GetPokemonList();
+        private List<Pokemon> pokemons = _catalog.GetPokemonList();
 
         /// <summary>
         /// Encuentra un Pokémon por su nombre en el catálogo.
@@ -29,12 +29,12 @@ namespace ClassLibrary
         /// <param name="pokemonName">Nombre del Pokémon a buscar.</param>
         /// <returns>El objeto Pokemon si se encuentra, de lo contrario null.</returns>
         
-        public Pokemon FindPokemonByName(string pokemonName)
+        public Pokemon FindPokemonByName(string pokemonName) //que pokemonname no sea nulo
         {
             // Recorre la lista de Pokémons en busca del nombre proporcionado.
-            foreach (Pokemon pokemon in catalog.Pokemons)
+            foreach (Pokemon pokemon in _catalog.GetPokemonList())
             {
-                if (pokemon.Name.ToLower() == pokemonName.ToLower())
+                if (pokemon.Name.Equals(pokemonName, StringComparison.OrdinalIgnoreCase))
                 {
                     return pokemon; // Retorna el Pokémon si encuentra coincidencia en el nombre.
                 }

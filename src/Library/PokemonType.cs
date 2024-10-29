@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// la efectividad de un ataque basado en los tipos del atacante y del defensor.
 /// </summary>
 
-public class PokemonType
+public static class PokemonType
 {
     /// <summary>
     /// Enumeración que define los tipos de Pokémon.

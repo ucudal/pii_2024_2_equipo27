@@ -191,6 +191,7 @@
             <param name="name">Nombre del Pokémon.</param>
             <param name="moves">Lista de movimientos del Pokémon.</param>
             <param name="specialMove">Movimiento especial del Pokémon.</param>
+            <param name="type">El tipo del Pokémon.</param>
         </member>
         <member name="M:ClassLibrary.PokemonCatalogBuilder.GetPokemonList">
             <summary>

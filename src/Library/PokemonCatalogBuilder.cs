@@ -12,7 +12,7 @@ namespace ClassLibrary
     public class PokemonCatalogBuilder
     {
         // Lista de Pokémons que serán añadidos al catálogo.
-        public List<Pokemon> Pokemons = new List<Pokemon>();
+        private List<Pokemon> Pokemons = new List<Pokemon>();
 
         /// <summary>
         /// Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
@@ -110,6 +110,7 @@ namespace ClassLibrary
         /// <param name="name">Nombre del Pokémon.</param>
         /// <param name="moves">Lista de movimientos del Pokémon.</param>
         /// <param name="specialMove">Movimiento especial del Pokémon.</param>
+        /// <param name="type">El tipo del Pokémon.</param>
         private void AddPokemonToCatalog(string name, List<Move> moves, Move specialMove, PokemonType.Type type)
         {
             // Crea una nueva instancia de un Pokémon y le asigna sus atributos.

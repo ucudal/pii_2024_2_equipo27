@@ -24,9 +24,9 @@ public class Facade
             player = game.Player2;
         }
         
-        foreach (string pokemonName in pokemonNames)
+        foreach (string pokemonName in pokemonNames) //Agregar un argumentNullException para verificar que pokemonNames no sea nulo antes de usarlo
         {
-            Pokemon pokemon = catalog.FindPokemonByName(pokemonName.ToLower());
+            Pokemon pokemon = catalog.FindPokemonByName(pokemonName);
             player.AddPokemon(pokemon);
         }
         
