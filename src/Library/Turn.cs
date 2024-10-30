@@ -21,11 +21,11 @@ public class Turn
         WaitingPlayer = temp;
     }
 
-    public override bool Equals(object obj)
-    {
-        return obj is Turn turn &&
-               EqualityComparer<Player>.Default.Equals(CurrentPlayer, turn.CurrentPlayer);
-    }
+    // public override bool Equals(object obj)
+    // {
+    //     return obj is Turn turn &&
+    //            EqualityComparer<Player>.Default.Equals(CurrentPlayer, turn.CurrentPlayer);
+    // }
 
     public void PenalizeTurn(Player player) //validar que parámentro player no sea nulo antes de usarlo
     {

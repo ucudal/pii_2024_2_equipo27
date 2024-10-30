@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace ClassLibrary;
 
 //Esta clase tiene la responsabilidaad de conocer a los pokemones que tiene disponibles el jugador,
