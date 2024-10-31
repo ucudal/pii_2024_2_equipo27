@@ -20,7 +20,7 @@ public class TurnTests
     {
         Player player1 = new Player();
         Player player2 = new Player();
-        Turn turn = new Turn(player2, player1);
+        Turn turn = new Turn(player1, player2);
         Assert.That(turn.WaitingPlayer, Is.EqualTo(player2));
     }
     [Test]
@@ -38,15 +38,16 @@ public class TurnTests
         [Test]
         public void PenalizeTurn_ShouldChangeTurn_WhenCurrentPlayerIsPenalized()
         {
-            // Act
+            // Arrange
             Player player1 = new Player();
             Player player2 = new Player();
             Turn turn = new Turn(player1, player2);
-            turn.ChangeTurn();
-            turn.PenalizeTurn(player1);
 
+            // Act
+            turn.PenalizeTurn(player1);
+            
             // Assert
-            Assert.That(player1, Is.EqualTo(turn.PenalizedPlayer));
+            Assert.That(player1, Is.EqualTo(turn.WaitingPlayer));
             Assert.That(player2, Is.EqualTo(turn.CurrentPlayer));
         }
 

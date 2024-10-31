@@ -6,7 +6,7 @@ public class Turn
 {
     public Player CurrentPlayer;
     public Player WaitingPlayer;
-    public Player PenalizedPlayer;
+    //public Player PenalizedPlayer;
 
     public Turn(Player player1, Player player2)
     {
@@ -21,26 +21,17 @@ public class Turn
         WaitingPlayer = temp;
     }
 
-<<<<<<< HEAD
-    public override bool Equals(object obj)
-    {
-        return obj is Turn turn &&
-               EqualityComparer<Player>.Default.Equals(CurrentPlayer, turn.CurrentPlayer);
-               // creo que aca puede ir una excepcion//
-    }
-=======
     // public override bool Equals(object obj)
     // {
     //     return obj is Turn turn &&
     //            EqualityComparer<Player>.Default.Equals(CurrentPlayer, turn.CurrentPlayer);
     // }
->>>>>>> main
 
     public void PenalizeTurn(Player player) //validar que parámentro player no sea nulo antes de usarlo
     {
         if (player == CurrentPlayer)
         {
-            PenalizedPlayer = CurrentPlayer;
+            //PenalizedPlayer = CurrentPlayer;
             ChangeTurn();
             Console.WriteLine($"{PenalizedPlayer.Name} has lost their turn.");
         }

@@ -1,8 +1,5 @@
 namespace ClassLibrary;
-/// <summary>
-/// La clase <c>Facade</c> actúa como una interfaz simplificada para interactuar con el juego,
-/// permitiendo a los jugadores elegir Pokémon, mostrar movimientos, activar ataques y obtener información sobre la salud de los Pokémon.
-/// </summary>
+
 public class Facade
 {
     Game game = new Game(new Player(), new Player());
@@ -24,9 +21,9 @@ public class Facade
             player = game.Player2;
         }
         
-        foreach (string pokemonName in pokemonNames) //Agregar un argumentNullException para verificar que pokemonNames no sea nulo antes de usarlo
+        foreach (string pokemonName in pokemonNames)
         {
-            Pokemon pokemon = catalog.FindPokemonByName(pokemonName);
+            Pokemon pokemon = catalog.FindPokemonByName(pokemonName.ToLower());
             player.AddPokemon(pokemon);
         }
         
@@ -127,7 +124,9 @@ public class Facade
         return userInterface.ShowPokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
     }
 
-    public string ChangePokemon(int playerId,string newPokemonName){
+    //historia de usuario 7
+    public string ChangePokemon(int playerId,string newPokemonName)
+    {
         Player player;
         if(playerId==1)
         {
@@ -149,5 +148,19 @@ public class Facade
     }
 
 }
+    
+    
+
+    // Para implementar la clase de cambiar al pokemon y que te saca turnos hacerlo aca algo asi creo
+    //
+    // public void ChangePokemon()
+    // {
+    //     
+    // }
+    
+    // if (pokemonName != player.ActivePokemon.Name)
+    // {
+    //     ChangePokemon();
+    // }
 
 
