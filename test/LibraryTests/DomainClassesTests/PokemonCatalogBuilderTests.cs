@@ -1,6 +1,6 @@
 using ClassLibrary;
 using NUnit.Framework;
-namespace Tests;
+namespace ClassLibrary.Tests;
 
 public class PokemonCatalogBuilderTests
 {

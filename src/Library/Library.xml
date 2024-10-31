@@ -191,6 +191,7 @@
             <param name="name">Nombre del Pokémon.</param>
             <param name="moves">Lista de movimientos del Pokémon.</param>
             <param name="specialMove">Movimiento especial del Pokémon.</param>
+            <param name="type">El tipo del Pokémon.</param>
         </member>
         <member name="M:ClassLibrary.PokemonCatalogBuilder.GetPokemonList">
             <summary>
@@ -214,8 +215,8 @@
             <summary>
             Método que devuelve la efectividad entre tipos.
             </summary>
-            <param name="attackingType">Tipo del Pokémon atacante.</param>
-            <param name="defendingType">Tipo del Pokémon defensor.</param>
+            <param name="defendingType">Tipo del Pokémon atacante.</param>
+            <param name="attackingType">Tipo del Pokémon defensor.</param>
             <returns>
             El multiplicador de daño según la efectividad entre tipos. 
             Devuelve 1.0 si no hay ventaja o desventaja.

@@ -4,7 +4,7 @@ Este proyecto consiste en el desarrollo de un chatbot multijugador por turnos qu
 
 ## Descripción
 
-El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores simular una batalla de Pokémon en una plataforma de mensajería, como WhatsApp. El juego se desarrollará por turnos, y los jugadores podrán elegir movimientos, cambiar Pokémon y recibir actualizaciones sobre el estado de la batalla.
+El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores simular una batalla de Pokémon en una plataforma de mensajería, como Discord. El juego se desarrollará por turnos, y los jugadores podrán elegir movimientos, cambiar Pokémon y recibir actualizaciones sobre el estado de la batalla.
 
 ### Características:
 
@@ -21,13 +21,13 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 ### Lenguajes y Herramientas:
 
 - **Lenguaje**: C#
-- **Plataforma de Mensajería**: WhatsApp (mediante la API de WhatsApp)
+- **Plataforma de Mensajería**: Discord (mediante la API de Discord)
 - **Diagrama de Clases**: DrawIO
 - **Repositorio de Código**: https://github.com/ucudal/pii_2024_2_equipo27.git 
 
 ### API Utilizada:
 
-- **API de WhatsApp**: Para enviar y recibir mensajes en el bot.
+- **API de Discord**: Para enviar y recibir mensajes en el bot.
 
 ## Estructura del Proyecto
 - `src`: Contiene el código fuente del proyecto, con las clases de dominio como `Pokemon`, `Move`, y `Turn` y próximamente la integración con la API de WhatsApp.

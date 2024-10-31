@@ -21,14 +21,22 @@ public class Turn
         WaitingPlayer = temp;
     }
 
+<<<<<<< HEAD
     public override bool Equals(object obj)
     {
         return obj is Turn turn &&
                EqualityComparer<Player>.Default.Equals(CurrentPlayer, turn.CurrentPlayer);
                // creo que aca puede ir una excepcion//
     }
+=======
+    // public override bool Equals(object obj)
+    // {
+    //     return obj is Turn turn &&
+    //            EqualityComparer<Player>.Default.Equals(CurrentPlayer, turn.CurrentPlayer);
+    // }
+>>>>>>> main
 
-    public void PenalizeTurn(Player player)
+    public void PenalizeTurn(Player player) //validar que parámentro player no sea nulo antes de usarlo
     {
         if (player == CurrentPlayer)
         {
@@ -42,10 +50,10 @@ public class Turn
         }
     }
     
-    public void PlayerAttack(Pokemon attacker, Pokemon defender, Move move)
+    public void PlayerAttack(Pokemon attacker, Pokemon defender, Move move) //Validar que move, attacker, defender no sean nulo antes de usarlo 
     {
         double effectiveness = PokemonType.GetEffectiveness(attacker.Type, defender.Type);
-        double baseDamage = move.AttackValue;
+        double baseDamage = move.AttackValue; 
         
         // Calcular el daño total con la efectividad.
         double totalDamage = baseDamage * effectiveness;
@@ -55,7 +63,7 @@ public class Turn
         Console.WriteLine($"{attacker.Name} usó {move.Name} y causó {totalDamage} de daño. ¡Es {GetEffectivenessMessage(effectiveness)}!");
     }
 
-    private string GetEffectivenessMessage(double effectiveness)
+    private static string GetEffectivenessMessage(double effectiveness)
     {
         if (effectiveness > 1.0)
             return "¡súper efectivo!";
