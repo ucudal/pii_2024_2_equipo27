@@ -367,5 +367,55 @@
             Devuelve 1.0 si no hay ventaja o desventaja.
             </returns>
         </member>
+        <member name="T:ClassLibrary.Turn">
+            <summary>
+            Esta clase conoce las especificaciones del turno de un jugador actual con sus correspondientes ataques.
+            </summary>
+        </member>
+        <member name="F:ClassLibrary.Turn.CurrentPlayer">
+            <summary>
+            Jugador que está actualmente en turno.
+            </summary>
+        </member>
+        <member name="F:ClassLibrary.Turn.WaitingPlayer">
+            <summary>
+            Jugador que está esperando su turno.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Turn.#ctor(ClassLibrary.Player,ClassLibrary.Player)">
+            <summary>
+            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.Turn"/> con dos jugadores.
+            </summary>
+            <remarks>
+            <see cref="T:ClassLibrary.Player"/> es la clase que representa a un jugador en el juego.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.ChangeTurn">
+            <summary>
+            Cambia el turno entre el jugador actual y el jugador en espera.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Turn.PenalizeTurn(ClassLibrary.Player)">
+            <summary>
+            Penaliza el turno de un jugador. Si el jugador penalizado es el actual, se cambia el turno.
+            </summary>
+            <remarks>
+            Se debe validar que el parámetro no sea nulo antes de usarlo.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.PlayerAttack(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Move)">
+            <summary>
+            Permite que un jugador ataque a otro Pokémon usando un movimiento.
+            </summary>
+            <remarks>
+            Se debe validar que move, attacker y defender no sean nulos antes de usar.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.GetEffectivenessMessage(System.Double)">
+            <summary>
+            Obtiene un mensaje sobre la efectividad del ataque.
+            </summary>
+            <returns>Un mensaje que describe la efectividad.</returns>
+        </member>
     </members>
 </doc>

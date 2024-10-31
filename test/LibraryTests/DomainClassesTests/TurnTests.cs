@@ -62,7 +62,7 @@ public class TurnTests
             turn.PenalizeTurn(player2);
 
             // Assert
-            Assert.That(player2, Is.EqualTo(turn.PenalizedPlayer));
+            Assert.That(player2, Is.EqualTo(turn.WaitingPlayer));
             Assert.That(player1, Is.EqualTo(turn.CurrentPlayer));
         }
 

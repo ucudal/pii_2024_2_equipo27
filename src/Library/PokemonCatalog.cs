@@ -20,7 +20,7 @@ namespace ClassLibrary
         
         // Lista de Pokémon obtenida a través del builder.
         private List<Pokemon> pokemons = catalog.GetPokemonList();
-
+ 
         /// <summary>
         /// Encuentra un Pokémon por su nombre en el catálogo.
         /// Recorre la lista de Pokémon y devuelve el objeto correspondiente si encuentra una coincidencia.
