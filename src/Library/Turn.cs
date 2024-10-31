@@ -25,6 +25,7 @@ public class Turn
     {
         return obj is Turn turn &&
                EqualityComparer<Player>.Default.Equals(CurrentPlayer, turn.CurrentPlayer);
+               // creo que aca puede ir una excepcion//
     }
 
     public void PenalizeTurn(Player player)
