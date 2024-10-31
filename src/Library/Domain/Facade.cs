@@ -41,7 +41,9 @@ public class Facade
     {
         _instance = null;
     }
-    
+    /// <summary>
+    /// ////////////////////de aca para arriba ? ////////////////////////////////////////////////////////
+    /// </summary>
     private WaitingList WaitingList { get; }
     
     private BattlesList BattlesList { get; }
