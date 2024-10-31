@@ -14,148 +14,141 @@ public static class PokemonType
     /// </summary>
     public enum Type
     {
-        Fire,
-        Water,
-        Grass,
-        Rock,
-        Psychic,
-        Dragon,
-        Normal,
-        Fighting,
-        Steel,
+        Water, Bug, Dragon, Electric, Ghost, Fire,
+        Ice, Fighting, Normal, Grass, Psychic, Rock,
+        Ground, Poison, Flying
     }
 
-    private static Dictionary<(Type, Type), double> typeEffectiveness = new Dictionary<(Type, Type), double>()
+    private static Dictionary<(Type, Type), double> typeEffectiveness = new Dictionary<(Type, Type), double>() 
     {
-         // Fire
-    { (Type.Fire, Type.Grass), 2.0 },
-    { (Type.Fire, Type.Water), 0.5 },
-    { (Type.Fire, Type.Fire), 0.5 },
-    { (Type.Fire, Type.Rock), 2.0 },
-    { (Type.Fire, Type.Psychic), 1.0 },
-    { (Type.Fire, Type.Dragon), 1.0 },
-    { (Type.Fire, Type.Normal), 1.0 },
-    { (Type.Fire, Type.Fighting), 1.0 },
-    { (Type.Fire, Type.Steel), 1.0 },
+    // Water defender
+    { (Type.Water, Type.Electric), 2.0 },
+    { (Type.Water, Type.Grass), 2.0 },
+    { (Type.Water, Type.Water), 0.5 },
+    { (Type.Water, Type.Fire), 0.5 },
+    { (Type.Water, Type.Ice), 0.5 },
 
-    // Water
-    { (Type.Water, Type.Fire), 2.0 },
-    { (Type.Water, Type.Grass), 0.5 },
-    { (Type.Water, Type.Water), 1.0 },
-    { (Type.Water, Type.Rock), 2.0 },
-    { (Type.Water, Type.Psychic), 1.0 },
-    { (Type.Water, Type.Dragon), 1.0 },
-    { (Type.Water, Type.Normal), 1.0 },
-    { (Type.Water, Type.Fighting), 1.0 },
-    { (Type.Water, Type.Steel), 1.0 },
+    // Bug defender
+    { (Type.Bug, Type.Fire), 2.0 },
+    { (Type.Bug, Type.Rock), 2.0 },
+    { (Type.Bug, Type.Flying), 2.0 },
+    { (Type.Bug, Type.Poison), 2.0 },
+    { (Type.Bug, Type.Fighting), 0.5 },
+    { (Type.Bug, Type.Grass), 0.5 },
+    { (Type.Bug, Type.Ground), 0.5 },
 
-    // Grass
-    { (Type.Grass, Type.Fire), 0.5 },
-    { (Type.Grass, Type.Water), 2.0 },
-    { (Type.Grass, Type.Grass), 1.0 },
-    { (Type.Grass, Type.Rock), 2.0 },
-    { (Type.Grass, Type.Psychic), 1.0 },
-    { (Type.Grass, Type.Dragon), 1.0 },
-    { (Type.Grass, Type.Normal), 1.0 },
-    { (Type.Grass, Type.Fighting), 1.0 },
-    { (Type.Grass, Type.Steel), 0.5 },
-
-    // Rock
-    { (Type.Rock, Type.Fire), 0.5 },
-    { (Type.Rock, Type.Water), 1.0 },
-    { (Type.Rock, Type.Grass), 0.5 },
-    { (Type.Rock, Type.Rock), 1.0 },
-    { (Type.Rock, Type.Psychic), 1.0 },
-    { (Type.Rock, Type.Dragon), 1.0 },
-    { (Type.Rock, Type.Normal), 1.0 },
-    { (Type.Rock, Type.Fighting), 1.0 },
-    { (Type.Rock, Type.Steel), 1.0 },
-
-    // Psychic
-    { (Type.Psychic, Type.Fire), 1.0 },
-    { (Type.Psychic, Type.Water), 1.0 },
-    { (Type.Psychic, Type.Grass), 1.0 },
-    { (Type.Psychic, Type.Rock), 1.0 },
-    { (Type.Psychic, Type.Psychic), 1.0 },
-    { (Type.Psychic, Type.Dragon), 1.0 },
-    { (Type.Psychic, Type.Normal), 1.0 },
-    { (Type.Psychic, Type.Fighting), 1.0 },
-    { (Type.Psychic, Type.Steel), 1.0 },
-
-    // Dragon
-    { (Type.Dragon, Type.Fire), 1.0 },
-    { (Type.Dragon, Type.Water), 1.0 },
-    { (Type.Dragon, Type.Grass), 1.0 },
-    { (Type.Dragon, Type.Rock), 1.0 },
-    { (Type.Dragon, Type.Psychic), 1.0 },
+    // Dragon defender
     { (Type.Dragon, Type.Dragon), 2.0 },
-    { (Type.Dragon, Type.Normal), 1.0 },
-    { (Type.Dragon, Type.Fighting), 1.0 },
-    { (Type.Dragon, Type.Steel), 1.0 },
+    { (Type.Dragon, Type.Ice), 2.0 },
+    { (Type.Dragon, Type.Water), 0.5 },
+    { (Type.Dragon, Type.Electric), 0.5 },
+    { (Type.Dragon, Type.Fire), 0.5 },
+    { (Type.Dragon, Type.Grass), 0.5 },
 
-    // Normal
-    { (Type.Normal, Type.Fire), 1.0 },
-    { (Type.Normal, Type.Water), 1.0 },
-    { (Type.Normal, Type.Grass), 1.0 },
-    { (Type.Normal, Type.Rock), 1.0 },
-    { (Type.Normal, Type.Psychic), 1.0 },
-    { (Type.Normal, Type.Dragon), 1.0 },
-    { (Type.Normal, Type.Normal), 1.0 },
-    { (Type.Normal, Type.Fighting), 1.0 },
-    { (Type.Normal, Type.Steel), 1.0 },
+    // Electric defender
+    { (Type.Electric, Type.Ground), 2.0 },
+    { (Type.Electric, Type.Flying), 0.5 },
+    { (Type.Electric, Type.Electric), 0.0 },
 
-    // Fighting
-    { (Type.Fighting, Type.Fire), 1.0 },
-    { (Type.Fighting, Type.Water), 1.0 },
-    { (Type.Fighting, Type.Grass), 1.0 },
+    // Ghost defender
+    { (Type.Ghost, Type.Ghost), 2.0 },
+    { (Type.Ghost, Type.Normal), 0.5 },
+    { (Type.Ghost, Type.Poison), 0.5 },
+    { (Type.Ghost, Type.Fighting), 0.5 },
+
+    // Fire defender
+    { (Type.Fire, Type.Water), 2.0 },
+    { (Type.Fire, Type.Rock), 2.0 },
+    { (Type.Fire, Type.Ground), 2.0 },
+    { (Type.Fire, Type.Bug), 0.5 },
+    { (Type.Fire, Type.Grass), 0.5 },
+    
+    // Ice defender
+    { (Type.Ice, Type.Fire), 2.0 },
+    { (Type.Ice, Type.Fighting), 2.0 },
+    { (Type.Ice, Type.Rock), 2.0 },
+    { (Type.Ice, Type.Ice), 0.5 },
+
+    // Fighting defender
+    { (Type.Fighting, Type.Psychic), 2.0 },
+    { (Type.Fighting, Type.Flying), 2.0 },
+    { (Type.Fighting, Type.Bug), 2.0 },
     { (Type.Fighting, Type.Rock), 2.0 },
-    { (Type.Fighting, Type.Psychic), 0.5 },
-    { (Type.Fighting, Type.Dragon), 1.0 },
-    { (Type.Fighting, Type.Normal), 1.0 },
-    { (Type.Fighting, Type.Fighting), 1.0 },
-    { (Type.Fighting, Type.Steel), 1.0 },
 
-    // Steel
-    { (Type.Steel, Type.Fire), 0.5 },
-    { (Type.Steel, Type.Water), 1.0 },
-    { (Type.Steel, Type.Grass), 1.0 },
-    { (Type.Steel, Type.Rock), 1.0 },
-    { (Type.Steel, Type.Psychic), 1.0 },
-    { (Type.Steel, Type.Dragon), 1.0 },
-    { (Type.Steel, Type.Normal), 1.0 },
-    { (Type.Steel, Type.Fighting), 1.0 },
-    { (Type.Steel, Type.Steel), 1.0 }
+    // Normal defender
+    { (Type.Normal, Type.Fighting), 2.0},
+    { (Type.Normal, Type.Ghost), 0.0 },
+
+    // Grass defender
+    { (Type.Grass, Type.Bug), 2.0 },
+    { (Type.Grass, Type.Fire), 2.0 },
+    { (Type.Grass, Type.Ice), 2.0 },
+    { (Type.Grass, Type.Poison), 2.0 },
+    { (Type.Grass, Type.Flying), 2.0 },
+    { (Type.Grass, Type.Water), 0.5 },
+    { (Type.Grass, Type.Ground), 0.5 },
+    { (Type.Grass, Type.Electric), 0.5 },
+    { (Type.Grass, Type.Grass), 0.5 },
+
+    // Psychic defender
+    { (Type.Psychic, Type.Bug), 2.0 },
+    { (Type.Psychic, Type.Fighting), 2.0 },
+    { (Type.Psychic, Type.Ghost), 2.0 },
+
+    // Rock defender
+    { (Type.Rock, Type.Water), 2.0 },
+    { (Type.Rock, Type.Fighting), 2.0 },
+    { (Type.Rock, Type.Grass), 2.0 },
+    { (Type.Rock, Type.Ground), 2.0 },
+    { (Type.Rock, Type.Fire), 0.5 },
+    { (Type.Rock, Type.Poison), 0.5 },
+    { (Type.Rock, Type.Flying), 0.5 },
+    { (Type.Rock, Type.Normal), 0.5 },
+
+    // Ground defender
+    { (Type.Ground, Type.Water), 2.0  },
+    { (Type.Ground, Type.Ice), 2.0  },
+    { (Type.Ground, Type.Grass), 2.0  },
+    { (Type.Ground, Type.Rock), 2.0 },
+    { (Type.Ground, Type.Poison), 2.0 },
+    { (Type.Ground, Type.Electric), 0.5 },
+
+    // Poison defender
+    { (Type.Poison, Type.Bug), 2.0 },
+    { (Type.Poison, Type.Psychic), 2.0 },
+    { (Type.Poison, Type.Ground), 2.0 },
+    { (Type.Poison, Type.Fighting), 2.0 },
+    { (Type.Poison, Type.Grass), 0.5 },
+    { (Type.Poison, Type.Poison), 0.5 },
+
+    // Flying defender
+    { (Type.Flying, Type.Electric), 2.0 },
+    { (Type.Flying, Type.Ice), 2.0 },
+    { (Type.Flying, Type.Rock), 2.0 },
+    { (Type.Flying, Type.Grass), 0.5 },
+    { (Type.Flying, Type.Bug), 0.5 },
+    { (Type.Flying, Type.Fighting), 0.5 },
+    { (Type.Flying, Type.Ground), 0.5 }
     };
-    
-    
-
-    // // Diccionario de efectividad: tipo atacante tipo defensor y multiplicador de daño
-    // private static Dictionary<Type, Dictionary<Type, double>> typeEffectiveness = new Dictionary<Type, Dictionary<Type, double>>()
-    // {
-    //     { Type.Fire, new Dictionary<Type, double> { { Type.Grass, 2.0 }, { Type.Water, 0.5 }, { Type.Fire, 0.5 } } },
-    //     { Type.Water, new Dictionary<Type, double> { { Type.Fire, 2.0 }, { Type.Grass, 0.5 }, { Type.Water, 0.5 } } },
-    //     { Type.Grass, new Dictionary<Type, double> { { Type.Water, 2.0 }, { Type.Fire, 0.5 }, { Type.Grass, 0.5 } } },
-    //     //otros tipos 
-    // };
 
     // Método que devuelve la efectividad entre tipos.
     /// <summary>
     /// Método que devuelve la efectividad entre tipos.
     /// </summary>
-    /// <param name="attackingType">Tipo del Pokémon atacante.</param>
-    /// <param name="defendingType">Tipo del Pokémon defensor.</param>
+    /// <param name="defendingType">Tipo del Pokémon atacante.</param>
+    /// <param name="attackingType">Tipo del Pokémon defensor.</param>
     /// <returns>
     /// El multiplicador de daño según la efectividad entre tipos. 
     /// Devuelve 1.0 si no hay ventaja o desventaja.
     /// </returns>
 
-    public static double GetEffectiveness(Type attackingType, Type defendingType)
+    public static double GetEffectiveness(Type defendingType, Type attackingType)
     {
         // Verifica si la combinación de tipos está definida en el diccionario
-        if (typeEffectiveness.ContainsKey((attackingType, defendingType)))
+        if (typeEffectiveness.ContainsKey((defendingType, attackingType)))
         {
             // Retorna la efectividad correspondiente
-            return typeEffectiveness[(attackingType, defendingType)];
+            return typeEffectiveness[(defendingType, attackingType)];
         }
         
         return 1.0; // Daño normal si no hay ninguna ventaja/desventaja

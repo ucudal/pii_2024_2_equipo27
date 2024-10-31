@@ -31,7 +31,7 @@ namespace ClassLibrary
                 new Move("Carantoña", 90, 20, 0),
                 new Move("Roca Afilada", 80, 20, 0),
                 new Move("Golpe Mordaza", 85, 25, 0)
-            }, new Move("Martillo Gigante", 150, 0, 0), PokemonType.Type.Steel);
+            }, new Move("Martillo Gigante", 150, 0, 0), PokemonType.Type.Poison);
 
             AddPokemonToCatalog("Salamence", new List<Move>
             {

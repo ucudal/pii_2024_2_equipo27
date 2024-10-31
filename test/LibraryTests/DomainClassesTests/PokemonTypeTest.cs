@@ -14,7 +14,7 @@ namespace ClassLibrary.Tests
             var expectedEffectiveness = 2.0;
 
             // Act
-            var effectiveness = PokemonType.GetEffectiveness(attackingType, defendingType);
+            var effectiveness = PokemonType.GetEffectiveness(defendingType, attackingType);
 
             // Assert
             Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
@@ -30,7 +30,7 @@ namespace ClassLibrary.Tests
             var expectedEffectiveness = 2.0;
 
             // Act
-            var effectiveness = PokemonType.GetEffectiveness(attackingType, defendingType);
+            var effectiveness = PokemonType.GetEffectiveness(defendingType, attackingType);
 
             // Assert
             Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
@@ -46,7 +46,7 @@ namespace ClassLibrary.Tests
             var expectedEffectiveness = 0.5;
 
             // Act
-            var effectiveness = PokemonType.GetEffectiveness(attackingType, defendingType);
+            var effectiveness = PokemonType.GetEffectiveness(defendingType, attackingType);
 
             // Assert
             Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
@@ -54,15 +54,15 @@ namespace ClassLibrary.Tests
         }
 
         [Test]
-        public void GetEffectiveness_FireVsFire_ShouldReturn05()
+        public void GetEffectiveness_FireVsRock_ShouldReturn05()
         {
             // Arrange
             var attackingType = PokemonType.Type.Fire;
-            var defendingType = PokemonType.Type.Fire;
+            var defendingType = PokemonType.Type.Rock;
             var expectedEffectiveness = 0.5;
 
             // Act
-            var effectiveness = PokemonType.GetEffectiveness(attackingType, defendingType);
+            var effectiveness = PokemonType.GetEffectiveness(defendingType, attackingType);
 
             // Assert
             Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
@@ -70,15 +70,15 @@ namespace ClassLibrary.Tests
         }
 
         [Test]
-        public void GetEffectiveness_WaterVsSteel_ShouldReturn1()
+        public void GetEffectiveness_WaterVsPsychic_ShouldReturn1()
         {
             // Arrange
             var attackingType = PokemonType.Type.Water;
-            var defendingType = PokemonType.Type.Steel;
+            var defendingType = PokemonType.Type.Psychic;
             var expectedEffectiveness = 1.0;
 
             // Act
-            var effectiveness = PokemonType.GetEffectiveness(attackingType, defendingType);
+            var effectiveness = PokemonType.GetEffectiveness(defendingType, attackingType);
 
             // Assert
             Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
@@ -94,7 +94,7 @@ namespace ClassLibrary.Tests
             var expectedEffectiveness = 2.0;
 
             // Act
-            var effectiveness = PokemonType.GetEffectiveness(attackingType, defendingType);
+            var effectiveness = PokemonType.GetEffectiveness(defendingType, attackingType);
 
             // Assert
             Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
