@@ -15,6 +15,11 @@ public class BattlesList
     /// <returns>La batalla creada.</returns>
     public Battle AddBattle(string player1, string player2)
     {
+        
+        if(player1.Equals(player2, StringComparasion.OrdinalIgnoreCase))
+        { 
+            trow new ApplicationException("El jugador no puede jugar consigo mismo")
+        }
         var battle = new Battle(player1, player2);
         this.battles.Add(battle);
         return battle;
