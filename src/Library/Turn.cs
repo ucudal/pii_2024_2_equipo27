@@ -52,7 +52,7 @@ namespace ClassLibrary
             }
             else
             {
-                Console.WriteLine($"{player.Name} is not currently playing.");
+                Console.WriteLine($"{player.DisplayName} is not currently playing.");
             }
         }
 
