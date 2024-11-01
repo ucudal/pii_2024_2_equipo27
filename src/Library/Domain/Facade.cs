@@ -41,7 +41,9 @@ public class Facade
     {
         _instance = null;
     }
-    
+    /// <summary>
+    /// ////////////////////de aca para arriba ? ////////////////////////////////////////////////////////
+    /// </summary>
     private WaitingList WaitingList { get; }
     
     private BattlesList BattlesList { get; }
@@ -51,9 +53,9 @@ public class Facade
     /// </summary>
     /// <param name="displayName">El nombre del jugador.</param>
     /// <returns>Un mensaje con el resultado.</returns>
-    public string AddTrainerToWaitingList(string displayName)
+    public string AddPlayerToWaitingList(string displayName)
     {
-        if (this.WaitingList.AddTrainer(displayName))
+        if (this.WaitingList.AddPlayer(displayName))
         {
             return $"{displayName} agregado a la lista de espera";
         }
@@ -66,9 +68,9 @@ public class Facade
     /// </summary>
     /// <param name="displayName">El jugador a remover.</param>
     /// <returns>Un mensaje con el resultado.</returns>
-    public string RemoveTrainerFromWaitingList(string displayName)
+    public string RemovePlayerFromWaitingList(string displayName)
     {
-        if (this.WaitingList.RemoveTrainer(displayName))
+        if (this.WaitingList.RemovePlayer(displayName))
         {
             return $"{displayName} removido de la lista de espera";
         }
@@ -82,7 +84,7 @@ public class Facade
     /// Obtiene la lista de jugadores esperando.
     /// </summary>
     /// <returns>Un mensaje con el resultado.</returns>
-    public string GetAllTrainersWaiting()
+    public string GetAllPlayersWaiting()
     {
         if (this.WaitingList.Count == 0)
         {
@@ -90,9 +92,9 @@ public class Facade
         }
 
         string result = "Esperan: ";
-        foreach (Trainer trainer in this.WaitingList.GetAllWaiting())
+        foreach (Player player in this.WaitingList.GetAllWaiting())
         {
-            result = result + trainer.DisplayName + "; ";
+            result = result + player.DisplayName + "; ";
         }
         
         return result;
@@ -103,10 +105,10 @@ public class Facade
     /// </summary>
     /// <param name="displayName">El jugador.</param>
     /// <returns>Un mensaje con el resultado.</returns>
-    public string TrainerIsWaiting(string displayName)
+    public string PlayerIsWaiting(string displayName)
     {
-        Trainer? trainer = this.WaitingList.FindTrainerByDisplayName(displayName);
-        if (trainer == null)
+        Player? player = this.WaitingList.FindPlayerByDisplayName(displayName);
+        if (player == null)
         {
             return $"{displayName} no está esperando";
         }
@@ -120,8 +122,8 @@ public class Facade
         // Aunque playerDisplayName y opponentDisplayName no estén en la lista
         // esperando para jugar los removemos igual para evitar preguntar si
         // están para luego removerlos.
-        this.WaitingList.RemoveTrainer(playerDisplayName);
-        this.WaitingList.RemoveTrainer(opponentDisplayName);
+        this.WaitingList.RemovePlayer(playerDisplayName);
+        this.WaitingList.RemovePlayer(opponentDisplayName);
         
         BattlesList.AddBattle(playerDisplayName, opponentDisplayName);
         return $"Comienza {playerDisplayName} vs {opponentDisplayName}";
@@ -135,9 +137,9 @@ public class Facade
     /// <returns>Un mensaje con el resultado.</returns>
     public string StartBattle(string playerDisplayName, string? opponentDisplayName)
     {
-        // El símbolo ? luego de Trainer indica que la variable opponent puede
-        // referenciar una instancia de Trainer o ser null.
-        Trainer? opponent;
+        // El símbolo ? luego de Player indica que la variable opponent puede
+        // referenciar una instancia de Player o ser null.
+        Player? opponent;
         
         if (!OpponentProvided() && !SomebodyIsWaiting())
         {
@@ -158,7 +160,7 @@ public class Facade
         // El símbolo ! luego de opponentDisplayName indica que sabemos que esa
         // variable no es null. Estamos seguros porque OpponentProvided hubiera
         // retorna false antes y no habríamos llegado hasta aquí.
-        opponent = this.WaitingList.FindTrainerByDisplayName(opponentDisplayName!);
+        opponent = this.WaitingList.FindPlayerByDisplayName(opponentDisplayName!);
         
         if (!OpponentFound())
         {

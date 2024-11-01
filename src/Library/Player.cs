@@ -6,7 +6,7 @@ namespace ClassLibrary;
 //conocer los pokemones activos del jugador y sus movimientos y activar a los mismos 
 public class Player
 {
-    public string Name { get; set;}
+    public string DisplayName { get; set;}
 
     public List<Pokemon> AvailablePokemons { get; } = new List<Pokemon>();
     
@@ -19,11 +19,11 @@ public class Player
         this.AvailablePokemons.Add(pokemon);
     }
 
-    public int GetIndexOfPokemon(string pokemonName)
+    public int GetIndexOfPokemon(string pokemonDisplayName)
     {
         for (int i = 0; i < this.AvailablePokemons.Count; i++)
         {
-            if (this.AvailablePokemons[i].Name == pokemonName)
+            if (this.AvailablePokemons[i].DisplayName == pokemonDisplayName)
             {
                 return i;
             }
@@ -38,11 +38,11 @@ public class Player
         this.ActiveMove = null;
     }
 
-    public int GetIndexOfMoveInActivePokemon(string moveName)
+    public int GetIndexOfMoveInActivePokemon(string moveDisplayName)
     {
         for (int i = 0; i < this.ActivePokemon.Moves.Count; i++)
         {
-            if (this.ActivePokemon.Moves[i].Name == moveName)
+            if (this.ActivePokemon.Moves[i].DisplayName == moveDisplayName)
             {
                 return i;
             }
@@ -56,7 +56,7 @@ public class Player
         this.ActiveMove = this.ActivePokemon.Moves[index];
     }
 
-    public void ActivateSpecialMove(string specialMoveName)
+    public void ActivateSpecialMove(string specialMoveDisplayName)
     {
         this.ActiveMove = this.ActivePokemon.SpecialMove;
         //turn.SpecialMoveIsAvailable = false;
