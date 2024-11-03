@@ -1,4 +1,4 @@
-namespace Ucu.Poo.DiscordBot.Domain;
+namespace ClassLibrary;
 
 /// <summary>
 /// Esta clase representa la lista de batallas en curso.
@@ -15,12 +15,12 @@ public class GamesList
     /// <returns>La batalla creada.</returns>
     public Game AddGame(string player1, string player2)
     {
-        
-        if(player1.Equals(player2, StringComparasion.OrdinalIgnoreCase))
-        { 
-            trow new ApplicationException("El jugador no puede jugar consigo mismo")
+        if (player1.Equals(player2, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new ApplicationException("El jugador no puede jugar consigo mismo");
         }
-        var game = new Game(player1, player2);
+        
+        var game = new Game(new Player(player1), new Player(player2));
         this.games.Add(game);
         return game;
     }

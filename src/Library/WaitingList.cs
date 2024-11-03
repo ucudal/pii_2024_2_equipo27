@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace Ucu.Poo.DiscordBot.Domain;
+namespace ClassLibrary;
 
 /// <summary>
 /// Esta clase representa la lista de jugadores esperando para jugar.
