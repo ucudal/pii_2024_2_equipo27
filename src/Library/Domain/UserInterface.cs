@@ -3,7 +3,7 @@ namespace ClassLibrary;
 //Esta clase tiene la responsabilidad de mostrar lo que ve el usuario
 public class UserInterface
 {
-    public static string ShowPokemonCatalog()
+    public static string ShowMessagePokemonCatalog()
     {
         PokemonCatalogBuilder pokemons = new PokemonCatalogBuilder();
 
@@ -30,7 +30,7 @@ public class UserInterface
             return "Ya has seleccionado 6 Pokémon.";
         }
     }
-    public static string ShowSelectedPokemons(List<Pokemon> selectedPokemons) //Validar que selectedPokemons no sea nulo
+    public static string ShowMessageSelectedPokemons(List<Pokemon> selectedPokemons) //Validar que selectedPokemons no sea nulo
     {
         string selectedList = "⭐️ Pokémon seleccionados:\n";
 
@@ -41,7 +41,7 @@ public class UserInterface
 
         return selectedList;
     }
-    public List<string> ShowPokemonHealth(List<Pokemon> playerPokemons, List<Pokemon> opponentPokemons) //validar que playerpokemons y oponentPokemons no sea nulo
+    public List<string> ShowMessagePokemonHealth(List<Pokemon> playerPokemons, List<Pokemon> opponentPokemons) //validar que playerpokemons y oponentPokemons no sea nulo
     {
         List<string> healthInfo = new List<string>();
         healthInfo.Add("💓 Salud de los Pokémon:");

@@ -4,7 +4,7 @@ namespace ClassLibrary;
 
 //Esta clase tiene la responsabilidaad de conocer a los pokemones que tiene disponibles el jugador,
 //conocer los pokemones activos del jugador y sus movimientos y activar a los mismos 
-public class Player(string displayName)
+public class Player
 {
     public string DisplayName { get; }
 

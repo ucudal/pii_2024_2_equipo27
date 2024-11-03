@@ -4,88 +4,11 @@
         <name>Library</name>
     </assembly>
     <members>
-        <member name="T:ClassLibrary.Battle">
-            <summary>
-            Esta clase representa una batalla entre dos jugadores.
-            </summary>
-        </member>
-        <member name="P:ClassLibrary.Battle.Player1">
-            <summary>
-            Obtiene el primer jugador.
-            </summary>
-        </member>
-        <member name="P:ClassLibrary.Battle.Player2">
-            <summary>
-            Obtiene el oponente.
-            </summary>
-        </member>
-        <member name="M:ClassLibrary.Battle.#ctor(ClassLibrary.Player,ClassLibrary.Player)">
-            <summary>
-            Inicializa una instancia de la clase <see cref="T:ClassLibrary.Battle"/> con los jugadores proporcionados.
-            </summary>
-            <param name="player1">El primer jugador.</param>
-            <param name="player2">El oponente.</param>
-        </member>
-        <member name="T:ClassLibrary.BattlesList">
-            <summary>
-            Esta clase representa la lista de batallas en curso.
-            </summary>
-        </member>
-        <member name="M:ClassLibrary.BattlesList.AddBattle(ClassLibrary.Player,ClassLibrary.Player)">
-            <summary>
-            Crea una nueva batalla entre dos jugadores.
-            </summary>
-            <param name="player1">El primer jugador.</param>
-            <param name="player2">El oponente.</param>
-            <returns>La batalla creada.</returns>
-        </member>
-        <member name="M:ClassLibrary.BattlesList.FindPlayerByDisplayName(System.String)">
-            <summary>
-            Encuentra un jugador por su nombre para una batalla en curso.
-            </summary>
-            <param name="displayName">El nombre del jugador.</param>
-            <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
-        </member>
         <member name="T:ClassLibrary.Facade">
             <summary>
             La clase <c>Facade</c> actúa como una interfaz simplificada para interactuar con el juego,
             permitiendo a los jugadores elegir Pokémon, mostrar movimientos, activar ataques y obtener información sobre la salud de los Pokémon.
             </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
-            del bot a agregar.
-            </param>
-            <returns><c>true</c> si se agrega el usuario; <c>false</c> en caso
-            contrario.</returns>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.WaitingList.RemoveTrainer(System.String)">
-            <summary>
-            Remueve un jugador de la lista de espera.
-            </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
-            del bot a remover.
-            </param>
-            <returns><c>true</c> si se remueve el usuario; <c>false</c> en caso
-            contrario.</returns>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.WaitingList.FindTrainerByDisplayName(System.String)">
-            <summary>
-            Busca un jugador por el nombre de usuario de Discord en el servidor del
-            bot.
-            </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
-            del bot a buscar.
-            </param>
-            <returns>El jugador encontrado o <c>null</c> en caso contrario.
-            </returns>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.WaitingList.GetAnyoneWaiting">
-            <summary>
-            Retorna un jugador cualquiera esperando para jugar. En esta
-            implementación provista no es cualquiera, sino el primero. En la
-            implementación definitiva, debería ser uno aleatorio.
-            
-            </summary>
-            <returns></returns>
         </member>
         <member name="P:ClassLibrary.Facade.Instance">
             <summary>
@@ -206,18 +129,25 @@
             alineado con el principio de Polimorfismo, donde nuevas reglas de finalización pueden ser añadidas sin alterar la estructura básica.
             </summary>
         </member>
-        <member name="T:ClassLibrary.GamesList">
+        <member name="T:ClassLibrary.GameList">
             <summary>
             Esta clase representa la lista de batallas en curso.
             </summary>
         </member>
-        <member name="M:ClassLibrary.GamesList.AddGame(System.String,System.String)">
+        <member name="M:ClassLibrary.GameList.AddGame(ClassLibrary.Player,ClassLibrary.Player)">
             <summary>
             Crea una nueva batalla entre dos jugadores.
             </summary>
             <param name="player1">El primer jugador.</param>
             <param name="player2">El oponente.</param>
             <returns>La batalla creada.</returns>
+        </member>
+        <member name="M:ClassLibrary.GameList.FindPlayerByDisplayName(System.String)">
+            <summary>
+            Encuentra un jugador por su nombre para una batalla en curso.
+            </summary>
+            <param name="displayName">El nombre del jugador.</param>
+            <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
         <member name="T:ClassLibrary.Move">
             <summary>
@@ -357,6 +287,56 @@
             Devuelve 1.0 si no hay ventaja o desventaja.
             </returns>
         </member>
+        <member name="T:ClassLibrary.Turn">
+            <summary>
+            Esta clase conoce las especificaciones del turno de un jugador actual con sus correspondientes ataques.
+            </summary>
+        </member>
+        <member name="F:ClassLibrary.Turn.CurrentPlayer">
+            <summary>
+            Jugador que está actualmente en turno.
+            </summary>
+        </member>
+        <member name="F:ClassLibrary.Turn.WaitingPlayer">
+            <summary>
+            Jugador que está esperando su turno.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Turn.#ctor(ClassLibrary.Player,ClassLibrary.Player)">
+            <summary>
+            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.Turn"/> con dos jugadores.
+            </summary>
+            <remarks>
+            <see cref="T:ClassLibrary.Player"/> es la clase que representa a un jugador en el juego.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.ChangeTurn">
+            <summary>
+            Cambia el turno entre el jugador actual y el jugador en espera.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Turn.PenalizeTurn(ClassLibrary.Player)">
+            <summary>
+            Penaliza el turno de un jugador. Si el jugador penalizado es el actual, se cambia el turno.
+            </summary>
+            <remarks>
+            Se debe validar que el parámetro no sea nulo antes de usarlo.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.PlayerAttack(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Move)">
+            <summary>
+            Permite que un jugador ataque a otro Pokémon usando un movimiento.
+            </summary>
+            <remarks>
+            Se debe validar que move, attacker y defender no sean nulos antes de usar.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.GetEffectivenessMessage(System.Double)">
+            <summary>
+            Obtiene un mensaje sobre la efectividad del ataque.
+            </summary>
+            <returns>Un mensaje que describe la efectividad.</returns>
+        </member>
         <member name="T:ClassLibrary.WaitingList">
             <summary>
             Esta clase representa la lista de jugadores esperando para jugar.
@@ -366,7 +346,7 @@
             <summary>
             Agrega un jugador a la lista de espera.
             </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
+            <param name="DisplayName">El nombre de usuario de Discord en el servidor
             del bot a agregar.
             </param>
             <returns><c>true</c> si se agrega el usuario; <c>false</c> en caso
@@ -376,7 +356,7 @@
             <summary>
             Remueve un jugador de la lista de espera.
             </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
+            <param name="DisplayName">El nombre de usuario de Discord en el servidor
             del bot a remover.
             </param>
             <returns><c>true</c> si se remueve el usuario; <c>false</c> en caso
@@ -387,7 +367,7 @@
             Busca un jugador por el nombre de usuario de Discord en el servidor del
             bot.
             </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
+            <param name="DisplayName">El nombre de usuario de Discord en el servidor
             del bot a buscar.
             </param>
             <returns>El jugador encontrado o <c>null</c> en caso contrario.
