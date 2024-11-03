@@ -1,166 +1,313 @@
-namespace ClassLibrary;
-
-public class Facade
+namespace ClassLibrary
 {
-    Game game = new Game(new Player(), new Player());
-
-    public List<string> ChoosePokemons(int playerId, string[] pokemonNames)
-    {
-        List<string> result = new List<string>();
-        result.Add($"Pokémons seleccionados por el jugador {playerId}.");
-        PokemonCatalog catalog = new PokemonCatalog();
-
-        Player player;
-        
-        if (playerId == 1)
-        {
-            player = game.Player1;
-        }
-        else
-        {
-            player = game.Player2;
-        }
-        
-        foreach (string pokemonName in pokemonNames)
-        {
-            Pokemon pokemon = catalog.FindPokemonByName(pokemonName.ToLower());
-            player.AddPokemon(pokemon);
-        }
-        
-        return result;
-    }
     /// <summary>
-    /// Muestra los movimientos disponibles de los Pokémon del jugador seleccionado.
+    /// La clase <c>Facade</c> actúa como una interfaz simplificada para interactuar con el juego,
+    /// permitiendo a los jugadores elegir Pokémon, mostrar movimientos, activar ataques y obtener información sobre la salud de los Pokémon.
     /// </summary>
-    /// <param name="playerId">El ID del jugador (1 o 2).</param>
-    /// <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
-    public List<string> ShowMoves(int playerId)
+    public class Facade
     {
-        Player player;
-        if (playerId == 1)
+        private static Facade? _instance;
+
+        // Este constructor privado impide que otras clases puedan crear instancias de esta.
+        private Facade()
         {
-            player = game.Player1;
+            this.WaitingList = new WaitingList();
+            this.BattlesList = new BattlesList();
         }
-        else
+        /// <summary>
+        /// Obtiene la única instancia de la clase <see cref="Facade"/>.
+        /// </summary>
+        public static Facade Instance
         {
-            player = game.Player2;
-        }
-
-        List<string> pokemonsWithMoves = new List<string>();
-
-        foreach (Pokemon pokemon in player.AvailablePokemons)
-        {
-            List<string> movesList = new List<string>();
-
-            foreach (Move move in pokemon.Moves)
+            get
             {
-                movesList.Add(move.Name);
+                if (_instance == null)
+                {
+                    _instance = new Facade();
+                }
+
+                return _instance;
+            }
+        }
+
+        /// <summary>
+        /// Inicializa este singleton. Es necesario solo en los tests.
+        /// </summary>
+        public static void Reset()
+        {
+            _instance = null;
+        }
+
+        private WaitingList WaitingList { get; }
+        private BattlesList BattlesList { get; }
+
+        public string ChoosePokemons(string playerDisplayName, string[] pokemonNames)
+        {
+            Player player = this.BattlesList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                return $"El jugador {playerDisplayName} no está jugando";
             }
 
-            movesList.Add(pokemon.SpecialMove.Name);
+            List<string> result = new List<string>
+            {
+                $"Pokémons seleccionados por el jugador {playerDisplayName}."
+            };
+            PokemonCatalog catalog = new PokemonCatalog();
 
-            string pokemonMoves = $"{pokemon.Name}: {string.Join(", ", movesList)}";
+            foreach (string pokemonName in pokemonNames)
+            {
+                Pokemon pokemon = catalog.FindPokemonByName(pokemonName);
+                player.AddPokemon(pokemon);
+            }
 
-            pokemonsWithMoves.Add(pokemonMoves);
+            return string.Join(",", result);
         }
 
-        return pokemonsWithMoves;
+        /// <summary>
+        /// Muestra los movimientos disponibles de los Pokémon del jugador seleccionado.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador.</param>
+        /// <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
+        public List<string> ShowMoves(string playerDisplayName)
+        {
+            Player player = this.BattlesList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                return new List<string> { $"El jugador {playerDisplayName} no está jugando" };
+            }
+
+            List<string> pokemonsWithMoves = new List<string>();
+
+            foreach (Pokemon pokemon in player.AvailablePokemons)
+            {
+                List<string> movesList = new List<string>();
+
+                foreach (Move move in pokemon.Moves)
+                {
+                    movesList.Add(move.Name);
+                }
+
+                movesList.Add(pokemon.SpecialMove.Name);
+
+                string pokemonMoves = $"{pokemon.Name}: {string.Join(", ", movesList)}";
+
+                pokemonsWithMoves.Add(pokemonMoves);
+            }
+
+            return pokemonsWithMoves;
+        }
+
+        /// <summary>
+        /// Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador.</param>
+        /// <param name="moveName">El nombre del movimiento a utilizar.</param>
+        /// <param name="pokemonName">El nombre del Pokémon que realizará el ataque.</param>
+        public void ChoosePokemonAndMoveToAttack(string playerDisplayName, string moveName, string pokemonName)
+        {
+            Player player = this.BattlesList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                throw new Exception($"El jugador {playerDisplayName} no está jugando");
+            }
+
+            int pokemonIndex = player.GetIndexOfPokemon(pokemonName);
+            if (pokemonIndex < 0)
+            {
+                throw new Exception($"El Pokémon {pokemonName} no está disponible para el jugador {playerDisplayName}");
+            }
+            player.ActivatePokemon(pokemonIndex);
+
+            if (moveName == player.ActivePokemon.SpecialMove.Name)
+            {
+                player.ActivateSpecialMove(moveName);
+            }
+            else
+            {
+                int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
+                if (moveIndex < 0)
+                {
+                    throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
+                }
+                player.ActivateMoveInActivePokemon(moveIndex);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene la salud de los Pokémon de un jugador en comparación con el oponente.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador.</param>
+        /// <returns>Una lista de cadenas que muestra la salud de los Pokémon del jugador y del oponente.</returns>
+        public List<string> GetPokemonsHealth(string playerDisplayName)
+        {
+            Player player = this.BattlesList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                return new List<string> { $"El jugador {playerDisplayName} no está jugando" };
+            }
+
+            Player opponent = this.BattlesList.FindOpponent(playerDisplayName);
+            if (opponent == null)
+            {
+                return new List<string> { $"No se encontró el oponente del jugador {playerDisplayName}" };
+            }
+
+            UserInterface userInterface = new UserInterface();
+
+            return userInterface.ShowPokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
+        }
+
+        public string ChangePokemon(string playerDisplayName, string newPokemonName)
+        {
+            Player player = this.BattlesList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                return $"El jugador {playerDisplayName} no está jugando";
+            }
+
+            int pokemonIndex = player.GetIndexOfPokemon(newPokemonName);
+            if (pokemonIndex < 0)
+            {
+                return $"El Pokémon {newPokemonName} no está disponible para el jugador {playerDisplayName}";
+            }
+            player.ActivatePokemon(pokemonIndex);
+
+            // Aquí debes manejar el cambio de turno y verificar si el juego termina
+            // Por ejemplo:
+            // game.TurnPlayer = game.TurnPlayer == game.Player1 ? game.Player2 : game.Player1;
+            // game.CheckIfGameEnds();
+
+            return $"{player.DisplayName} cambió a {player.ActivePokemon.Name} y perdió su turno";
+        }
+
+        /// <summary>
+        /// Agrega un jugador a la lista de espera.
+        /// </summary>
+        /// <param name="displayName">El nombre del jugador.</param>
+        /// <returns>Un mensaje con el resultado.</returns>
+        public string AddPlayerToWaitingList(string displayName)
+        {
+            if (this.WaitingList.AddPlayer(displayName))
+            {
+                return $"{displayName} agregado a la lista de espera";
+            }
+
+            return $"{displayName} ya está en la lista de espera";
+        }
+
+        /// <summary>
+        /// Remueve un jugador de la lista de espera.
+        /// </summary>
+        /// <param name="displayName">El jugador a remover.</param>
+        /// <returns>Un mensaje con el resultado.</returns>
+        public string RemovePlayerFromWaitingList(string displayName)
+        {
+            if (this.WaitingList.RemovePlayer(displayName))
+            {
+                return $"{displayName} removido de la lista de espera";
+            }
+            else
+            {
+                return $"{displayName} no está en la lista de espera";
+            }
+        }
+
+        /// <summary>
+        /// Obtiene la lista de jugadores esperando.
+        /// </summary>
+        /// <returns>Un mensaje con el resultado.</returns>
+        public string GetAllPlayersWaiting()
+        {
+            if (this.WaitingList.Count == 0)
+            {
+                return "No hay nadie esperando";
+            }
+
+            string result = "Esperan: ";
+            foreach (Player player in this.WaitingList.GetAllWaiting())
+            {
+                result = result + player.DisplayName + "; ";
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determina si un jugador está esperando para jugar.
+        /// </summary>
+        /// <param name="displayName">El jugador.</param>
+        /// <returns>Un mensaje con el resultado.</returns>
+        public string PlayerIsWaiting(string displayName)
+        {
+            Player? player = this.WaitingList.FindPlayerByDisplayName(displayName);
+            if (player == null)
+            {
+                return $"{displayName} no está esperando";
+            }
+
+            return $"{displayName} está esperando";
+        }
+
+        private string CreateBattle(string playerDisplayName, string opponentDisplayName)
+        {
+            Player player1 = new Player(playerDisplayName);
+            Player player2 = new Player(opponentDisplayName);
+
+            this.WaitingList.RemovePlayer(playerDisplayName);
+            this.WaitingList.RemovePlayer(opponentDisplayName);
+
+            this.BattlesList.AddBattle(player1, player2);
+            return $"Comienza {playerDisplayName} vs {opponentDisplayName}";
+        }
+
+        /// <summary>
+        /// Crea una batalla entre dos jugadores.
+        /// </summary>
+        /// <param name="playerDisplayName">El primer jugador.</param>
+        /// <param name="opponentDisplayName">El oponente.</param>
+        /// <returns>Un mensaje con el resultado.</returns>
+        public string StartBattle(string playerDisplayName, string? opponentDisplayName)
+        {
+            Player? opponent;
+
+            if (!OpponentProvided() && !SomebodyIsWaiting())
+            {
+                return "No hay nadie esperando";
+            }
+
+            if (!OpponentProvided())
+            {
+                opponent = this.WaitingList.GetAnyoneWaiting();
+                return this.CreateBattle(playerDisplayName, opponent!.DisplayName);
+            }
+
+            opponent = this.WaitingList.FindPlayerByDisplayName(opponentDisplayName!);
+
+            if (!OpponentFound())
+            {
+                return $"{opponentDisplayName} no está esperando";
+            }
+
+            return this.CreateBattle(playerDisplayName, opponent!.DisplayName);
+
+            // Funciones locales a continuación para mejorar la legibilidad
+
+            bool OpponentProvided()
+            {
+                return !string.IsNullOrEmpty(opponentDisplayName);
+            }
+
+            bool SomebodyIsWaiting()
+            {
+                return this.WaitingList.Count != 0;
+            }
+
+            bool OpponentFound()
+            {
+                return opponent != null;
+            }
+        }
     }
-    /// <summary>
-    /// Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
-    /// </summary>
-    /// <param name="playerId">El ID del jugador (1 o 2).</param>
-    /// <param name="moveName">El nombre del movimiento a utilizar.</param>
-    /// <param name="pokemonName">El nombre del Pokémon que realizará el ataque.</param>
-    public void ChoosePokemonAndMoveToAttack(int playerId, string moveName, string pokemonName)
-    {
-        List<string> result = new List<string>();
-        Player player;
-
-        if (playerId == 1)
-        {
-            player = game.Player1;
-        }
-        else
-        {
-            player = game.Player2;
-        }
-        
-        int pokemonIndex = player.GetIndexOfPokemon(pokemonName);
-        player.ActivatePokemon(pokemonIndex);
-        
-        if (moveName == player.ActivePokemon.SpecialMove.Name) 
-        {
-            player.ActivateSpecialMove(moveName); // Falta hacer lo de que no se pueda usar cada dos turnos creo que usando turn y game 
-        }
-        else
-        {
-            int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
-            player.ActivateMoveInActivePokemon(moveIndex);
-        }
-    }
-    /// <summary>
-    /// Obtiene la salud de los Pokémon de un jugador en comparación con el oponente.
-    /// </summary>
-    /// <param name="playerId">El ID del jugador (1 o 2).</param>
-    /// <returns>Una lista de cadenas que muestra la salud de los Pokémon del jugador y del oponente.</returns>
-    public List<string> GetPokemonsHealth(int playerId)
-    {
-        Player player;
-        Player opponent;
-        UserInterface userInterface = new UserInterface();
-        
-        if (playerId == 1)
-        {
-            player = game.Player1;
-            opponent = game.Player2;
-        }
-        else
-        {
-            player = game.Player2;
-            opponent = game.Player1;
-        }
-
-        return userInterface.ShowPokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
-    }
-
-    //historia de usuario 7
-    public string ChangePokemon(int playerId,string newPokemonName)
-    {
-        Player player;
-        if(playerId==1)
-        {
-            player=game.Player1;
-        }
-        else
-        {
-            player=game.Player2;
-        }
-        int pokemonIndex=player.GetIndexOfPokemon(newPokemonName);
-        if(pokemonIndex<0)
-        {
-            return $"El Pokemon {newPokemonName} no esta disponible para el jugador {playerId}";
-        }
-        player.ActivatePokemon(pokemonIndex);
-        game.TurnPlayer=game.TurnPlayer==game.Player1 ? game.Player2:game.Player1;
-        game.CheckIfGameEnds();
-        return $"{player.Name} cambio a {player.ActivePokemon.Name} y perdio su turn";
-    }
-
 }
-    
-    
-
-    // Para implementar la clase de cambiar al pokemon y que te saca turnos hacerlo aca algo asi creo
-    //
-    // public void ChangePokemon()
-    // {
-    //     
-    // }
-    
-    // if (pokemonName != player.ActivePokemon.Name)
-    // {
-    //     ChangePokemon();
-    // }
-
 

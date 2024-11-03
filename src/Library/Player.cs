@@ -6,7 +6,12 @@ namespace ClassLibrary;
 //conocer los pokemones activos del jugador y sus movimientos y activar a los mismos 
 public class Player(string displayName)
 {
-    public string DisplayName { get; set;}
+    public string DisplayName { get; }
+
+    public Player(string displayName)
+    {
+        DisplayName = displayName;
+    }
 
     public List<Pokemon> AvailablePokemons { get; } = new List<Pokemon>();
     

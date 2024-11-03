@@ -1,3 +1,4 @@
+
 namespace ClassLibrary
 {
     /// <summary>
@@ -15,6 +16,11 @@ namespace ClassLibrary
         /// </summary>
         public Player WaitingPlayer;
 
+        public Turn(Player player1, Player player2)
+        {
+            CurrentPlayer = player1;
+            WaitingPlayer = player2;
+        }
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Turn"/> con dos jugadores.
         /// </summary>
@@ -89,3 +95,4 @@ namespace ClassLibrary
         }
     }
 }
+    
