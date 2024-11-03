@@ -23,7 +23,7 @@
 //     /// </summary>
 //     public static Facade Instance
 //     {
-//         get
+//         getgi
 //         {
 //             if (_instance == null)
 //             {
