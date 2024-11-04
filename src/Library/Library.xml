@@ -4,178 +4,88 @@
         <name>Library</name>
     </assembly>
     <members>
-        <member name="T:Ucu.Poo.DiscordBot.Domain.Battle">
+        <member name="T:ClassLibrary.Facade">
             <summary>
-            Esta clase representa una batalla entre dos jugadores.
+            La clase <c>Facade</c> actúa como una interfaz simplificada para interactuar con el juego,
+            permitiendo a los jugadores elegir Pokémon, mostrar movimientos, activar ataques y obtener información sobre la salud de los Pokémon.
             </summary>
         </member>
-        <member name="P:Ucu.Poo.DiscordBot.Domain.Battle.Player1">
+        <member name="P:ClassLibrary.Facade.Instance">
             <summary>
-            Obtiene un valor que representa el primer jugador.
+            Obtiene la única instancia de la clase <see cref="T:ClassLibrary.Facade"/>.
             </summary>
         </member>
-        <member name="P:Ucu.Poo.DiscordBot.Domain.Battle.Player2">
-            <summary>
-            Obtiene un valor que representa al oponente.
-            </summary>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Battle.#ctor(System.String,System.String)">
-            <summary>
-            Inicializa una instancia de la clase <see cref="T:Ucu.Poo.DiscordBot.Domain.Battle"/> con los
-            valores recibidos como argumento.
-            </summary>
-            <param name="player1">El primer jugador.</param>
-            <param name="player2">El oponente.</param>
-        </member>
-        <member name="T:Ucu.Poo.DiscordBot.Domain.BattlesList">
-            <summary>
-            Esta clase representa la lista de batallas en curso.
-            </summary>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.BattlesList.AddBattle(System.String,System.String)">
-            <summary>
-            Crea una nueva batalla entre dos jugadores.
-            </summary>
-            <param name="player1">El primer jugador.</param>
-            <param name="player2">El oponente.</param>
-            <returns>La batalla creada.</returns>
-        </member>
-        <member name="T:Ucu.Poo.DiscordBot.Domain.Facade">
-            <summary>
-            Esta clase recibe las acciones y devuelve los resultados que permiten
-            implementar las historias de usuario. Otras clases que implementan el bot
-            usan esta <see cref="T:Ucu.Poo.DiscordBot.Domain.Facade"/> pero no conocen el resto de las clases del
-            dominio. Esta clase es un singleton.
-            </summary>
-        </member>
-        <member name="P:Ucu.Poo.DiscordBot.Domain.Facade.Instance">
-            <summary>
-            Obtiene la única instancia de la clase <see cref="T:Ucu.Poo.DiscordBot.Domain.Facade"/>.
-            </summary>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Facade.Reset">
+        <member name="M:ClassLibrary.Facade.Reset">
             <summary>
             Inicializa este singleton. Es necesario solo en los tests.
             </summary>
         </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Facade.AddTrainerToWaitingList(System.String)">
+        <member name="M:ClassLibrary.Facade.ShowMoves(System.String)">
+            <summary>
+            Muestra los movimientos disponibles de los Pokémon del jugador seleccionado.
+            </summary>
+            <param name="playerDisplayName">El nombre del jugador.</param>
+            <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
+        </member>
+        <member name="M:ClassLibrary.Facade.ChoosePokemonAndMoveToAttack(System.String,System.String,System.String)">
+            <summary>
+            Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
+            </summary>
+            <param name="playerDisplayName">El nombre del jugador.</param>
+            <param name="moveName">El nombre del movimiento a utilizar.</param>
+            <param name="pokemonName">El nombre del Pokémon que realizará el ataque.</param>
+        </member>
+        <member name="M:ClassLibrary.Facade.GetPokemonsHealth(System.String)">
+            <summary>
+            Obtiene la salud de los Pokémon de un jugador y su oponente, formateada en una cadena.
+            </summary>
+            <param name="playerDisplayName">El nombre del jugador del cual se obtendrá la salud de los Pokémon.</param>
+            <returns>Una cadena que contiene la información de la salud de los Pokémon del jugador y su oponente.</returns>
+            <exception cref="T:System.ArgumentException">Se lanza si el jugador o el oponente no se encuentran.</exception>
+        </member>
+        <member name="M:ClassLibrary.Facade.ChangePokemon(System.String,System.String)">
+            <summary>
+            Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
+            </summary>
+            <param name="playerDisplayName">Nombre del jugador que quiere cambiar de Pokémon.</param>
+            <param name="newPokemonName">Nombre del nuevo Pokémon a activar.</param>
+            <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
+            <exception cref="T:System.ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
+        </member>
+        <member name="M:ClassLibrary.Facade.AddPlayerToWaitingList(System.String)">
             <summary>
             Agrega un jugador a la lista de espera.
             </summary>
             <param name="displayName">El nombre del jugador.</param>
             <returns>Un mensaje con el resultado.</returns>
         </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Facade.RemoveTrainerFromWaitingList(System.String)">
+        <member name="M:ClassLibrary.Facade.RemovePlayerFromWaitingList(System.String)">
             <summary>
             Remueve un jugador de la lista de espera.
             </summary>
             <param name="displayName">El jugador a remover.</param>
             <returns>Un mensaje con el resultado.</returns>
         </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Facade.GetAllTrainersWaiting">
+        <member name="M:ClassLibrary.Facade.GetAllPlayersWaiting">
             <summary>
             Obtiene la lista de jugadores esperando.
             </summary>
             <returns>Un mensaje con el resultado.</returns>
         </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Facade.TrainerIsWaiting(System.String)">
+        <member name="M:ClassLibrary.Facade.PlayerIsWaiting(System.String)">
             <summary>
             Determina si un jugador está esperando para jugar.
             </summary>
             <param name="displayName">El jugador.</param>
             <returns>Un mensaje con el resultado.</returns>
         </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Facade.StartBattle(System.String,System.String)">
+        <member name="M:ClassLibrary.Facade.StartBattle(System.String,System.String)">
             <summary>
             Crea una batalla entre dos jugadores.
             </summary>
             <param name="playerDisplayName">El primer jugador.</param>
             <param name="opponentDisplayName">El oponente.</param>
             <returns>Un mensaje con el resultado.</returns>
-        </member>
-        <member name="T:Ucu.Poo.DiscordBot.Domain.Trainer">
-            <summary>
-            Esta clase representa un jugador en el juego Pokémon.
-            </summary>
-        </member>
-        <member name="P:Ucu.Poo.DiscordBot.Domain.Trainer.DisplayName">
-            <summary>
-            El nombre de usuario de Discord en el servidor del bot del jugador.
-            </summary>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.Trainer.#ctor(System.String)">
-            <summary>
-            Inicializa una nueva instancia de la clase <see cref="T:Ucu.Poo.DiscordBot.Domain.Trainer"/> con el
-            nombre de usuario de Discord que se recibe como argumento.
-            </summary>
-            <param name="displayName">El nombre de usuario de Discord.</param>
-        </member>
-        <member name="T:Ucu.Poo.DiscordBot.Domain.WaitingList">
-            <summary>
-            Esta clase representa la lista de jugadores esperando para jugar.
-            </summary>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.WaitingList.AddTrainer(System.String)">
-            <summary>
-            Agrega un jugador a la lista de espera.
-            </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
-            del bot a agregar.
-            </param>
-            <returns><c>true</c> si se agrega el usuario; <c>false</c> en caso
-            contrario.</returns>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.WaitingList.RemoveTrainer(System.String)">
-            <summary>
-            Remueve un jugador de la lista de espera.
-            </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
-            del bot a remover.
-            </param>
-            <returns><c>true</c> si se remueve el usuario; <c>false</c> en caso
-            contrario.</returns>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.WaitingList.FindTrainerByDisplayName(System.String)">
-            <summary>
-            Busca un jugador por el nombre de usuario de Discord en el servidor del
-            bot.
-            </summary>
-            <param name="displayName">El nombre de usuario de Discord en el servidor
-            del bot a buscar.
-            </param>
-            <returns>El jugador encontrado o <c>null</c> en caso contrario.
-            </returns>
-        </member>
-        <member name="M:Ucu.Poo.DiscordBot.Domain.WaitingList.GetAnyoneWaiting">
-            <summary>
-            Retorna un jugador cualquiera esperando para jugar. En esta
-            implementación provista no es cualquiera, sino el primero. En la
-            implementación definitiva, debería ser uno aleatorio.
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ClassLibrary.Facade.ShowMoves(System.Int32)">
-            <summary>
-            Muestra los movimientos disponibles de los Pokémon del jugador seleccionado.
-            </summary>
-            <param name="playerId">El ID del jugador (1 o 2).</param>
-            <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
-        </member>
-        <member name="M:ClassLibrary.Facade.ChoosePokemonAndMoveToAttack(System.Int32,System.String,System.String)">
-            <summary>
-            Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
-            </summary>
-            <param name="playerId">El ID del jugador (1 o 2).</param>
-            <param name="moveName">El nombre del movimiento a utilizar.</param>
-            <param name="pokemonName">El nombre del Pokémon que realizará el ataque.</param>
-        </member>
-        <member name="M:ClassLibrary.Facade.GetPokemonsHealth(System.Int32)">
-            <summary>
-            Obtiene la salud de los Pokémon de un jugador en comparación con el oponente.
-            </summary>
-            <param name="playerId">El ID del jugador (1 o 2).</param>
-            <returns>Una lista de cadenas que muestra la salud de los Pokémon del jugador y del oponente.</returns>
         </member>
         <member name="T:ClassLibrary.Game">
             <summary>
@@ -199,10 +109,14 @@
             para controlar el flujo del juego.
             </summary>
         </member>
+        <member name="P:ClassLibrary.Game.Turn">
+            <summary>
+            Instancia de la clase Turn para gestionar el turno actual del juego.
+            </summary>
+        </member>
         <member name="P:ClassLibrary.Game.TurnPlayer">
             <summary>
-            Propiedad que indica qué jugador tiene el turno en el juego.
-            Esto facilita la implementación de reglas como el cambio de turno, alineado con el principio de responsabilidad única (SRP).
+            Propiedad que indica el jugador que actualmente tiene el turno.
             </summary>
         </member>
         <member name="P:ClassLibrary.Game.PlayIsOn">
@@ -228,6 +142,26 @@
             Este método puede ser fácilmente extendido o modificado con otras reglas de fin de juego, 
             alineado con el principio de Polimorfismo, donde nuevas reglas de finalización pueden ser añadidas sin alterar la estructura básica.
             </summary>
+        </member>
+        <member name="T:ClassLibrary.GameList">
+            <summary>
+            Esta clase representa la lista de batallas en curso.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.GameList.AddGame(ClassLibrary.Player,ClassLibrary.Player)">
+            <summary>
+            Crea una nueva batalla entre dos jugadores.
+            </summary>
+            <param name="player1">El primer jugador.</param>
+            <param name="player2">El oponente.</param>
+            <returns>La batalla creada.</returns>
+        </member>
+        <member name="M:ClassLibrary.GameList.FindPlayerByDisplayName(System.String)">
+            <summary>
+            Encuentra un jugador por su nombre para una batalla en curso.
+            </summary>
+            <param name="displayName">El nombre del jugador.</param>
+            <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
         <member name="T:ClassLibrary.Move">
             <summary>
@@ -416,6 +350,81 @@
             Obtiene un mensaje sobre la efectividad del ataque.
             </summary>
             <returns>Un mensaje que describe la efectividad.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessagePokemonHealth(System.Collections.Generic.List{ClassLibrary.Pokemon},System.Collections.Generic.List{ClassLibrary.Pokemon})">
+            <summary>
+            Genera un mensaje con la información de salud de los Pokémon del jugador y del oponente.
+            </summary>
+            <param name="playerPokemons">Lista de Pokémon del jugador.</param>
+            <param name="opponentPokemons">Lista de Pokémon del oponente.</param>
+            <returns>Una cadena con la información de salud de los Pokémon.</returns>
+            <exception cref="T:System.ArgumentNullException">Se lanza si alguna de las listas es nula.</exception>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageChangePokemon(System.String,System.String)">
+            <summary>
+            Genera un mensaje indicando que el jugador ha cambiado su Pokémon activo y ha perdido su turno.
+            </summary>
+            <param name="playerDisplayName">Nombre del jugador que realizó el cambio de Pokémon.</param>
+            <param name="newPokemonName">Nombre del nuevo Pokémon activado.</param>
+            <returns>Mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageNoPlayersWaiting">
+            <summary>
+            Genera un mensaje indicando que no hay jugadores en la lista de espera.
+            </summary>
+            <returns>Mensaje indicando que no hay nadie esperando.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessagePlayersWaiting(System.Collections.ObjectModel.ReadOnlyCollection{ClassLibrary.Player})">
+            <summary>
+            Genera un mensaje listando los nombres de los jugadores en la lista de espera.
+            </summary>
+            <param name="waitingPlayers">Lista de jugadores en espera.</param>
+            <returns>Un mensaje con los nombres de los jugadores en espera.</returns>
+        </member>
+        <member name="T:ClassLibrary.WaitingList">
+            <summary>
+            Esta clase representa la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.WaitingList.AddPlayer(System.String)">
+            <summary>
+            Agrega un jugador a la lista de espera.
+            </summary>
+            <param name="DisplayName">El nombre de usuario de Discord en el servidor
+            del bot a agregar.
+            </param>
+            <returns><c>true</c> si se agrega el usuario; <c>false</c> en caso
+            contrario.</returns>
+        </member>
+        <member name="M:ClassLibrary.WaitingList.RemovePlayer(System.String)">
+            <summary>
+            Remueve un jugador de la lista de espera.
+            </summary>
+            <param name="DisplayName">El nombre de usuario de Discord en el servidor
+            del bot a remover.
+            </param>
+            <returns><c>true</c> si se remueve el usuario; <c>false</c> en caso
+            contrario.</returns>
+        </member>
+        <member name="M:ClassLibrary.WaitingList.FindPlayerByDisplayName(System.String)">
+            <summary>
+            Busca un jugador por el nombre de usuario de Discord en el servidor del
+            bot.
+            </summary>
+            <param name="DisplayName">El nombre de usuario de Discord en el servidor
+            del bot a buscar.
+            </param>
+            <returns>El jugador encontrado o <c>null</c> en caso contrario.
+            </returns>
+        </member>
+        <member name="M:ClassLibrary.WaitingList.GetAnyoneWaiting">
+            <summary>
+            Retorna un jugador cualquiera esperando para jugar. En esta
+            implementación provista no es cualquiera, sino el primero. En la
+            implementación definitiva, debería ser uno aleatorio.
+            
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

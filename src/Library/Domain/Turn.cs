@@ -1,3 +1,4 @@
+
 namespace ClassLibrary
 {
     /// <summary>
@@ -14,7 +15,7 @@ namespace ClassLibrary
         /// Jugador que está esperando su turno.
         /// </summary>
         public Player WaitingPlayer;
-
+        
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Turn"/> con dos jugadores.
         /// </summary>
@@ -52,7 +53,7 @@ namespace ClassLibrary
             }
             else if (WaitingPlayer == player)
             {
-                Console.WriteLine($"{player.Name} is not currently playing.");
+                Console.WriteLine($"{player.DisplayName} is not currently playing.");
             }
         }
 
@@ -89,3 +90,4 @@ namespace ClassLibrary
         }
     }
 }
+    

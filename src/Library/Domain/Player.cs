@@ -6,7 +6,12 @@ namespace ClassLibrary;
 //conocer los pokemones activos del jugador y sus movimientos y activar a los mismos 
 public class Player
 {
-    public string DisplayName { get; set;}
+    public string DisplayName { get; }
+
+    public Player(string displayName)
+    {
+        DisplayName = displayName;
+    }
 
     public List<Pokemon> AvailablePokemons { get; } = new List<Pokemon>();
     
@@ -23,7 +28,7 @@ public class Player
     {
         for (int i = 0; i < this.AvailablePokemons.Count; i++)
         {
-            if (this.AvailablePokemons[i].DisplayName == pokemonDisplayName)
+            if (this.AvailablePokemons[i].Name == pokemonDisplayName)
             {
                 return i;
             }
@@ -42,7 +47,7 @@ public class Player
     {
         for (int i = 0; i < this.ActivePokemon.Moves.Count; i++)
         {
-            if (this.ActivePokemon.Moves[i].DisplayName == moveDisplayName)
+            if (this.ActivePokemon.Moves[i].Name == moveDisplayName)
             {
                 return i;
             }
