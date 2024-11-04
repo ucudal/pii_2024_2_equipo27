@@ -37,10 +37,20 @@
         </member>
         <member name="M:ClassLibrary.Facade.GetPokemonsHealth(System.String)">
             <summary>
-            Obtiene la salud de los Pokémon de un jugador en comparación con el oponente.
+            Obtiene la salud de los Pokémon de un jugador y su oponente, formateada en una cadena.
             </summary>
-            <param name="playerDisplayName">El nombre del jugador.</param>
-            <returns>Una lista de cadenas que muestra la salud de los Pokémon del jugador y del oponente.</returns>
+            <param name="playerDisplayName">El nombre del jugador del cual se obtendrá la salud de los Pokémon.</param>
+            <returns>Una cadena que contiene la información de la salud de los Pokémon del jugador y su oponente.</returns>
+            <exception cref="T:System.ArgumentException">Se lanza si el jugador o el oponente no se encuentran.</exception>
+        </member>
+        <member name="M:ClassLibrary.Facade.ChangePokemon(System.String,System.String)">
+            <summary>
+            Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
+            </summary>
+            <param name="playerDisplayName">Nombre del jugador que quiere cambiar de Pokémon.</param>
+            <param name="newPokemonName">Nombre del nuevo Pokémon a activar.</param>
+            <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
+            <exception cref="T:System.ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
         </member>
         <member name="M:ClassLibrary.Facade.AddPlayerToWaitingList(System.String)">
             <summary>
@@ -99,10 +109,14 @@
             para controlar el flujo del juego.
             </summary>
         </member>
+        <member name="P:ClassLibrary.Game.Turn">
+            <summary>
+            Instancia de la clase Turn para gestionar el turno actual del juego.
+            </summary>
+        </member>
         <member name="P:ClassLibrary.Game.TurnPlayer">
             <summary>
-            Propiedad que indica qué jugador tiene el turno en el juego.
-            Esto facilita la implementación de reglas como el cambio de turno, alineado con el principio de responsabilidad única (SRP).
+            Propiedad que indica el jugador que actualmente tiene el turno.
             </summary>
         </member>
         <member name="P:ClassLibrary.Game.PlayIsOn">
@@ -336,6 +350,36 @@
             Obtiene un mensaje sobre la efectividad del ataque.
             </summary>
             <returns>Un mensaje que describe la efectividad.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessagePokemonHealth(System.Collections.Generic.List{ClassLibrary.Pokemon},System.Collections.Generic.List{ClassLibrary.Pokemon})">
+            <summary>
+            Genera un mensaje con la información de salud de los Pokémon del jugador y del oponente.
+            </summary>
+            <param name="playerPokemons">Lista de Pokémon del jugador.</param>
+            <param name="opponentPokemons">Lista de Pokémon del oponente.</param>
+            <returns>Una cadena con la información de salud de los Pokémon.</returns>
+            <exception cref="T:System.ArgumentNullException">Se lanza si alguna de las listas es nula.</exception>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageChangePokemon(System.String,System.String)">
+            <summary>
+            Genera un mensaje indicando que el jugador ha cambiado su Pokémon activo y ha perdido su turno.
+            </summary>
+            <param name="playerDisplayName">Nombre del jugador que realizó el cambio de Pokémon.</param>
+            <param name="newPokemonName">Nombre del nuevo Pokémon activado.</param>
+            <returns>Mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageNoPlayersWaiting">
+            <summary>
+            Genera un mensaje indicando que no hay jugadores en la lista de espera.
+            </summary>
+            <returns>Mensaje indicando que no hay nadie esperando.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessagePlayersWaiting(System.Collections.ObjectModel.ReadOnlyCollection{ClassLibrary.Player})">
+            <summary>
+            Genera un mensaje listando los nombres de los jugadores en la lista de espera.
+            </summary>
+            <param name="waitingPlayers">Lista de jugadores en espera.</param>
+            <returns>Un mensaje con los nombres de los jugadores en espera.</returns>
         </member>
         <member name="T:ClassLibrary.WaitingList">
             <summary>

@@ -10,6 +10,7 @@ namespace ClassLibrary
         private GameList GameList { get; }
         private UserInterface UserInterface { get;  }
         
+        
         private static Facade? _instance;
 
         // Este constructor privado impide que otras clases puedan crear instancias de esta.
@@ -149,28 +150,31 @@ namespace ClassLibrary
         //HISTORIA DE USUARIO 3
 
         /// <summary>
-        /// Obtiene la salud de los Pokémon de un jugador en comparación con el oponente.
+        /// Obtiene la salud de los Pokémon de un jugador y su oponente, formateada en una cadena.
         /// </summary>
-        /// <param name="playerDisplayName">El nombre del jugador.</param>
-        /// <returns>Una lista de cadenas que muestra la salud de los Pokémon del jugador y del oponente.</returns>
-        public List<string> GetPokemonsHealth(string playerDisplayName)
+        /// <param name="playerDisplayName">El nombre del jugador del cual se obtendrá la salud de los Pokémon.</param>
+        /// <returns>Una cadena que contiene la información de la salud de los Pokémon del jugador y su oponente.</returns>
+        /// <exception cref="ArgumentException">Se lanza si el jugador o el oponente no se encuentran.</exception>
+        public string GetPokemonsHealth(string playerDisplayName)
         {
+            // Busca al jugador por su nombre para obtener sus Pokémon.
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
             {
-                return new List<string> { $"El jugador {playerDisplayName} no está jugando" };
+                throw new ArgumentException($"El jugador {playerDisplayName} no está jugando.");
             }
 
+            // Busca al oponente del jugador para obtener sus Pokémon.
             Player opponent = this.GameList.FindOpponent(playerDisplayName);
             if (opponent == null)
             {
-                return new List<string> { $"No se encontró el oponente del jugador {playerDisplayName}" };
+                throw new ArgumentException($"No se encontró el oponente del jugador {playerDisplayName}.");
             }
 
-            UserInterface userInterface = new UserInterface();
-
-            return userInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
+            // Devuelve la cadena formateada con la salud de los Pokémon de ambos jugadores.
+            return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
         }
+
 
         //HISTORIA DE USUARIO 4
         
@@ -183,27 +187,33 @@ namespace ClassLibrary
 
         //HISTORIA DE USUARIO 7
 
+        /// <summary>
+        /// Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
+        /// </summary>
+        /// <param name="playerDisplayName">Nombre del jugador que quiere cambiar de Pokémon.</param>
+        /// <param name="newPokemonName">Nombre del nuevo Pokémon a activar.</param>
+        /// <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
+        /// <exception cref="ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
         public string ChangePokemon(string playerDisplayName, string newPokemonName)
         {
+            // Buscar el jugador por su nombre
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
             {
-                return $"El jugador {playerDisplayName} no está jugando";
+                throw new ArgumentException($"El jugador {playerDisplayName} no está jugando", nameof(playerDisplayName));
             }
 
+            // Obtener el índice del Pokémon
             int pokemonIndex = player.GetIndexOfPokemon(newPokemonName);
             if (pokemonIndex < 0)
             {
-                return $"El Pokémon {newPokemonName} no está disponible para el jugador {playerDisplayName}";
+                throw new ArgumentException($"El Pokémon {newPokemonName} no está disponible para el jugador {playerDisplayName}", nameof(newPokemonName));
             }
+
+            // Activar el Pokémon y generar mensaje
             player.ActivatePokemon(pokemonIndex);
-
-            // Aquí debes manejar el cambio de turno y verificar si el juego termina
-            // Por ejemplo:
-            // game.TurnPlayer = game.TurnPlayer == game.Player1 ? game.Player2 : game.Player1;
-            // game.CheckIfGameEnds();
-
-            return $"{player.DisplayName} cambió a {player.ActivePokemon.Name} y perdió su turno";
+            // falta hacer lo de penalizar el turno: Game.Turn.PenalizeTurn(player);
+            return UserInterface.ShowMessageChangePokemon(player.DisplayName, player.ActivePokemon.Name);
         }
 
         //HISTORIA DE USUARIO 8
@@ -253,17 +263,15 @@ namespace ClassLibrary
         {
             if (this.WaitingList.Count == 0)
             {
-                return "No hay nadie esperando";
+                return UserInterface.ShowMessageNoPlayersWaiting();
             }
 
-            string result = "Esperan: ";
-            foreach (Player player in this.WaitingList.GetAllWaiting())
-            {
-                result = result + player.DisplayName + "; ";
-            }
+            return UserInterface.ShowMessagePlayersWaiting(this.WaitingList.GetAllWaiting());
 
-            return result;
         }
+        
+        //HISTORIA DE USUARIO 11
+
 
         /// <summary>
         /// Determina si un jugador está esperando para jugar.
@@ -280,9 +288,7 @@ namespace ClassLibrary
 
             return $"{displayName} está esperando";
         }
-
-        //HISTORIA DE USUARIO 11
-
+        
         private string CreateBattle(string playerDisplayName, string opponentDisplayName)
         {
             Player player1 = new Player(playerDisplayName);

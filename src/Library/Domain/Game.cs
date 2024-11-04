@@ -21,12 +21,26 @@ namespace ClassLibrary
         /// para controlar el flujo del juego.
         /// </summary>
         public Player Player2 { get; }
-
+        
         /// <summary>
-        /// Propiedad que indica qué jugador tiene el turno en el juego.
-        /// Esto facilita la implementación de reglas como el cambio de turno, alineado con el principio de responsabilidad única (SRP).
+        /// Instancia de la clase Turn para gestionar el turno actual del juego.
         /// </summary>
-        public Player TurnPlayer { get; set; }  
+        public Turn Turn { get; set; }
+        
+        /// <summary>
+        /// Propiedad que indica el jugador que actualmente tiene el turno.
+        /// </summary>
+        public Player TurnPlayer
+        {
+            get
+            {
+                return Turn.CurrentPlayer;
+            }
+            set
+            {
+                
+            }
+        }
 
         /// <summary>
         /// Propiedad que indica si el juego sigue activo (true) o ha terminado (false).
@@ -46,6 +60,7 @@ namespace ClassLibrary
         {
             Player1 = player1;
             Player2 = player2;
+            Turn = new Turn(player1, player2);
             TurnPlayer = player1; // El jugador 1 comienza con el turno
             PlayIsOn = true;      // El juego inicia en estado activo
         }
