@@ -50,7 +50,7 @@ namespace ClassLibrary
                 // PenalizedPlayer = CurrentPlayer; // Descomentado si se necesita usar
                 ChangeTurn();
             }
-            else
+            else if (WaitingPlayer == player)
             {
                 Console.WriteLine($"{player.Name} is not currently playing.");
             }
