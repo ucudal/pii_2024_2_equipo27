@@ -74,6 +74,15 @@ namespace ClassLibrary.Tests
             Assert.That(pokemon.Name, Is.EqualTo("Blaziken"));
         }
 
-
+        [Test]
+        public void FindPokemonByName_EmptyName_ThrowsArgumentException()
+        {
+            // Arrange
+            PokemonCatalog catalog = new PokemonCatalog();
+            
+            // Act & Assert
+            Assert.That(() => catalog.FindPokemonByName(""), Throws.ArgumentException);
+        }
+        
     }
 }

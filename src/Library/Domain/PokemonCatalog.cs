@@ -28,8 +28,13 @@ namespace ClassLibrary
         /// <param name="pokemonName">Nombre del Pokémon a buscar.</param>
         /// <returns>El objeto Pokemon si se encuentra, de lo contrario null.</returns>
         
-        public Pokemon FindPokemonByName(string pokemonName) //que pokemonname no sea nulo
+        public Pokemon FindPokemonByName(string pokemonName) 
         {
+            // Verifica que la string no esté vacía.
+            if (string.IsNullOrWhiteSpace(pokemonName))
+            {
+                throw new ArgumentException("El nombre del Pokémon no puede estar vacío.", nameof(pokemonName));
+            }
             // Recorre la lista de Pokémons en busca del nombre proporcionado.
             foreach (Pokemon pokemon in catalog.GetPokemonList())
             {
@@ -39,7 +44,7 @@ namespace ClassLibrary
                 }
             }
     
-            // Si no se encuentra ningún Pokémon, retorna null después de recorrer todo el catálogo.
+            // Si no se encuentra ningún Pokémon, retorna null después de recorrer todo el catalog.
             return null;
         }
     }
