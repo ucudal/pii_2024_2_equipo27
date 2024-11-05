@@ -182,7 +182,35 @@ namespace ClassLibrary
         }
         
         //HISTORIA DE USUARIO 4
-        
+        /// <summary>
+        /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
+        /// </summary>
+        /// <param name="attackingPlayer">El jugador que realiza el ataque.</param>
+        /// <param name="defendingPlayer">El jugador que recibe el ataque.</param>
+        /// <param name="selectedMove">El movimiento seleccionado para el ataque.</param>
+        public void PlayerAttack(Pokemon attackingPlayer, Pokemon defendingPlayer, Move selectedMove)
+        {
+            if (attackingPlayer == null || defendingPlayer == null || selectedMove == null)
+            {
+                throw new ArgumentException("Datos inválidos para el ataque.");
+            }
+
+            Pokemon attackingPokemon = attackingPlayer;
+            Pokemon defendingPokemon = defendingPlayer;
+
+            // Calcula la efectividad del tipo
+            double typeEffectiveness = PokemonType.GetEffectiveness(attackingPlayer.Type, defendingPokemon.Type);
+
+            // Calcula el daño basado en la efectividad
+            int baseDamage = selectedMove.AttackValue;
+            int calculatedDamage = (int)(baseDamage * typeEffectiveness);
+
+            // Aplica el daño al Pokémon defensor
+            defendingPokemon.HealthPoints-= (int)calculatedDamage;
+
+            Console.WriteLine($"{attackingPlayer.Name} ataca con {selectedMove.Name}!");
+            Console.WriteLine($"{defendingPlayer.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})");
+        }
         
         
         //HISTORIA DE USUARIO 5
