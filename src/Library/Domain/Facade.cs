@@ -115,6 +115,7 @@ namespace ClassLibrary
             }
 
             return pokemonsWithMoves;
+            
         }
 
         /// <summary>
@@ -163,12 +164,6 @@ namespace ClassLibrary
         /// <exception cref="ArgumentException">Se lanza si el jugador o el oponente no se encuentran.</exception>
         public string GetPokemonsHealth(string playerDisplayName)
         {
-            //Verifica que el parámetro playerDisplayName no sea Null ni este vacío
-            if (string.IsNullOrWhiteSpace(playerDisplayName))
-            {
-                throw new ArgumentNullException(nameof(playerDisplayName), "El nombre del jugador no puede ser nulo o estar vacío.");
-            }
-            
             // Busca al jugador por su nombre para obtener sus Pokémon.
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
@@ -186,57 +181,43 @@ namespace ClassLibrary
             // Devuelve la cadena formateada con la salud de los Pokémon de ambos jugadores.
             return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
         }
-        // HISTORIA DE USUARIO 4
-    /// <summary>
-    /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
-    /// </summary>
-    /// <param name="attackerName">El nombre del jugador atacante.</param>
-    /// <param name="defenderName">El nombre del jugador defensor.</param>
-    /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
-    /// <returns>Un mensaje con el resultado del ataque.</returns>
-    public string PlayerAttack(string attackerName, string defenderName, string moveName)
-    {
-        Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
-        Player defender = this.GameList.FindPlayerByDisplayName(defenderName);
-
-        if (attacker == null || defender == null)
-        {
-            return "Uno o ambos jugadores no están en el juego.";
-        }
-
-        Pokemon attackingPokemon = attacker.ActivePokemon;
-        Pokemon defendingPokemon = defender.ActivePokemon;
-
-        if (attackingPokemon == null || defendingPokemon == null)
-        {
-            return "Uno o ambos Pokémon no están activos para el ataque.";
-        }
-
-        Move selectedMove = attackingPokemon.Moves.Find(m => m.Name == moveName) ?? attackingPokemon.SpecialMove;
-        if (selectedMove == null || selectedMove.Name != moveName)
-        {
-            return $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.";
-        }
-
-        // Calcula la efectividad del tipo
-        double typeEffectiveness = PokemonType.GetEffectiveness(attackingPokemon.Type, defendingPokemon.Type);
-
-        // Calcula el daño basado en la efectividad
-        int baseDamage = selectedMove.AttackValue;
-        int calculatedDamage = (int)(baseDamage * typeEffectiveness);
-
-        // Aplica el daño al Pokémon defensor
-        defendingPokemon.HealthPoints -= calculatedDamage;
-
-        // Construye el mensaje de resultado
-        string effectivenessMessage = typeEffectiveness > 1.0 ? "¡Es súper efectivo!" :
-                                      typeEffectiveness < 1.0 ? "No es muy efectivo..." :
-                                      "Es efectivo.";
-        return $"{attackingPokemon.Name} ataca con {selectedMove.Name} y causa {calculatedDamage} de daño a {defendingPokemon.Name}. {effectivenessMessage}";
         
-        //Falta implemetar el turno
+        //HISTORIA DE USUARIO 4
+        /// <summary>
+        /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
+        /// </summary>
+        /// <param name="playerDisplayName">El jugador que realiza el ataque.</param>
+        /// <param name="opponentDisplayName">El jugador que recibe el ataque.</param>
+        /// <param name="moveName">El movimiento seleccionado para el ataque.</param>
+        //public void PlayerAttack(Pokemon playerDisplayName, Pokemon opponentDisplayName, Move moveName)
+        public string PlayerAttach(string playerDisplayName, string moveName)
+        {
+            if (playerDisplayName == null || moveName == null)
+            {
+                throw new ArgumentException("Datos inválidos para el ataque.");
+            }
+
+            Game game = GameList.FindGame(playerDisplayName);
+
+            Pokemon attackingPokemon = game.TurnPlayer.ActivePokemon;
+            Move move = attackingPokemon.GetMoveByName(moveName);
+            Pokemon defendingPokemon = null; // game tiene que poder decirte quien es el oponente
+
+            // Calcula la efectividad del tipo
+            double typeEffectiveness = PokemonType.GetEffectiveness(attackingPokemon.Type, defendingPokemon.Type);
+
+            // Calcula el daño basado en la efectividad
+            int baseDamage = move.AttackValue;
+            int calculatedDamage = (int)(baseDamage * typeEffectiveness);
+
+            // Aplica el daño al Pokémon defensor
+            defendingPokemon.HealthPoints-= (int)calculatedDamage;
+
+          // Console.WriteLine($"{playerDisplayName.Name} ataca con {moveName.Name}!");
+          // Console.WriteLine($"{opponentDisplayName.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})");
+          
+        }
         
-    }
         
         
         //HISTORIA DE USUARIO 5
@@ -244,9 +225,10 @@ namespace ClassLibrary
         
         //HISTORIA DE USUARIO 6
         
+        
 
         //HISTORIA DE USUARIO 7
-        
+
         /// <summary>
         /// Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
         /// </summary>
@@ -254,38 +236,27 @@ namespace ClassLibrary
         /// <param name="newPokemonName">Nombre del nuevo Pokémon a activar.</param>
         /// <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
         /// <exception cref="ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
-        /// <exception cref="ArgumentNullException">Se lanza si <paramref name="playerDisplayName"/> o <paramref name="newPokemonName"/> son nulos o están vacíos.</exception>
         public string ChangePokemon(string playerDisplayName, string newPokemonName)
         {
-            // Validación de parámetros de entrada
-            if (string.IsNullOrWhiteSpace(playerDisplayName)||string.IsNullOrWhiteSpace(newPokemonName))
-            {
-                throw new ArgumentNullException(nameof(playerDisplayName), "El nombre del jugador o de su pokemon seleccionado no puede ser nulo o estar vacío.");
-            }
-
-            // Buscar el jugador por su nombre y validar que esté en el juego
+            // Buscar el jugador por su nombre
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
             {
-                throw new ArgumentException($"El jugador '{playerDisplayName}' no está jugando.");
+                throw new ArgumentException($"El jugador {playerDisplayName} no está jugando", nameof(playerDisplayName));
             }
 
-            // Obtener el índice del Pokémon y validar que el jugador tenga el pokemon
+            // Obtener el índice del Pokémon
             int pokemonIndex = player.GetIndexOfPokemon(newPokemonName);
             if (pokemonIndex < 0)
             {
-                throw new ArgumentException($"El Pokémon '{newPokemonName}' no está disponible para el jugador '{playerDisplayName}'");
+                throw new ArgumentException($"El Pokémon {newPokemonName} no está disponible para el jugador {playerDisplayName}", nameof(newPokemonName));
             }
 
             // Activar el Pokémon y generar mensaje
             player.ActivatePokemon(pokemonIndex);
-
-            // Penalizar el turno del jugador
-            //Game.Turn.PenalizeTurn(player);
-
+            // falta hacer lo de penalizar el turno: Game.Turn.PenalizeTurn(player);
             return UserInterface.ShowMessageChangePokemon(player.DisplayName, player.ActivePokemon.Name);
         }
-
 
         //HISTORIA DE USUARIO 8
 
@@ -418,6 +389,8 @@ namespace ClassLibrary
                 return opponent != null;
             }
         }
+
+ 
     }
 }
 

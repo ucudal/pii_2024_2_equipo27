@@ -60,5 +60,21 @@ public class GameList
         }
         return null;
     }
+
+    public Game FindGame(string playerDisplayName)
+    {
+        foreach ( Game game in games)
+        {
+            if (playerDisplayName == game.Player1.DisplayName)
+            {
+                return game; 
+            }
+            else if (playerDisplayName == game.Player2.DisplayName)
+            {
+                return game;
+            }
+        }
+        return null;
+    }
 }
 

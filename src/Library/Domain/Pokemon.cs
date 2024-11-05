@@ -31,6 +31,25 @@ public class Pokemon
                 throw new ArgumentNullException(nameof(Name), "El nombre del Pokémon no puede ser nulo o vacío.");
             _name = value;
         }
+
+        public Move GetMoveByName(string moveName)
+        {
+            Move move = this.Moves.FirstOrDefault(m => m.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase));
+        
+            // Si no lo encontramos, verificamos si es el movimiento especial
+            if (move == null && this.SpecialMove.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase))
+            {
+                move = this.SpecialMove;
+            }
+
+            // Si no encontramos el movimiento, lanzamos una excepción
+            if (move == null)
+            {
+                throw new Exception($"El movimiento {moveName} no se encuentra en los movimientos del Pokémon {this.Name}.");
+            }
+
+            return move;
+        }
     }
 
     /// <summary>
