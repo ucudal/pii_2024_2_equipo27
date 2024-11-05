@@ -1,13 +1,13 @@
 namespace ClassLibrary
 {
     /// <summary>
-    /// La clase PokemonCatalogBuilder se encarga de la creación y configuración de un catálogo de Pokémon,
-    /// gestionando la asignación de atributos y movimientos para cada Pokémon. 
-    /// Aplica el principio de responsabilidad única (SRP) al dedicarse exclusivamente a construir el catálogo
-    /// de Pokémon, separando la lógica de creación de los Pokémon del resto de la aplicación. 
-    /// Utiliza el patrón Expert, ya que es la clase que mejor conoce cómo crear un Pokémon con sus movimientos
-    /// y atributos. También sigue el principio de sustitución de Liskov (LSP), ya que puede ser extendida
-    /// o modificada sin afectar el funcionamiento del catálogo en otras clases.
+    /// La clase  <c>PokemonCatalogBuilder</c> se encarga de crear y configurar un catálogo de Pokémon, gestionando la asignación
+    /// de atributos y movimientos. Aplica el Principio de Responsabilidad Única (SRP) al centralizar toda la lógica
+    /// de construcción, lo que facilita el mantenimiento. Como patrón de diseño, se puede considerar un Builder, ya que
+    /// permite crear objetos complejos de manera controlada. Además, utiliza el patrón Expert de GRASP, siendo la autoridad
+    /// en la creación de Pokémon, lo que asegura una implementación coherente. Cumple con el Principio de Sustitución de
+    /// Liskov (LSP), permitiendo su extensión sin afectar al catálogo. Esta estructura promueve un diseño desacoplado y escalable,
+    /// facilitando la integración de nuevas funcionalidades en el sistema.
     /// </summary>
     public class PokemonCatalogBuilder
     {

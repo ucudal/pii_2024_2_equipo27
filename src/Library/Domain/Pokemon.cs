@@ -2,12 +2,13 @@
 namespace ClassLibrary
 {
     /// <summary>
-    /// La clase Pokemon es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
-    /// Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente los datos y comportamientos
-    /// de cada Pokémon. Utiliza el patrón Expert, ya que conoce toda la información relevante para administrar
-    /// sus atributos, como la salud y los movimientos. También permite aplicar polimorfismo y respetar el principio
-    /// de sustitución de Liskov (LSP) si se crean subclases de Pokémon con comportamientos más especializados
-    /// o específicos.
+    /// La clase  <c>Pokemon</c> es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
+    /// Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente los datos y comportamientos de
+    /// cada Pokémon. Utiliza el patrón Expert, ya que posee toda la información necesaria para administrar sus atributos,
+    /// como puntos de vida y movimientos. Además, permite aplicar polimorfismo y respetar el principio de sustitución de 
+    /// Liskov (LSP) si se crean subclases especializadas de Pokémon con comportamientos más específicos. Este diseño 
+    /// facilita la extensión de la clase para añadir nuevas categorías de Pokémon o habilidades sin modificar la clase base,
+    /// alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión.
     /// </summary>
     
     public class Pokemon

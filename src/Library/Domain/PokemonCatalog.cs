@@ -1,16 +1,15 @@
 namespace ClassLibrary
 {
     /// <summary>
-    /// La clase PokemonCatalog tiene la responsabilidad de acceder a los atributos de los Pokémons y gestionar 
-    /// un catálogo de Pokémons. Permite buscar un Pokémon por su nombre.
-    ///
-    /// Esta clase está separada para cumplir con el principio de responsabilidad única (SRP), ya que está especializada
-    /// en conocer y gestionar únicamente el catálogo de Pokémons. Cualquier cambio en cómo se almacenan
-    /// o gestionan los datos de los Pokémons se realizaría únicamente aquí.
-    /// 
-    /// Tener esta clase como experta en la gestión del catálogo de Pokémons facilita futuras expansiones, como cambiar
-    /// la forma de almacenar los datos, añadir nuevas formas de búsqueda o modificar la fuente del catálogo, minimizando 
-    /// así las razones de cambio y centralizando la responsabilidad.
+    /// La clase  <c>PokemonCatalog</c> se encarga de gestionar el acceso y la manipulación de un catálogo de Pokémon, siguiendo
+    /// el Principio de Responsabilidad Única (SRP), lo que significa que se especializa exclusivamente en la gestión de
+    /// datos de los Pokémon. Esto asegura que cualquier modificación en la forma de almacenar o buscar Pokémon se realice
+    /// centralizadamente en esta clase, minimizando el impacto en el resto del sistema. Además, al aplicar el patrón
+    /// Expert de GRASP, PokemonCatalog se convierte en la autoridad en la gestión del catálogo, lo que facilita la
+    /// incorporación de nuevas características, como métodos de búsqueda adicionales o cambios en la fuente de datos,
+    /// sin necesidad de alteraciones significativas en otras partes del código. Esta separación de responsabilidades no
+    /// solo optimiza el mantenimiento y la extensibilidad, sino que también reduce las razones de cambio, permitiendo una
+    /// evolución más ágil y segura del sistema.
     /// </summary>
     
     public class PokemonCatalog
