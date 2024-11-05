@@ -1,13 +1,19 @@
 namespace ClassLibrary
 {
     /// <summary>
-    /// La clase <c>Facade</c> actúa como una interfaz simplificada para interactuar con el juego,
-    /// permitiendo a los jugadores elegir Pokémon, mostrar movimientos, activar ataques y obtener información sobre la salud de los Pokémon.
+    /// La clase  <c>Facade</c> proporciona una interfaz simplificada para interactuar con el juego, permitiendo a los jugadores seleccionar
+    /// Pokémon, mostrar movimientos, activar ataques y consultar la salud de los Pokémon. Aplica el Patrón de Diseño Facade,
+    /// que oculta la complejidad del sistema y simplifica la interacción con múltiples subsistemas, mejorando la usabilidad.
+    /// Esta clase sigue el Principio de Responsabilidad Única (SRP) al concentrar la lógica de interacción en un solo lugar,
+    /// lo que facilita el mantenimiento y la evolución del sistema. Además, respeta el Principio de Inversión de Dependencias (DIP)
+    /// al depender de abstracciones, permitiendo una mayor flexibilidad y una mejor capacidad de prueba. Esta estructura permite a los
+    /// desarrolladores y jugadores interactuar con el juego de manera más intuitiva, minimizando la necesidad de conocer la
+    /// implementación interna.
     /// </summary>
     public class Facade
     {
         private WaitingList WaitingList { get; }
-        private GameList GameList { get; }
+        public GameList GameList { get; }
         private UserInterface UserInterface { get;  }
         
         
@@ -174,9 +180,9 @@ namespace ClassLibrary
             // Devuelve la cadena formateada con la salud de los Pokémon de ambos jugadores.
             return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
         }
-
-
+        
         //HISTORIA DE USUARIO 4
+        
         
         
         //HISTORIA DE USUARIO 5
@@ -271,7 +277,6 @@ namespace ClassLibrary
         }
         
         //HISTORIA DE USUARIO 11
-
 
         /// <summary>
         /// Determina si un jugador está esperando para jugar.
