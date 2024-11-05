@@ -115,6 +115,7 @@ namespace ClassLibrary
             }
 
             return pokemonsWithMoves;
+            
         }
 
         /// <summary>
@@ -188,35 +189,42 @@ namespace ClassLibrary
         /// <param name="playerDisplayName">El jugador que realiza el ataque.</param>
         /// <param name="opponentDisplayName">El jugador que recibe el ataque.</param>
         /// <param name="moveName">El movimiento seleccionado para el ataque.</param>
-        public void PlayerAttack(Pokemon playerDisplayName, Pokemon opponentDisplayName, Move moveName)
+        //public void PlayerAttack(Pokemon playerDisplayName, Pokemon opponentDisplayName, Move moveName)
+        public string PlayerAttach(string playerDisplayName, string moveName)
         {
-            if (playerDisplayName == null || opponentDisplayName == null || moveName == null)
+            if (playerDisplayName == null || moveName == null)
             {
                 throw new ArgumentException("Datos inválidos para el ataque.");
             }
 
-            Pokemon attackingPokemon = playerDisplayName;
-            Pokemon defendingPokemon = opponentDisplayName;
+            Game game = GameList.FindGame(playerDisplayName);
+
+            Pokemon attackingPokemon = game.TurnPlayer.ActivePokemon;
+            Move move = attackingPokemon.GetMoveByName(moveName);
+            Pokemon defendingPokemon = null; // game tiene que poder decirte quien es el oponente
 
             // Calcula la efectividad del tipo
-            double typeEffectiveness = PokemonType.GetEffectiveness(playerDisplayName.Type, defendingPokemon.Type);
+            double typeEffectiveness = PokemonType.GetEffectiveness(attackingPokemon.Type, defendingPokemon.Type);
 
             // Calcula el daño basado en la efectividad
-            int baseDamage = moveName.AttackValue;
+            int baseDamage = move.AttackValue;
             int calculatedDamage = (int)(baseDamage * typeEffectiveness);
 
             // Aplica el daño al Pokémon defensor
             defendingPokemon.HealthPoints-= (int)calculatedDamage;
 
-            Console.WriteLine($"{playerDisplayName.Name} ataca con {moveName.Name}!");
-            Console.WriteLine($"{opponentDisplayName.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})");
+          // Console.WriteLine($"{playerDisplayName.Name} ataca con {moveName.Name}!");
+          // Console.WriteLine($"{opponentDisplayName.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})");
+          
         }
+        
         
         
         //HISTORIA DE USUARIO 5
         
         
         //HISTORIA DE USUARIO 6
+        
         
 
         //HISTORIA DE USUARIO 7
@@ -381,6 +389,8 @@ namespace ClassLibrary
                 return opponent != null;
             }
         }
+
+ 
     }
 }
 

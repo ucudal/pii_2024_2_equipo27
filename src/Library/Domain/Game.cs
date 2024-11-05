@@ -97,13 +97,13 @@ namespace ClassLibrary
             // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
             if (todosSonCeroPlayer1)
             {
-                Console.WriteLine("¡Ha ganado Player 2!");
                 PlayIsOn = false;  // El juego termina
+                
             }
             // Si todos los Pokémon de Player 2 tienen 0 puntos de vida, Player 1 gana
             else if (todosSonCeroPlayer2)
             {
-                Console.WriteLine("¡Ha ganado Player 1!");
+               
                 PlayIsOn = false;  // El juego termina
             }
         }

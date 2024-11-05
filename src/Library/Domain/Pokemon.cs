@@ -44,5 +44,24 @@ namespace ClassLibrary
         {
             Moves.Add(move); // Agrega el movimiento a la lista de movimientos.
         }
+
+        public Move GetMoveByName(string moveName)
+        {
+            Move move = this.Moves.FirstOrDefault(m => m.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase));
+        
+            // Si no lo encontramos, verificamos si es el movimiento especial
+            if (move == null && this.SpecialMove.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase))
+            {
+                move = this.SpecialMove;
+            }
+
+            // Si no encontramos el movimiento, lanzamos una excepción
+            if (move == null)
+            {
+                throw new Exception($"El movimiento {moveName} no se encuentra en los movimientos del Pokémon {this.Name}.");
+            }
+
+            return move;
+        }
     }
 }
