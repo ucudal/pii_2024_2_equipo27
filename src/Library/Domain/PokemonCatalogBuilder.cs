@@ -113,6 +113,12 @@ namespace ClassLibrary
         /// <param name="type">El tipo del Pokémon.</param>
         private void AddPokemonToCatalog(string name, List<Move> moves, Move specialMove, PokemonType.Type type)
         {
+            // Validar todos los parámetros en una única condición
+            if (string.IsNullOrWhiteSpace(name) || moves == null || moves.Count == 0 || !Enum.IsDefined(typeof(PokemonType.Type), type))
+            {
+                throw new ArgumentException("Uno o más parámetros son inválidos. Verifique el nombre, la lista de movimientos o el tipo.");
+            }
+            
             // Crea una nueva instancia de un Pokémon y le asigna sus atributos.
             Pokemon pokemon = new Pokemon();
             pokemon.Name = name;
