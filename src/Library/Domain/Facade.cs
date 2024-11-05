@@ -163,6 +163,12 @@ namespace ClassLibrary
         /// <exception cref="ArgumentException">Se lanza si el jugador o el oponente no se encuentran.</exception>
         public string GetPokemonsHealth(string playerDisplayName)
         {
+            //Verifica que el parámetro playerDisplayName no sea Null ni este vacío
+            if (string.IsNullOrWhiteSpace(playerDisplayName))
+            {
+                throw new ArgumentNullException(nameof(playerDisplayName), "El nombre del jugador no puede ser nulo o estar vacío.");
+            }
+            
             // Busca al jugador por su nombre para obtener sus Pokémon.
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
@@ -220,7 +226,7 @@ namespace ClassLibrary
         
 
         //HISTORIA DE USUARIO 7
-
+        
         /// <summary>
         /// Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
         /// </summary>
@@ -228,27 +234,38 @@ namespace ClassLibrary
         /// <param name="newPokemonName">Nombre del nuevo Pokémon a activar.</param>
         /// <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
         /// <exception cref="ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
+        /// <exception cref="ArgumentNullException">Se lanza si <paramref name="playerDisplayName"/> o <paramref name="newPokemonName"/> son nulos o están vacíos.</exception>
         public string ChangePokemon(string playerDisplayName, string newPokemonName)
         {
-            // Buscar el jugador por su nombre
+            // Validación de parámetros de entrada
+            if (string.IsNullOrWhiteSpace(playerDisplayName)||string.IsNullOrWhiteSpace(newPokemonName))
+            {
+                throw new ArgumentNullException(nameof(playerDisplayName), "El nombre del jugador o de su pokemon seleccionado no puede ser nulo o estar vacío.");
+            }
+
+            // Buscar el jugador por su nombre y validar que esté en el juego
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
             {
-                throw new ArgumentException($"El jugador {playerDisplayName} no está jugando", nameof(playerDisplayName));
+                throw new ArgumentException($"El jugador '{playerDisplayName}' no está jugando.");
             }
 
-            // Obtener el índice del Pokémon
+            // Obtener el índice del Pokémon y validar que el jugador tenga el pokemon
             int pokemonIndex = player.GetIndexOfPokemon(newPokemonName);
             if (pokemonIndex < 0)
             {
-                throw new ArgumentException($"El Pokémon {newPokemonName} no está disponible para el jugador {playerDisplayName}", nameof(newPokemonName));
+                throw new ArgumentException($"El Pokémon '{newPokemonName}' no está disponible para el jugador '{playerDisplayName}'");
             }
 
             // Activar el Pokémon y generar mensaje
             player.ActivatePokemon(pokemonIndex);
-            // falta hacer lo de penalizar el turno: Game.Turn.PenalizeTurn(player);
+
+            // Penalizar el turno del jugador
+            //Game.Turn.PenalizeTurn(player);
+
             return UserInterface.ShowMessageChangePokemon(player.DisplayName, player.ActivePokemon.Name);
         }
+
 
         //HISTORIA DE USUARIO 8
 

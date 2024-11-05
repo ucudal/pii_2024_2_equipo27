@@ -65,6 +65,7 @@
             <param name="newPokemonName">Nombre del nuevo Pokémon a activar.</param>
             <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
             <exception cref="T:System.ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
+            <exception cref="T:System.ArgumentNullException">Se lanza si <paramref name="playerDisplayName"/> o <paramref name="newPokemonName"/> son nulos o están vacíos.</exception>
         </member>
         <member name="M:ClassLibrary.Facade.AddPlayerToWaitingList(System.String)">
             <summary>
