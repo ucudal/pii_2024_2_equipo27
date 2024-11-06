@@ -190,7 +190,7 @@ namespace ClassLibrary
         /// <param name="opponentDisplayName">El jugador que recibe el ataque.</param>
         /// <param name="moveName">El movimiento seleccionado para el ataque.</param>
         //public void PlayerAttack(Pokemon playerDisplayName, Pokemon opponentDisplayName, Move moveName)
-        public string PlayerAttach(string playerDisplayName, string moveName)
+        public string PlayerAttack(string playerDisplayName, string moveName)
         {
             if (playerDisplayName == null || moveName == null)
             {
@@ -215,7 +215,8 @@ namespace ClassLibrary
 
           // Console.WriteLine($"{playerDisplayName.Name} ataca con {moveName.Name}!");
           // Console.WriteLine($"{opponentDisplayName.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})");
-          
+          return $"{defendingPokemon.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})";
+
         }
         
         

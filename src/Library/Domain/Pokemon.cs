@@ -17,20 +17,21 @@ public class Pokemon
     private Move _specialMove;
     private const int MaxMoves = 4;
     private List<Move> _moves;
-    
+
     /// <summary>
     /// Obtiene o establece el nombre del Pokémon.
     /// </summary>
     /// <exception cref="ArgumentNullException">Se lanza si el nombre es nulo o vacío.</exception>
-    public string Name 
-    { 
-        get => _name; 
+    public string Name
+    {
+        get => _name;
         set
         {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(Name), "El nombre del Pokémon no puede ser nulo o vacío.");
             _name = value;
         }
+    }
 
         public Move GetMoveByName(string moveName)
         {
@@ -50,7 +51,7 @@ public class Pokemon
 
             return move;
         }
-    }
+    
 
     /// <summary>
     /// Obtiene o establece los puntos de salud del Pokémon.
