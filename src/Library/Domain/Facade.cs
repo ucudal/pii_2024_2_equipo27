@@ -227,6 +227,9 @@ namespace ClassLibrary
                                       typeEffectiveness < 1.0 ? "No es muy efectivo..." :
                                       "Es efectivo.";
         return $"{attackingPokemon.Name} ataca con {selectedMove.Name} y causa {calculatedDamage} de daño a {defendingPokemon.Name}. {effectivenessMessage}";
+        
+        //Falta implemetar el turno
+        
     }
         
         
