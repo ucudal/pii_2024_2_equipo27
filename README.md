@@ -30,8 +30,8 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 - **API de Discord**: Para enviar y recibir mensajes en el bot.
 
 ## Estructura del Proyecto
-- `src`: Contiene el código fuente del proyecto, con las clases de dominio como `Pokemon`, `Move`, y `Turn` y próximamente la integración con la API de WhatsApp.
-- `tests`: Contiene las pruebas unitarias para verificar la lógica del juego.
+- `src`: Contiene el código fuente del proyecto, con las clases de dominio como `Pokemon`, `Move`, y `Turn` y las clases de comando que permiten la integración con la API de WhatsApp.
+- `tests`: Contiene las pruebas unitarias para verificar la lógica del juego y cada historia de usuario por separado.
 - `docs`: Contiene documentación del proyecto, como el diagrama de clases y Doxify.
 
 ## Roadmap del Proyecto
@@ -51,6 +51,11 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 5. Como jugador, quiero saber de quién es el turno para estar seguro de cuándo atacar o esperar.
 6. Como jugador, quiero ganar la batalla cuando la vida de todos los Pokémons oponente llegue a cero.
 7. Como jugador, quiero poder cambiar de Pokémon durante una batalla.
+8. Como jugador, quiero poder usar un ítem durante una batalla.
+9. Como jugador, quiero unirme a la lista de jugadores esperando por un oponente.
+10. Como jugador, quiero ver la lista de jugadores esperando por un oponente.
+11. Como jugador, quiero iniciar una ballata con un jugador que está esperando por un oponente.
+
 
 ## Notas de Reflexión
 

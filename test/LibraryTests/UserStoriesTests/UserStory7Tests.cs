@@ -1,71 +1,81 @@
-// namespace ClassLibrary.Tests;
-// using NUnit.Framework;
-// using ClassLibrary;
+namespace ClassLibrary.Tests;
+using NUnit.Framework;
+using ClassLibrary;
 
-// public class ChangePokemonTests
-// {
-//     [TearDown]
-//     public void TearDown()
-//     {
-//         Facade.Reset(); // Asumiendo que el método `Reset` restablece el estado del juego.
-//     }
-//
-//     [Test]
-//     public void ChangePokemon_WhenPlayerExistsAndPokemonIsAvailable_ReturnsChangeMessage()
-//     {
-//         // Arrange
-//         Facade.Instance.AddPlayer("player1"); // Agrega un jugador a la partida
-//         Facade.Instance.AddPokemonToPlayer("player1", "Pikachu"); // Agrega un Pokémon al jugador
-//         
-//         // Act
-//         string result = Facade.Instance.ChangePokemon("player1", "Pikachu");
-//
-//         // Assert
-//         Assert.That(result, Is.EqualTo("player1 cambió a Pikachu y perdió su turno"));
-//     }
-//
-//     [Test]
-//     public void ChangePokemon_WhenPlayerDoesNotExist_ThrowsArgumentException()
-//     {
-//         // Arrange & Act & Assert
-//         var ex = Assert.Throws<ArgumentException>(() => Facade.Instance.ChangePokemon("nonExistentPlayer", "Pikachu"));
-//         Assert.That(ex.Message, Is.EqualTo("El jugador nonExistentPlayer no está jugando (Parameter 'playerDisplayName')"));
-//     }
-//
-//     [Test]
-//     public void ChangePokemon_WhenPokemonIsNotAvailable_ThrowsArgumentException()
-//     {
-//         // Arrange
-//         Facade.Instance.AddPlayer("player1"); // Agrega un jugador sin Pokémon
-//
-//         // Act & Assert
-//         var ex = Assert.Throws<ArgumentException>(() => Facade.Instance.ChangePokemon("player1", "Charizard"));
-//     }
-//     
-//     [Test]
-//     public void ChangePokemon_WhenPokemonNameIsNull_ThrowsArgumentException()
-//     {
-//         // Arrange
-//         Facade.Instance.AddPlayer("player1");
-//         Facade.Instance.AddPokemonToPlayer("player1", "Bulbasaur");
-//
-//         // Act & Assert
-//         var ex = Assert.Throws<ArgumentException>(() => Facade.Instance.ChangePokemon("player1", null));
-//         Assert.That(ex.Message, Is.EqualTo("El Pokémon  no está disponible para el jugador player1 (Parameter 'newPokemonName')"));
-//     }
-//     
-//     [Test]
-//     public void ChangePokemon_WhenPlayerHasMultiplePokemons_ChangesToSpecifiedPokemon()
-//     {
-//         // Arrange
-//         Facade.Instance.AddPlayer("player1");
-//         Facade.Instance.AddPokemonToPlayer("player1", "Pikachu");
-//         Facade.Instance.AddPokemonToPlayer("player1", "Charizard");
-//
-//         // Act
-//         string result = Facade.Instance.ChangePokemon("player1", "Charizard");
-//
-//         // Assert
-//         Assert.That(result, Is.EqualTo("player1 cambió a Charizard y perdió su turno"));
-//     }
-// }
+public class UserStory7Tests
+{
+    [TearDown]
+    public void TearDown()
+    {
+        Facade.Reset(); 
+    }
+
+    [Test]
+    public void ChangePokemon_WhenPlayerExistsAndPokemonIsAvailable_ReturnsChangeMessage()
+    {
+        // Arrange
+        Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
+        Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        
+        // Act
+        string result = Facade.Instance.ChangePokemon("player1", "Blaziken");
+        string expected = "player1 cambió a Blaziken y perdió su turno";
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ChangePokemon_WhenParameterPlayerDisplayName_IsNullOrEmpty_ThrowsArgumentNullException()
+    {
+        // Arrange
+        Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
+        Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        
+        // Act Assert
+        Assert.That(()=> Facade.Instance.ChangePokemon("", "Blaziken"), Throws.ArgumentNullException);
+    }
+    
+    [Test]
+    public void ChangePokemon_WhenParameterNewPokemonName_IsNullOrEmpty_ThrowsArgumentNullException()
+    {
+        // Arrange
+        Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
+        Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        
+        // Act & Assert
+        Assert.That(()=> Facade.Instance.ChangePokemon("player1", null), Throws.ArgumentNullException);
+    }
+    
+     [Test]
+     public void ChangePokemon_WhenPlayerDoesNotExist_ThrowsArgumentException()
+     {
+         // Arrange
+         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
+         Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+         Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+         Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        
+         // Act & Assert
+         Assert.That(()=> Facade.Instance.ChangePokemon("player3", "Blaziken"), Throws.ArgumentException);
+     }
+     
+     [Test]
+     public void ChangePokemon_WhenPokemonDoesNotExist_ThrowsArgumentException()
+     {
+         // Arrange
+         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
+         Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+         Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
+         Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        
+         // Act & Assert
+         Assert.That(()=> Facade.Instance.ChangePokemon("player1", "Lululemon"), Throws.ArgumentException);
+     }
+ }
