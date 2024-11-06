@@ -225,8 +225,18 @@ namespace ClassLibrary
         
         
         //HISTORIA DE USUARIO 6
-        
-        
+        public string EndGame(string playerDisplayName)
+        {   
+            Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
+            if (player.AvailablePokemons.Count == 0)
+            {
+                return Game.ShowBattleEndMessage( WinnerName: playerDisplayName);
+
+            }
+
+            return null;
+        }
+
 
         //HISTORIA DE USUARIO 7
 

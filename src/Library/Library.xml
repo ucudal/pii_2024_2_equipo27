@@ -237,17 +237,28 @@
         </member>
         <member name="P:ClassLibrary.Player.AvailablePokemons">
             <summary>
-            Obtiene la lista de Pokémon disponibles para el jugador.
+            Lista de Pokémon disponibles para el jugador.
             </summary>
         </member>
         <member name="P:ClassLibrary.Player.ActivePokemon">
             <summary>
-            Obtiene el Pokémon actualmente activo del jugador.
+            El Pokémon activo del jugador.
             </summary>
         </member>
         <member name="P:ClassLibrary.Player.ActiveMove">
             <summary>
-            Obtiene el movimiento actualmente activo del Pokémon del jugador.
+            El movimiento actualmente activo del Pokémon del jugador.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Player.SetOpponent(ClassLibrary.Player)">
+            <summary>
+            Establece al oponente del jugador.
+            </summary>
+            <param name="opponent">El jugador que será el oponente.</param>
+        </member>
+        <member name="M:ClassLibrary.Player.GetOpponent">
+            <summary>
+            Obtiene el oponente del jugador.
             </summary>
         </member>
         <member name="M:ClassLibrary.Player.AddPokemon(ClassLibrary.Pokemon)">
