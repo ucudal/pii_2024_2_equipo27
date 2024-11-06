@@ -4,7 +4,7 @@ namespace ClassLibrary.Tests
     using ClassLibrary;
     using System.Collections.Generic;
 
-    public class PlayerAttackTests
+    public class UserStory4
     {
         private Pokemon attacker;
         private Pokemon defender;
@@ -13,25 +13,20 @@ namespace ClassLibrary.Tests
         [SetUp]
         public void SetUp()
         {
-            // Configuración inicial del atacante y defensor con sus tipos, HP y movimiento
-            attacker = new Pokemon
-            {
-                Name = "Charizard",
-                Type = PokemonType.Type.Fire,
-                HealthPoints = 100,
-                Moves = new List<Move>(),
-                SpecialMove = new Move("Flamethrower", 50, 0,0) // Movimiento especial como ejemplo
-            };
-            move = new Move("Flamethrower", 50,0,0); // Movimiento a utilizar en las pruebas
-            attacker.AddMove(move); // Añadir el movimiento a la lista de movimientos
+            // Utilizar el catálogo para obtener los Pokémon en lugar de configurarlos manualmente
+            PokemonCatalog catalog = new PokemonCatalog();
 
-            defender = new Pokemon
-            {
-                Name = "Bulbasaur",
-                Type = PokemonType.Type.Grass,
-                HealthPoints = 100,
-                Moves = new List<Move>()
-            };
+            // Obtener los Pokémon desde el catálogo
+            attacker = catalog.FindPokemonByName("Blaziken");
+            defender = catalog.FindPokemonByName("Bulbasaur");
+
+            // // Asegurarse de que los Pokémon existen en el catálogo
+            // Assert.NotNull(attacker, "El Pokémon Blaziken no se encontró en el catálogo.");
+            // Assert.NotNull(defender, "El Pokémon Bulbasaur no se encontró en el catálogo.");
+
+            // Obtener el movimiento específico para las pruebas
+            move = attacker.SpecialMove ?? new Move("Flamethrower", 50, 0, 0); // Usa el movimiento especial si está definido
+            attacker.AddMove(move); // Añadir el movimiento a la lista de movimientos
         }
 
         [Test]
@@ -41,7 +36,7 @@ namespace ClassLibrary.Tests
             Facade.Instance.PlayerAttack("user", "oponent", "move");
 
             // Calculamos el HP esperado después del ataque efectivo
-            int expectedHealth = 100 - (int)(50 * 2.0); // 2.0 es el multiplicador de efectividad
+            int expectedHealth = defender.HealthPoints - (int)(move.AttackValue * 2.0); // 2.0 es el multiplicador de efectividad
             Assert.That(defender.HealthPoints, Is.EqualTo(expectedHealth));
         }
 
@@ -55,7 +50,7 @@ namespace ClassLibrary.Tests
             Facade.Instance.PlayerAttack("user", "oponent", "move");
 
             // Calculamos el HP esperado con daño reducido (0.5 de multiplicador)
-            int expectedHealth = 100 - (int)(50 * 0.5);
+            int expectedHealth = defender.HealthPoints - (int)(move.AttackValue * 0.5);
             Assert.That(defender.HealthPoints, Is.EqualTo(expectedHealth));
         }
 
@@ -69,7 +64,7 @@ namespace ClassLibrary.Tests
             Facade.Instance.PlayerAttack("user", "oponent", "move");
 
             // Daño sin modificador de efectividad
-            int expectedHealth = 100 - 50;
+            int expectedHealth = defender.HealthPoints - move.AttackValue;
             Assert.That(defender.HealthPoints, Is.EqualTo(expectedHealth));
         }
 
