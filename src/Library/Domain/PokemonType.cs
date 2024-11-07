@@ -2,9 +2,15 @@ namespace ClassLibrary;
 
 using System.Collections.Generic;
 /// <summary>
-/// La clase <c>PokemonType</c> gestiona los tipos de Pokémon y su efectividad en combates.
-/// Proporciona una enumeración para definir los tipos de Pokémon y un método para calcular
-/// la efectividad de un ataque basado en los tipos del atacante y del defensor.
+/// La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
+/// Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
+/// efectividad de ataques entre tipos.
+/// Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
+/// entre tipos, promoviendo alta cohesión y bajo acoplamiento con otras clases.
+/// Además, sigue el principio abierto/cerrado (OCP), permitiendo agregar nuevos tipos o combinaciones de efectividad
+/// sin modificar la estructura de la clase.
+/// La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
+/// estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
 /// </summary>
 
 public static class PokemonType
@@ -144,6 +150,12 @@ public static class PokemonType
 
     public static double GetEffectiveness(Type defendingType, Type attackingType)
     {
+        // Comprobación de argumentos
+        if (!Enum.IsDefined(typeof(Type), defendingType) || !Enum.IsDefined(typeof(Type), attackingType))
+        {
+            throw new ArgumentException("Los tipos de Pokémon proporcionados no son válidos.");
+        }
+        
         // Verifica si la combinación de tipos está definida en el diccionario
         if (typeEffectiveness.ContainsKey((defendingType, attackingType)))
         {

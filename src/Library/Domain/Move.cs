@@ -41,5 +41,6 @@ public abstract class Move: IMove
         int calculatedDamage = (int)((this.AttackValue * typeEffectiveness)*(criticalHit));
 
         target.HealthPoints -= calculatedDamage;
+        
     }
 }
