@@ -110,10 +110,5 @@ namespace ClassLibrary
             }
         }
 
-        public static string ShowBattleEndMessage(string WinnerName)
-        {
-            return $"¡La batalla ha terminado! El jugador {WinnerName} ha ganado la batalla.";
-        }
-
     }
 }

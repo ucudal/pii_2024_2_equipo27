@@ -201,7 +201,7 @@ namespace ClassLibrary
 
             Pokemon attackingPokemon = game.TurnPlayer.ActivePokemon;
             Move move = attackingPokemon.GetMoveByName(moveName);
-            Pokemon defendingPokemon = null; // game tiene que poder decirte quien es el oponente
+            Pokemon defendingPokemon = game.TurnPlayer.GetOpponent().ActivePokemon;
 
             // Calcula la efectividad del tipo
             double typeEffectiveness = PokemonType.GetEffectiveness(attackingPokemon.Type, defendingPokemon.Type);
@@ -215,8 +215,14 @@ namespace ClassLibrary
 
           // Console.WriteLine($"{playerDisplayName.Name} ataca con {moveName.Name}!");
           // Console.WriteLine($"{opponentDisplayName.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})");
-          return $"{defendingPokemon.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})";
+          string message = $"{defendingPokemon.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})";
+          game.CheckIfGameEnds();
+          if (!game.PlayIsOn)
+          {
+              message += UserInterface.ShowBattleEndMessage(playerDisplayName);
+          }
 
+          return message;
         }
         
         
@@ -225,17 +231,35 @@ namespace ClassLibrary
         
         
         //HISTORIA DE USUARIO 6
-        public string EndGame(string playerDisplayName)
-        {   
-            Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
+        /// <summary>
+        /// Finaliza la batalla y muestra un mensaje indicando si el juego ha terminado o si la batalla sigue en curso.
+        /// Verifica el estado de los Pokémon disponibles del jugador y maneja el flujo de finalización de la batalla.
+        /// </summary>
+        /// <param name="userInterface">La instancia de la interfaz de usuario que muestra los mensajes al jugador.</param>
+        /// <param name="game">El objeto del juego que contiene la lógica para determinar si la batalla ha terminado.</param>
+        /// <param name="player">El jugador que está participando en la batalla.</param>
+        /// <param name="playerDisplayName">El nombre para mostrar del jugador, usado para personalizar los mensajes.</param>
+        /// <returns>Un mensaje que indica si la batalla ha terminado o si la batalla continúa.</returns>
+        /// <exception cref="ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
+        public string EndGame(UserInterface userInterface, Game game, Player player, string playerDisplayName)
+        {
+            // Verifica si el juego ha terminado (puede modificar estados internos del juego)
+            game.CheckIfGameEnds();
+
+            // Si el jugador no tiene Pokémon disponibles, termina la batalla y muestra el mensaje de fin de la batalla
             if (player.AvailablePokemons.Count == 0)
             {
-                return Game.ShowBattleEndMessage( WinnerName: playerDisplayName);
-
+                return UserInterface.ShowBattleEndMessage(playerDisplayName);
+            }
+            // Si el jugador tiene solo un Pokémon disponible, la batalla no ha terminado
+            else if (player.AvailablePokemons.Count == 1)
+            {
+                throw new ArgumentException($"La batalla continúa.");
             }
 
             return null;
         }
+
 
 
         //HISTORIA DE USUARIO 7
@@ -282,7 +306,7 @@ namespace ClassLibrary
         {
             if (this.WaitingList.AddPlayer(displayName))
             {
-                return $"{displayName} agregado a la lista de espera";
+               return UserInterface.AddPlayerToWaitingList(displayName);
             }
 
             return $"{displayName} ya está en la lista de espera";

@@ -140,5 +140,19 @@ namespace ClassLibrary
             }
             return result.ToString();
         }
+
+        public string AddPlayerToWaitingList(string displayName)
+        {
+            if (displayName == displayName)
+            {
+                return $"{displayName} ya está en la lista de espera";
+            }
+            return displayName;
+        }
+
+        public static string ShowBattleEndMessage(string playerName)
+        {
+            return $"{playerName} ha ganado la batalla";
+        }
     }
 }
