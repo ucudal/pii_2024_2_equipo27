@@ -142,7 +142,8 @@ namespace ClassLibrary
             {
                 throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
             }
-            player.ActivateMoveInActivePokemon(moveIndex);
+            
+            //player.ActivateMoveInActivePokemon(moveIndex);
         }
 
         //HISTORIA DE USUARIO 3

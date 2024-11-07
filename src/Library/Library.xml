@@ -371,7 +371,7 @@
             <param name="moveDisplayName">Nombre del movimiento a buscar.</param>
             <returns>Índice del movimiento en la lista de movimientos del Pokémon activo o -1 si no se encuentra.</returns>
         </member>
-        <member name="M:ClassLibrary.Player.ActivateMoveInActivePokemon(System.Int32)">
+        <member name="M:ClassLibrary.Player.ActivateMoveInActivePokemon(ClassLibrary.Move)">
             <summary>
             Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
             </summary>
@@ -561,6 +561,20 @@
             <remarks>
             Se debe validar que el parámetro no sea nulo antes de usarlo.
             </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.PlayerAttack(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Move)">
+            <summary>
+            Permite que un jugador ataque a otro Pokémon usando un movimiento.
+            </summary>
+            <remarks>
+            Se debe validar que move, attacker y defender no sean nulos antes de usar.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.GetEffectivenessMessage(System.Double)">
+            <summary>
+            Obtiene un mensaje sobre la efectividad del ataque.
+            </summary>
+            <returns>Un mensaje que describe la efectividad.</returns>
         </member>
         <member name="T:ClassLibrary.UserInterface">
             <summary>

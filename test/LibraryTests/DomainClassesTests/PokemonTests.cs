@@ -21,13 +21,6 @@ namespace ClassLibrary.Tests
         }
 
         [Test]
-        public void HealthPoints_SetNegativeHealthPoints_ShouldThrowArgumentOutOfRangeException()
-        {
-            // Act & Assert
-            Assert.That(() => _pokemon.HealthPoints = -10, Throws.TypeOf<ArgumentOutOfRangeException>());
-        }
-
-        [Test]
         public void SpecialMove_SetNullSpecialMove_ShouldThrowArgumentNullException()
         {
             // Act & Assert

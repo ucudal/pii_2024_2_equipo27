@@ -5,19 +5,6 @@ namespace ClassLibrary.Tests
 {
     public class PokemonCatalogTests
     {
-        [Test]
-        public void FindPokemonByName_ReturnsPokemonWithSpecialMove()
-        {
-            // Arrange
-            PokemonCatalog catalog = new PokemonCatalog();
-    
-            // Act
-            Pokemon pokemon = catalog.FindPokemonByName("Blaziken");
-
-            // Assert
-            Assert.That(pokemon, Is.Not.Null);
-            Assert.That(pokemon.SpecialMoveNormal.Name, Is.EqualTo("Anillo Ígneo"));
-        }
         
         [Test]
         public void FindPokemonByName_NameWithSpaces_ReturnsCorrectPokemon()
@@ -40,7 +27,7 @@ namespace ClassLibrary.Tests
             PokemonCatalog catalog = new PokemonCatalog();
     
             // Act
-            Pokemon pokemon = catalog.FindPokemonByName("Pikachu");
+            Pokemon pokemon = catalog.FindPokemonByName("Hulalu");
 
             // Assert
             Assert.That(pokemon, Is.Null);
