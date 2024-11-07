@@ -369,7 +369,14 @@
         </member>
         <member name="T:ClassLibrary.WaitingList">
             <summary>
-            Esta clase representa la lista de jugadores esperando para jugar.
+            La clase <c>WaitingList</c> es responsable de gestionar la lista de jugadores en espera para jugar.
+            Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en las operaciones
+            relacionadas con la lista de espera de jugadores, como agregar, remover y buscar.
+            Utiliza el patrón Expert, ya que posee toda la información necesaria para manejar la lista
+            de jugadores de manera eficiente, promoviendo una alta cohesión.
+            Además, está diseñada para ser extensible en el futuro, siguiendo el principio abierto/cerrado (OCP),
+            permitiendo, por ejemplo, la selección de un jugador aleatorio sin modificar la estructura básica.
+            La clase mantiene su robustez y seguridad al validar las entradas y evitar estados inválidos.
             </summary>
         </member>
         <member name="M:ClassLibrary.WaitingList.AddPlayer(System.String)">
@@ -688,9 +695,15 @@
         </member>
         <member name="T:ClassLibrary.PokemonType">
             <summary>
-            La clase <c>PokemonType</c> gestiona los tipos de Pokémon y su efectividad en combates.
-            Proporciona una enumeración para definir los tipos de Pokémon y un método para calcular
-            la efectividad de un ataque basado en los tipos del atacante y del defensor.
+            La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
+            Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
+            efectividad de ataques entre tipos.
+            Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
+            entre tipos, promoviendo alta cohesión y bajo acoplamiento con otras clases.
+            Además, sigue el principio abierto/cerrado (OCP), permitiendo agregar nuevos tipos o combinaciones de efectividad
+            sin modificar la estructura de la clase.
+            La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
+            estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
             </summary>
         </member>
         <member name="T:ClassLibrary.PokemonType.Type">
