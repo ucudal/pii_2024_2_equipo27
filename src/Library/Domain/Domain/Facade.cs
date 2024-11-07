@@ -19,7 +19,7 @@ namespace ClassLibrary
         private UserInterface UserInterface { get;  }
         
         
-        private static Facade? _instance;
+        private static Facade _instance;
 
         // Este constructor privado impide que otras clases puedan crear instancias de esta.
         private Facade()
@@ -245,13 +245,10 @@ namespace ClassLibrary
             //Enviar mensaje interfaz de que no es efectivo y sino seguir 
             
             double AccuaracyAttack = attackingPokemon.SpecialMoveNormal.Accuracy;
-
-            string message;
             
             if (AccuaracyAttack < 0.5)
             {
-                // return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
-                message = UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack);
+                return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
             }
             // if (AccuaracyAttack > 0.5)
             // {
@@ -263,15 +260,17 @@ namespace ClassLibrary
 
             // Generar un número aleatorio entre 1 y 100
             int randomNumber = random.Next(1, 101);
-            bool criticalHit = randomNumber <= 10;
 
+            if (randomNumber < 10)
+            {
+                //int golpeCritico = attackingPokemon.Moves
+            }
             //Comprobar si es un golpe crítico.
             //Un golpe crítico aumenta un 20% el daño a realizar. La probabilidad de que un golpe sea crítico es del 10%. 
             //Para eso definir de default 1
         
             //Ejecuta el ataque
-            //attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
-            attacker.ExecuteMove(defender, criticalHit);
+            attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
             
             // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
             if (attackingPokemon.IsPoisoned)

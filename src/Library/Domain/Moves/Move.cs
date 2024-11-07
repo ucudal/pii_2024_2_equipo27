@@ -1,6 +1,6 @@
 namespace ClassLibrary;
 
-public abstract class Move: IMove
+public abstract class Move
 {
     /// <summary>
     /// Nombre del movimiento. 
@@ -35,19 +35,5 @@ public abstract class Move: IMove
     /// <param name="attacker">El pokemon que está atacando.</param>
     /// <param name="target">El pokemon que está siendo atacado.</param>
     ///
-    public virtual void ExecuteMove(Pokemon attacker, Pokemon target, bool criticalHit)
-    {
-        double typeEffectiveness = PokemonType.GetEffectiveness(attacker.Type, target.Type);
-        int calculatedDamage;
-        if (criticalHit)
-        {
-            calculatedDamage = (int)((this.AttackValue * typeEffectiveness) * 1.2);
-        }
-        else
-        {
-            calculatedDamage = (int)((this.AttackValue * typeEffectiveness));
-        }
-
-        target.HealthPoints -= calculatedDamage;
-    }
+    public abstract void ExecuteMove(Pokemon attacker, Pokemon target, double criticalHit);
 }

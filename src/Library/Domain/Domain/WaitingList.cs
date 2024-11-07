@@ -65,7 +65,7 @@ public class WaitingList
         {
             throw new ArgumentException("El nombre de usuario no puede estar vacío o nulo.", nameof(DisplayName));
         }
-        Player? player = this.FindPlayerByDisplayName(DisplayName);
+        Player player = this.FindPlayerByDisplayName(DisplayName);
         if (player == null) return false;
         players.Remove(player);
         return true;
@@ -81,7 +81,7 @@ public class WaitingList
     /// </param>
     /// <returns>El jugador encontrado o <c>null</c> en caso contrario.
     /// </returns>
-    public Player? FindPlayerByDisplayName(string DisplayName)
+    public Player FindPlayerByDisplayName(string DisplayName)
     {
         // Verifica que el nombre no esté vacío o nulo
         if (string.IsNullOrEmpty(DisplayName))
@@ -108,7 +108,7 @@ public class WaitingList
     /// 
     /// </summary>
     /// <returns></returns>
-    public Player? GetAnyoneWaiting()
+    public Player GetAnyoneWaiting()
     {
         // Verifica si la lista está vacía
         if (this.players.Count == 0)

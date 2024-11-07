@@ -19,7 +19,7 @@ namespace ClassLibrary
         /// </summary>
         public PokemonCatalogBuilder()
         {
-            AddPokemonToCatalog("Blaziken", new List<IMove>
+            AddPokemonToCatalog("Blaziken", new List<Move>
             {
                 new MoveNormal("Patada Ígnea", 80, 0.5),
                 new MoveNormal("Llamarada", 90, 0.7),
@@ -27,7 +27,7 @@ namespace ClassLibrary
                 new MoveBurn("Anillo Ígneo", 0, 0.3) 
             }, PokemonType.Type.Fire);
 
-            AddPokemonToCatalog("Tinkaton", new List<IMove>
+            AddPokemonToCatalog("Tinkaton", new List<Move>
             {
                 new MoveNormal("Carantoña", 90, 0.6),
                 new MoveNormal("Roca Afilada", 80, 0.5),
@@ -35,7 +35,7 @@ namespace ClassLibrary
                 new MovePoison("Martillo Gigante", 5, 0.8) 
             }, PokemonType.Type.Poison);
 
-            AddPokemonToCatalog("Salamence", new List<IMove>
+            AddPokemonToCatalog("Salamence", new List<Move>
             {
                 new MoveNormal("Enfado", 120, 0.4),
                 new MoveNormal("Lanzallamas", 90, 0.6),
@@ -43,7 +43,7 @@ namespace ClassLibrary
                 new MoveParalize("Vuelo", 5, 0.4) 
             }, PokemonType.Type.Dragon);
 
-            AddPokemonToCatalog("Bellsprout", new List<IMove>
+            AddPokemonToCatalog("Bellsprout", new List<Move>
             {
                 new MoveNormal("Absorber", 20, 0.7),
                 new MoveNormal("Látigo Cepa", 45, 0.4),
@@ -51,7 +51,7 @@ namespace ClassLibrary
                 new MoveBurn("Rayo Solar", 15, 0.3) 
             }, PokemonType.Type.Grass);
 
-            AddPokemonToCatalog("Zangoose", new List<IMove>
+            AddPokemonToCatalog("Zangoose", new List<Move>
             {
                 new MoveNormal("Cuchillada", 70, 0.85),
                 new MoveNormal("Garra Brutal", 90, 0.6),
@@ -59,7 +59,7 @@ namespace ClassLibrary
                 new MoveSleep("Danza Espada", 0, 1.0) 
             }, PokemonType.Type.Normal);
 
-            AddPokemonToCatalog("Rayquaza", new List<IMove>
+            AddPokemonToCatalog("Rayquaza", new List<Move>
             {
                 new MoveNormal("Ascenso Draco", 120, 0.5),
                 new MoveNormal("Pulso Dragón", 85, 0.8),
@@ -67,7 +67,7 @@ namespace ClassLibrary
                 new MoveNormal("Hiperrayo", 40, 0.9) 
             }, PokemonType.Type.Dragon);
 
-            AddPokemonToCatalog("Wailord", new List<IMove>
+            AddPokemonToCatalog("Wailord", new List<Move>
             {
                 new MoveNormal("Hidrobomba", 110, 0.5),
                 new MoveNormal("Cuerpo Pesado", 85, 0.8),
@@ -75,7 +75,7 @@ namespace ClassLibrary
                 new MovePoison("Salto Cañón", 5, 0.9) 
             }, PokemonType.Type.Water);
 
-            AddPokemonToCatalog("Sudowoodo", new List<IMove>
+            AddPokemonToCatalog("Sudowoodo", new List<Move>
             {
                 new MoveNormal("Avalancha", 75, 0.7),
                 new MoveNormal("Lanzarrocas", 50, 0.85),
@@ -83,7 +83,7 @@ namespace ClassLibrary
                 new MoveParalize("Maldición", 10, 0.8) 
             }, PokemonType.Type.Rock);
 
-            AddPokemonToCatalog("Mew", new List<IMove>
+            AddPokemonToCatalog("Mew", new List<Move>
             {
                 new MoveNormal("Psíquico", 90, 0.9),
                 new MoveNormal("Sombra Vil", 70, 0.8),
@@ -91,7 +91,7 @@ namespace ClassLibrary
                 new MoveSleep("Aurasfera", 0, 0.9) 
             }, PokemonType.Type.Psychic);
 
-            AddPokemonToCatalog("Azumarill", new List<IMove>
+            AddPokemonToCatalog("Azumarill", new List<Move>
             {
                 new MoveNormal("Rayo Burbuja", 65, 0.8),
                 new MoveNormal("Cola Férrea", 75, 0.7),
@@ -99,7 +99,7 @@ namespace ClassLibrary
                 new MoveBurn("Acua Jet", 5, 1.0) 
             }, PokemonType.Type.Water);
 
-            AddPokemonToCatalog("Jigglypuff", new List<IMove>
+            AddPokemonToCatalog("Jigglypuff", new List<Move>
             {
                 new MoveNormal("Placaje", 40, 0.9),
                 new MoveNormal("Doble Bofetón", 30, 0.8),
@@ -107,7 +107,7 @@ namespace ClassLibrary
                 new MoveNormal("Hipnosis", 25, 0.6) 
             }, PokemonType.Type.Normal);
 
-            AddPokemonToCatalog("Lucario", new List<IMove>
+            AddPokemonToCatalog("Lucario", new List<Move>
             {
                 new MoveNormal("Esfera Aural", 80, 0.9),
                 new MoveNormal("Velocidad Extrema", 80, 0.95),
@@ -115,7 +115,7 @@ namespace ClassLibrary
                 new MovePoison("Aurasfera", 10, 1.0) 
             }, PokemonType.Type.Fighting);
             
-            AddPokemonToCatalog("Pikachu", new List<IMove>
+            AddPokemonToCatalog("Pikachu", new List<Move>
             {
                 new MoveNormal("Impactrueno", 40, 0.95),
                 new MoveNormal("Rayo", 90, 0.7),
@@ -123,7 +123,7 @@ namespace ClassLibrary
                 new MoveNormal("Voltio Cruel", 100, 0.6) 
             }, PokemonType.Type.Electric);
 
-            AddPokemonToCatalog("Charizard", new List<IMove>
+            AddPokemonToCatalog("Charizard", new List<Move>
             {
                 new MoveNormal("Lanzallamas", 90, 0.7),
                 new MoveNormal("Garra Dragón", 80, 0.8),
@@ -131,7 +131,7 @@ namespace ClassLibrary
                 new MoveNormal("Tajo Aéreo", 70, 0.9)     
             }, PokemonType.Type.Fire);
 
-            AddPokemonToCatalog("Gengar", new List<IMove>
+            AddPokemonToCatalog("Gengar", new List<Move>
             {
                 new MoveNormal("Bola Sombra", 80, 0.8),
                 new MoveNormal("Psíquico", 90, 0.7),
@@ -139,7 +139,7 @@ namespace ClassLibrary
                 new MovePoison("Bomba Lodo", 90, 0.7)     
             }, PokemonType.Type.Ghost);
 
-            AddPokemonToCatalog("Lapras", new List<IMove>
+            AddPokemonToCatalog("Lapras", new List<Move>
             {
                 new MoveNormal("Surf", 90, 0.8),
                 new MoveNormal("Ventisca", 110, 0.6),
@@ -156,7 +156,7 @@ namespace ClassLibrary
         /// <param name="moves">Lista de movimientos del Pokémon.</param>
         /// <param name="specialNormalMove">Movimiento especial del Pokémon.</param>
         /// <param name="type">El tipo del Pokémon.</param>
-        private void AddPokemonToCatalog(string name, List<IMove> moves, PokemonType.Type type)
+        private void AddPokemonToCatalog(string name, List<Move> moves, PokemonType.Type type)
         {
             // Validar todos los parámetros en una única condición
             if (string.IsNullOrWhiteSpace(name) || moves == null || moves.Count == 0 || !Enum.IsDefined(typeof(PokemonType.Type), type))
