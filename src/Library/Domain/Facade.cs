@@ -114,9 +114,7 @@ namespace ClassLibrary
                 {
                     movesList.Add(move.Name);
                 }
-
-                movesList.Add(pokemon.SpecialMove.Name);
-
+                
                 string pokemonMoves = $"{pokemon.Name}: {string.Join(", ", movesList)}";
 
                 pokemonsWithMoves.Add(pokemonMoves);

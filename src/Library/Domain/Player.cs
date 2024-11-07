@@ -108,17 +108,7 @@ public class Player
     /// <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
     public void ActivateMoveInActivePokemon(int index)
     {
-        this.ActiveMove = this.ActivePokemon.Moves[index];
-    }
-
-    /// <summary>
-    /// Activa el movimiento especial del Pokémon activo.
-    /// </summary>
-    /// <param name="specialMoveDisplayName">Nombre del movimiento especial a activar.</param>
-    public void ActivateSpecialMove(string specialMoveDisplayName)
-    {
-        this.ActiveMove = this.ActivePokemon.SpecialMove;
-        // turn.SpecialMoveIsAvailable = false; // Descomentar si el movimiento especial debe estar disponible condicionalmente
+        //this.ActiveMove = this.ActivePokemon.Moves[index];
     }
 
     public Item UseItem(string itemName)
