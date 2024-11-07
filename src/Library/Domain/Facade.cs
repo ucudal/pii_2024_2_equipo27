@@ -53,11 +53,6 @@ namespace ClassLibrary
         
 
         //HISTORIA DE USUARIO 1
-        public string ShowPokemonCatalog()
-        {
-            return UserInterface.ShowMessagePokemonCatalog();
-        }
-
         public string ChoosePokemons(string playerDisplayName, string[] pokemonNames)
         {
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
@@ -66,20 +61,28 @@ namespace ClassLibrary
                 return $"El jugador {playerDisplayName} no está jugando";
             }
 
-            List<string> result = new List<string>
+            if (pokemonNames.Length > 6)
             {
-                $"Pokémons seleccionados por el jugador {playerDisplayName}."
-            };
+                return "No puedes seleccionar más de 6 Pokémon.";
+            }
+
+            List<Pokemon> selectedPokemons = new List<Pokemon>();
             PokemonCatalog catalog = new PokemonCatalog();
 
             foreach (string pokemonName in pokemonNames)
             {
                 Pokemon pokemon = catalog.FindPokemonByName(pokemonName);
-                player.AddPokemon(pokemon);
+                if (pokemon != null)
+                {
+                    player.AddPokemon(pokemon);
+                    selectedPokemons.Add(pokemon);
+                }
             }
 
-            return string.Join(",", result);
+            // Llama a UserInterface para mostrar los Pokémon seleccionados
+            return UserInterface.ShowMessageSelectedPokemons(selectedPokemons);
         }
+
 
         //HISTORIA DE USUARIO 2
 
@@ -268,6 +271,50 @@ namespace ClassLibrary
         }
 
         //HISTORIA DE USUARIO 8
+        // public string PlayerUseItem(string playerDisplayName, string itemName)
+        // {
+        //     // Buscar el jugador por su nombre
+        //     Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
+        //     if (player == null)
+        //     {
+        //         throw new ArgumentException($"El jugador {playerDisplayName} no está jugando", nameof(playerDisplayName));
+        //     }
+        //
+        //     Item item = player.UseItem(itemName);
+        // }
+        public string PlayerUseItem(string playerDisplayName, string itemName) 
+        {
+            // Buscar el jugador por su nombre
+            Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                // Retorna un mensaje indicando que el jugador no está jugando
+                return $"El jugador {playerDisplayName} no está jugando";
+            }
+
+            try
+            {
+                // Intentar usar el ítem
+                Item itemUsed = player.UseItem(itemName);
+
+                // Verificar que el jugador tiene un Pokémon activo
+                if (player.ActivePokemon == null)
+                {
+                    return $"{playerDisplayName} no tiene un Pokémon activo para aplicar el ítem.";
+                }
+
+                // Aplicar el efecto del ítem en el Pokémon activo del jugador
+                string effectResult = itemUsed.ApplyEffect(player.ActivePokemon);
+
+                // Retornar un mensaje que indica el uso del ítem y el resultado de su efecto
+                return $"{playerDisplayName} ha usado {itemUsed.Name}. {effectResult}";
+            }
+            catch (ApplicationException ex)
+            {
+                // Si ocurre una excepción (por ejemplo, el ítem no existe), retorna el mensaje de error
+                return ex.Message;
+            }
+        }
 
         //HISTORIA DE USUARIO 9
 

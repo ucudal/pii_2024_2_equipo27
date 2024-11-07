@@ -49,13 +49,14 @@
             <returns>Una cadena que contiene la información de la salud de los Pokémon del jugador y su oponente.</returns>
             <exception cref="T:System.ArgumentException">Se lanza si el jugador o el oponente no se encuentran.</exception>
         </member>
-        <member name="M:ClassLibrary.Facade.PlayerAttack(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Move)">
+        <member name="M:ClassLibrary.Facade.PlayerAttack(System.String,System.String,System.String)">
             <summary>
             Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
             </summary>
-            <param name="playerDisplayName">El jugador que realiza el ataque.</param>
-            <param name="opponentDisplayName">El jugador que recibe el ataque.</param>
-            <param name="moveName">El movimiento seleccionado para el ataque.</param>
+            <param name="attackerName">El nombre del jugador atacante.</param>
+            <param name="defenderName">El nombre del jugador defensor.</param>
+            <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
+            <returns>Un mensaje con el resultado del ataque.</returns>
         </member>
         <member name="M:ClassLibrary.Facade.ChangePokemon(System.String,System.String)">
             <summary>
@@ -177,6 +178,14 @@
             <param name="displayName">El nombre del jugador.</param>
             <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
+        <member name="M:ClassLibrary.Item.ApplyEffect(ClassLibrary.Pokemon)">
+            <summary>
+            Aplica el efecto del ítem en el Pokémon especificado.
+            Este método será sobrescrito por las subclases.
+            </summary>
+            <param name="pokemon">El Pokémon al que se le aplicará el efecto.</param>
+            <returns>Un mensaje con el resultado de aplicar el efecto.</returns>
+        </member>
         <member name="T:ClassLibrary.Move">
             <summary>
             La clase <c>Move</c> tiene la responsabilidad de almacenar y gestionar los valores de ataque, defensa y curación de un movimiento.
@@ -225,7 +234,7 @@
             </summary>
         </member>
         <member name="P:ClassLibrary.Player.DisplayName">
-            <summary>
+            <summary>               
             Obtiene el nombre para mostrar del jugador.
             </summary>
         </member>
