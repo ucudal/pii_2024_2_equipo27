@@ -267,7 +267,21 @@ namespace ClassLibrary
         
         
         //HISTORIA DE USUARIO 5
-        
+    public string GetCurrentTurnPlayer(string playerDisplayName)
+    {
+            // Buscar la partida en la que está el jugador
+        Game game = this.GameList.FindGameByPlayerDisplayName(playerDisplayName);
+
+        if (game == null)
+        {
+            return $"El jugador {playerDisplayName} no está en una partida.";
+        }
+
+            // Obtener el nombre del jugador que tiene el turno actual
+        string currentPlayerDisplayName = game.Turn.CurrentPlayer.DisplayName;
+
+        return UserInterface.ShowMessageCurrentTurnPlayer(currentPlayerDisplayName);
+    }
         
         //HISTORIA DE USUARIO 6
         

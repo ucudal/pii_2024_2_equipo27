@@ -140,5 +140,9 @@ namespace ClassLibrary
             }
             return result.ToString();
         }
+        public static string ShowMessageCurrentTurnPlayer(string currentPlayerDisplayName)
+        {
+            return $"🎮 Es el turno de {currentPlayerDisplayName}.";
+        }
     }
 }
