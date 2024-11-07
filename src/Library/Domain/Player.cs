@@ -7,8 +7,10 @@ namespace ClassLibrary;
     /// </summary>
     
 public class Player
-    {
-    /// <summary>
+{
+    private List<Item> items = new List<Item>();
+
+    /// <summary>               
     /// Obtiene el nombre para mostrar del jugador.
     /// </summary>
     public string DisplayName { get; }
@@ -20,6 +22,14 @@ public class Player
     public Player(string displayName)
     {
         DisplayName = displayName;
+        this.items.Add(new SuperPocion());
+        this.items.Add(new SuperPocion());
+        this.items.Add(new SuperPocion());
+        this.items.Add(new SuperPocion());
+        this.items.Add(new Revivir());
+        this.items.Add(new CuraTotal());
+        this.items.Add(new CuraTotal());
+
     }
 
     /// <summary>
@@ -96,10 +106,41 @@ public class Player
     /// Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
     /// </summary>
     /// <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
-    public void ActivateMoveInActivePokemon(Move move)
+    public void ActivateMoveInActivePokemon(int index)
     {
-        if (this.ActivePokemon.Moves.Contains(move))
-        this.ActiveMove = move ;
+        this.ActiveMove = this.ActivePokemon.Moves[index];
+    }
+
+    /// <summary>
+    /// Activa el movimiento especial del Pokémon activo.
+    /// </summary>
+    /// <param name="specialMoveDisplayName">Nombre del movimiento especial a activar.</param>
+    public void ActivateSpecialMove(string specialMoveDisplayName)
+    {
+        this.ActiveMove = this.ActivePokemon.SpecialMove;
+        // turn.SpecialMoveIsAvailable = false; // Descomentar si el movimiento especial debe estar disponible condicionalmente
+    }
+
+    public Item UseItem(string itemName)
+    {
+        Item itemFound = null;
+        foreach (Item item in this.items)
+        {
+            if (item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase))
+            {
+                itemFound = item;
+                break; // Sale del bucle una vez encontrado
+            }
+        }
+
+        if (itemFound == null)
+        {
+            throw new ApplicationException($"No existe el ítem {itemName} en el inventario.");
+        }
+
+        this.items.Remove(itemFound);
+        return itemFound;
     }
 }
+    
 

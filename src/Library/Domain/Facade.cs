@@ -67,19 +67,26 @@ namespace ClassLibrary
                 return $"El jugador {playerDisplayName} no está jugando";
             }
 
-            List<string> result = new List<string>
+            if (pokemonNames.Length > 6)
             {
-                $"Pokémons seleccionados por el jugador {playerDisplayName}."
-            };
+                return "No puedes seleccionar más de 6 Pokémon.";
+            }
+
+            List<Pokemon> selectedPokemons = new List<Pokemon>();
             PokemonCatalog catalog = new PokemonCatalog();
 
             foreach (string pokemonName in pokemonNames)
             {
                 Pokemon pokemon = catalog.FindPokemonByName(pokemonName);
-                player.AddPokemon(pokemon);
+                if (pokemon != null)
+                {
+                    player.AddPokemon(pokemon);
+                    selectedPokemons.Add(pokemon);
+                }
             }
 
-            return string.Join(",", result);
+            // Llama a UserInterface para mostrar los Pokémon seleccionados
+            return UserInterface.ShowMessageSelectedPokemons(selectedPokemons);
         }
 
         //HISTORIA DE USUARIO 2
@@ -107,6 +114,8 @@ namespace ClassLibrary
                 {
                     movesList.Add(move.Name);
                 }
+
+                movesList.Add(pokemon.SpecialMove.Name);
 
                 string pokemonMoves = $"{pokemon.Name}: {string.Join(", ", movesList)}";
 
@@ -261,7 +270,21 @@ namespace ClassLibrary
         // }
         
         //HISTORIA DE USUARIO 5
-        
+    public string GetCurrentTurnPlayer(string playerDisplayName)
+    {
+            // Buscar la partida en la que está el jugador
+        Game game = this.GameList.FindGameByPlayerDisplayName(playerDisplayName);
+
+        if (game == null)
+        {
+            return $"El jugador {playerDisplayName} no está en una partida.";
+        }
+
+            // Obtener el nombre del jugador que tiene el turno actual
+        string currentPlayerDisplayName = game.Turn.CurrentPlayer.DisplayName;
+
+        return UserInterface.ShowMessageCurrentTurnPlayer(currentPlayerDisplayName);
+    }
         
         //HISTORIA DE USUARIO 6
         
@@ -309,6 +332,40 @@ namespace ClassLibrary
 
 
         //HISTORIA DE USUARIO 8
+     
+        public string PlayerUseItem(string playerDisplayName, string itemName) 
+        {
+            // Buscar el jugador por su nombre
+            Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                // Retorna un mensaje indicando que el jugador no está jugando
+                return $"El jugador {playerDisplayName} no está jugando";
+            }
+
+            try
+            {
+                // Intentar usar el ítem
+                Item itemUsed = player.UseItem(itemName);
+
+                // Verificar que el jugador tiene un Pokémon activo
+                if (player.ActivePokemon == null)
+                {
+                    return $"{playerDisplayName} no tiene un Pokémon activo para aplicar el ítem.";
+                }
+
+                // Aplicar el efecto del ítem en el Pokémon activo del jugador
+                string effectResult = itemUsed.ApplyEffect(player.ActivePokemon);
+
+                // Retornar un mensaje que indica el uso del ítem y el resultado de su efecto
+                return $"{playerDisplayName} ha usado {itemUsed.Name}. {effectResult}";
+            }
+            catch (ApplicationException ex)
+            {
+                // Si ocurre una excepción (por ejemplo, el ítem no existe), retorna el mensaje de error
+                return ex.Message;
+            }
+        }
 
         //HISTORIA DE USUARIO 9
 

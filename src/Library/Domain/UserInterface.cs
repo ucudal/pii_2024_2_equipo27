@@ -140,6 +140,10 @@ namespace ClassLibrary
             }
             return result.ToString();
         }
+        public static string ShowMessageCurrentTurnPlayer(string currentPlayerDisplayName)
+        {
+            return $"🎮 Es el turno de {currentPlayerDisplayName}.";
+        }
         
         /// <summary>
         /// Muestra un mensaje indicando que un ataque ha ocurrido, con detalles sobre el atacante, el defensor y el movimiento usado.
