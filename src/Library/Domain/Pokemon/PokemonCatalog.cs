@@ -14,7 +14,7 @@ namespace ClassLibrary
     
     public class PokemonCatalog
     {
-        // El builder crea y gestiona la lista de Pokémon del catálogo. Esta variable es estática porque el catállogo de pokemon es único y no cambainte en la solución.  
+        // El builder crea y gniestiona la lista de Pokémon del catálogo. Esta variable es estática porque el catállogo de pokemon es único y no cambainte en la solución.  
         private static PokemonCatalogBuilder catalog = new PokemonCatalogBuilder();
         
         // Lista de Pokémon obtenida a través del builder.

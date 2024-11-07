@@ -168,7 +168,7 @@ namespace ClassLibrary
             Pokemon pokemon = new Pokemon();
             pokemon.Name = name;
             pokemon.HealthPoints = 100;
-            pokemon.Moves = new List<IMove>();
+            pokemon.Moves = moves;
             pokemon.Type = type;
             this.Pokemons.Add(pokemon); // Añade el Pokémon a la lista del catálogo.
         }

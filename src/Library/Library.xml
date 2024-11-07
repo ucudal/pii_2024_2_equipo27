@@ -170,6 +170,14 @@
             <param name="displayName">El nombre del jugador.</param>
             <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
+        <member name="M:ClassLibrary.Item.ApplyEffect(ClassLibrary.Pokemon)">
+            <summary>
+            Aplica el efecto del ítem en el Pokémon especificado.
+            Este método será sobrescrito por las subclases.
+            </summary>
+            <param name="pokemon">El Pokémon al que se le aplicará el efecto.</param>
+            <returns>Un mensaje con el resultado de aplicar el efecto.</returns>
+        </member>
         <member name="P:ClassLibrary.Move.Name">
             <summary>
             Nombre del movimiento. 
@@ -318,7 +326,7 @@
             </summary>
         </member>
         <member name="P:ClassLibrary.Player.DisplayName">
-            <summary>
+            <summary>               
             Obtiene el nombre para mostrar del jugador.
             </summary>
         </member>
@@ -561,6 +569,20 @@
             <remarks>
             Se debe validar que el parámetro no sea nulo antes de usarlo.
             </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.PlayerAttack(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Move)">
+            <summary>
+            Permite que un jugador ataque a otro Pokémon usando un movimiento.
+            </summary>
+            <remarks>
+            Se debe validar que move, attacker y defender no sean nulos antes de usar.
+            </remarks>
+        </member>
+        <member name="M:ClassLibrary.Turn.GetEffectivenessMessage(System.Double)">
+            <summary>
+            Obtiene un mensaje sobre la efectividad del ataque.
+            </summary>
+            <returns>Un mensaje que describe la efectividad.</returns>
         </member>
         <member name="T:ClassLibrary.UserInterface">
             <summary>

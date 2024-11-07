@@ -60,5 +60,16 @@ public class GameList
         }
         return null;
     }
+    public Game FindGameByPlayerDisplayName(string displayName)
+    {
+        foreach (var game in games)
+        {
+            if (game.Player1.DisplayName == displayName || game.Player2.DisplayName == displayName)
+            {
+                return game;
+            }
+        }
+        return null;
+    }
 }
 
