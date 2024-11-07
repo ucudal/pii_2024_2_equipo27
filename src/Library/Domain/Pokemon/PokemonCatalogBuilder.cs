@@ -167,7 +167,6 @@ namespace ClassLibrary
             // Crea una nueva instancia de un Pokémon y le asigna sus atributos.
             Pokemon pokemon = new Pokemon();
             pokemon.Name = name;
-            pokemon.HealthPoints = 100;
             pokemon.Moves = moves;
             pokemon.Type = type;
             this.Pokemons.Add(pokemon); // Añade el Pokémon a la lista del catálogo.

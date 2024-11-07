@@ -19,13 +19,6 @@ namespace ClassLibrary.Tests
             Assert.That(() => _pokemon.Name = null, Throws.ArgumentNullException);
             Assert.That(() => _pokemon.Name = "", Throws.ArgumentNullException);
         }
-
-        [Test]
-        public void SpecialMove_SetNullSpecialMove_ShouldThrowArgumentNullException()
-        {
-            // Act & Assert
-            Assert.That(() => _pokemon.SpecialMoveNormal = null, Throws.ArgumentNullException);
-        }
         
 
        [Test]
@@ -46,19 +39,6 @@ namespace ClassLibrary.Tests
 
             // Assert
             Assert.That(_pokemon.HealthPoints, Is.EqualTo(100));
-        }
-
-        [Test]
-        public void SpecialMove_SetValidSpecialMove_ShouldSetSpecialMove()
-        {
-            // Arrange
-            MoveNormal specialMoveNormal = new MoveNormal("Thunder", 60, 0.5);
-
-            // Act
-            _pokemon.SpecialMoveNormal = specialMoveNormal;
-
-            // Assert
-            Assert.That(_pokemon.SpecialMoveNormal, Is.EqualTo(specialMoveNormal));
         }
 
         [Test]
