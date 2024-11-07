@@ -35,7 +35,7 @@ public class Player
     /// <summary>
     /// Obtiene el movimiento actualmente activo del Pokémon del jugador.
     /// </summary>
-    public IMove ActiveMove { get; private set; }
+    public Move ActiveMove { get; private set; }
 
     /// <summary>
     /// Agrega un Pokémon a la lista de Pokémon disponibles para el jugador.
@@ -96,9 +96,10 @@ public class Player
     /// Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
     /// </summary>
     /// <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
-    public void ActivateMoveInActivePokemon(int index)
+    public void ActivateMoveInActivePokemon(Move move)
     {
-        this.ActiveMove = this.ActivePokemon.Moves[index];
+        if (this.ActivePokemon.Moves.Contains(move))
+        this.ActiveMove = move ;
     }
 }
 

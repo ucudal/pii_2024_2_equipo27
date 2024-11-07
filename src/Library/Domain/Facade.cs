@@ -51,6 +51,7 @@ namespace ClassLibrary
             _instance = null;
         }
         
+
         //HISTORIA DE USUARIO 1
         
         public string ShowPokemonCatalog()
@@ -102,12 +103,10 @@ namespace ClassLibrary
             {
                 List<string> movesList = new List<string>();
 
-                foreach (MoveNormal move in pokemon.Moves)
+                foreach (Move move in pokemon.Moves)
                 {
                     movesList.Add(move.Name);
                 }
-
-                movesList.Add(pokemon.SpecialMoveNormal.Name);
 
                 string pokemonMoves = $"{pokemon.Name}: {string.Join(", ", movesList)}";
 
@@ -204,17 +203,26 @@ namespace ClassLibrary
         //     Pokemon attackingPokemon = attacker.ActivePokemon;
         //     Pokemon defendingPokemon = defender.ActivePokemon;
         //
-        //     if (attackingPokemon == null || defendingPokemon == null)
-        //     {
-        //         return "Uno o ambos Pokémon no están activos para el ataque.";
-        //     }
+        //     // Buscar el jugador por su nombre y validar que esté en el juego
+            // if (attacker == null )
+            // {
+            //     throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
+            // }
+            // if (defender == null)
+            // {
+            //     throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
+            // }
         //
         //     // Verificar que el Pokémon tenga el ataque seleccionado
         //     
-        //     if (moveName == null || attacker.ActiveMove.Name != moveName)
-        //     {
-        //         return $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.";
-        //     }
+        //     if (attackingPokemon == null)
+            //     {
+            //         throw new ArgumentException($"El Pókemon '{attacker.ActivePokemon}' no está activo para la ataque.");
+            //     }
+            // if (defendingPokemon == null)
+            // {
+            //     throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
+            // }
         //
         //     // Verifica que el ataque realiza daño
         //     bool canAttack = attackingPokemon.TryAttack();
