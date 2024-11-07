@@ -22,13 +22,13 @@ public class Player
     public Player(string displayName)
     {
         DisplayName = displayName;
-        this.items.Add(new SuperPocion());
-        this.items.Add(new SuperPocion());
-        this.items.Add(new SuperPocion());
-        this.items.Add(new SuperPocion());
-        this.items.Add(new Revivir());
-        this.items.Add(new CuraTotal());
-        this.items.Add(new CuraTotal());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemRevive());
+        this.items.Add(new ItemCompleteCure());
+        this.items.Add(new ItemCompleteCure());
 
     }
 

@@ -244,12 +244,12 @@ namespace ClassLibrary
             // Verificar si el ataque es efectivo aleatorio con random
             //Enviar mensaje interfaz de que no es efectivo y sino seguir 
             
-            double AccuaracyAttack = attackingPokemon.SpecialMoveNormal.Accuracy;
+            //double AccuaracyAttack = attackingPokemon.Move.Accuracy;
             
-            if (AccuaracyAttack < 0.5)
-            {
-                return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
-            }
+            // if (AccuaracyAttack < 0.5)
+            // {
+            //     return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
+            // }
             // if (AccuaracyAttack > 0.5)
             // {
             //     return UserInterface.ShowMessageHighEffectiveness(AccuaracyAttack); 

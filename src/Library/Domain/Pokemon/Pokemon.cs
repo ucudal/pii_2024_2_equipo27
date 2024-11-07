@@ -2,37 +2,27 @@ namespace ClassLibrary;
 
 /// <summary>
 /// La clase  <c>Pokemon</c> es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
-/// Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente los datos y comportamientos de
-/// cada Pokémon. Utiliza el patrón Expert, ya que posee toda la información necesaria para administrar sus atributos,
-/// como puntos de vida y movimientos. Además facilita la extensión de la clase para añadir nuevas categorías de Pokémon
-/// o habilidades sin modificar la clase base, alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión.
-/// Además la robustez y seguridad de esta clase se asegura al evitar estados inválidos y facilitar la detección de errores
-/// en el uso de la clase
+/// La clase Pokemon sigue los principios de diseño orientado a objetos, como el Principio de Responsabilidad Única y
+/// al centrarse en gestionar el estado y las interacciones de un Pokémon en combate. Maneja atributos como puntos de salud,
+/// movimientos y efectos de estado (veneno, quemado, parálisis y sueño), y valida que estos no se modifiquen de manera inapropiada
+/// con excepciones y restricciones implementadas. Esas restricciones son como la cantidad máxima de movimientos y la validación
+/// de estados, aseguran que el Pokémon funcione de acuerdo con las reglas del juego de manera coherente y extensible. 
 /// </summary>
     
 public class Pokemon
 
 { 
-    private string _name;
-    private int _healthPoints;
-    private MoveNormal _specialMoveNormal;
-    private const int MaxMoves = 4;
-    private List<Move> _moves;
-    private bool _isPoisoned;
-    private bool _isBurned;
-    private int _sleepTurns;
-    private bool _isParalyzed;
-
     /// <summary>
-    /// Inicializa una nueva instancia de la clase <see cref="Pokemon"/> con una lista de movimientos vacía.
+    /// Inicializa una nueva instancia de la clase <c>Pokemon</c> con una lista de movimientos vacía.
     /// </summary>
    public Pokemon()
    {
        Moves = new List<Move>();
-       this.IsBurned = false;
-       this.IsPoisoned = false;
        this.SleepTurns = 0;
        this.IsParalyzed = false;
+       this._isPoisoned = false;
+       this._isBurned = false;
+       this.HealthPoints = 100;
    } 
     
     /// <summary>
@@ -53,6 +43,8 @@ public class Pokemon
             _isPoisoned = value;
         }
     }
+    private bool _isPoisoned;
+
 
     /// <summary>
     /// Obtiene o establece si un Pokémon está quemado.
@@ -71,6 +63,8 @@ public class Pokemon
             _isBurned = value;
         }
     }
+    private bool _isBurned;
+
 
     /// <summary>
     /// Obtiene o establece si un Pokémon está paralizado.
@@ -89,6 +83,8 @@ public class Pokemon
             _isParalyzed = value;
         }
     }
+    private bool _isParalyzed;
+
 
     /// <summary>
     /// Obtiene o establece los turnos durante los cuales el Pokémon queda dormido.
@@ -112,6 +108,8 @@ public class Pokemon
             _sleepTurns = value;
         }
     }
+    private int _sleepTurns;
+
     
     /// <summary>
     /// Obtiene o establece el nombre del Pokémon.
@@ -127,6 +125,8 @@ public class Pokemon
             _name = value;
         }
     }
+    private string _name;
+
 
     /// <summary>
     /// Obtiene o establece los puntos de salud del Pokémon.
@@ -142,21 +142,7 @@ public class Pokemon
             _healthPoints = value;
         }
     }
-
-    /// <summary>
-    /// Obtiene o establece el movimiento especial del Pokémon.
-    /// </summary>
-    /// <exception cref="ArgumentNullException">Se lanza si el movimiento especial es nulo.</exception>
-    public MoveNormal SpecialMoveNormal 
-    { 
-        get { return this._specialMoveNormal; }
-        set
-        {
-            if (value == null)
-                throw new ArgumentNullException(nameof(SpecialMoveNormal), "El movimiento especial no puede ser nulo.");
-            _specialMoveNormal = value;
-        }
-    }
+    private int _healthPoints;
 
     /// <summary>
     /// Obtiene o establece el tipo del Pokémon.
@@ -178,6 +164,8 @@ public class Pokemon
             _moves = value;
         }
     }
+    private const int MaxMoves = 4;
+    private List<Move> _moves;
     
     /// <summary>
     /// Verifica si el <c>Pokemon</c>  puede atacar.

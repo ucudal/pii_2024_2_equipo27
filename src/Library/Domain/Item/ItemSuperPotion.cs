@@ -1,10 +1,10 @@
 namespace ClassLibrary
 {
-    public class SuperPocion : Item
+    public class ItemSuperPotion : Item
     {
         private const int HealingAmount = 70;
 
-        public SuperPocion() : base("Super pocion") { }
+        public ItemSuperPotion() : base("Super pocion") { }
 
         public override string ApplyEffect(Pokemon pokemon)
         {
