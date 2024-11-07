@@ -41,6 +41,6 @@ public class MoveBurn: Move
         }
         
         //Aplica al pokemon ataque de quemado
-        target.IsPoisoned= true;
+        target.IsBurned= true;
     }
 }
