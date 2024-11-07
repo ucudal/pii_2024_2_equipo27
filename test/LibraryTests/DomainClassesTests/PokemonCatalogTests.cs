@@ -16,7 +16,7 @@ namespace ClassLibrary.Tests
 
             // Assert
             Assert.That(pokemon, Is.Not.Null);
-            Assert.That(pokemon.SpecialMove.Name, Is.EqualTo("Anillo Ígneo"));
+            Assert.That(pokemon.SpecialMoveNormal.Name, Is.EqualTo("Anillo Ígneo"));
         }
         
         [Test]

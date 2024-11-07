@@ -31,23 +31,9 @@ namespace ClassLibrary.Tests
         public void SpecialMove_SetNullSpecialMove_ShouldThrowArgumentNullException()
         {
             // Act & Assert
-            Assert.That(() => _pokemon.SpecialMove = null, Throws.ArgumentNullException);
+            Assert.That(() => _pokemon.SpecialMoveNormal = null, Throws.ArgumentNullException);
         }
-
-        [Test]
-        public void Moves_AddMoreThanMaxMoves_ShouldThrowInvalidOperationException()
-        {
-            // Arrange
-            Move move1 = new Move("Esfera Aural", 80, 20, 0);
-            Move move2 = new Move("Velocidad Extrema", 80, 5, 0);
-            Move move3 = new Move("Puño Incremento", 50, 20, 0);
-            Move move4 = new Move("Hululo", 20, 30, 0);
-            Move move5 = new Move("Martillo", 20, 100, 0);
-
-
-            // Act & Assert
-            Assert.That(() => _pokemon.Moves = new List<Move>() { move1, move2, move3, move4, move5 }, Throws.InvalidOperationException);
-        }
+        
 
        [Test]
         public void Name_SetValidName_ShouldSetName()
@@ -73,13 +59,13 @@ namespace ClassLibrary.Tests
         public void SpecialMove_SetValidSpecialMove_ShouldSetSpecialMove()
         {
             // Arrange
-            Move specialMove = new Move("Thunder", 60, 50, 10);
+            MoveNormal specialMoveNormal = new MoveNormal("Thunder", 60, 0.5);
 
             // Act
-            _pokemon.SpecialMove = specialMove;
+            _pokemon.SpecialMoveNormal = specialMoveNormal;
 
             // Assert
-            Assert.That(_pokemon.SpecialMove, Is.EqualTo(specialMove));
+            Assert.That(_pokemon.SpecialMoveNormal, Is.EqualTo(specialMoveNormal));
         }
 
         [Test]

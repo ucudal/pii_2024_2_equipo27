@@ -53,6 +53,12 @@ namespace ClassLibrary
         
 
         //HISTORIA DE USUARIO 1
+        
+        public string ShowPokemonCatalog()
+        {
+            return UserInterface.ShowMessagePokemonCatalog();
+        }
+
         public string ChoosePokemons(string playerDisplayName, string[] pokemonNames)
         {
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
@@ -82,7 +88,6 @@ namespace ClassLibrary
             // Llama a UserInterface para mostrar los Pokémon seleccionados
             return UserInterface.ShowMessageSelectedPokemons(selectedPokemons);
         }
-
 
         //HISTORIA DE USUARIO 2
 
@@ -140,20 +145,13 @@ namespace ClassLibrary
                 throw new Exception($"El Pokémon {pokemonName} no está disponible para el jugador {playerDisplayName}");
             }
             player.ActivatePokemon(pokemonIndex);
-
-            if (moveName == player.ActivePokemon.SpecialMove.Name)
+            
+            int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
+            if (moveIndex < 0)
             {
-                player.ActivateSpecialMove(moveName);
+                throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
             }
-            else
-            {
-                int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
-                if (moveIndex < 0)
-                {
-                    throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
-                }
-                player.ActivateMoveInActivePokemon(moveIndex);
-            }
+            player.ActivateMoveInActivePokemon(moveIndex);
         }
 
         //HISTORIA DE USUARIO 3
@@ -188,83 +186,87 @@ namespace ClassLibrary
 
             // Devuelve la cadena formateada con la salud de los Pokémon de ambos jugadores.
             return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
-        } 
-        
-        // HISTORIA DE USUARIO 4
-        
-        /// <summary>
-        /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
-        /// </summary>
-        /// <param name="attackerName">El nombre del jugador atacante.</param>
-        /// <param name="defenderName">El nombre del jugador defensor.</param>
-        /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
-        /// <returns>Un mensaje con el resultado del ataque.</returns>
-
-        
-        public string PlayerAttack(string attackerName, string defenderName, string moveName)
-        {
-            // Validación de parámetros de entrada
-            if (string.IsNullOrWhiteSpace(attackerName)||string.IsNullOrWhiteSpace(defenderName)||string.IsNullOrWhiteSpace(moveName))
-            {
-                throw new ArgumentNullException(nameof(attackerName), "El nombre de los jugadores o del movimiento no puede ser nulo o estar vacío.");
-            }
-            
-            Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
-            Player defender = this.GameList.FindPlayerByDisplayName(defenderName);
-            
-            // Buscar el jugador por su nombre y validar que esté en el juego
-            if (attacker == null )
-            {
-                throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
-            }
-            if (defender == null)
-            {
-                throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
-            }
-            
-            Pokemon attackingPokemon = attacker.ActivePokemon;
-            Pokemon defendingPokemon = defender.ActivePokemon;
-
-            // Buscar el Pókemon por su metodo (ActivePokemon) y validar que esté en el juego
-            if (attackingPokemon == null)
-            {
-                throw new ArgumentException($"El Pókemon '{attacker.ActivePokemon}' no está activo para la ataque.");
-            }
-            if (defendingPokemon == null)
-            {
-                throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
-            }
-
-            Move selectedMove = attackingPokemon.Moves.Find(m => m.Name == moveName) ?? attackingPokemon.SpecialMove;
-            
-            // Buscar el movimiento por su nombre y validar que esté en el juego
-            if (selectedMove == null || selectedMove.Name != moveName)
-            {
-                throw new ArgumentException( $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.");
-            }
-
-            // Calcula la efectividad del tipo
-            double typeEffectiveness = PokemonType.GetEffectiveness(attackingPokemon.Type, defendingPokemon.Type);
-
-            // Calcula el daño basado en la efectividad
-            int baseDamage = selectedMove.AttackValue;
-            int calculatedDamage = (int)(baseDamage * typeEffectiveness);
-
-            // Aplica el daño al Pokémon defensor
-            defendingPokemon.HealthPoints -= calculatedDamage;
-
-            // Construye el mensaje de resultado
-            string effectivenessMessage = typeEffectiveness > 1.0 ? "¡Es súper efectivo!" :
-                                          typeEffectiveness < 1.0 ? "No es muy efectivo..." :
-                                          "Es efectivo.";
-            return $"{attackingPokemon.Name} ataca con {selectedMove.Name} y causa {calculatedDamage} de daño a {defendingPokemon.Name}. {effectivenessMessage}";
-
-           
-            
-            //Falta implemetar el turno
-
         }
         
+        // // HISTORIA DE USUARIO 4
+        //
+        // /// <summary>
+        // /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
+        // /// </summary>
+        // /// <param name="attackerName">El nombre del jugador atacante.</param>
+        // /// <param name="defenderName">El nombre del jugador defensor.</param>
+        // /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
+        // /// <returns>Un mensaje con el resultado del ataque.</returns>
+        // public string PlayerAttack(string attackerName, string defenderName, string moveName)
+        // { 
+        //     //Encontrar el jugador
+        //     Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
+        //     Player defender = this.GameList.FindPlayerByDisplayName(defenderName);
+        //
+        //     if (attacker == null || defender == null)
+        //     {
+        //         return "Uno o ambos jugadores no están en el juego.";
+        //     }
+        //     
+        //     //Encontrar los pokemones activos
+        //     Pokemon attackingPokemon = attacker.ActivePokemon;
+        //     Pokemon defendingPokemon = defender.ActivePokemon;
+        //
+        //     // Buscar el jugador por su nombre y validar que esté en el juego
+            // if (attacker == null )
+            // {
+            //     throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
+            // }
+            // if (defender == null)
+            // {
+            //     throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
+            // }
+        //
+        //     // Verificar que el Pokémon tenga el ataque seleccionado
+        //     
+        //     if (attackingPokemon == null)
+            //     {
+            //         throw new ArgumentException($"El Pókemon '{attacker.ActivePokemon}' no está activo para la ataque.");
+            //     }
+            // if (defendingPokemon == null)
+            // {
+            //     throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
+            // }
+        //
+        //     // Verifica que el ataque realiza daño
+        //     bool canAttack = attackingPokemon.TryAttack();
+        //     if (!canAttack)
+        //     {
+        //         return UserInterface.ShowMessageAttackDidNotOccur(attacker, attackingPokemon);
+        //     }
+        //     
+        //     // Verificar si el ataque es efectivo 
+        //     //Enviar mensaje interfaz de que no es efectivo y sino seguir 
+        //     
+        //     //Comprobar si es un golpe crítico.
+        //     //Un golpe crítico aumenta un 20% el daño a realizar. La probabilidad de que un golpe sea crítico es del 10%. 
+        //     //Para eso definir de default 1
+        //
+        //     //Ejecuta el ataque
+        //     attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
+        //     
+        //     // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
+        //     if (attackingPokemon.IsPoisoned)
+        //     {
+        //         attackingPokemon.HealthPoints -= (int) 0.05 * (attackingPokemon.HealthPoints);
+        //     }
+        //     
+        //     if (attackingPokemon.IsBurned)
+        //     {
+        //         attackingPokemon.HealthPoints -= (int) 0.10 * (attackingPokemon.HealthPoints);
+        //     }
+        //
+        //     //Implemetar el turno
+        //     
+        //     // Construye el mensaje de resultado
+        //     return UserInterface.ShowMessageAttackOcurred(attackingPokemon, defendingPokemon, attacker, defender);
+        //
+        // }
         
         //HISTORIA DE USUARIO 5
     public string GetCurrentTurnPlayer(string playerDisplayName)
@@ -329,17 +331,7 @@ namespace ClassLibrary
 
 
         //HISTORIA DE USUARIO 8
-        // public string PlayerUseItem(string playerDisplayName, string itemName)
-        // {
-        //     // Buscar el jugador por su nombre
-        //     Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
-        //     if (player == null)
-        //     {
-        //         throw new ArgumentException($"El jugador {playerDisplayName} no está jugando", nameof(playerDisplayName));
-        //     }
-        //
-        //     Item item = player.UseItem(itemName);
-        // }
+     
         public string PlayerUseItem(string playerDisplayName, string itemName) 
         {
             // Buscar el jugador por su nombre

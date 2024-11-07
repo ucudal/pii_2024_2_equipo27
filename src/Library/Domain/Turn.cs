@@ -24,6 +24,16 @@ namespace ClassLibrary
         /// </remarks>
         public Turn(Player player1, Player player2)
         {
+            if (player1 == null)
+            {
+                throw new ArgumentNullException(nameof(player1), "El jugador 1 no puede ser nulo.");
+            }
+
+            if (player2 == null)
+            {
+                throw new ArgumentNullException(nameof(player2), "El jugador 2 no puede ser nulo.");
+            }
+            
             CurrentPlayer = player1;
             WaitingPlayer = player2;
         }
@@ -33,6 +43,8 @@ namespace ClassLibrary
         /// </summary>
         public void ChangeTurn()
         {
+            
+            // Intercambia los jugadores
             var temp = CurrentPlayer;
             CurrentPlayer = WaitingPlayer;
             WaitingPlayer = temp;
@@ -65,6 +77,20 @@ namespace ClassLibrary
         /// </remarks>
         public void PlayerAttack(Pokemon attacker, Pokemon defender, Move move)
         {
+            if (attacker == null )
+            {
+                throw new ArgumentException($"El pokemon '{attacker.Name}' no está jugando.");
+            }
+            if (defender == null )
+            {
+                throw new ArgumentException($"El pokemon '{defender.Name}' no está jugando.");
+            }
+
+            if (move == null )
+            {
+                throw new ArgumentException($"El movimiento '{move.Name}' no es valido.");
+            }
+            
             double effectiveness = PokemonType.GetEffectiveness(attacker.Type, defender.Type);
             double baseDamage = move.AttackValue;
 
@@ -82,6 +108,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje que describe la efectividad.</returns>
         private static string GetEffectivenessMessage(double effectiveness)
         {
+            
             if (effectiveness > 1.0)
                 return "¡súper efectivo!";
             else if (effectiveness < 1.0)

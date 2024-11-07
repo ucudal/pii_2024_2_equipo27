@@ -144,5 +144,30 @@ namespace ClassLibrary
         {
             return $"🎮 Es el turno de {currentPlayerDisplayName}.";
         }
+        
+        /// <summary>
+        /// Muestra un mensaje indicando que un ataque ha ocurrido, con detalles sobre el atacante, el defensor y el movimiento usado.
+        /// </summary>
+        /// <param name="attackingPokemon">El Pokémon que está atacando.</param>
+        /// <param name="defendingPokemon">El Pokémon que está siendo atacado.</param>
+        /// <param name="attacker">El jugador que controla al Pokémon atacante.</param>
+        /// <param name="defender">El jugador que controla al Pokémon defensor.</param>
+        /// <returns>Un mensaje formateado indicando que el ataque ocurrió.</returns>
+        public static string ShowMessageAttackOcurred(Pokemon attackingPokemon, Pokemon defendingPokemon, Player attacker, Player defender)
+        {
+            return $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon} de {defender}";
+        }
+
+        /// <summary>
+        /// Muestra un mensaje indicando que el ataque no ocurrió, debido a que el Pokémon del jugador tiene un ataque especial activo que lo impide.
+        /// </summary>
+        /// <param name="attacker">El jugador que intenta realizar el ataque.</param>
+        /// <param name="attackingPokemon">El Pokémon que está intentando atacar.</param>
+        /// <returns>Un mensaje formateado indicando que el ataque no ocurrió debido a un movimiento especial activo.</returns>
+        public static string ShowMessageAttackDidNotOccur(Player attacker, Pokemon attackingPokemon)
+        {
+            return $"$ El jugador {attacker} no puede jugar porque su Pokémon {attackingPokemon} tiene un ataque especial activo que no lo permite";
+        }
+
     }
 }

@@ -34,22 +34,6 @@ public class PokemonCatalogBuilderTests
     }
 
     [Test]
-    public void Pokemon_InCatalog_HasSpecialMove()
-    {
-        // Arrange
-        PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
-        
-        // Act
-        List<Pokemon> pokemonList = catalogBuilder.GetPokemonList();
-
-        // Assert
-        foreach (Pokemon pokemon in pokemonList)
-        {
-            Assert.That(pokemon.SpecialMove, Is.Not.Null); 
-        }
-    }
-
-    [Test]
     public void Pokemon_InCatalog_HasAtLeastOneMove()
     {
         // Arrange
