@@ -17,7 +17,7 @@ namespace ClassLibrary
         private UserInterface UserInterface { get;  }
         
         
-        private static Facade? _instance;
+        private static Facade _instance;
 
         // Este constructor privado impide que otras clases puedan crear instancias de esta.
         private Facade()
@@ -323,7 +323,8 @@ namespace ClassLibrary
             player.ActivatePokemon(pokemonIndex);
 
             // Penalizar el turno del jugador
-            //Game.Turn.PenalizeTurn(player);
+            Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
+            game.Turn.PenalizeTurn(player);
 
             return UserInterface.ShowMessageChangePokemon(player.DisplayName, player.ActivePokemon.Name);
         }
@@ -426,7 +427,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje con el resultado.</returns>
         public string PlayerIsWaiting(string displayName)
         {
-            Player? player = this.WaitingList.FindPlayerByDisplayName(displayName);
+            Player player = this.WaitingList.FindPlayerByDisplayName(displayName);
             if (player == null)
             {
                 return $"{displayName} no está esperando";
@@ -453,9 +454,9 @@ namespace ClassLibrary
         /// <param name="playerDisplayName">El primer jugador.</param>
         /// <param name="opponentDisplayName">El oponente.</param>
         /// <returns>Un mensaje con el resultado.</returns>
-        public string StartBattle(string playerDisplayName, string? opponentDisplayName)
+        public string StartBattle(string playerDisplayName, string opponentDisplayName)
         {
-            Player? opponent;
+            Player opponent;
 
             if (!OpponentProvided() && !SomebodyIsWaiting())
             {

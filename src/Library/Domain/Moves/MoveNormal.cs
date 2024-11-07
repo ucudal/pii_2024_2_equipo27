@@ -18,10 +18,10 @@ namespace ClassLibrary
         /// <param name="attacker">El pokemon que está atacando.</param>
         /// <param name="target">El pokemon que está siendo atacado.</param>
         ///
-        public void ExecuteMove(Pokemon attacker, Pokemon target)
+        public override void ExecuteMove(Pokemon attacker, Pokemon target, double criticalHit)
         {
             double typeEffectiveness = PokemonType.GetEffectiveness(attacker.Type, target.Type);
-            int calculatedDamage = (int)(this.AttackValue * typeEffectiveness);
+            int calculatedDamage = (int)((this.AttackValue * typeEffectiveness)*(criticalHit));
 
             target.HealthPoints -= calculatedDamage;
         }

@@ -1,6 +1,6 @@
 namespace ClassLibrary;
 
-public abstract class Move: IMove
+public abstract class Move
 {
     /// <summary>
     /// Nombre del movimiento. 
@@ -35,7 +35,5 @@ public abstract class Move: IMove
     /// <param name="attacker">El pokemon que está atacando.</param>
     /// <param name="target">El pokemon que está siendo atacado.</param>
     ///
-    public virtual void ExecuteMove(Pokemon attacker, Pokemon target, double criticalHit)
-    {
-    }
+    public abstract void ExecuteMove(Pokemon attacker, Pokemon target, double criticalHit);
 }

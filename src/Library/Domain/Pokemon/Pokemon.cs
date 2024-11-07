@@ -17,7 +17,7 @@ public class Pokemon
     private int _healthPoints;
     private MoveNormal _specialMoveNormal;
     private const int MaxMoves = 4;
-    private List<IMove> _moves;
+    private List<Move> _moves;
     private bool _isPoisoned;
     private bool _isBurned;
     private int _sleepTurns;
@@ -28,7 +28,7 @@ public class Pokemon
     /// </summary>
    public Pokemon()
    {
-       Moves = new List<IMove>();
+       Moves = new List<Move>();
        this.IsBurned = false;
        this.IsPoisoned = false;
        this.SleepTurns = 0;
@@ -41,7 +41,7 @@ public class Pokemon
     /// </summary>
     public bool IsPoisoned
     {
-        get => _isPoisoned;
+        get { return this._isPoisoned; }
         set
         {
             // Verifica si el Pokémon ya está afectado por un estado especial
@@ -78,7 +78,7 @@ public class Pokemon
     /// </summary>
     public bool IsParalyzed
     {
-        get => _isParalyzed;
+        get { return this._isParalyzed; }
         set
         {
             if (_isPoisoned || _isBurned || _sleepTurns > 0)
@@ -96,7 +96,7 @@ public class Pokemon
     /// </summary>
     public int SleepTurns
     {
-        get => _sleepTurns;
+        get { return this._sleepTurns; }
         set
         {
             if (_isPoisoned || _isBurned || _isParalyzed)
@@ -112,15 +112,14 @@ public class Pokemon
             _sleepTurns = value;
         }
     }
-
     
     /// <summary>
     /// Obtiene o establece el nombre del Pokémon.
     /// </summary>
     /// <exception cref="ArgumentNullException">Se lanza si el nombre es nulo o vacío.</exception>
-    public string Name 
-    { 
-        get => _name; 
+    public string Name
+    {
+        get { return this._name; }
         set
         {
             if (string.IsNullOrEmpty(value))
@@ -135,7 +134,7 @@ public class Pokemon
     /// <exception cref="ArgumentOutOfRangeException">Se lanza si los puntos de salud son negativos.</exception>
     public int HealthPoints 
     { 
-        get => _healthPoints; 
+        get { return this._healthPoints; }
         set
         {
             if (value < 0) 
@@ -150,7 +149,7 @@ public class Pokemon
     /// <exception cref="ArgumentNullException">Se lanza si el movimiento especial es nulo.</exception>
     public MoveNormal SpecialMoveNormal 
     { 
-        get => _specialMoveNormal; 
+        get { return this._specialMoveNormal; }
         set
         {
             if (value == null)
@@ -167,9 +166,10 @@ public class Pokemon
     /// <summary>
     /// Obtiene o establece la lista de movimientos regulares del Pokémon.
     /// </summary>
-    public List<IMove> Moves
+    public List<Move> Moves
     {
-        get => _moves ??= new List<IMove>(); // Inicializa la lista si es nula.
+        get { return this._moves; }
+
         set
         {
             if (value != null && value.Count > MaxMoves)

@@ -51,7 +51,7 @@ public class WaitingList
     /// contrario.</returns>
     public bool RemovePlayer(string DisplayName)
     {
-        Player? player = this.FindPlayerByDisplayName(DisplayName);
+        Player player = this.FindPlayerByDisplayName(DisplayName);
         if (player == null) return false;
         players.Remove(player);
         return true;
@@ -67,7 +67,7 @@ public class WaitingList
     /// </param>
     /// <returns>El jugador encontrado o <c>null</c> en caso contrario.
     /// </returns>
-    public Player? FindPlayerByDisplayName(string DisplayName)
+    public Player FindPlayerByDisplayName(string DisplayName)
     {
         foreach (Player player in this.players)
         {
@@ -87,7 +87,7 @@ public class WaitingList
     /// 
     /// </summary>
     /// <returns></returns>
-    public Player? GetAnyoneWaiting()
+    public Player GetAnyoneWaiting()
     {
         if (this.players.Count == 0)
         {
