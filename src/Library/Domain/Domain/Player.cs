@@ -131,6 +131,11 @@ public class Player
         this.items.Remove(itemFound);
         return itemFound;
     }
+
+    public void ExecuteMove(Player defender, bool criticalHit)
+    {
+        this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
+    }
 }
     
 
