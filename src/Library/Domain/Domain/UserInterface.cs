@@ -169,5 +169,15 @@ namespace ClassLibrary
             return $"$ El jugador {attacker} no puede jugar porque su Pokémon {attackingPokemon} tiene un ataque especial activo que no lo permite";
         }
 
+        public static String ShowMessageHighEffectiveness(Double accuaracyAttack)
+        {
+            return $"$ La efectividad del ataque es alta:  {accuaracyAttack} ";
+        }
+        public static String ShowMessageLowEffectiveness(Double accuaracyAttack)
+        {
+            return $"$ La efectividad del ataque es baja: {accuaracyAttack} ";
+        }
+        
+
     }
 }
