@@ -196,6 +196,11 @@ namespace ClassLibrary
     /// <returns>Un mensaje con el resultado del ataque.</returns>
     public string PlayerAttack(string attackerName, string moveName)
     {
+        if (attackerName == null || moveName == null)
+        {
+            throw new ArgumentException("Datos inválidos para el ataque.");
+        }
+        
         Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
         Player defender = this.GameList.FindOpponentOfDisplayName(attackerName);
 
@@ -212,7 +217,8 @@ namespace ClassLibrary
             return "Uno o ambos Pokémon no están activos para el ataque.";
         }
 
-        Move selectedMove = attackingPokemon.Moves.Find(m => m.Name == moveName) ?? attackingPokemon.SpecialMove;
+        //Move selectedMove = attackingPokemon.Moves.Find(m => m.Name == moveName) ?? attackingPokemon.SpecialMove;
+        Move selectedMove = attackingPokemon.GetMoveByName(moveName);
         if (selectedMove == null || selectedMove.Name != moveName)
         {
             return $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.";
@@ -228,21 +234,51 @@ namespace ClassLibrary
         // Aplica el daño al Pokémon defensor
         defendingPokemon.HealthPoints -= calculatedDamage;
 
-        // Construye el mensaje de resultado
-        string effectivenessMessage = typeEffectiveness > 1.0 ? "¡Es súper efectivo!" :
-                                      typeEffectiveness < 1.0 ? "No es muy efectivo..." :
-                                      "Es efectivo.";
-        return $"{attackingPokemon.Name} ataca con {selectedMove.Name} y causa {calculatedDamage} de daño a {defendingPokemon.Name}. {effectivenessMessage}";
-        
-        //Falta implemetar el turno
-        
+        string message = $"{defendingPokemon.Name} recibe {calculatedDamage} de daño! (Efectividad: {typeEffectiveness})";
+        Game game = this.GameList.FindGame(attackerName);
+        game.CheckIfGameEnds();
+        if (!game.PlayIsOn)
+        {
+            message += UserInterface.ShowBattleEndMessage(attackerName);
+        }
+
+        return message;
     }
         
         
         //HISTORIA DE USUARIO 5
         
         
+        //HISTORIA DE USUARIO 6 
         //HISTORIA DE USUARIO 6
+        /// <summary>
+        /// Finaliza la batalla y muestra un mensaje indicando si el juego ha terminado o si la batalla sigue en curso.
+        /// Verifica el estado de los Pokémon disponibles del jugador y maneja el flujo de finalización de la batalla.
+        /// </summary>
+        /// <param name="userInterface">La instancia de la interfaz de usuario que muestra los mensajes al jugador.</param>
+        /// <param name="game">El objeto del juego que contiene la lógica para determinar si la batalla ha terminado.</param>
+        /// <param name="player">El jugador que está participando en la batalla.</param>
+        /// <param name="playerDisplayName">El nombre para mostrar del jugador, usado para personalizar los mensajes.</param>
+        /// <returns>Un mensaje que indica si la batalla ha terminado o si la batalla continúa.</returns>
+        /// <exception cref="ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
+        public string EndGame(UserInterface userInterface, Game game, Player player, string playerDisplayName)
+        {
+            // Verifica si el juego ha terminado (puede modificar estados internos del juego)
+            game.CheckIfGameEnds();
+
+            // Si el jugador no tiene Pokémon disponibles, termina la batalla y muestra el mensaje de fin de la batalla
+            if (player.AvailablePokemons.Count == 0)
+            {
+                return UserInterface.ShowBattleEndMessage(playerDisplayName);
+            }
+            // Si el jugador tiene solo un Pokémon disponible, la batalla no ha terminado
+            else if (player.AvailablePokemons.Count == 1)
+            {
+                throw new ArgumentException($"La batalla continúa.");
+            }
+
+            return null;
+        }
         
 
         //HISTORIA DE USUARIO 7
