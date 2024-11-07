@@ -4,7 +4,14 @@ using ClassLibrary;
 namespace ClassLibrary;
 
 /// <summary>
-/// Esta clase representa la lista de jugadores esperando para jugar.
+/// La clase <c>WaitingList</c> es responsable de gestionar la lista de jugadores en espera para jugar.
+/// Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en las operaciones
+/// relacionadas con la lista de espera de jugadores, como agregar, remover y buscar.
+/// Utiliza el patrón Expert, ya que posee toda la información necesaria para manejar la lista
+/// de jugadores de manera eficiente, promoviendo una alta cohesión.
+/// Además, está diseñada para ser extensible en el futuro, siguiendo el principio abierto/cerrado (OCP),
+/// permitiendo, por ejemplo, la selección de un jugador aleatorio sin modificar la estructura básica.
+/// La clase mantiene su robustez y seguridad al validar las entradas y evitar estados inválidos.
 /// </summary>
 public class WaitingList
 {
@@ -30,11 +37,13 @@ public class WaitingList
     /// contrario.</returns>
     public bool AddPlayer(string DisplayName)
     {
+        // Verifica que el nombre no esté vacío o nulo
         if (string.IsNullOrEmpty(DisplayName))
         {
             throw new ArgumentException(nameof(DisplayName));
         }
         
+        // Verifica que el nombre no esté vacío o nulo
         if (this.FindPlayerByDisplayName(DisplayName) != null) return false;
         players.Add(new Player(DisplayName));
         return true;
@@ -51,7 +60,12 @@ public class WaitingList
     /// contrario.</returns>
     public bool RemovePlayer(string DisplayName)
     {
-        Player? player = this.FindPlayerByDisplayName(DisplayName);
+        // Verifica que el nombre no esté vacío o nulo
+        if (string.IsNullOrEmpty(DisplayName))
+        {
+            throw new ArgumentException("El nombre de usuario no puede estar vacío o nulo.", nameof(DisplayName));
+        }
+        Player player = this.FindPlayerByDisplayName(DisplayName);
         if (player == null) return false;
         players.Remove(player);
         return true;
@@ -67,8 +81,15 @@ public class WaitingList
     /// </param>
     /// <returns>El jugador encontrado o <c>null</c> en caso contrario.
     /// </returns>
-    public Player? FindPlayerByDisplayName(string DisplayName)
+    public Player FindPlayerByDisplayName(string DisplayName)
     {
+        // Verifica que el nombre no esté vacío o nulo
+        if (string.IsNullOrEmpty(DisplayName))
+        {
+            throw new ArgumentException("El nombre de usuario no puede estar vacío o nulo.", nameof(DisplayName));
+        }
+        
+        // Busca en la lista de jugadores
         foreach (Player player in this.players)
         {
             if (player.DisplayName == DisplayName)
@@ -87,8 +108,9 @@ public class WaitingList
     /// 
     /// </summary>
     /// <returns></returns>
-    public Player? GetAnyoneWaiting()
+    public Player GetAnyoneWaiting()
     {
+        // Verifica si la lista está vacía
         if (this.players.Count == 0)
         {
             return null;
