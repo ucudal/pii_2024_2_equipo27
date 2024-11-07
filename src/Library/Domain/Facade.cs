@@ -51,8 +51,8 @@ namespace ClassLibrary
             _instance = null;
         }
         
-
         //HISTORIA DE USUARIO 1
+        
         public string ShowPokemonCatalog()
         {
             return UserInterface.ShowMessagePokemonCatalog();
@@ -102,12 +102,12 @@ namespace ClassLibrary
             {
                 List<string> movesList = new List<string>();
 
-                foreach (Move move in pokemon.Moves)
+                foreach (MoveNormal move in pokemon.Moves)
                 {
                     movesList.Add(move.Name);
                 }
 
-                movesList.Add(pokemon.SpecialMove.Name);
+                movesList.Add(pokemon.SpecialMoveNormal.Name);
 
                 string pokemonMoves = $"{pokemon.Name}: {string.Join(", ", movesList)}";
 
@@ -137,20 +137,13 @@ namespace ClassLibrary
                 throw new Exception($"El Pokémon {pokemonName} no está disponible para el jugador {playerDisplayName}");
             }
             player.ActivatePokemon(pokemonIndex);
-
-            if (moveName == player.ActivePokemon.SpecialMove.Name)
+            
+            int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
+            if (moveIndex < 0)
             {
-                player.ActivateSpecialMove(moveName);
+                throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
             }
-            else
-            {
-                int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
-                if (moveIndex < 0)
-                {
-                    throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
-                }
-                player.ActivateMoveInActivePokemon(moveIndex);
-            }
+            player.ActivateMoveInActivePokemon(moveIndex);
         }
 
         //HISTORIA DE USUARIO 3
@@ -186,58 +179,77 @@ namespace ClassLibrary
             // Devuelve la cadena formateada con la salud de los Pokémon de ambos jugadores.
             return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
         }
-        // HISTORIA DE USUARIO 4
-    /// <summary>
-    /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
-    /// </summary>
-    /// <param name="attackerName">El nombre del jugador atacante.</param>
-    /// <param name="defenderName">El nombre del jugador defensor.</param>
-    /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
-    /// <returns>Un mensaje con el resultado del ataque.</returns>
-    public string PlayerAttack(string attackerName, string defenderName, string moveName)
-    {
-        Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
-        Player defender = this.GameList.FindPlayerByDisplayName(defenderName);
-
-        if (attacker == null || defender == null)
-        {
-            return "Uno o ambos jugadores no están en el juego.";
-        }
-
-        Pokemon attackingPokemon = attacker.ActivePokemon;
-        Pokemon defendingPokemon = defender.ActivePokemon;
-
-        if (attackingPokemon == null || defendingPokemon == null)
-        {
-            return "Uno o ambos Pokémon no están activos para el ataque.";
-        }
-
-        Move selectedMove = attackingPokemon.Moves.Find(m => m.Name == moveName) ?? attackingPokemon.SpecialMove;
-        if (selectedMove == null || selectedMove.Name != moveName)
-        {
-            return $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.";
-        }
-
-        // Calcula la efectividad del tipo
-        double typeEffectiveness = PokemonType.GetEffectiveness(attackingPokemon.Type, defendingPokemon.Type);
-
-        // Calcula el daño basado en la efectividad
-        int baseDamage = selectedMove.AttackValue;
-        int calculatedDamage = (int)(baseDamage * typeEffectiveness);
-
-        // Aplica el daño al Pokémon defensor
-        defendingPokemon.HealthPoints -= calculatedDamage;
-
-        // Construye el mensaje de resultado
-        string effectivenessMessage = typeEffectiveness > 1.0 ? "¡Es súper efectivo!" :
-                                      typeEffectiveness < 1.0 ? "No es muy efectivo..." :
-                                      "Es efectivo.";
-        return $"{attackingPokemon.Name} ataca con {selectedMove.Name} y causa {calculatedDamage} de daño a {defendingPokemon.Name}. {effectivenessMessage}";
         
-        //Falta implemetar el turno
-        
-    }
-        
+        // // HISTORIA DE USUARIO 4
+        //
+        // /// <summary>
+        // /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
+        // /// </summary>
+        // /// <param name="attackerName">El nombre del jugador atacante.</param>
+        // /// <param name="defenderName">El nombre del jugador defensor.</param>
+        // /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
+        // /// <returns>Un mensaje con el resultado del ataque.</returns>
+        // public string PlayerAttack(string attackerName, string defenderName, string moveName)
+        // { 
+        //     //Encontrar el jugador
+        //     Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
+        //     Player defender = this.GameList.FindPlayerByDisplayName(defenderName);
+        //
+        //     if (attacker == null || defender == null)
+        //     {
+        //         return "Uno o ambos jugadores no están en el juego.";
+        //     }
+        //     
+        //     //Encontrar los pokemones activos
+        //     Pokemon attackingPokemon = attacker.ActivePokemon;
+        //     Pokemon defendingPokemon = defender.ActivePokemon;
+        //
+        //     if (attackingPokemon == null || defendingPokemon == null)
+        //     {
+        //         return "Uno o ambos Pokémon no están activos para el ataque.";
+        //     }
+        //
+        //     // Verificar que el Pokémon tenga el ataque seleccionado
+        //     
+        //     if (moveName == null || attacker.ActiveMove.Name != moveName)
+        //     {
+        //         return $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.";
+        //     }
+        //
+        //     // Verifica que el ataque realiza daño
+        //     bool canAttack = attackingPokemon.TryAttack();
+        //     if (!canAttack)
+        //     {
+        //         return UserInterface.ShowMessageAttackDidNotOccur(attacker, attackingPokemon);
+        //     }
+        //     
+        //     // Verificar si el ataque es efectivo 
+        //     //Enviar mensaje interfaz de que no es efectivo y sino seguir 
+        //     
+        //     //Comprobar si es un golpe crítico.
+        //     //Un golpe crítico aumenta un 20% el daño a realizar. La probabilidad de que un golpe sea crítico es del 10%. 
+        //     //Para eso definir de default 1
+        //
+        //     //Ejecuta el ataque
+        //     attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
+        //     
+        //     // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
+        //     if (attackingPokemon.IsPoisoned)
+        //     {
+        //         attackingPokemon.HealthPoints -= (int) 0.05 * (attackingPokemon.HealthPoints);
+        //     }
+        //     
+        //     if (attackingPokemon.IsBurned)
+        //     {
+        //         attackingPokemon.HealthPoints -= (int) 0.10 * (attackingPokemon.HealthPoints);
+        //     }
+        //
+        //     //Implemetar el turno
+        //     
+        //     // Construye el mensaje de resultado
+        //     return UserInterface.ShowMessageAttackOcurred(attackingPokemon, defendingPokemon, attacker, defender);
+        //
+        // }
         
         //HISTORIA DE USUARIO 5
         

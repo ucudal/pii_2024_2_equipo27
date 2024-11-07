@@ -11,12 +11,108 @@ namespace ClassLibrary;
 /// </summary>
     
 public class Pokemon
+
 { 
     private string _name;
     private int _healthPoints;
-    private Move _specialMove;
+    private MoveNormal _specialMoveNormal;
     private const int MaxMoves = 4;
-    private List<Move> _moves;
+    private List<IMove> _moves;
+    private bool _isPoisoned;
+    private bool _isBurned;
+    private int _sleepTurns;
+    private bool _isParalyzed;
+
+    /// <summary>
+    /// Inicializa una nueva instancia de la clase <see cref="Pokemon"/> con una lista de movimientos vacía.
+    /// </summary>
+   public Pokemon()
+   {
+       Moves = new List<IMove>();
+       this.IsBurned = false;
+       this.IsPoisoned = false;
+       this.SleepTurns = 0;
+       this.IsParalyzed = false;
+   } 
+    
+    /// <summary>
+    /// Obtiene o establece si un Pokémon está envenenado.
+    /// Si el Pokémon ya está envenenado, no puede ser afectado por otro estado (quemado, paralizado, dormido).
+    /// </summary>
+    public bool IsPoisoned
+    {
+        get => _isPoisoned;
+        set
+        {
+            // Verifica si el Pokémon ya está afectado por un estado especial
+            if (_isBurned || _isParalyzed || _sleepTurns > 0)
+            {
+                throw new InvalidOperationException("El Pokémon no puede ser envenenado si ya está afectado por otro estado (quemado, paralizado, dormido).");
+            }
+
+            _isPoisoned = value;
+        }
+    }
+
+    /// <summary>
+    /// Obtiene o establece si un Pokémon está quemado.
+    /// Si el Pokémon ya está quemado, no puede ser afectado por otro estado (envenenado, paralizado, dormido).
+    /// </summary>
+    public bool IsBurned
+    {
+        get => _isBurned;
+        set
+        {
+            if (_isPoisoned || _isParalyzed || _sleepTurns > 0)
+            {
+                throw new InvalidOperationException("El Pokémon no puede ser quemado si ya está afectado por otro estado (envenenado, paralizado, dormido).");
+            }
+
+            _isBurned = value;
+        }
+    }
+
+    /// <summary>
+    /// Obtiene o establece si un Pokémon está paralizado.
+    /// Si el Pokémon ya está paralizado, no puede ser afectado por otro estado (envenenado, quemado, dormido).
+    /// </summary>
+    public bool IsParalyzed
+    {
+        get => _isParalyzed;
+        set
+        {
+            if (_isPoisoned || _isBurned || _sleepTurns > 0)
+            {
+                throw new InvalidOperationException("El Pokémon no puede ser paralizado si ya está afectado por otro estado (envenenado, quemado, dormido).");
+            }
+
+            _isParalyzed = value;
+        }
+    }
+
+    /// <summary>
+    /// Obtiene o establece los turnos durante los cuales el Pokémon queda dormido.
+    /// Si el Pokémon ya está envenenado, quemado o paralizado, no puede quedarse dormido.
+    /// </summary>
+    public int SleepTurns
+    {
+        get => _sleepTurns;
+        set
+        {
+            if (_isPoisoned || _isBurned || _isParalyzed)
+            {
+                throw new InvalidOperationException("El Pokémon no puede dormir si ya está afectado por otro estado (envenenado, quemado, paralizado).");
+            }
+
+            if (value < 0 || value > 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(SleepTurns), "El número de turnos de sueño debe estar entre 1 y 4.");
+            }
+
+            _sleepTurns = value;
+        }
+    }
+
     
     /// <summary>
     /// Obtiene o establece el nombre del Pokémon.
@@ -42,8 +138,8 @@ public class Pokemon
         get => _healthPoints; 
         set
         {
-            if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(HealthPoints), "Los puntos de salud no pueden ser negativos.");
+            if (value < 0) 
+                _healthPoints= 0;
             _healthPoints = value;
         }
     }
@@ -52,14 +148,14 @@ public class Pokemon
     /// Obtiene o establece el movimiento especial del Pokémon.
     /// </summary>
     /// <exception cref="ArgumentNullException">Se lanza si el movimiento especial es nulo.</exception>
-    public Move SpecialMove 
+    public MoveNormal SpecialMoveNormal 
     { 
-        get => _specialMove; 
+        get => _specialMoveNormal; 
         set
         {
             if (value == null)
-                throw new ArgumentNullException(nameof(SpecialMove), "El movimiento especial no puede ser nulo.");
-            _specialMove = value;
+                throw new ArgumentNullException(nameof(SpecialMoveNormal), "El movimiento especial no puede ser nulo.");
+            _specialMoveNormal = value;
         }
     }
 
@@ -71,9 +167,9 @@ public class Pokemon
     /// <summary>
     /// Obtiene o establece la lista de movimientos regulares del Pokémon.
     /// </summary>
-    public List<Move> Moves
+    public List<IMove> Moves
     {
-        get => _moves ??= new List<Move>(); // Inicializa la lista si es nula.
+        get => _moves ??= new List<IMove>(); // Inicializa la lista si es nula.
         set
         {
             if (value != null && value.Count > MaxMoves)
@@ -82,11 +178,25 @@ public class Pokemon
             _moves = value;
         }
     }
+    
     /// <summary>
-    /// Inicializa una nueva instancia de la clase <see cref="Pokemon"/> con una lista de movimientos vacía.
+    /// Verifica si el <c>Pokemon</c>  puede atacar.
     /// </summary>
-    public Pokemon()
+    public bool TryAttack()
     {
-        Moves = new List<Move>();
+        if (IsParalyzed)
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 1);
+            if (randomNumber == 0)
+                return false;
+        }
+
+        if (SleepTurns > 0)
+        {
+            SleepTurns -= 1;
+            return false;
+        }
+        return true;
     }
 }

@@ -35,7 +35,7 @@ public class Player
     /// <summary>
     /// Obtiene el movimiento actualmente activo del Pokémon del jugador.
     /// </summary>
-    public Move ActiveMove { get; private set; }
+    public IMove ActiveMove { get; private set; }
 
     /// <summary>
     /// Agrega un Pokémon a la lista de Pokémon disponibles para el jugador.
@@ -99,16 +99,6 @@ public class Player
     public void ActivateMoveInActivePokemon(int index)
     {
         this.ActiveMove = this.ActivePokemon.Moves[index];
-    }
-
-    /// <summary>
-    /// Activa el movimiento especial del Pokémon activo.
-    /// </summary>
-    /// <param name="specialMoveDisplayName">Nombre del movimiento especial a activar.</param>
-    public void ActivateSpecialMove(string specialMoveDisplayName)
-    {
-        this.ActiveMove = this.ActivePokemon.SpecialMove;
-        // turn.SpecialMoveIsAvailable = false; // Descomentar si el movimiento especial debe estar disponible condicionalmente
     }
 }
 

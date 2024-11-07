@@ -49,15 +49,6 @@
             <returns>Una cadena que contiene la información de la salud de los Pokémon del jugador y su oponente.</returns>
             <exception cref="T:System.ArgumentException">Se lanza si el jugador o el oponente no se encuentran.</exception>
         </member>
-        <member name="M:ClassLibrary.Facade.PlayerAttack(System.String,System.String,System.String)">
-            <summary>
-            Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
-            </summary>
-            <param name="attackerName">El nombre del jugador atacante.</param>
-            <param name="defenderName">El nombre del jugador defensor.</param>
-            <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
-            <returns>Un mensaje con el resultado del ataque.</returns>
-        </member>
         <member name="M:ClassLibrary.Facade.ChangePokemon(System.String,System.String)">
             <summary>
             Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
@@ -179,45 +170,145 @@
             <param name="displayName">El nombre del jugador.</param>
             <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
-        <member name="T:ClassLibrary.Move">
-            <summary>
-            La clase <c>Move</c> tiene la responsabilidad de almacenar y gestionar los valores de ataque, defensa y curación de un movimiento.
-            Esto sigue el principio de responsabilidad única (SRP) ya que su única función es representar los atributos de un movimiento en el juego.
-            </summary>
-        </member>
         <member name="P:ClassLibrary.Move.Name">
             <summary>
-            Nombre del movimiento. La clase <c>Move</c> tiene la responsabilidad de manejar el nombre ya que es parte esencial de la identidad del movimiento.
+            Nombre del movimiento. 
             </summary>
         </member>
         <member name="P:ClassLibrary.Move.AttackValue">
             <summary>
-            Valor del ataque del movimiento. Según el principio de "experto" (Expert), la clase <c>Move</c> es la responsable de conocer los valores de ataque 
-            porque es quien posee los datos relacionados con cada movimiento.
+            Valor del ataque del movimiento.
             </summary>
         </member>
-        <member name="P:ClassLibrary.Move.DefenseValue">
+        <member name="P:ClassLibrary.Move.Accuracy">
             <summary>
-            Valor de defensa del movimiento. De nuevo, siguiendo el principio de "experto" (Expert), la clase <c>Move</c> conoce los valores de defensa 
-            y tiene la responsabilidad de mantener estos valores encapsulados.
+            El valor de precisión define la probabilidad de que el ataque se ejecute. 
             </summary>
         </member>
-        <member name="P:ClassLibrary.Move.CureValue">
+        <member name="M:ClassLibrary.Move.#ctor(System.String,System.Int32,System.Double)">
             <summary>
-            Valor de curación del movimiento. La clase <c>Move</c> sigue el principio de SRP al tener la responsabilidad de almacenar 
-            solo los datos relacionados con el movimiento, dejando las acciones más complejas (como aplicar estos valores) a otras clases.
+            Constructor de la clase.
+            </summary>
+            <param name="name">El nombre del movimiento.</param>
+            <param name="attackValue">El valor de ataque del movimiento.</param>
+        </member>
+        <member name="M:ClassLibrary.Move.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
+             <summary>
+             Método para aplicar el ataque considerando ambos pokemones.
+             </summary>
+             <param name="attacker">El pokemon que está atacando.</param>
+             <param name="target">El pokemon que está siendo atacado.</param>
+            
+        </member>
+        <member name="T:ClassLibrary.MoveBurn">
+            <summary>
+            La clase <c>MoveSleep</c> tiene la responsabilidad de almacenar y gestionar los valores de ataque, su nombre, y método de ejecución de un movimiento especial.
+            Esto sigue el principio de responsabilidad única (SRP) ya que su única función es representar los atributos de un movimiento en el juego.
+            </summary>
+            
+        </member>
+        <member name="M:ClassLibrary.MoveBurn.#ctor(System.String,System.Int32,System.Double)">
+            <summary>
+            Constructor de la clase <c>MoveBurn</c>. Inicializa los valores de nombre, ataque, defensa y curación.
+            Esto sigue el principio de Liskov Substitution Principle (LSP) porque permite que cualquier clase derivada de <c>MoveSleep</c> (si la hubiera) 
+            pueda sustituirse sin alterar el comportamiento de la lógica del juego.
+            </summary>
+            <param name="name">El nombre del movimiento.</param>
+            <param name="attackValue">El valor de ataque del movimiento.</param>
+        </member>
+        <member name="M:ClassLibrary.MoveBurn.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
+             <summary>
+             Método para aplicar el ataque del <c>IMove</c> en particular, considerando ambos pokemones.
+             </summary>
+             <param name="attacker">El pokemon que está atacando.</param>
+             <param name="target">El pokemon que está siendo atacado.</param>
+            
+        </member>
+        <member name="T:ClassLibrary.MoveNormal">
+            <summary>
+            La clase <c>NormalMove</c> tiene la responsabilidad de almacenar y gestionar los valores de ataque, su nombre, y método de ejecución de un movimiento común.
+            Esto sigue el principio de responsabilidad única (SRP) ya que su única función es representar los atributos de un movimiento en el juego.
             </summary>
         </member>
-        <member name="M:ClassLibrary.Move.#ctor(System.String,System.Int32,System.Int32,System.Int32)">
+        <member name="M:ClassLibrary.MoveNormal.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon)">
+             <summary>
+             Método para aplicar el ataque considerando ambos pokemones.
+             </summary>
+             <param name="attacker">El pokemon que está atacando.</param>
+             <param name="target">El pokemon que está siendo atacado.</param>
+            
+        </member>
+        <member name="T:ClassLibrary.MoveParalize">
             <summary>
-            Constructor de la clase <c>Move</c>. Inicializa los valores de nombre, ataque, defensa y curación.
+            La clase <c>MoveParalize</c> tiene la responsabilidad de almacenar y gestionar los valores de ataque, su nombre, y método de ejecución de un movimiento especial.
+            Esto sigue el principio de responsabilidad única (SRP) ya que su única función es representar los atributos de un movimiento en el juego.
+            </summary>
+            
+        </member>
+        <member name="M:ClassLibrary.MoveParalize.#ctor(System.String,System.Int32,System.Double)">
+            <summary>
+            Constructor de la clase <c>MoveParalize</c>. Inicializa los valores de nombre, ataque, defensa y curación.
             Esto sigue el principio de Liskov Substitution Principle (LSP) porque permite que cualquier clase derivada de <c>Move</c> (si la hubiera) 
             pueda sustituirse sin alterar el comportamiento de la lógica del juego.
             </summary>
             <param name="name">El nombre del movimiento.</param>
             <param name="attackValue">El valor de ataque del movimiento.</param>
-            <param name="defenseValue">El valor de defensa del movimiento.</param>
-            <param name="cureValue">El valor de curación del movimiento.</param>
+        </member>
+        <member name="M:ClassLibrary.MoveParalize.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
+             <summary>
+             Método para aplicar el ataque del <c>IMove</c> en particular, considerando ambos pokemones.
+             </summary>
+             <param name="attacker">El pokemon que está atacando.</param>
+             <param name="target">El pokemon que está siendo atacado.</param>
+            
+        </member>
+        <member name="T:ClassLibrary.MovePoison">
+            <summary>
+            La clase <c>MovePoison</c> tiene la responsabilidad de almacenar y gestionar los valores de ataque, su nombre, y método de ejecución de un movimiento especial.
+            Esto sigue el principio de responsabilidad única (SRP) ya que su única función es representar los atributos de un movimiento en el juego.
+            </summary>
+            
+        </member>
+        <member name="M:ClassLibrary.MovePoison.#ctor(System.String,System.Int32,System.Double)">
+            <summary>
+            Constructor de la clase <c>MovePoison</c>. Inicializa los valores de nombre, ataque, defensa y curación.
+            Esto sigue el principio de Liskov Substitution Principle (LSP) porque permite que cualquier clase derivada de <c>MoveSleep</c> (si la hubiera) 
+            pueda sustituirse sin alterar el comportamiento de la lógica del juego.
+            </summary>
+            <param name="name">El nombre del movimiento.</param>
+            <param name="attackValue">El valor de ataque del movimiento.</param>
+        </member>
+        <member name="M:ClassLibrary.MovePoison.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
+             <summary>
+             Método para aplicar el ataque del <c>IMove</c> en particular, considerando ambos pokemones.
+             </summary>
+             <param name="attacker">El pokemon que está atacando.</param>
+             <param name="target">El pokemon que está siendo atacado.</param>
+            
+        </member>
+        <member name="T:ClassLibrary.MoveSleep">
+            <summary>
+            La clase <c>MoveSleep</c> tiene la responsabilidad de almacenar y gestionar los valores de ataque, su nombre, y método de ejecución de un movimiento especial.
+            Esto sigue el principio de responsabilidad única (SRP) ya que su única función es representar los atributos de un movimiento en el juego.
+            </summary>
+            
+        </member>
+        <member name="M:ClassLibrary.MoveSleep.#ctor(System.String,System.Int32,System.Double)">
+            <summary>
+            Constructor de la clase <c>MoveSleep</c>. Inicializa los valores de nombre, ataque, defensa y curación.
+            Esto sigue el principio de Liskov Substitution Principle (LSP) porque permite que cualquier clase derivada de <c>MoveSleep</c> (si la hubiera) 
+            pueda sustituirse sin alterar el comportamiento de la lógica del juego.
+            </summary>
+            <param name="name">El nombre del movimiento.</param>
+            <param name="attackValue">El valor de ataque del movimiento.</param>
+        </member>
+        <member name="M:ClassLibrary.MoveSleep.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
+             <summary>
+             Método para aplicar el ataque del <c>IMove</c> en particular, considerando ambos pokemones.
+             </summary>
+             <param name="attacker">El pokemon que está atacando.</param>
+             <param name="target">El pokemon que está siendo atacado.</param>
+            
         </member>
         <member name="T:ClassLibrary.Player">
             <summary>
@@ -286,12 +377,6 @@
             </summary>
             <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
         </member>
-        <member name="M:ClassLibrary.Player.ActivateSpecialMove(System.String)">
-            <summary>
-            Activa el movimiento especial del Pokémon activo.
-            </summary>
-            <param name="specialMoveDisplayName">Nombre del movimiento especial a activar.</param>
-        </member>
         <member name="T:ClassLibrary.Pokemon">
             <summary>
             La clase  <c>Pokemon</c> es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
@@ -301,6 +386,35 @@
             o habilidades sin modificar la clase base, alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión.
             Además la robustez y seguridad de esta clase se asegura al evitar estados inválidos y facilitar la detección de errores
             en el uso de la clase
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Pokemon.#ctor">
+            <summary>
+            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.Pokemon"/> con una lista de movimientos vacía.
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Pokemon.IsPoisoned">
+            <summary>
+            Obtiene o establece si un Pokémon está envenenado.
+            Si el Pokémon ya está envenenado, no puede ser afectado por otro estado (quemado, paralizado, dormido).
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Pokemon.IsBurned">
+            <summary>
+            Obtiene o establece si un Pokémon está quemado.
+            Si el Pokémon ya está quemado, no puede ser afectado por otro estado (envenenado, paralizado, dormido).
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Pokemon.IsParalyzed">
+            <summary>
+            Obtiene o establece si un Pokémon está paralizado.
+            Si el Pokémon ya está paralizado, no puede ser afectado por otro estado (envenenado, quemado, dormido).
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Pokemon.SleepTurns">
+            <summary>
+            Obtiene o establece los turnos durante los cuales el Pokémon queda dormido.
+            Si el Pokémon ya está envenenado, quemado o paralizado, no puede quedarse dormido.
             </summary>
         </member>
         <member name="P:ClassLibrary.Pokemon.Name">
@@ -315,7 +429,7 @@
             </summary>
             <exception cref="T:System.ArgumentOutOfRangeException">Se lanza si los puntos de salud son negativos.</exception>
         </member>
-        <member name="P:ClassLibrary.Pokemon.SpecialMove">
+        <member name="P:ClassLibrary.Pokemon.SpecialMoveNormal">
             <summary>
             Obtiene o establece el movimiento especial del Pokémon.
             </summary>
@@ -331,9 +445,9 @@
             Obtiene o establece la lista de movimientos regulares del Pokémon.
             </summary>
         </member>
-        <member name="M:ClassLibrary.Pokemon.#ctor">
+        <member name="M:ClassLibrary.Pokemon.TryAttack">
             <summary>
-            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.Pokemon"/> con una lista de movimientos vacía.
+            Verifica si el <c>Pokemon</c>  puede atacar.
             </summary>
         </member>
         <member name="T:ClassLibrary.PokemonCatalog">
@@ -374,13 +488,13 @@
             Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
             </summary>
         </member>
-        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.Move},ClassLibrary.Move,ClassLibrary.PokemonType.Type)">
+        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.IMove},ClassLibrary.PokemonType.Type)">
             <summary>
             Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
             </summary>
             <param name="name">Nombre del Pokémon.</param>
             <param name="moves">Lista de movimientos del Pokémon.</param>
-            <param name="specialMove">Movimiento especial del Pokémon.</param>
+            <param name="specialNormalMove">Movimiento especial del Pokémon.</param>
             <param name="type">El tipo del Pokémon.</param>
         </member>
         <member name="M:ClassLibrary.PokemonCatalogBuilder.GetPokemonList">
@@ -448,20 +562,6 @@
             Se debe validar que el parámetro no sea nulo antes de usarlo.
             </remarks>
         </member>
-        <member name="M:ClassLibrary.Turn.PlayerAttack(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Move)">
-            <summary>
-            Permite que un jugador ataque a otro Pokémon usando un movimiento.
-            </summary>
-            <remarks>
-            Se debe validar que move, attacker y defender no sean nulos antes de usar.
-            </remarks>
-        </member>
-        <member name="M:ClassLibrary.Turn.GetEffectivenessMessage(System.Double)">
-            <summary>
-            Obtiene un mensaje sobre la efectividad del ataque.
-            </summary>
-            <returns>Un mensaje que describe la efectividad.</returns>
-        </member>
         <member name="T:ClassLibrary.UserInterface">
             <summary>
             La clase <c>UserInterface</c> es responsable de construir y devolver mensajes 
@@ -523,6 +623,24 @@
             </summary>
             <param name="waitingPlayers">Lista de jugadores en espera.</param>
             <returns>Un mensaje con los nombres de los jugadores en espera.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageAttackOcurred(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Player,ClassLibrary.Player)">
+            <summary>
+            Muestra un mensaje indicando que un ataque ha ocurrido, con detalles sobre el atacante, el defensor y el movimiento usado.
+            </summary>
+            <param name="attackingPokemon">El Pokémon que está atacando.</param>
+            <param name="defendingPokemon">El Pokémon que está siendo atacado.</param>
+            <param name="attacker">El jugador que controla al Pokémon atacante.</param>
+            <param name="defender">El jugador que controla al Pokémon defensor.</param>
+            <returns>Un mensaje formateado indicando que el ataque ocurrió.</returns>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageAttackDidNotOccur(ClassLibrary.Player,ClassLibrary.Pokemon)">
+            <summary>
+            Muestra un mensaje indicando que el ataque no ocurrió, debido a que el Pokémon del jugador tiene un ataque especial activo que lo impide.
+            </summary>
+            <param name="attacker">El jugador que intenta realizar el ataque.</param>
+            <param name="attackingPokemon">El Pokémon que está intentando atacar.</param>
+            <returns>Un mensaje formateado indicando que el ataque no ocurrió debido a un movimiento especial activo.</returns>
         </member>
         <member name="T:ClassLibrary.WaitingList">
             <summary>
