@@ -37,9 +37,5 @@ public abstract class Move: IMove
     ///
     public virtual void ExecuteMove(Pokemon attacker, Pokemon target, double criticalHit)
     {
-        double typeEffectiveness = PokemonType.GetEffectiveness(attacker.Type, target.Type);
-        int calculatedDamage = (int)((this.AttackValue * typeEffectiveness)*(criticalHit));
-
-        target.HealthPoints -= calculatedDamage;
     }
 }
