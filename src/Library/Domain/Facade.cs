@@ -239,7 +239,7 @@ namespace ClassLibrary
             {
                 throw new ArgumentException( $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.");
             }
-
+            
             // Calcula la efectividad del tipo
             double typeEffectiveness = PokemonType.GetEffectiveness(attackingPokemon.Type, defendingPokemon.Type);
 
