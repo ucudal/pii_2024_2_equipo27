@@ -110,5 +110,5 @@ public class Player
         this.ActiveMove = this.ActivePokemon.SpecialMove;
         // turn.SpecialMoveIsAvailable = false; // Descomentar si el movimiento especial debe estar disponible condicionalmente
     }
-}
+    }
 

@@ -200,26 +200,44 @@ namespace ClassLibrary
         
         public string PlayerAttack(string attackerName, string defenderName, string moveName)
         {
+            // Validación de parámetros de entrada
+            if (string.IsNullOrWhiteSpace(attackerName)||string.IsNullOrWhiteSpace(defenderName)||string.IsNullOrWhiteSpace(moveName))
+            {
+                throw new ArgumentNullException(nameof(attackerName), "El nombre de los jugadores o del movimiento no puede ser nulo o estar vacío.");
+            }
+            
             Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
             Player defender = this.GameList.FindPlayerByDisplayName(defenderName);
-
-            if (attacker == null || defender == null)
+            
+            // Buscar el jugador por su nombre y validar que esté en el juego
+            if (attacker == null )
             {
-                return "Uno o ambos jugadores no están en el juego.";
+                throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
             }
-
+            if (defender == null)
+            {
+                throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
+            }
+            
             Pokemon attackingPokemon = attacker.ActivePokemon;
             Pokemon defendingPokemon = defender.ActivePokemon;
 
-            if (attackingPokemon == null || defendingPokemon == null)
+            // Buscar el Pókemon por su metodo (ActivePokemon) y validar que esté en el juego
+            if (attackingPokemon == null)
             {
-                return "Uno o ambos Pokémon no están activos para el ataque.";
+                throw new ArgumentException($"El Pókemon '{attacker.ActivePokemon}' no está activo para la ataque.");
+            }
+            if (defendingPokemon == null)
+            {
+                throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
             }
 
             Move selectedMove = attackingPokemon.Moves.Find(m => m.Name == moveName) ?? attackingPokemon.SpecialMove;
+            
+            // Buscar el movimiento por su nombre y validar que esté en el juego
             if (selectedMove == null || selectedMove.Name != moveName)
             {
-                return $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.";
+                throw new ArgumentException( $"El movimiento {moveName} no está disponible para {attackingPokemon.Name}.");
             }
 
             // Calcula la efectividad del tipo
