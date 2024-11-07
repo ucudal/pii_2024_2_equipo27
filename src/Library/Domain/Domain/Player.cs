@@ -132,7 +132,7 @@ public class Player
         return itemFound;
     }
 
-    public void ExecuteMove(Player defender, bool criticalHit)
+    public void ExecuteMove(Player defender, double criticalHit)
     {
         this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
     }

@@ -270,7 +270,7 @@ namespace ClassLibrary
             //Para eso definir de default 1
         
             //Ejecuta el ataque
-            attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
+            //attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
             
             // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
             if (attackingPokemon.IsPoisoned)
