@@ -45,7 +45,7 @@ public class GameList
         }
         return null;
     }
-    public Player FindOpponent(string playerDisplayName)
+    public Player FindOpponentOfDisplayName(string playerDisplayName)
     {
         foreach (var game in games)
         {

@@ -1,4 +1,4 @@
-namespace ClassLibrary; 
+namespace ClassLibrary;
 
 /// <summary>
 /// La clase  <c>Pokemon</c> es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
@@ -9,9 +9,8 @@ namespace ClassLibrary;
 /// Además la robustez y seguridad de esta clase se asegura al evitar estados inválidos y facilitar la detección de errores
 /// en el uso de la clase
 /// </summary>
-    
 public class Pokemon
-{ 
+{
     private string _name;
     private int _healthPoints;
     private Move _specialMove;
@@ -33,37 +32,38 @@ public class Pokemon
         }
     }
 
-        public Move GetMoveByName(string moveName)
+    public Move GetMoveByName(string moveName)
+    {
+        Move move = this.Moves.FirstOrDefault(m => m.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase));
+
+        // Si no lo encontramos, verificamos si es el movimiento especial
+        if (move == null && this.SpecialMove.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase))
         {
-            Move move = this.Moves.FirstOrDefault(m => m.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase));
-        
-            // Si no lo encontramos, verificamos si es el movimiento especial
-            if (move == null && this.SpecialMove.Name.Equals(moveName, StringComparison.OrdinalIgnoreCase))
-            {
-                move = this.SpecialMove;
-            }
-
-            // Si no encontramos el movimiento, lanzamos una excepción
-            if (move == null)
-            {
-                throw new Exception($"El movimiento {moveName} no se encuentra en los movimientos del Pokémon {this.Name}.");
-            }
-
-            return move;
+            move = this.SpecialMove;
         }
-    
+
+        // Si no encontramos el movimiento, lanzamos una excepción
+        if (move == null)
+        {
+            throw new Exception(
+                $"El movimiento {moveName} no se encuentra en los movimientos del Pokémon {this.Name}.");
+        }
+
+        return move;
+    }
 
     /// <summary>
     /// Obtiene o establece los puntos de salud del Pokémon.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">Se lanza si los puntos de salud son negativos.</exception>
-    public int HealthPoints 
-    { 
-        get => _healthPoints; 
+    public int HealthPoints
+    {
+        get => _healthPoints;
         set
         {
             if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(HealthPoints), "Los puntos de salud no pueden ser negativos.");
+                throw new ArgumentOutOfRangeException(nameof(HealthPoints),
+                    "Los puntos de salud no pueden ser negativos.");
             _healthPoints = value;
         }
     }
@@ -72,9 +72,10 @@ public class Pokemon
     /// Obtiene o establece el movimiento especial del Pokémon.
     /// </summary>
     /// <exception cref="ArgumentNullException">Se lanza si el movimiento especial es nulo.</exception>
-    public Move SpecialMove 
-    { 
-        get => _specialMove; 
+    public Move SpecialMove
+    {
+        get => _specialMove;
+
         set
         {
             if (value == null)
@@ -98,10 +99,11 @@ public class Pokemon
         {
             if (value != null && value.Count > MaxMoves)
                 throw new InvalidOperationException($"No se pueden agregar más de {MaxMoves} movimientos.");
-                
+
             _moves = value;
         }
     }
+
     /// <summary>
     /// Inicializa una nueva instancia de la clase <see cref="Pokemon"/> con una lista de movimientos vacía.
     /// </summary>

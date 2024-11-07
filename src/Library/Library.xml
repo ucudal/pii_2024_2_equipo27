@@ -53,21 +53,10 @@
             <summary>
             Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
             </summary>
-            <param name="playerDisplayName">El jugador que realiza el ataque.</param>
-            <param name="opponentDisplayName">El jugador que recibe el ataque.</param>
-            <param name="moveName">El movimiento seleccionado para el ataque.</param>
-        </member>
-        <member name="M:ClassLibrary.Facade.EndGame(ClassLibrary.UserInterface,ClassLibrary.Game,ClassLibrary.Player,System.String)">
-            <summary>
-            Finaliza la batalla y muestra un mensaje indicando si el juego ha terminado o si la batalla sigue en curso.
-            Verifica el estado de los Pokémon disponibles del jugador y maneja el flujo de finalización de la batalla.
-            </summary>
-            <param name="userInterface">La instancia de la interfaz de usuario que muestra los mensajes al jugador.</param>
-            <param name="game">El objeto del juego que contiene la lógica para determinar si la batalla ha terminado.</param>
-            <param name="player">El jugador que está participando en la batalla.</param>
-            <param name="playerDisplayName">El nombre para mostrar del jugador, usado para personalizar los mensajes.</param>
-            <returns>Un mensaje que indica si la batalla ha terminado o si la batalla continúa.</returns>
-            <exception cref="T:System.ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
+            <param name="attackerName">El nombre del jugador atacante.</param>
+            <param name="defenderName">El nombre del jugador defensor.</param>
+            <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
+            <returns>Un mensaje con el resultado del ataque.</returns>
         </member>
         <member name="M:ClassLibrary.Facade.ChangePokemon(System.String,System.String)">
             <summary>
@@ -77,6 +66,7 @@
             <param name="newPokemonName">Nombre del nuevo Pokémon a activar.</param>
             <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
             <exception cref="T:System.ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
+            <exception cref="T:System.ArgumentNullException">Se lanza si <paramref name="playerDisplayName"/> o <paramref name="newPokemonName"/> son nulos o están vacíos.</exception>
         </member>
         <member name="M:ClassLibrary.Facade.AddPlayerToWaitingList(System.String)">
             <summary>
