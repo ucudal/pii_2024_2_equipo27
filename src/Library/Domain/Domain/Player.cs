@@ -29,7 +29,6 @@ public class Player
         this.items.Add(new Revivir());
         this.items.Add(new CuraTotal());
         this.items.Add(new CuraTotal());
-
     }
 
     /// <summary>
@@ -54,6 +53,10 @@ public class Player
     public void AddPokemon(Pokemon pokemon)
     {
         this.AvailablePokemons.Add(pokemon);
+        if (this.AvailablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
+        {
+            this.ActivePokemon = this.AvailablePokemons[0];
+        }
     }
 
     /// <summary>
