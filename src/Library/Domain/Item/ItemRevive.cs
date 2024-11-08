@@ -1,10 +1,10 @@
 namespace ClassLibrary
 {
-    public class Revivir : Item
+    public class ItemRevive : Item
     {
         private const int ReviveHealth = 50;
 
-        public Revivir() : base("Revivir") { }
+        public ItemRevive() : base("Revivir") { }
 
         public override string ApplyEffect(Pokemon pokemon)
         {

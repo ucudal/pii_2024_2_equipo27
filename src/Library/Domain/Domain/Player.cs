@@ -22,30 +22,51 @@ public class Player
     public Player(string displayName)
     {
         DisplayName = displayName;
-        this.items.Add(new SuperPocion());
-        this.items.Add(new SuperPocion());
-        this.items.Add(new SuperPocion());
-        this.items.Add(new SuperPocion());
-        this.items.Add(new Revivir());
-        this.items.Add(new CuraTotal());
-        this.items.Add(new CuraTotal());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemSuperPotion());
+        this.items.Add(new ItemRevive());
+        this.items.Add(new ItemCompleteCure());
+        this.items.Add(new ItemCompleteCure());
 
     }
-
+    
     /// <summary>
-    /// Obtiene la lista de Pokémon disponibles para el jugador.
+    /// Lista de Pokémon disponibles para el jugador.
     /// </summary>
     public List<Pokemon> AvailablePokemons { get; } = new List<Pokemon>();
 
     /// <summary>
-    /// Obtiene el Pokémon actualmente activo del jugador.
+    /// El Pokémon activo del jugador.
     /// </summary>
     public Pokemon ActivePokemon { get; private set; }
 
     /// <summary>
-    /// Obtiene el movimiento actualmente activo del Pokémon del jugador.
+    /// El movimiento actualmente activo del Pokémon del jugador.
     /// </summary>
     public Move ActiveMove { get; private set; }
+
+    // Referencia al oponente de este jugador.
+    private Player _opponent;
+
+    /// <summary>
+    /// Establece al oponente del jugador.
+    /// </summary>
+    /// <param name="opponent">El jugador que será el oponente.</param>
+    public void SetOpponent(Player opponent)
+    {
+        _opponent = opponent;
+    }
+
+    /// <summary>
+    /// Obtiene el oponente del jugador.
+    /// </summary>
+    public Player GetOpponent()
+    {
+        return _opponent;
+    }
+    
 
     /// <summary>
     /// Agrega un Pokémon a la lista de Pokémon disponibles para el jugador.

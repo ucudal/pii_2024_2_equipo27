@@ -7,9 +7,7 @@ namespace ClassLibrary
     /// centralizadamente en esta clase, minimizando el impacto en el resto del sistema. Además, al aplicar el patrón
     /// Expert de GRASP, PokemonCatalog se convierte en la autoridad en la gestión del catálogo, lo que facilita la
     /// incorporación de nuevas características, como métodos de búsqueda adicionales o cambios en la fuente de datos,
-    /// sin necesidad de alteraciones significativas en otras partes del código. Esta separación de responsabilidades no
-    /// solo optimiza el mantenimiento y la extensibilidad, sino que también reduce las razones de cambio, permitiendo una
-    /// evolución más ágil y segura del sistema.
+    /// sin necesidad de alteraciones significativas en otras partes del código. 
     /// </summary>
     
     public class PokemonCatalog

@@ -45,7 +45,7 @@ public class GameList
         }
         return null;
     }
-    public Player FindOpponent(string playerDisplayName)
+    public Player FindOpponentOfDisplayName(string playerDisplayName)
     {
         foreach (var game in games)
         {
@@ -60,11 +60,12 @@ public class GameList
         }
         return null;
     }
-    public Game FindGameByPlayerDisplayName(string displayName)
+
+    public Game FindGameByPlayerDisplayName(string playerDisplayName)
     {
-        foreach (var game in games)
+        foreach ( Game game in games)
         {
-            if (game.Player1.DisplayName == displayName || game.Player2.DisplayName == displayName)
+             if (game.Player1.DisplayName == playerDisplayName || game.Player2.DisplayName == playerDisplayName)
             {
                 return game;
             }

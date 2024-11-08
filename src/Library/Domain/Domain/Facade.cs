@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 
 namespace ClassLibrary
 {
+    //esta es la buena 
     /// <summary>
     /// La clase  <c>Facade</c> proporciona una interfaz simplificada para interactuar con el juego, permitiendo a los jugadores seleccionar
     /// Pokémon, mostrar movimientos, activar ataques y consultar la salud de los Pokémon. Aplica el Patrón de Diseño Facade,
@@ -179,7 +180,7 @@ namespace ClassLibrary
             }
 
             // Busca al oponente del jugador para obtener sus Pokémon.
-            Player opponent = this.GameList.FindOpponent(playerDisplayName);
+            Player opponent = this.GameList.FindOpponentOfDisplayName(playerDisplayName);
             if (opponent == null)
             {
                 throw new ArgumentException($"No se encontró el oponente del jugador {playerDisplayName}.");
@@ -189,15 +190,15 @@ namespace ClassLibrary
             return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
         }
         
-        // // HISTORIA DE USUARIO 4
-        //
-        // /// <summary>
-        // /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
-        // /// </summary>
-        // /// <param name="attackerName">El nombre del jugador atacante.</param>
-        // /// <param name="defenderName">El nombre del jugador defensor.</param>
-        // /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
-        // /// <returns>Un mensaje con el resultado del ataque.</returns>
+        // HISTORIA DE USUARIO 4
+        
+        /// <summary>
+        /// Realiza un ataque en el turno del jugador, aplicando el daño basado en la efectividad del tipo.
+        /// </summary>
+        /// <param name="attackerName">El nombre del jugador atacante.</param>
+        /// <param name="defenderName">El nombre del jugador defensor.</param>
+        /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
+        /// <returns>Un mensaje con el resultado del ataque.</returns>
         public string PlayerAttack(string attackerName, string defenderName, string moveName)
         { 
             //Encontrar el jugador
@@ -244,11 +245,11 @@ namespace ClassLibrary
             // Verificar si el ataque es efectivo aleatorio con random
             //Enviar mensaje interfaz de que no es efectivo y sino seguir 
             
-            double AccuaracyAttack = attackingPokemon.SpecialMoveNormal.Accuracy;
+            //double AccuaracyAttack = attackingPokemon.SpecialMoveNormal.Accuracy;
             
-            if (AccuaracyAttack < 0.5)
+            //if (AccuaracyAttack < 0.5)
             {
-                return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
+               // return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
             }
             // if (AccuaracyAttack > 0.5)
             // {
@@ -348,12 +349,12 @@ namespace ClassLibrary
             player.ActivatePokemon(pokemonIndex);
 
             // Penalizar el turno del jugador
-            //Game.Turn.PenalizeTurn(player);
+            Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
+            game.Turn.PenalizeTurn(player);
 
             return UserInterface.ShowMessageChangePokemon(player.DisplayName, player.ActivePokemon.Name);
         }
-
-
+        
         //HISTORIA DE USUARIO 8
      
         public string PlayerUseItem(string playerDisplayName, string itemName) 

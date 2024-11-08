@@ -7,11 +7,12 @@ namespace ClassLibrary
     /// La clase <c>UserInterface</c> es responsable de construir y devolver mensajes 
     /// formateados para la interfaz de usuario, proporcionando la información necesaria sobre
     /// el juego, para interactuar con el usuario en el chatbot.
-    /// - Principio de Responsabilidad Única (SRP): La clase se encarga exclusivamente de generar y mostrar mensajes
-    /// que se utilizan para informar al usuario sobre el estado del juego, manteniéndose concentrada en
-    /// esta responsabilidad sin realizar ninguna lógica del juego.
-    /// - Expert Pattern (GRASP): Esta clase es la "experta" en formatear y construir mensajes para la interfaz de
-    /// usuario, ya que es la única que conoce el formato y contenido de los mensajes que se deben mostrar.
+    /// La clase se encarga exclusivamente de generar y mostrar mensajes que se utilizan para
+    /// informar al usuario sobre el estado del juego, manteniéndose concentrada en esta responsabilidad
+    /// sin realizar ninguna lógica del juego, por lo que cumple con el patrón de Responsabilidad Única(SRP)
+    /// También esta clase es la "experta" en formatear y construir mensajes para la interfaz de
+    /// usuario, ya que es la única que conoce el formato y contenido de los mensajes que se deben mostrar,
+    /// por lo que sigue el patrón Expert.
     /// </summary>
     public class UserInterface
     {
@@ -140,6 +141,21 @@ namespace ClassLibrary
             }
             return result.ToString();
         }
+
+        public string AddPlayerToWaitingList(string displayName)
+        {
+            if (displayName == displayName)
+            {
+                return $"{displayName} ya está en la lista de espera";
+            }
+            return displayName;
+        }
+
+        public static string ShowBattleEndMessage(string playerName)
+        {
+            return $"{playerName} ha ganado la batalla";
+        }
+
         public static string ShowMessageCurrentTurnPlayer(string currentPlayerDisplayName)
         {
             return $"🎮 Es el turno de {currentPlayerDisplayName}.";
@@ -169,15 +185,27 @@ namespace ClassLibrary
             return $"$ El jugador {attacker} no puede jugar porque su Pokémon {attackingPokemon} tiene un ataque especial activo que no lo permite";
         }
 
+        /// <summary>
+        /// Muestra un mensaje que la efectividad del ataque fue alta.
+        /// </summary>
+        /// <param name="attacker">El jugador que intenta realizar el ataque.</param>
+        /// <param name="attackingPokemon">El Pokémon que está intentando atacar.</param>
+        /// <returns>Un mensaje formateado indicando la efectividad.</returns>
         public static String ShowMessageHighEffectiveness(Double accuaracyAttack)
         {
             return $"$ La efectividad del ataque es alta:  {accuaracyAttack} ";
         }
+        
+        /// <summary>
+        /// Muestra un mensaje indicando que la efectividad del mensaje fue baja.
+        /// </summary>
+        /// <param name="attacker">El jugador que intenta realizar el ataque.</param>
+        /// <param name="attackingPokemon">El Pokémon que está intentando atacar.</param>
+        /// <returns>Un mensaje formateado indicando la efectividad.</returns>
         public static String ShowMessageLowEffectiveness(Double accuaracyAttack)
         {
             return $"$ La efectividad del ataque es baja: {accuaracyAttack} ";
         }
-        
 
     }
 }

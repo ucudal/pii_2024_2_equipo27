@@ -1,8 +1,8 @@
 namespace ClassLibrary
 {
-    public class CuraTotal : Item
+    public class ItemCompleteCure : Item
     {
-        public CuraTotal() : base("Cura total") { }
+        public ItemCompleteCure() : base("Cura total") { }
 
         public override string ApplyEffect(Pokemon pokemon)
         {

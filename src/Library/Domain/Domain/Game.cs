@@ -21,25 +21,19 @@ namespace ClassLibrary
         /// para controlar el flujo del juego.
         /// </summary>
         public Player Player2 { get; }
-        
+
         /// <summary>
         /// Instancia de la clase Turn para gestionar el turno actual del juego.
         /// </summary>
         public Turn Turn { get; set; }
-        
+
         /// <summary>
         /// Propiedad que indica el jugador que actualmente tiene el turno.
         /// </summary>
         public Player TurnPlayer
         {
-            get
-            {
-                return Turn.CurrentPlayer;
-            }
-            set
-            {
-                
-            }
+            get { return Turn.CurrentPlayer; }
+            set { return; }
         }
 
         /// <summary>
@@ -56,14 +50,21 @@ namespace ClassLibrary
         /// </summary>
         /// <param name="player1">El primer jugador.</param>
         /// <param name="player2">El segundo jugador.</param>
+
         public Game(Player player1, Player player2)
         {
             Player1 = player1;
             Player2 = player2;
             Turn = new Turn(player1, player2);
             TurnPlayer = player1; // El jugador 1 comienza con el turno
-            PlayIsOn = true;      // El juego inicia en estado activo
+            PlayIsOn = true; // El juego inicia en estado activo
+
+            // Establecer los oponentes
+            Player1.SetOpponent(Player2);
+            Player2.SetOpponent(Player1);
         }
+
+
 
         /// <summary>
         /// Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
@@ -74,6 +75,7 @@ namespace ClassLibrary
         public void CheckIfGameEnds()
         {
             // Verificamos si todos los Pokémon del jugador 1 tienen 0 puntos de vida
+            Player opponent = TurnPlayer.GetOpponent();
             bool todosSonCeroPlayer1 = true; // = Player1.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
             foreach (Pokemon pokemon in Player1.AvailablePokemons)
             {
@@ -82,8 +84,8 @@ namespace ClassLibrary
                     todosSonCeroPlayer1 = false;
                 }
             }
-            
-            
+
+
             // Verificamos si todos los Pokémon del jugador 2 tienen 0 puntos de vida
             bool todosSonCeroPlayer2 = true; // Player2.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
             foreach (Pokemon pokemon in Player2.AvailablePokemons)
@@ -93,18 +95,16 @@ namespace ClassLibrary
                     todosSonCeroPlayer2 = false;
                 }
             }
-            
+
             // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
             if (todosSonCeroPlayer1)
             {
-                Console.WriteLine("¡Ha ganado Player 2!");
-                PlayIsOn = false;  // El juego termina
+                PlayIsOn = false; // El juego termina
             }
             // Si todos los Pokémon de Player 2 tienen 0 puntos de vida, Player 1 gana
             else if (todosSonCeroPlayer2)
             {
-                Console.WriteLine("¡Ha ganado Player 1!");
-                PlayIsOn = false;  // El juego termina
+                PlayIsOn = false; // El juego termina
             }
         }
     }
