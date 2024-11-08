@@ -153,7 +153,7 @@ namespace ClassLibrary
                 throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
             }
             
-            //player.ActivateMoveInActivePokemon(moveIndex);
+            player.ActivateMoveInActivePokemon(moveIndex);
         }
 
         //HISTORIA DE USUARIO 3
@@ -245,30 +245,35 @@ namespace ClassLibrary
             // Verificar si el ataque es efectivo aleatorio con random
             //Enviar mensaje interfaz de que no es efectivo y sino seguir 
             
-            //double AccuaracyAttack = attackingPokemon.SpecialMoveNormal.Accuracy;
             
-            //if (AccuaracyAttack < 0.5)
+            double AccuaracyAttack = attacker.ActiveMove.Accuracy;
+            
+            if (AccuaracyAttack < 0.5)
             {
-               // return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
+                return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
             }
-            // if (AccuaracyAttack > 0.5)
-            // {
-            //     return UserInterface.ShowMessageHighEffectiveness(AccuaracyAttack); 
-            // }
+            
             
             //golpecritico
             Random random = new Random();
 
             // Generar un número aleatorio entre 1 y 100
             int randomNumber = random.Next(1, 101);
-            bool criticalHit = randomNumber <= 10;
+            double criticalHit;
+            if (randomNumber <= 10)
+            {
+                criticalHit = 1.20;
+            }
+            else
+            {
+                criticalHit = 1.0;
+            }
+            
             //Comprobar si es un golpe crítico.
             //Un golpe crítico aumenta un 20% el daño a realizar. La probabilidad de que un golpe sea crítico es del 10%. 
-            //Para eso definir de default 1
-        
             
             //Ejecuta el ataque
-            //attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
+            
             attacker.ExecuteMove(defender, criticalHit);
             
             // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
@@ -281,15 +286,13 @@ namespace ClassLibrary
             {
                 attackingPokemon.HealthPoints -= (int) 0.10 * (attackingPokemon.HealthPoints);
             }
-        
-            //Implemetar el turno
+            
+            //Penalizar el turno del jugador
+            Game game = GameList.FindGameByPlayerDisplayName(attackerName);
+            game.Turn.PenalizeTurn(attacker);
             
             // Construye el mensaje de resultado
             return UserInterface.ShowMessageAttackOcurred(attackingPokemon, defendingPokemon, attacker, defender);
-            
-            //Penalizar el turno del jugador
-            // Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
-            // game.Turn.PenalizeTurn(player);
 
         }
         

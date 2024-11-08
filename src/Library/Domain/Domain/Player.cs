@@ -129,7 +129,7 @@ public class Player
     /// <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
     public void ActivateMoveInActivePokemon(int index)
     {
-        //this.ActiveMove = this.ActivePokemon.Moves[index];
+        this.ActiveMove = this.ActivePokemon.Moves[index];
     }
 
     public Item UseItem(string itemName)

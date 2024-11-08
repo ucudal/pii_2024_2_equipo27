@@ -171,7 +171,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje formateado indicando que el ataque ocurrió.</returns>
         public static string ShowMessageAttackOcurred(Pokemon attackingPokemon, Pokemon defendingPokemon, Player attacker, Player defender)
         {
-            return $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon} de {defender}";
+            return $"Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon.Name} de {defender.DisplayName}";
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje formateado indicando que el ataque no ocurrió debido a un movimiento especial activo.</returns>
         public static string ShowMessageAttackDidNotOccur(Player attacker, Pokemon attackingPokemon)
         {
-            return $"$ El jugador {attacker} no puede jugar porque su Pokémon {attackingPokemon} tiene un ataque especial activo que no lo permite";
+            return $"El jugador {attacker} no puede jugar porque su Pokémon {attackingPokemon} tiene un ataque especial activo que no lo permite";
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje formateado indicando la efectividad.</returns>
         public static String ShowMessageHighEffectiveness(Double accuaracyAttack)
         {
-            return $"$ La efectividad del ataque es alta:  {accuaracyAttack} ";
+            return $"La efectividad del ataque es alta: {accuaracyAttack}";
         }
         
         /// <summary>
@@ -204,7 +204,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje formateado indicando la efectividad.</returns>
         public static String ShowMessageLowEffectiveness(Double accuaracyAttack)
         {
-            return $"$ La efectividad del ataque es baja: {accuaracyAttack} ";
+            return $"La efectividad del ataque es baja: {accuaracyAttack}";
         }
 
     }
