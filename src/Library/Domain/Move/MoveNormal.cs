@@ -16,6 +16,7 @@ namespace ClassLibrary
         {
             this.Name = name;
             this.AttackValue = attackValue;
+            this.Accuracy = accuracy;
         }
         
         /// <summary>

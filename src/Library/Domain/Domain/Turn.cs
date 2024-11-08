@@ -43,11 +43,12 @@ namespace ClassLibrary
         /// </summary>
         public void ChangeTurn()
         {
-            
             // Intercambia los jugadores
             var temp = CurrentPlayer;
             CurrentPlayer = WaitingPlayer;
             WaitingPlayer = temp;
+
+            CurrentPlayer.TurnChanged();
         }
 
         /// <summary>
