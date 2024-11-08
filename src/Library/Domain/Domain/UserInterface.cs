@@ -151,7 +151,7 @@ namespace ClassLibrary
             return displayName;
         }
 
-        public static string ShowBattleEndMessage(string playerName)
+        public string ShowBattleEndMessage(string playerName)
         {
             return $"{playerName} ha ganado la batalla";
         }

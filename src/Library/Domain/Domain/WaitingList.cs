@@ -97,7 +97,6 @@ public class WaitingList
                 return player;
             }
         }
-
         return null;
     }
 
