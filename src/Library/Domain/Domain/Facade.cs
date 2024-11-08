@@ -260,17 +260,15 @@ namespace ClassLibrary
 
             // Generar un número aleatorio entre 1 y 100
             int randomNumber = random.Next(1, 101);
-
-            if (randomNumber < 10)
-            {
-                //int golpeCritico = attackingPokemon.Moves
-            }
+            bool criticalHit = randomNumber <= 10;
             //Comprobar si es un golpe crítico.
             //Un golpe crítico aumenta un 20% el daño a realizar. La probabilidad de que un golpe sea crítico es del 10%. 
             //Para eso definir de default 1
         
+            
             //Ejecuta el ataque
             //attacker.ActiveMove.ExecuteMove(attacker, defender, criticalHit);
+            attacker.ExecuteMove(defender, criticalHit);
             
             // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
             if (attackingPokemon.IsPoisoned)
@@ -287,7 +285,11 @@ namespace ClassLibrary
             
             // Construye el mensaje de resultado
             return UserInterface.ShowMessageAttackOcurred(attackingPokemon, defendingPokemon, attacker, defender);
-        
+            
+            //Penalizar el turno del jugador
+            // Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
+            // game.Turn.PenalizeTurn(player);
+
         }
         
         //HISTORIA DE USUARIO 5
