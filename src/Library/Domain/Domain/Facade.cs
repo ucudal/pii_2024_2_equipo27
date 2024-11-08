@@ -152,7 +152,7 @@ namespace ClassLibrary
                 throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
             }
 
-            //player.ActivateMoveInActivePokemon(moveIndex);
+            player.ActivateMoveInActivePokemon(moveIndex);
         }
 
         //HISTORIA DE USUARIO 3
@@ -326,7 +326,7 @@ namespace ClassLibrary
             // Si el jugador no tiene Pokémon disponibles, termina la batalla y muestra el mensaje de fin de la batalla
             if (player.AvailablePokemons.Count == 0)
             {
-                return userInterface.ShowBattleEndMessage(playerName: playerDisplayName);
+                return UserInterface.ShowBattleEndMessage(playerName: playerDisplayName);
             }
             // Si el jugador tiene un Pokémon o mas  disponibles, la batalla no ha terminado
             else if (player.AvailablePokemons.Count >= 1)

@@ -171,7 +171,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje formateado indicando que el ataque ocurrió.</returns>
         public static string ShowMessageAttackOcurred(Pokemon attackingPokemon, Pokemon defendingPokemon, Player attacker, Player defender)
         {
-            return $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon} de {defender}";
+            return $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon.Name} de {defender.DisplayName}";
         }
 
         /// <summary>

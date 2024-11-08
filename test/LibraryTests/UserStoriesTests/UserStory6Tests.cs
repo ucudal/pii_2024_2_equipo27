@@ -18,8 +18,8 @@ public class UserStory6Tests
         Facade.Instance.AddPlayerToWaitingList("Player 2");
         
         //Assert
-        Assert.That(Facade.Instance.PlayerIsWaiting("Player 1").Equals("Player 1"));
-        // ver con fernando//
+        Assert.That(Facade.Instance.PlayerIsWaiting("Player 1"), Is.EqualTo("Player 1 está esperando"));
+        
         
         
         
@@ -36,10 +36,11 @@ public class UserStory6Tests
         Facade.Instance.ChoosePokemons("Player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
         Facade.Instance.ChoosePokemons("Player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
         Facade.Instance.ChoosePokemonAndMoveToAttack( "Player1",  "Corte", "Mew");
+        Facade.Instance.ChoosePokemonAndMoveToAttack("Player2", "Llamarada", "Blaziken");
         
         // Act
         string result = Facade.Instance.PlayerAttack("Player1", "Player2", "Corte");
-        string expected =" Jugador Player1 usa al Pokémon Blaziken que ataca con Corte a Blasiken de Player2";
+        string expected =" Jugador Player1 usa al Pokémon Mew que ataca con Corte a Blaziken de Player2";
         // Assert
         Assert.That(result, Is.EqualTo(expected));
 
