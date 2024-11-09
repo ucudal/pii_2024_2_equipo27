@@ -56,12 +56,22 @@ namespace ClassLibrary
         
 
         //HISTORIA DE USUARIO 1
-        
+        /// <summary>
+        /// Muestra el catálogo completo de Pokémon disponibles para seleccionar en la partida.
+        /// </summary>
+        /// <returns>Un mensaje que contiene la lista de Pokémon disponibles en el catálogo.</returns>
         public string ShowPokemonCatalog()
         {
             return UserInterface.ShowMessagePokemonCatalog();
         }
-
+        /// <summary>
+        /// Permite a un jugador seleccionar hasta seis Pokémon para su equipo en la partida.
+        /// Verifica que el jugador esté activo y que no seleccione más de seis Pokémon. Luego,
+        /// agrega los Pokémon seleccionados al equipo del jugador y muestra los detalles de los Pokémon seleccionados.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador que seleccionará los Pokémon.</param>
+        /// <param name="pokemonNames">Un arreglo de nombres de los Pokémon que el jugador desea seleccionar.</param>
+        /// <returns>Un mensaje que indica los Pokémon seleccionados o un mensaje de error si ocurre algún problema.</returnS>
         public string ChoosePokemons(string playerDisplayName, string[] pokemonNames)
         {
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
@@ -85,6 +95,10 @@ namespace ClassLibrary
                 {
                     player.AddPokemon(pokemon);
                     selectedPokemons.Add(pokemon);
+                }
+                else
+                { ;
+                    throw new Exception($"El pokemon {pokemonName} no esta en el catalogo");
                 }
             }
 
@@ -297,6 +311,12 @@ namespace ClassLibrary
         }
         
         //HISTORIA DE USUARIO 5
+        /// <summary>
+        /// Obtiene el nombre del jugador que tiene el turno actual en la partida en la que se encuentra el jugador especificado.
+        /// Verifica si el jugador está en una partida activa y, de ser así, devuelve el nombre del jugador cuyo turno está en curso.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador para buscar su partida.</param>
+        /// <returns>Un mensaje que indica el nombre del jugador con el turno actual o un mensaje de error si el jugador no está en una partida.</returns>
     public string GetCurrentTurnPlayer(string playerDisplayName)
     {
             // Buscar la partida en la que está el jugador
@@ -304,7 +324,7 @@ namespace ClassLibrary
 
         if (game == null)
         {
-            return $"El jugador {playerDisplayName} no está en una partida.";
+            throw new Exception($"El jugador {playerDisplayName} no está en una partida.");
         }
 
             // Obtener el nombre del jugador que tiene el turno actual
@@ -359,7 +379,14 @@ namespace ClassLibrary
         }
         
         //HISTORIA DE USUARIO 8
-     
+        /// <summary>
+        /// Permite que un jugador use un ítem específico en su Pokémon activo dentro de una partida.
+        /// La función busca al jugador por su nombre, verifica que esté en la partida y que tenga un Pokémon activo
+        /// para aplicar el ítem. Si todo es válido, aplica el efecto del ítem al Pokémon.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador que intenta usar el ítem.</param>
+        /// <param name="itemName">El nombre del ítem que el jugador intenta usar.</param>
+        /// <returns>Un mensaje que indica si el jugador usó el ítem con éxito, el efecto del ítem o cualquier error.</returns>
         public string PlayerUseItem(string playerDisplayName, string itemName) 
         {
             // Buscar el jugador por su nombre
@@ -367,7 +394,7 @@ namespace ClassLibrary
             if (player == null)
             {
                 // Retorna un mensaje indicando que el jugador no está jugando
-                return $"El jugador {playerDisplayName} no está jugando";
+                throw new Exception($"El jugador {playerDisplayName} no está jugando");
             }
 
             try
@@ -378,7 +405,7 @@ namespace ClassLibrary
                 // Verificar que el jugador tiene un Pokémon activo
                 if (player.ActivePokemon == null)
                 {
-                    return $"{playerDisplayName} no tiene un Pokémon activo para aplicar el ítem.";
+                    throw new Exception($"{playerDisplayName} no tiene un Pokémon activo para aplicar el ítem.");
                 }
 
                 // Aplicar el efecto del ítem en el Pokémon activo del jugador

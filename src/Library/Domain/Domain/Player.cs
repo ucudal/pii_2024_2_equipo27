@@ -22,18 +22,17 @@ public class Player
     public Player(string displayName)
     {
         DisplayName = displayName;
-        this.items.Add(new ItemSuperPotion());
-        this.items.Add(new ItemSuperPotion());
-        this.items.Add(new ItemSuperPotion());
-        this.items.Add(new ItemSuperPotion());
-        this.items.Add(new ItemRevive());
-        this.items.Add(new ItemCompleteCure());
-        this.items.Add(new ItemCompleteCure());
-
+        this.items.Add(new SuperPocion());
+        this.items.Add(new SuperPocion());
+        this.items.Add(new SuperPocion());
+        this.items.Add(new SuperPocion());
+        this.items.Add(new Revivir());
+        this.items.Add(new CompleteCure());
+        this.items.Add(new CompleteCure());
     }
-    
+
     /// <summary>
-    /// Lista de Pokémon disponibles para el jugador.
+    /// Obtiene la lista de Pokémon disponibles para el jugador.
     /// </summary>
     public List<Pokemon> AvailablePokemons { get; } = new List<Pokemon>();
 
@@ -75,6 +74,10 @@ public class Player
     public void AddPokemon(Pokemon pokemon)
     {
         this.AvailablePokemons.Add(pokemon);
+        if (this.AvailablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
+        {
+            this.ActivePokemon = this.AvailablePokemons[0];
+        }
     }
 
     /// <summary>

@@ -26,6 +26,13 @@
             Inicializa este singleton. Es necesario solo en los tests.
             </summary>
         </member>
+        <member name="M:ClassLibrary.Facade.ShowPokemonCatalog">
+            <summary>
+            Muestra el catálogo completo de Pokémon disponibles para seleccionar en la partida.
+            </summary>
+            <returns>Un mensaje que contiene la lista de Pokémon disponibles en el catálogo.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:ClassLibrary.Facade.ChoosePokemons(System.String,System.String[])" -->
         <member name="M:ClassLibrary.Facade.ShowMoves(System.String)">
             <summary>
             Muestra los movimientos disponibles de los Pokémon del jugador seleccionado.
@@ -58,6 +65,14 @@
             <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
             <returns>Un mensaje con el resultado del ataque.</returns>
         </member>
+        <member name="M:ClassLibrary.Facade.GetCurrentTurnPlayer(System.String)">
+            <summary>
+            Obtiene el nombre del jugador que tiene el turno actual en la partida en la que se encuentra el jugador especificado.
+            Verifica si el jugador está en una partida activa y, de ser así, devuelve el nombre del jugador cuyo turno está en curso.
+            </summary>
+            <param name="playerDisplayName">El nombre del jugador para buscar su partida.</param>
+            <returns>Un mensaje que indica el nombre del jugador con el turno actual o un mensaje de error si el jugador no está en una partida.</returns>
+        </member>
         <member name="M:ClassLibrary.Facade.ChangePokemon(System.String,System.String)">
             <summary>
             Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
@@ -67,6 +82,16 @@
             <returns>Un mensaje formateado indicando el cambio de Pokémon y la pérdida de turno.</returns>
             <exception cref="T:System.ArgumentException">Se lanza si el jugador no está en la partida o si el Pokémon no está disponible.</exception>
             <exception cref="T:System.ArgumentNullException">Se lanza si <paramref name="playerDisplayName"/> o <paramref name="newPokemonName"/> son nulos o están vacíos.</exception>
+        </member>
+        <member name="M:ClassLibrary.Facade.PlayerUseItem(System.String,System.String)">
+            <summary>
+            Permite que un jugador use un ítem específico en su Pokémon activo dentro de una partida.
+            La función busca al jugador por su nombre, verifica que esté en la partida y que tenga un Pokémon activo
+            para aplicar el ítem. Si todo es válido, aplica el efecto del ítem al Pokémon.
+            </summary>
+            <param name="playerDisplayName">El nombre del jugador que intenta usar el ítem.</param>
+            <param name="itemName">El nombre del ítem que el jugador intenta usar.</param>
+            <returns>Un mensaje que indica si el jugador usó el ítem con éxito, el efecto del ítem o cualquier error.</returns>
         </member>
         <member name="M:ClassLibrary.Facade.AddPlayerToWaitingList(System.String)">
             <summary>
@@ -199,7 +224,7 @@
         </member>
         <member name="P:ClassLibrary.Player.AvailablePokemons">
             <summary>
-            Lista de Pokémon disponibles para el jugador.
+            Obtiene la lista de Pokémon disponibles para el jugador.
             </summary>
         </member>
         <member name="P:ClassLibrary.Player.ActivePokemon">
@@ -456,13 +481,66 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:ClassLibrary.Item">
+            <summary>
+            La clase <c>Item</c> representa un ítem genérico que puede ser utilizado en el contexto del juego.
+            - Principio de Responsabilidad Única (SRP): Se encarga exclusivamente de modelar las propiedades y el comportamiento básico de un ítem.
+            - Patrón Polimorfismo (GRASP): Permite a las subclases sobrescribir el método <c>ApplyEffect</c> para definir comportamientos específicos de los ítems.
+            - Inmutabilidad: La propiedad <c>Name</c> es de solo lectura, garantizando que el nombre del ítem no pueda ser modificado después de su creación.
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Item.Name">
+            <summary>
+            Propiedad que almacena el nombre del ítem.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Item.#ctor(System.String)">
+            <summary>
+            Constructor de la clase <c>Item</c>.
+            Inicializa el ítem con un nombre específico.
+            </summary>
+            <param name="name">Nombre del ítem.</param>
+        </member>
         <member name="M:ClassLibrary.Item.ApplyEffect(ClassLibrary.Pokemon)">
             <summary>
             Aplica el efecto del ítem en el Pokémon especificado.
-            Este método será sobrescrito por las subclases.
+            Este método está diseñado para ser sobrescrito por subclases que implementen efectos específicos.
+            - Principio de Sustitución de Liskov (LSP): Las subclases pueden proporcionar su propia implementación de este método sin alterar su comportamiento general.
             </summary>
-            <param name="pokemon">El Pokémon al que se le aplicará el efecto.</param>
-            <returns>Un mensaje con el resultado de aplicar el efecto.</returns>
+            <param name="pokemon">El Pokémon al que se aplicará el efecto del ítem.</param>
+            <returns>Un mensaje que indica el resultado de aplicar el efecto.</returns>
+        </member>
+        <member name="T:ClassLibrary.Revivir">
+            <summary>
+            La clase <c>Revivir</c> representa un ítem que revive a un Pokémon debilitado, restaurando parcialmente sus puntos de vida.
+            Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente la lógica de revivir y curación parcial
+            para Pokémon debilitados. Utiliza el patrón Expert, ya que posee toda la información necesaria para aplicar su efecto
+            al Pokémon. Además, facilita la extensión de la clase para añadir nuevos ítems sin modificar la clase base,
+            alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión. La clase asegura la robustez y
+            seguridad de su comportamiento al prevenir estados inválidos y facilitar la detección de errores en su uso.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Revivir.#ctor">
+            <summary>
+            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.Revivir"/> con el nombre del ítem establecido como "Revivir".
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Revivir.ApplyEffect(ClassLibrary.Pokemon)">
+            <summary>
+            Aplica el efecto de la <c>Revivir</c> al Pokémon especificado. Si el Pokémon está debilitado (con puntos de vida iguales a cero),
+            lo revive restaurando 50 puntos de vida. Si el Pokémon ya tiene puntos de vida, no se puede aplicar el efecto.
+            </summary>
+            <param name="pokemon">El Pokémon al que se le aplicará el ítem.</param>
+            <returns>Un mensaje indicando el resultado de la aplicación del ítem.</returns>
+        </member>
+        <member name="T:ClassLibrary.SuperPocion">
+            <summary>
+            La clase <c>SuperPocion</c> representa un ítem que restaura puntos de vida a un Pokémon en batalla.
+            Aplica el principio de responsabilidad única (SRP) al encargarse exclusivamente de la lógica de curación
+            parcial de un Pokémon. Utiliza el patrón Expert, ya que posee toda la información necesaria para aplicar
+            su efecto al Pokémon. La clase también está diseñada para cumplir con el principio abierto/cerrado (OCP),
+            facilitando la extensión mediante la adición de otros ítems sin necesidad de modificar la clase base.
+            </summary>
         </member>
         <member name="T:ClassLibrary.Move">
             <summary>
