@@ -17,9 +17,9 @@ namespace ClassLibrary
     {
         private WaitingList WaitingList { get; }
         public GameList GameList { get; }
-        private UserInterface UserInterface { get;  }
-        
-        
+        private UserInterface UserInterface { get; }
+
+
         private static Facade _instance;
 
         // Este constructor privado impide que otras clases puedan crear instancias de esta.
@@ -166,8 +166,9 @@ namespace ClassLibrary
             {
                 throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
             }
-            
+
             player.ActivateMoveInActivePokemon(moveIndex);
+       
         }
 
         //HISTORIA DE USUARIO 3
@@ -263,26 +264,37 @@ namespace ClassLibrary
             double AccuaracyAttack = attacker.ActiveMove.Accuracy;
             
             if (AccuaracyAttack < 0.5)
+
+            //double AccuaracyAttack = attackingPokemon.SpecialMoveNormal.Accuracy;
+
+            //if (AccuaracyAttack < 0.5)
             {
                 return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
+                // return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
             }
             
             
+            // if (AccuaracyAttack > 0.5)
+            // {
+            //     return UserInterface.ShowMessageHighEffectiveness(AccuaracyAttack); 
+            // }
+
             //golpecritico
             Random random = new Random();
 
             // Generar un número aleatorio entre 1 y 100
             int randomNumber = random.Next(1, 101);
-            double criticalHit;
+            double criticalHit = 0;
             if (randomNumber <= 10)
             {
                 criticalHit = 1.20;
             }
             else
+
+            //if (randomNumber < 10)
             {
-                criticalHit = 1.0;
+                //int golpeCritico = attackingPokemon.Moves
             }
-            
             //Comprobar si es un golpe crítico.
             //Un golpe crítico aumenta un 20% el daño a realizar. La probabilidad de que un golpe sea crítico es del 10%. 
             
@@ -334,7 +346,35 @@ namespace ClassLibrary
     }
         
         //HISTORIA DE USUARIO 6
-        
+
+        /// <summary>
+        /// Finaliza la batalla y muestra un mensaje indicando si el juego ha terminado o si la batalla sigue en curso.
+        /// Verifica el estado de los Pokémon disponibles del jugador y maneja el flujo de finalización de la batalla.
+        /// </summary>
+        /// <param name="userInterface">La instancia de la interfaz de usuario que muestra los mensajes al jugador.</param>
+        /// <param name="game">El objeto del juego que contiene la lógica para determinar si la batalla ha terminado.</param>
+        /// <param name="player">El jugador que está participando en la batalla.</param>
+        /// <param name="playerDisplayName">El nombre para mostrar del jugador, usado para personalizar los mensajes.</param>
+        /// <returns>Un mensaje que indica si la batalla ha terminado o si la batalla continúa.</returns>
+        /// <exception cref="ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
+        public string EndGame(UserInterface userInterface, Game game, Player player, string playerDisplayName)
+        {
+            // Verifica si el juego ha terminado (puede modificar estados internos del juego)
+            game.CheckIfGameEnds();
+            // Si el jugador no tiene Pokémon disponibles, termina la batalla y muestra el mensaje de fin de la batalla
+            if (player.AvailablePokemons.Count == 0)
+            {
+                return UserInterface.ShowBattleEndMessage(playerName: playerDisplayName);
+            }
+            // Si el jugador tiene un Pokémon o mas  disponibles, la batalla no ha terminado
+            else if (player.AvailablePokemons.Count >= 1)
+            {
+                throw new ArgumentException($"La batalla continúa.");
+            }
+
+            return null;
+        }
+
 
         //HISTORIA DE USUARIO 7
         

@@ -160,6 +160,17 @@ public class Player
     {
         this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
     }
+
+    public void TurnChanged()
+    {
+        foreach (Pokemon pokemon in this.AvailablePokemons)
+        {
+            if (pokemon.IsBurned)
+            {
+                pokemon.HealthPoints = (int)(pokemon.HealthPoints * 0.9);
+            }
+        }
+    }
 }
     
 

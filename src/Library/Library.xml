@@ -73,6 +73,18 @@
             <param name="playerDisplayName">El nombre del jugador para buscar su partida.</param>
             <returns>Un mensaje que indica el nombre del jugador con el turno actual o un mensaje de error si el jugador no está en una partida.</returns>
         </member>
+        <member name="M:ClassLibrary.Facade.EndGame(ClassLibrary.UserInterface,ClassLibrary.Game,ClassLibrary.Player,System.String)">
+            <summary>
+            Finaliza la batalla y muestra un mensaje indicando si el juego ha terminado o si la batalla sigue en curso.
+            Verifica el estado de los Pokémon disponibles del jugador y maneja el flujo de finalización de la batalla.
+            </summary>
+            <param name="userInterface">La instancia de la interfaz de usuario que muestra los mensajes al jugador.</param>
+            <param name="game">El objeto del juego que contiene la lógica para determinar si la batalla ha terminado.</param>
+            <param name="player">El jugador que está participando en la batalla.</param>
+            <param name="playerDisplayName">El nombre para mostrar del jugador, usado para personalizar los mensajes.</param>
+            <returns>Un mensaje que indica si la batalla ha terminado o si la batalla continúa.</returns>
+            <exception cref="T:System.ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
+        </member>
         <member name="M:ClassLibrary.Facade.ChangePokemon(System.String,System.String)">
             <summary>
             Cambia el Pokémon activo del jugador al especificado por <paramref name="newPokemonName"/> y pierde su turno.
