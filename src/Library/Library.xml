@@ -73,7 +73,7 @@
             <param name="playerDisplayName">El nombre del jugador para buscar su partida.</param>
             <returns>Un mensaje que indica el nombre del jugador con el turno actual o un mensaje de error si el jugador no está en una partida.</returns>
         </member>
-        <member name="M:ClassLibrary.Facade.EndGame(ClassLibrary.UserInterface,ClassLibrary.Game,ClassLibrary.Player,System.String)">
+        <member name="M:ClassLibrary.Facade.EndGame(ClassLibrary.Game,ClassLibrary.Player,System.String)">
             <summary>
             Finaliza la batalla y muestra un mensaje indicando si el juego ha terminado o si la batalla sigue en curso.
             Verifica el estado de los Pokémon disponibles del jugador y maneja el flujo de finalización de la batalla.
@@ -216,6 +216,20 @@
             <param name="displayName">El nombre del jugador.</param>
             <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
+        <member name="M:ClassLibrary.GameList.FindOpponentOfDisplayName(System.String)">
+            <summary>
+            Encuentra un jugador por el nombre de su oponente para una batalla en curso.
+            </summary>
+            <param name="displayName">El nombre del jugador.</param>
+            <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
+        </member>
+        <member name="M:ClassLibrary.GameList.FindGameByPlayerDisplayName(System.String)">
+            <summary>
+            Encuentra una battala por el nombre de uno de sus jugadores.
+            </summary>
+            <param name="displayName">El nombre del jugador.</param>
+            <returns> El objeto Game si se encuentra; de lo contrario, null.</returns>
+        </member>
         <member name="T:ClassLibrary.Player">
             <summary>
             La clase  <c>Player</c> representa a un jugador en el juego, 
@@ -329,20 +343,6 @@
             <remarks>
             Se debe validar que el parámetro no sea nulo antes de usarlo.
             </remarks>
-        </member>
-        <member name="M:ClassLibrary.Turn.PlayerAttack(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Move)">
-            <summary>
-            Permite que un jugador ataque a otro Pokémon usando un movimiento.
-            </summary>
-            <remarks>
-            Se debe validar que move, attacker y defender no sean nulos antes de usar.
-            </remarks>
-        </member>
-        <member name="M:ClassLibrary.Turn.GetEffectivenessMessage(System.Double)">
-            <summary>
-            Obtiene un mensaje sobre la efectividad del ataque.
-            </summary>
-            <returns>Un mensaje que describe la efectividad.</returns>
         </member>
         <member name="T:ClassLibrary.UserInterface">
             <summary>
@@ -489,7 +489,6 @@
             Retorna un jugador cualquiera esperando para jugar. En esta
             implementación provista no es cualquiera, sino el primero. En la
             implementación definitiva, debería ser uno aleatorio.
-            
             </summary>
             <returns></returns>
         </member>
@@ -522,6 +521,30 @@
             <param name="pokemon">El Pokémon al que se aplicará el efecto del ítem.</param>
             <returns>Un mensaje que indica el resultado de aplicar el efecto.</returns>
         </member>
+        <member name="T:ClassLibrary.CompleteCure">
+            <summary>
+            La clase <c>CuraTotal</c> es responsable de representar un ítem que cura completamente a un Pokémon.
+            Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente la lógica de curación completa
+            y eliminación de efectos de estado de un Pokémon. Utiliza el patrón Expert, ya que posee toda la información
+            necesaria para aplicar su efecto al Pokémon. Además, facilita la extensión de la clase para añadir nuevos
+            ítems sin modificar la clase base, alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión.
+            La robustez y seguridad de esta clase se asegura al evitar estados inválidos y facilitar la detección de errores
+            en el uso de la clase.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.CompleteCure.#ctor">
+            <summary>
+            Constructor de la clase <c>CompleteCure</c> que inicializa el ítem con el nombre "Cura total".
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.CompleteCure.ApplyEffect(ClassLibrary.Pokemon)">
+            <summary>
+            Aplica el efecto de curación completa y eliminación de estados alterados a un Pokémon.
+            </summary>
+            <param name="pokemon">El Pokémon al que se le aplicará la cura completa.</param>
+            <returns>Un mensaje que indica que el Pokémon ha sido curado completamente.</returns>
+            <exception cref="T:System.Exception">Se lanza una excepción si no se pasa un Pokémon válido.</exception>
+        </member>
         <member name="T:ClassLibrary.Revivir">
             <summary>
             La clase <c>Revivir</c> representa un ítem que revive a un Pokémon debilitado, restaurando parcialmente sus puntos de vida.
@@ -553,6 +576,24 @@
             su efecto al Pokémon. La clase también está diseñada para cumplir con el principio abierto/cerrado (OCP),
             facilitando la extensión mediante la adición de otros ítems sin necesidad de modificar la clase base.
             </summary>
+        </member>
+        <member name="F:ClassLibrary.SuperPocion.HealingAmount">
+            <summary>
+            Cantidad de puntos de vida que restaura la super poción.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.SuperPocion.#ctor">
+            <summary>
+            Constructor de la clase <c>SuperPocion</c> que inicializa el ítem con el nombre "SuperPocion".
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.SuperPocion.ApplyEffect(ClassLibrary.Pokemon)">
+            <summary>
+            Aplica el efecto de la super poción, aumentando los puntos de vida del Pokémon.
+            </summary>
+            <param name="pokemon">El Pokémon al que se le aplicará la super poción.</param>
+            <returns>Un mensaje que indica la cantidad de puntos de vida restaurados.</returns>
+            <exception cref="T:System.Exception">Se lanza una excepción si no se pasa un Pokémon válido.</exception>
         </member>
         <member name="T:ClassLibrary.Move">
             <summary>

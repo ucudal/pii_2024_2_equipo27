@@ -4,7 +4,7 @@ namespace ClassLibrary.Tests
     using ClassLibrary;
     using System.Collections.Generic;
 
-    public class UserStory4
+    public class UserStory4Tests
     {
         [TearDown]
         public void TearDown()

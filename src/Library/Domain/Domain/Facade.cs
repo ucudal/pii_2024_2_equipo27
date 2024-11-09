@@ -1,8 +1,5 @@
-using System.Security.Cryptography;
-
 namespace ClassLibrary
 {
-    //esta es la buena 
     /// <summary>
     /// La clase  <c>Facade</c> proporciona una interfaz simplificada para interactuar con el juego, permitiendo a los jugadores seleccionar
     /// Pokémon, mostrar movimientos, activar ataques y consultar la salud de los Pokémon. Aplica el Patrón de Diseño Facade,
@@ -56,6 +53,7 @@ namespace ClassLibrary
         
 
         //HISTORIA DE USUARIO 1
+        
         /// <summary>
         /// Muestra el catálogo completo de Pokémon disponibles para seleccionar en la partida.
         /// </summary>
@@ -64,6 +62,7 @@ namespace ClassLibrary
         {
             return UserInterface.ShowMessagePokemonCatalog();
         }
+        
         /// <summary>
         /// Permite a un jugador seleccionar hasta seis Pokémon para su equipo en la partida.
         /// Verifica que el jugador esté activo y que no seleccione más de seis Pokémon. Luego,
@@ -168,7 +167,6 @@ namespace ClassLibrary
             }
 
             player.ActivateMoveInActivePokemon(moveIndex);
-       
         }
 
         //HISTORIA DE USUARIO 3
@@ -260,26 +258,14 @@ namespace ClassLibrary
             // Verificar si el ataque es efectivo aleatorio con random
             //Enviar mensaje interfaz de que no es efectivo y sino seguir 
             
-            
             double AccuaracyAttack = attacker.ActiveMove.Accuracy;
             
             if (AccuaracyAttack < 0.5)
-
-            //double AccuaracyAttack = attackingPokemon.SpecialMoveNormal.Accuracy;
-
-            //if (AccuaracyAttack < 0.5)
             {
                 return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
-                // return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
             }
-            
-            
-            // if (AccuaracyAttack > 0.5)
-            // {
-            //     return UserInterface.ShowMessageHighEffectiveness(AccuaracyAttack); 
-            // }
 
-            //golpecritico
+            // Genera el Golpe Crítico con random
             Random random = new Random();
 
             // Generar un número aleatorio entre 1 y 100
@@ -289,17 +275,8 @@ namespace ClassLibrary
             {
                 criticalHit = 1.20;
             }
-            else
-
-            //if (randomNumber < 10)
-            {
-                //int golpeCritico = attackingPokemon.Moves
-            }
-            //Comprobar si es un golpe crítico.
-            //Un golpe crítico aumenta un 20% el daño a realizar. La probabilidad de que un golpe sea crítico es del 10%. 
-            
+           
             //Ejecuta el ataque
-            
             attacker.ExecuteMove(defender, criticalHit);
             
             // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
@@ -319,31 +296,31 @@ namespace ClassLibrary
             
             // Construye el mensaje de resultado
             return UserInterface.ShowMessageAttackOcurred(attackingPokemon, defendingPokemon, attacker, defender);
-
         }
         
         //HISTORIA DE USUARIO 5
+        
         /// <summary>
         /// Obtiene el nombre del jugador que tiene el turno actual en la partida en la que se encuentra el jugador especificado.
         /// Verifica si el jugador está en una partida activa y, de ser así, devuelve el nombre del jugador cuyo turno está en curso.
         /// </summary>
         /// <param name="playerDisplayName">El nombre del jugador para buscar su partida.</param>
         /// <returns>Un mensaje que indica el nombre del jugador con el turno actual o un mensaje de error si el jugador no está en una partida.</returns>
-    public string GetCurrentTurnPlayer(string playerDisplayName)
-    {
-            // Buscar la partida en la que está el jugador
-        Game game = this.GameList.FindGameByPlayerDisplayName(playerDisplayName);
-
-        if (game == null)
+        public string GetCurrentTurnPlayer(string playerDisplayName)
         {
-            throw new Exception($"El jugador {playerDisplayName} no está en una partida.");
+                // Buscar la partida en la que está el jugador
+            Game game = this.GameList.FindGameByPlayerDisplayName(playerDisplayName);
+
+            if (game == null)
+            {
+                throw new Exception($"El jugador {playerDisplayName} no está en una partida.");
+            }
+
+                // Obtener el nombre del jugador que tiene el turno actual
+            string currentPlayerDisplayName = game.Turn.CurrentPlayer.DisplayName;
+
+            return UserInterface.ShowMessageCurrentTurnPlayer(currentPlayerDisplayName);
         }
-
-            // Obtener el nombre del jugador que tiene el turno actual
-        string currentPlayerDisplayName = game.Turn.CurrentPlayer.DisplayName;
-
-        return UserInterface.ShowMessageCurrentTurnPlayer(currentPlayerDisplayName);
-    }
         
         //HISTORIA DE USUARIO 6
 
@@ -357,21 +334,22 @@ namespace ClassLibrary
         /// <param name="playerDisplayName">El nombre para mostrar del jugador, usado para personalizar los mensajes.</param>
         /// <returns>Un mensaje que indica si la batalla ha terminado o si la batalla continúa.</returns>
         /// <exception cref="ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
-        public string EndGame(UserInterface userInterface, Game game, Player player, string playerDisplayName)
+        public string EndGame(Game game, Player player, string playerDisplayName)
         {
             // Verifica si el juego ha terminado (puede modificar estados internos del juego)
             game.CheckIfGameEnds();
+            
             // Si el jugador no tiene Pokémon disponibles, termina la batalla y muestra el mensaje de fin de la batalla
             if (player.AvailablePokemons.Count == 0)
             {
                 return UserInterface.ShowBattleEndMessage(playerName: playerDisplayName);
             }
+            
             // Si el jugador tiene un Pokémon o mas  disponibles, la batalla no ha terminado
-            else if (player.AvailablePokemons.Count >= 1)
+            if (player.AvailablePokemons.Count >= 1)
             {
                 throw new ArgumentException($"La batalla continúa.");
             }
-
             return null;
         }
 
@@ -419,6 +397,7 @@ namespace ClassLibrary
         }
         
         //HISTORIA DE USUARIO 8
+        
         /// <summary>
         /// Permite que un jugador use un ítem específico en su Pokémon activo dentro de una partida.
         /// La función busca al jugador por su nombre, verifica que esté en la partida y que tenga un Pokémon activo

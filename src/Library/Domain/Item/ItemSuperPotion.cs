@@ -9,10 +9,22 @@ namespace ClassLibrary
     /// </summary>
     public class SuperPocion : Item
     {
+        /// <summary>
+        /// Cantidad de puntos de vida que restaura la super poción.
+        /// </summary>
         private const int HealingAmount = 70;
 
+        /// <summary>
+        /// Constructor de la clase <c>SuperPocion</c> que inicializa el ítem con el nombre "SuperPocion".
+        /// </summary>
         public SuperPocion() : base("SuperPocion") { }
 
+        /// <summary>
+        /// Aplica el efecto de la super poción, aumentando los puntos de vida del Pokémon.
+        /// </summary>
+        /// <param name="pokemon">El Pokémon al que se le aplicará la super poción.</param>
+        /// <returns>Un mensaje que indica la cantidad de puntos de vida restaurados.</returns>
+        /// <exception cref="Exception">Se lanza una excepción si no se pasa un Pokémon válido.</exception>
         public override string ApplyEffect(Pokemon pokemon)
         {
             if (pokemon == null)

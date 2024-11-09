@@ -45,6 +45,12 @@ public class GameList
         }
         return null;
     }
+    
+    /// <summary>
+    /// Encuentra un jugador por el nombre de su oponente para una batalla en curso.
+    /// </summary>
+    /// <param name="displayName">El nombre del jugador.</param>
+    /// <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
     public Player FindOpponentOfDisplayName(string playerDisplayName)
     {
         foreach (var game in games)
@@ -61,6 +67,11 @@ public class GameList
         return null;
     }
 
+    /// <summary>
+    /// Encuentra una battala por el nombre de uno de sus jugadores.
+    /// </summary>
+    /// <param name="displayName">El nombre del jugador.</param>
+    /// <returns> El objeto Game si se encuentra; de lo contrario, null.</returns>
     public Game FindGameByPlayerDisplayName(string playerDisplayName)
     {
         foreach ( Game game in games)

@@ -42,12 +42,10 @@ public class WaitingList
         {
             throw new ArgumentException(nameof(DisplayName));
         }
-        
         // Verifica que el nombre no esté vacío o nulo
         if (this.FindPlayerByDisplayName(DisplayName) != null) return false;
         players.Add(new Player(DisplayName));
         return true;
-
     }
 
     /// <summary>
@@ -69,7 +67,6 @@ public class WaitingList
         if (player == null) return false;
         players.Remove(player);
         return true;
-
     }
 
     /// <summary>
@@ -104,7 +101,6 @@ public class WaitingList
     /// Retorna un jugador cualquiera esperando para jugar. En esta
     /// implementación provista no es cualquiera, sino el primero. En la
     /// implementación definitiva, debería ser uno aleatorio.
-    /// 
     /// </summary>
     /// <returns></returns>
     public Player GetAnyoneWaiting()

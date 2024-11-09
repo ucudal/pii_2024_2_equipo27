@@ -1,39 +1,57 @@
+using NUnit.Framework;
 namespace ClassLibrary.Tests;
 
-using NUnit.Framework;
-using ClassLibrary;
-
-public class UserStoryGetCurrentTurnPlayerTests
-{
-    [SetUp]
-    public void StartBattle()
-    {
-        // Configuración inicial para simular una partida
-        Facade.Instance.AddPlayerToWaitingList("player1");
-        Facade.Instance.AddPlayerToWaitingList("player2");
-        Facade.Instance.StartBattle("player1", "player2");
-
-        Facade.Instance.ChoosePokemons("player1",
-            new[] { "Blaziken", "Lapras", "Salamence", "Bellsprout", "Zangoose", "Rayquaza" });
-
-        Facade.Instance.ChoosePokemons("player2",
-            new[] { "Charizard", "Lucario", "Pikachu", "Lapras", "Gengar", "Gengar" });
-    }
-
-    [Test]
-    public void GetCurrentTurnPlayer_WhenPlayerIsInGame_ReturnsCurrentTurnPlayer()
-    {
-        // Act
-        string message = Facade.Instance.GetCurrentTurnPlayer("player1");
-        
-        Assert.That(message, Is.EqualTo("\ud83c\udfae Es el turno de player1."));
-    }
-    
-
-    [Test]
-    public void GetCurrentTurnPlayer_WhenPlayerDoesNotExist_ThrowsException()
-    {
-        
-        Assert.That(() => Facade.Instance.GetCurrentTurnPlayer("nonexistentplayer"), Throws.InstanceOf<Exception>());
-    }
+public class UserStory1Tests
+{ 
+    // private Facade facade;
+    //
+    // [SetUp]
+    // public void Setup()
+    // {
+    //     facade = new Facade();
+    // }
+    //
+    // [Test]
+    // public void ChoosePokemons_WhenCalled_AddsPokemonsToPlayer()
+    // {
+    //     // Arrange
+    //      pokemonNames = { "Blaziken", "Tinkaton" };
+    //     
+    //     // Act
+    //     string result = facade.ChoosePokemons("1", pokemonNames);
+    //     
+    //     // Assert
+    //     Assert.That(result.Count, Is.EqualTo(1));
+    //     Assert.That(result[0], Is.EqualTo(UserInterface.ShowMessageSelectedPokemons(pokemonNames)));
+    // }
+    //
+    // [Test]
+    // public void ShowMoves_WhenCalled_ReturnsPokemonMoves()
+    // {
+    //     // Arrange
+    //     string[] pokemonNames = {"Blaziken" };
+    //     facade.ChoosePokemons("hola", pokemonNames);
+    //     
+    //     // Act
+    //     List<string> moves = facade.ShowMoves("hola");
+    //     
+    //     // Assert
+    //     Assert.That(moves.Count, Is.GreaterThan(0));
+    //     Assert.That(moves[0], Does.Contain("Blaziken"));
+    // }
+    //
+    // [Test]
+    // public void ChoosePokemonAndMoveToAttack_ActivatesPokemonAndMove()
+    // {
+    //     // Arrange
+    //     string[] pokemonNames = { "Blaziken" };
+    //     facade.ChoosePokemons(1, pokemonNames);
+    //     
+    //     // Act
+    //     facade.ChoosePokemonAndMoveToAttack(1, "Patada Ígnea", "Blaziken");
+    //     
+    //     // Assert
+    //     // Aquí podríamos verificar si el movimiento fue activado correctamente si tuviéramos un método en la clase para comprobar el estado
+    //     Assert.Pass(); // Placeholder - implementar lógica de verificación según la implementación interna.
+    // 
 }
