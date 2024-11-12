@@ -5,8 +5,9 @@ namespace ClassLibrary;
 /// sistema de batallas, sin representar un movimiento específico por sí sola. Según el principio de responsabilidad única,
 /// <c>Move</c> organiza los elementos comunes (como el nombre y precisión) y delega a sus subclases <c>MoveParalize</c>, <c>MoveSleep</c>,
 /// <c>MovePosion</c> <c>MoveBurn</c> <c>MoveNormal</c> la implementación de efectos específicos, asegurando que cada ataque cumpla
-/// su función particular sin duplicar código. Además, el diseño sigue los principios de Liskov y Abierto/Cerrado, permitiendo la adición de nuevos tipos de movimientos
-/// sin modificar la estructura base, lo cual favorece un sistema extensible y polimórfico.
+/// su función particular sin duplicar código. Hicimos uso del patrón de diseño Strategy que permite diferentes estrategias de implementación
+/// de un mismo método. Además, el diseño sigue los principios de Liskov y Abierto/Cerrado, permitiendo la adición de nuevos tipos de movimientos
+/// sin modificar la estructura base, lo cual favorece un sistema extensible y polimórfico. 
 /// </summary>
 public abstract class Move
 {

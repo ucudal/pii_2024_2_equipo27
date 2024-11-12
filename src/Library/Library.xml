@@ -4,6 +4,90 @@
         <name>Library</name>
     </assembly>
     <members>
+        <member name="T:Library.Commands.BattleCommand">
+            <summary>
+            Esta clase implementa el comando 'battle' del bot. Este comando une al
+            jugador que envía el mensaje con el oponente que se recibe como parámetro,
+            si lo hubiera, en una batalla; si no se recibe un oponente, lo une con
+            cualquiera que esté esperando para jugar.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.BattleCommand.ExecuteAsync(System.String)">
+            <summary>
+            Implementa el comando 'battle'. Este comando une al jugador que envía el
+            mensaje a la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="T:Library.Commands.JoinCommand">
+            <summary>
+            Esta clase implementa el comando 'join' del bot. Este comando une al jugador
+            que envía el mensaje a la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.JoinCommand.ExecuteAsync">
+            <summary>
+            Implementa el comando 'join'. Este comando une al jugador que envía el
+            mensaje a la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="T:Library.Commands.LeaveCommand">
+            <summary>
+            Esta clase implementa el comando 'leave' del bot. Este comando remueve el
+            jugador que envía el mensaje de la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.LeaveCommand.ExecuteAsync">
+            <summary>
+            Implementa el comando 'leave' del bot. Este comando remueve el jugador
+            que envía el mensaje de la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="T:Library.Commands.PokemonNameCommand">
+            <summary>
+            Esta clase implementa el comando 'name' del bot. Este comando retorna el
+            nombre de un Pokémon dado su identificador.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.PokemonNameCommand.#ctor(Microsoft.Extensions.Logging.ILogger{Library.Commands.PokemonNameCommand})">
+            <summary>
+            Inicializa una nueva instancia de la clase
+            <see cref="T:Library.Commands.PokemonNameCommand"/> con los valores recibidos como
+            argumento.
+            </summary>
+            <param name="logger">El servicio de logging a utilizar.</param>
+        </member>
+        <member name="M:Library.Commands.PokemonNameCommand.ExecuteAsync(System.Int32)">
+            <summary>
+            Implementa el comando 'name'. Este comando retorna el nombre de un
+            Pokémon dado su identificador.
+            </summary>
+            <param name="id">El identificador del Pokémon a buscar.</param>
+        </member>
+        <member name="T:Library.Commands.UserInfoCommand">
+            <summary>
+            Esta clase implementa el comando 'userinfo', alias 'who' o 'whois' del bot.
+            Este comando retorna información sobre el usuario que envía el mensaje o sobre
+            otro usuario si se incluye como parámetro..
+            </summary>
+        </member>
+        <member name="M:Library.Commands.UserInfoCommand.ExecuteAsync(System.String)">
+            <summary>
+            Implementa el comando 'userinfo', alias 'who' o 'whois' del bot.
+            </summary>
+            <param name="displayName">El nombre de usuario de Discord a buscar.</param>
+        </member>
+        <member name="T:Library.Commands.WaitingCommand">
+            <summary>
+            Esta clase implementa el comando 'waitinglist' del bot. Este comando muestra
+            la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.WaitingCommand.ExecuteAsync">
+            <summary>
+            Implementa el comando 'waitinglist'. Este comando muestra la lista de
+            jugadores esperando para jugar.
+            </summary>
+        </member>
         <member name="T:ClassLibrary.Facade">
             <summary>
             La clase  <c>Facade</c> proporciona una interfaz simplificada para interactuar con el juego, permitiendo a los jugadores seleccionar
@@ -495,9 +579,9 @@
         <member name="T:ClassLibrary.Item">
             <summary>
             La clase <c>Item</c> representa un ítem genérico que puede ser utilizado en el contexto del juego.
-            - Principio de Responsabilidad Única (SRP): Se encarga exclusivamente de modelar las propiedades y el comportamiento básico de un ítem.
-            - Patrón Polimorfismo (GRASP): Permite a las subclases sobrescribir el método <c>ApplyEffect</c> para definir comportamientos específicos de los ítems.
-            - Inmutabilidad: La propiedad <c>Name</c> es de solo lectura, garantizando que el nombre del ítem no pueda ser modificado después de su creación.
+            Sigue el principio de responsabilidad única ya que se encarga exclusivamente de modelar las propiedades y el comportamiento básico de un ítem.
+            Hicimos uso del patrón de diseño Strategy que permite diferentes estrategias de implementación
+            de un mismo método, usando el polimorfismo para sobrescribir el método <c>ApplyEffect</c> para definir comportamientos específicos de los ítems.
             </summary>
         </member>
         <member name="P:ClassLibrary.Item.Name">
@@ -601,8 +685,9 @@
             sistema de batallas, sin representar un movimiento específico por sí sola. Según el principio de responsabilidad única,
             <c>Move</c> organiza los elementos comunes (como el nombre y precisión) y delega a sus subclases <c>MoveParalize</c>, <c>MoveSleep</c>,
             <c>MovePosion</c> <c>MoveBurn</c> <c>MoveNormal</c> la implementación de efectos específicos, asegurando que cada ataque cumpla
-            su función particular sin duplicar código. Además, el diseño sigue los principios de Liskov y Abierto/Cerrado, permitiendo la adición de nuevos tipos de movimientos
-            sin modificar la estructura base, lo cual favorece un sistema extensible y polimórfico.
+            su función particular sin duplicar código. Hicimos uso del patrón de diseño Strategy que permite diferentes estrategias de implementación
+            de un mismo método. Además, el diseño sigue los principios de Liskov y Abierto/Cerrado, permitiendo la adición de nuevos tipos de movimientos
+            sin modificar la estructura base, lo cual favorece un sistema extensible y polimórfico. 
             </summary>
         </member>
         <member name="F:ClassLibrary.Move._name">
@@ -895,6 +980,22 @@
             El multiplicador de daño según la efectividad entre tipos. 
             Devuelve 1.0 si no hay ventaja o desventaja.
             </returns>
+        </member>
+        <member name="T:ClassLibrary.Bot">
+            <summary>
+            Esta clase implementa el bot de Discord.
+            </summary>
+        </member>
+        <member name="T:ClassLibrary.BotLoader">
+            <summary>
+            Esta clase ejecuta el bot de Discord hasta que en la terminal donde se
+            ejecuta el bot se oprime la tecla 'Q'.
+            </summary>
+        </member>
+        <member name="T:ClassLibrary.IBot">
+            <summary>
+            La interfaz del Bot de Discord para usar con inyección de dependencias.
+            </summary>
         </member>
     </members>
 </doc>

@@ -1,13 +1,18 @@
-﻿
-using System;
-using ClassLibrary;
-namespace ConsoleApplication;
+﻿namespace Program;
 
-public static class Program
+using ClassLibrary;
+
+/// <summary>
+/// Un programa que implementa un bot de Discord.
+/// </summary>
+internal static class Program
 {
-    public static void Main(string[] args)
+    /// <summary>
+    /// Punto de entrada al programa.
+    /// </summary>
+    private static void Main()
     {
-//             
-    }    
+        BotLoader.LoadAsync().GetAwaiter().GetResult();
+    }
 }
-        
+ 
