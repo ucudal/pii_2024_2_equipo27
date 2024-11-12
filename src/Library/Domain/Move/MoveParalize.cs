@@ -8,7 +8,7 @@ namespace ClassLibrary;
 /// </summary>
 public class MoveParalize: Move
 {
-    //// <summary>
+    /// <summary>
     /// Constructor de la clase <c>MoveParalize</c>. 
     /// </summary>
     /// <param name="name">El nombre del movimiento.</param>

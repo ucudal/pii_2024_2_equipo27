@@ -774,7 +774,14 @@
             paralizado; si no lo está, establece su estado de parálisis en verdadero.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:ClassLibrary.MoveParalize.#ctor(System.String,System.Int32,System.Double)" -->
+        <member name="M:ClassLibrary.MoveParalize.#ctor(System.String,System.Int32,System.Double)">
+            <summary>
+            Constructor de la clase <c>MoveParalize</c>. 
+            </summary>
+            <param name="name">El nombre del movimiento.</param>
+            <param name="attackValue">El valor de ataque del movimiento.</param>
+            <param name="accuracy">El valor de la precisión del movimiento.</param>
+        </member>
         <member name="M:ClassLibrary.MoveParalize.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
             <summary>
             Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
