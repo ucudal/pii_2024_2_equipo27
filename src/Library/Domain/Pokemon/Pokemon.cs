@@ -1,4 +1,4 @@
-namespace ClassLibrary; 
+namespace ClassLibrary;
 
 /// <summary>
 /// La clase  <c>Pokemon</c> es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
@@ -8,23 +8,26 @@ namespace ClassLibrary;
 /// con excepciones y restricciones implementadas. Esas restricciones son como la cantidad máxima de movimientos y la validación
 /// de estados, aseguran que el Pokémon funcione de acuerdo con las reglas del juego de manera coherente y extensible. 
 /// </summary>
-    
 public class Pokemon
 
-{ 
+{
     /// <summary>
     /// Inicializa una nueva instancia de la clase <c>Pokemon</c> con una lista de movimientos vacía.
     /// </summary>
-   public Pokemon()
-   {
-       Moves = new List<Move>();
-       this.SleepTurns = 0;
-       this.IsParalyzed = false;
-       this._isPoisoned = false;
-       this._isBurned = false;
-       this.HealthPoints = 100;
-   } 
-    
+    public Pokemon(Move[] moves)
+    {
+        if (moves.Length != MAX_MOVES)
+        {
+            throw new ApplicationException("Tiene que haber 4 movimientos");
+        }
+        this._moves = moves.ToList();
+        this.SleepTurns = 0;
+        this.IsParalyzed = false;
+        this._isPoisoned = false;
+        this._isBurned = false;
+        this.HealthPoints = 100;
+    }
+
     /// <summary>
     /// Obtiene o establece si un Pokémon está envenenado.
     /// Si el Pokémon ya está envenenado, no puede ser afectado por otro estado (quemado, paralizado, dormido).
@@ -37,12 +40,14 @@ public class Pokemon
             // Verifica si el Pokémon ya está afectado por un estado especial
             if (_isBurned || _isParalyzed || _sleepTurns > 0)
             {
-                throw new InvalidOperationException("El Pokémon no puede ser envenenado si ya está afectado por otro estado (quemado, paralizado, dormido).");
+                throw new InvalidOperationException(
+                    "El Pokémon no puede ser envenenado si ya está afectado por otro estado (quemado, paralizado, dormido).");
             }
 
             _isPoisoned = value;
         }
     }
+
     private bool _isPoisoned;
 
 
@@ -57,14 +62,15 @@ public class Pokemon
         {
             if (_isPoisoned || _isParalyzed || _sleepTurns > 0)
             {
-                throw new InvalidOperationException("El Pokémon no puede ser quemado si ya está afectado por otro estado (envenenado, paralizado, dormido).");
+                throw new InvalidOperationException(
+                    "El Pokémon no puede ser quemado si ya está afectado por otro estado (envenenado, paralizado, dormido).");
             }
 
             _isBurned = value;
         }
     }
-    private bool _isBurned;
 
+    private bool _isBurned;
 
     /// <summary>
     /// Obtiene o establece si un Pokémon está paralizado.
@@ -77,12 +83,14 @@ public class Pokemon
         {
             if (_isPoisoned || _isBurned || _sleepTurns > 0)
             {
-                throw new InvalidOperationException("El Pokémon no puede ser paralizado si ya está afectado por otro estado (envenenado, quemado, dormido).");
+                throw new InvalidOperationException(
+                    "El Pokémon no puede ser paralizado si ya está afectado por otro estado (envenenado, quemado, dormido).");
             }
 
             _isParalyzed = value;
         }
     }
+
     private bool _isParalyzed;
 
 
@@ -97,20 +105,23 @@ public class Pokemon
         {
             if (_isPoisoned || _isBurned || _isParalyzed)
             {
-                throw new InvalidOperationException("El Pokémon no puede dormir si ya está afectado por otro estado (envenenado, quemado, paralizado).");
+                throw new InvalidOperationException(
+                    "El Pokémon no puede dormir si ya está afectado por otro estado (envenenado, quemado, paralizado).");
             }
 
             if (value < 0 || value > 4)
             {
-                throw new ArgumentOutOfRangeException(nameof(SleepTurns), "El número de turnos de sueño debe estar entre 1 y 4.");
+                throw new ArgumentOutOfRangeException(nameof(SleepTurns),
+                    "El número de turnos de sueño debe estar entre 1 y 4.");
             }
 
             _sleepTurns = value;
         }
     }
+
     private int _sleepTurns;
 
-    
+
     /// <summary>
     /// Obtiene o establece el nombre del Pokémon.
     /// </summary>
@@ -125,6 +136,7 @@ public class Pokemon
             _name = value;
         }
     }
+
     private string _name;
 
 
@@ -132,41 +144,58 @@ public class Pokemon
     /// Obtiene o establece los puntos de salud del Pokémon.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">Se lanza si los puntos de salud son negativos.</exception>
-    public int HealthPoints 
-    { 
+    public int HealthPoints
+    {
         get { return this._healthPoints; }
         set
         {
-            if (value < 0) 
-                _healthPoints= 0;
+            if (value < 0)
+                _healthPoints = 0;
             _healthPoints = value;
         }
     }
+
     private int _healthPoints;
+
 
     /// <summary>
     /// Obtiene o establece el tipo del Pokémon.
     /// </summary>
-    public PokemonType.Type Type { get; set; }
+    private Type _pokemonType; 
+    public Type PokemonType
+    {
+        get => _pokemonType;
+        set
+        {
+            if (!Enum.IsDefined(typeof(Type), value))
+            {
+                throw new ArgumentException("El tipo de Pokémon no es válido.");
+            }
+
+            _pokemonType = value;
+        }
+    }
+
 
     /// <summary>
     /// Obtiene o establece la lista de movimientos regulares del Pokémon.
     /// </summary>
-    public List<Move> Moves
+    public IReadOnlyList<Move> Moves
     {
-        get { return this._moves; }
+        get { return this._moves.AsReadOnly(); }
 
-        set
-        {
-            if (value != null && value.Count > MaxMoves)
-                throw new InvalidOperationException($"No se pueden agregar más de {MaxMoves} movimientos.");
-                
-            _moves = value;
-        }
+        // set
+        // {
+        //     if (value != null && value.Count > MaxMoves)
+        //         throw new InvalidOperationException($"No se pueden agregar más de {MaxMoves} movimientos.");
+        //
+        //     _moves = value;
+        // }
     }
-    private const int MaxMoves = 4;
+
+    public const int MAX_MOVES = 4;
     private List<Move> _moves;
-    
+
     /// <summary>
     /// Verifica si el <c>Pokemon</c>  puede atacar.
     /// </summary>
@@ -185,6 +214,7 @@ public class Pokemon
             SleepTurns -= 1;
             return false;
         }
+
         return true;
     }
 }

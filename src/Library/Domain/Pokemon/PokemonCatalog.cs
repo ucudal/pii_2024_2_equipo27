@@ -13,12 +13,12 @@ namespace ClassLibrary
     public class PokemonCatalog
     {
         // Lista de Pokémon obtenida a través del builder.
-        private List<Pokemon> pokemons;
+        private IReadOnlyList<Pokemon> pokemons;
 
         public PokemonCatalog()
         {
             PokemonCatalogBuilder builder = new PokemonCatalogBuilder();
-            this.pokemons = builder.GetPokemonList();
+            this.pokemons = builder.PokemonList;
         }
  
         /// <summary>

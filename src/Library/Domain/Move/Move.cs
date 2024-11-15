@@ -26,6 +26,28 @@ public abstract class Move
         }
     }
 
+
+    /// <summary>
+    /// Obtiene o establece el tipo del Ataque.
+    /// </summary>
+    
+    private Type _moveType;
+
+    public Type MoveType
+    {
+        get => _moveType;
+        set
+        {
+            if (!Enum.IsDefined(typeof(Type), value))
+            {
+                throw new ArgumentException("El tipo de movimiento no es válido.");
+            }
+
+            _moveType = value;
+        }
+    }
+
+    
     /// <summary>
     /// Valor del ataque del movimiento.
     /// </summary>
@@ -61,8 +83,9 @@ public abstract class Move
     /// <param name="name">El nombre del movimiento.</param>
     /// <param name="attackValue">El valor de ataque del movimiento.</param>
     /// <param name="accuracy">El valor de precisión del movimiento.</param>
-    public Move(string name, int attackValue, double accuracy)
+    public Move(string name, int attackValue, double accuracy, Type moveType)
     {
+        this.MoveType = moveType;
         this.Name = name;
         this.AttackValue = attackValue;
         this.Accuracy = accuracy;

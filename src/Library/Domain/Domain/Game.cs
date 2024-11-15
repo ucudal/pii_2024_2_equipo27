@@ -62,7 +62,7 @@ namespace ClassLibrary
             Player1.SetOpponent(Player2);
             Player2.SetOpponent(Player1);
         }
-        
+
         /// <summary>
         /// Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
         /// Si un jugador pierde todos sus Pokémon, el juego termina y se declara un ganador.
@@ -81,7 +81,7 @@ namespace ClassLibrary
                     todosSonCeroPlayer1 = false;
                 }
             }
-            
+
             // Verificamos si todos los Pokémon del jugador 2 tienen 0 puntos de vida
             bool todosSonCeroPlayer2 = true; // Player2.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
             foreach (Pokemon pokemon in Player2.AvailablePokemons)

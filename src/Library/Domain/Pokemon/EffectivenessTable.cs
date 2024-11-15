@@ -1,6 +1,18 @@
 namespace ClassLibrary;
 
 using System.Collections.Generic;
+
+
+/// <summary>
+/// Enumeración que define los tipos de Pokémon.
+/// </summary>
+public enum Type
+{
+    Water, Bug, Dragon, Electric, Ghost, Fire,
+    Ice, Fighting, Normal, Grass, Psychic, Rock,
+    Ground, Poison, Flying
+}
+
 /// <summary>
 /// La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
 /// Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
@@ -12,19 +24,8 @@ using System.Collections.Generic;
 /// La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
 /// estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
 /// </summary>
-
-public static class PokemonType
+public static class EffectivenessTable
 {
-    /// <summary>
-    /// Enumeración que define los tipos de Pokémon.
-    /// </summary>
-    public enum Type
-    {
-        Water, Bug, Dragon, Electric, Ghost, Fire,
-        Ice, Fighting, Normal, Grass, Psychic, Rock,
-        Ground, Poison, Flying
-    }
-
     private static Dictionary<(Type, Type), double> typeEffectiveness = new Dictionary<(Type, Type), double>() 
     {
     // Water defender

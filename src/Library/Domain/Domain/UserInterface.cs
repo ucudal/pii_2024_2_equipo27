@@ -23,12 +23,11 @@ namespace ClassLibrary
         public static string ShowMessagePokemonCatalog()
         {
             PokemonCatalogBuilder pokemons = new PokemonCatalogBuilder();
-            List<Pokemon> pokemonList = pokemons.GetPokemonList();
 
             StringBuilder catalogo = new StringBuilder();
             catalogo.AppendLine("📜 Catálogo de Pokémon:\n");
 
-            foreach (Pokemon pokemon in pokemonList)
+            foreach (Pokemon pokemon in pokemons.PokemonList)
             {
                 catalogo.AppendLine($"{pokemon.Name}");
             }

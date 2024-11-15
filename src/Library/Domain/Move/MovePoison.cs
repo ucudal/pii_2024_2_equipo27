@@ -16,8 +16,9 @@ public class MovePoison: Move
     /// <param name="attackValue">El valor de ataque del movimiento.</param>
     /// <param name="accuracy">El valor de la precisión del movimiento.</param>
     
-    public MovePoison(string name, int attackValue, double accuracy): base(name, attackValue, accuracy) 
+    public MovePoison(string name, int attackValue, double accuracy, Type moveType): base(name, attackValue, accuracy, moveType)
     {
+        this.MoveType = moveType;
         this.Name = name;
         this.AttackValue = attackValue;
         this.Accuracy = accuracy;
@@ -43,7 +44,7 @@ public class MovePoison: Move
         //Aplica el ataque común
         if (this.AttackValue > 0)
         {
-            double typeEffectiveness = PokemonType.GetEffectiveness(attacker.Type, target.Type);
+            double typeEffectiveness = EffectivenessTable.GetEffectiveness(this.MoveType, target.PokemonType);
             int calculatedDamage = (int)((this.AttackValue * typeEffectiveness)*(criticalHit));
             target.HealthPoints -= calculatedDamage;
         }
