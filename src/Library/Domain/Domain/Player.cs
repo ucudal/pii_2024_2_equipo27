@@ -1,11 +1,10 @@
 namespace ClassLibrary;
 
-    /// <summary>
-    /// La clase  <c>Player</c> representa a un jugador en el juego, 
-    /// responsable de gestionar los Pokémon disponibles, el Pokémon activo
-    /// y el movimiento activo del jugador.
-    /// </summary>
-    
+/// <summary>
+/// La clase  <c>Player</c> representa a un jugador en el juego, 
+/// responsable de gestionar los Pokémon disponibles, el Pokémon activo
+/// y el movimiento activo del jugador.
+/// </summary>
 public class Player
 {
     private List<Item> items = new List<Item>();
@@ -65,7 +64,7 @@ public class Player
     {
         return _opponent;
     }
-    
+
 
     /// <summary>
     /// Agrega un Pokémon a la lista de Pokémon disponibles para el jugador.
@@ -95,6 +94,7 @@ public class Player
                 return i;
             }
         }
+
         return -1;
     }
 
@@ -123,6 +123,7 @@ public class Player
                 return i;
             }
         }
+
         return -1;
     }
 
@@ -156,9 +157,62 @@ public class Player
         return itemFound;
     }
 
-    public void ExecuteMove(Player defender, double criticalHit)
+    public void ExecuteMove(Player defender, Player attacker)
     {
+        /////////////////////////////
+
+        //Encontrar los pokemones activos
+        Pokemon attackingPokemon = attacker.ActivePokemon;
+        Pokemon defendingPokemon = defender.ActivePokemon;
+
+        // Verificar que el Pokémon tenga el ataque seleccionado
+
+        if (attackingPokemon == null)
+        {
+            throw new ArgumentException($"El Pókemon '{attacker.ActivePokemon}' no está activo para la ataque.");
+        }
+
+        if (defendingPokemon == null)
+        {
+            throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
+        }
+
+        // Verificar si el ataque es efectivo aleatorio con random
+        //Enviar mensaje interfaz de que no es efectivo y sino seguir 
+
+        // double AccuaracyAttack = attacker.ActiveMove.Accuracy;
+        //
+        // if (AccuaracyAttack < 0.5)
+        // {
+        //     return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
+        // }
+
+        // Genera el Golpe Crítico con random
+        Random random = new Random();
+
+        // Generar un número aleatorio entre 1 y 100
+        int randomNumber = random.Next(1, 101);
+        double criticalHit = 0;
+        if (randomNumber <= 10)
+        {
+            criticalHit = 1.20;
+        }
+
+        // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
+        if (attackingPokemon.IsPoisoned)
+        {
+            attackingPokemon.HealthPoints -= (int)0.05 * (attackingPokemon.HealthPoints);
+        }
+
+        if (attackingPokemon.IsBurned)
+        {
+            attackingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
+        }
+        
         this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
+
+        //Cambia el turno del jugador
+        Facade.Instance.ChangeTurn(attacker);
     }
 
     public void TurnChanged()
@@ -172,5 +226,3 @@ public class Player
         }
     }
 }
-    
-

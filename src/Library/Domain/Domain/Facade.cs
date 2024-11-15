@@ -212,22 +212,11 @@ namespace ClassLibrary
         /// <param name="defenderName">El nombre del jugador defensor.</param>
         /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
         /// <returns>Un mensaje con el resultado del ataque.</returns>
-        public string PlayerAttack(string attackerName, string moveName)
+        public string PlayerAttack(string attackerName)
         { 
             //Encontrar el jugador
             Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
             Player defender = this.GameList.FindOpponentOfDisplayName(attackerName);
-        
-            if (attacker == null || defender == null)
-            {
-                throw new PokemonException("Uno o ambos jugadores no están en el juego");
-                //return "Uno o ambos jugadores no están en el juego.";
-            }
-            
-            //Encontrar los pokemones activos
-            Pokemon attackingPokemon = attacker.ActivePokemon;
-            Pokemon defendingPokemon = defender.ActivePokemon;
-        
             // Buscar el jugador por su nombre y validar que esté en el juego
             if (attacker == null )
             {
@@ -238,67 +227,16 @@ namespace ClassLibrary
                 throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
             }
         
-            // Verificar que el Pokémon tenga el ataque seleccionado
-            
-            if (attackingPokemon == null)
-                {
-                    throw new ArgumentException($"El Pókemon '{attacker.ActivePokemon}' no está activo para la ataque.");
-                }
-            if (defendingPokemon == null)
+            if (attacker == null || defender == null)
             {
-                throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
+                throw new PokemonException("Uno o ambos jugadores no están en el juego");
+                //return "Uno o ambos jugadores no están en el juego.";
             }
-        
-            // Verifica que el ataque realiza daño
-            bool canAttack = attackingPokemon.TryAttack();
-            if (!canAttack)
-            {
-                return UserInterface.ShowMessageAttackDidNotOccur(attacker, attackingPokemon);
-            }
-            
-            // Verificar si el ataque es efectivo aleatorio con random
-            //Enviar mensaje interfaz de que no es efectivo y sino seguir 
-            
-            double AccuaracyAttack = attacker.ActiveMove.Accuracy;
-            
-            if (AccuaracyAttack < 0.5)
-            {
-                return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
-            }
-
-            // Genera el Golpe Crítico con random
-            Random random = new Random();
-
-            // Generar un número aleatorio entre 1 y 100
-            int randomNumber = random.Next(1, 101);
-            double criticalHit = 0;
-            if (randomNumber <= 10)
-            {
-                criticalHit = 1.20;
-            }
-           
             //Ejecuta el ataque
-            attacker.ExecuteMove(defender, criticalHit);
-            
-            // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
-            if (attackingPokemon.IsPoisoned)
-            {
-                attackingPokemon.HealthPoints -= (int) 0.05 * (attackingPokemon.HealthPoints);
-            }
-            
-            if (attackingPokemon.IsBurned)
-            {
-                attackingPokemon.HealthPoints -= (int) 0.10 * (attackingPokemon.HealthPoints);
-            }
-            
-            //Penalizar el turno del jugador
-            Game game = GameList.FindGameByPlayerDisplayName(attackerName);
-            game.Turn.ChangeTurn();
-
-            game.CheckIfGameEnds();
+            attacker.ExecuteMove(defender, attacker);
             
             // Construye el mensaje de resultado
-            return UserInterface.ShowMessageAttackOcurred(attackingPokemon, defendingPokemon, attacker, defender);
+            return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker, defender);
         }
         
         //HISTORIA DE USUARIO 5
@@ -571,6 +509,14 @@ namespace ClassLibrary
             {
                 return opponent != null;
             }
+        }
+
+        public void ChangeTurn(Player attacker)
+        {
+            Game game = GameList.FindGameByPlayerDisplayName(attacker.DisplayName);
+            game.Turn.ChangeTurn();
+
+            game.CheckIfGameEnds();
         }
     }
 }
