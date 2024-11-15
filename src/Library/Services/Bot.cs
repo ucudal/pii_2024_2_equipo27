@@ -13,7 +13,7 @@ namespace ClassLibrary;
 /// </summary>
 public class Bot : IBot
 {
-    private ServiceProvider? serviceProvider;
+    private ServiceProvider serviceProvider;
     private readonly ILogger<Bot> logger;
     private readonly IConfiguration configuration;
     private readonly DiscordSocketClient client;

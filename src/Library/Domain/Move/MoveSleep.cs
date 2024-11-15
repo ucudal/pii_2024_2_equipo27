@@ -19,10 +19,7 @@ public class MoveSleep: Move
     /// <param name="accuracy">El valor de la precisión del movimiento.</param>
     public MoveSleep(string name, int attackValue, double accuracy, Type moveType): base(name, attackValue, accuracy, moveType)
     {
-        this.MoveType = moveType;
-        this.Name = name;
-        this.AttackValue = attackValue;
-        this.Accuracy = accuracy;
+       //Intencionalmente vacío
     }
     
     /// <summary>

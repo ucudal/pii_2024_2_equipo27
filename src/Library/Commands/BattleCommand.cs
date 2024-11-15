@@ -29,11 +29,11 @@ public class BattleCommand : ModuleBase<SocketCommandContext>
     public async Task ExecuteAsync(
         [Remainder]
         [Summary("Display name del oponente, opcional")]
-        string? opponentDisplayName = null)
+        string opponentDisplayName = null)
     {
         string displayName = CommandHelper.GetDisplayName(Context);
         
-        SocketGuildUser? opponentUser = CommandHelper.GetUser(
+        SocketGuildUser opponentUser = CommandHelper.GetUser(
             Context, opponentDisplayName);
 
         string result;

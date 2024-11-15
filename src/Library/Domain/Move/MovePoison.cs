@@ -18,10 +18,7 @@ public class MovePoison: Move
     
     public MovePoison(string name, int attackValue, double accuracy, Type moveType): base(name, attackValue, accuracy, moveType)
     {
-        this.MoveType = moveType;
-        this.Name = name;
-        this.AttackValue = attackValue;
-        this.Accuracy = accuracy;
+        // Intencionalmente vacío
 
     }
     
