@@ -212,15 +212,16 @@ namespace ClassLibrary
         /// <param name="defenderName">El nombre del jugador defensor.</param>
         /// <param name="moveName">El nombre del movimiento seleccionado para el ataque.</param>
         /// <returns>Un mensaje con el resultado del ataque.</returns>
-        public string PlayerAttack(string attackerName, string defenderName, string moveName)
+        public string PlayerAttack(string attackerName, string moveName)
         { 
             //Encontrar el jugador
             Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
-            Player defender = this.GameList.FindPlayerByDisplayName(defenderName);
+            Player defender = this.GameList.FindOpponentOfDisplayName(attackerName);
         
             if (attacker == null || defender == null)
             {
-                return "Uno o ambos jugadores no están en el juego.";
+                throw new PokemonException("Uno o ambos jugadores no están en el juego");
+                //return "Uno o ambos jugadores no están en el juego.";
             }
             
             //Encontrar los pokemones activos
@@ -292,7 +293,9 @@ namespace ClassLibrary
             
             //Penalizar el turno del jugador
             Game game = GameList.FindGameByPlayerDisplayName(attackerName);
-            game.Turn.PenalizeTurn(attacker);
+            game.Turn.ChangeTurn();
+
+            game.CheckIfGameEnds();
             
             // Construye el mensaje de resultado
             return UserInterface.ShowMessageAttackOcurred(attackingPokemon, defendingPokemon, attacker, defender);
