@@ -12,143 +12,146 @@ namespace ClassLibrary
     public class PokemonCatalogBuilder
     {
         // Lista de Pokémons que serán añadidos al catálogo.
-        private List<Pokemon> Pokemons = new List<Pokemon>();
+        private List<Pokemon> _pokemonList = new List<Pokemon>();
+
+        public IReadOnlyList<Pokemon> PokemonList => _pokemonList;
+
 
         /// <summary>
         /// Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
         /// </summary>
         public PokemonCatalogBuilder()
         {
-            AddPokemonToCatalog("Blaziken", new List<Move>
+            AddPokemonToCatalog("Blaziken", new Move[]
             {
-                new MoveNormal("Patada Ígnea", 80, 0.5),
-                new MoveNormal("Llamarada", 90, 0.7),
-                new MoveNormal("Tajo Aéreo", 70, 0.5),
-                new MoveBurn("Anillo Ígneo", 0, 0.3) 
-            }, PokemonType.Type.Fire);
+                new MoveNormal("Patada Ígnea", 80, 0.5, Type.Fire),
+                new MoveNormal("Llamarada", 90, 0.7, Type.Fire),
+                new MoveNormal("Tajo Aéreo", 70, 0.5, Type.Flying),
+                new MoveBurn("Anillo Ígneo", 0, 0.3, Type.Fire)
+            }, Type.Fire);
 
-            AddPokemonToCatalog("Tinkaton", new List<Move>
+            AddPokemonToCatalog("Tinkaton", new Move[]
             {
-                new MoveNormal("Carantoña", 90, 0.6),
-                new MoveNormal("Roca Afilada", 80, 0.5),
-                new MoveNormal("Golpe Mordaza", 85, 0.8),
-                new MovePoison("Martillo Gigante", 5, 0.8) 
-            }, PokemonType.Type.Poison);
+                new MoveNormal("Carantoña", 90, 0.6, Type.Normal),
+                new MoveNormal("Roca Afilada", 80, 0.5, Type.Rock),
+                new MoveNormal("Golpe Mordaza", 85, 0.8, Type.Fighting),
+                new MovePoison("Martillo Gigante", 5, 0.8, Type.Poison)
+            }, Type.Poison);
 
-            AddPokemonToCatalog("Salamence", new List<Move>
+            AddPokemonToCatalog("Salamence", new Move[]
             {
-                new MoveNormal("Enfado", 120, 0.4),
-                new MoveNormal("Lanzallamas", 90, 0.6),
-                new MoveNormal("Cabeza de Hierro", 80, 0.9),
-                new MoveParalize("Vuelo", 5, 0.4) 
-            }, PokemonType.Type.Dragon);
+                new MoveNormal("Enfado", 120, 0.4, Type.Dragon),
+                new MoveNormal("Lanzallamas", 90, 0.6, Type.Fire),
+                new MoveNormal("Cabeza de Hierro", 80, 0.9, Type.Fighting),
+                new MoveParalize("Vuelo", 5, 0.4, Type.Flying)
+            }, Type.Dragon);
 
-            AddPokemonToCatalog("Bellsprout", new List<Move>
+            AddPokemonToCatalog("Bellsprout", new Move[]
             {
-                new MoveNormal("Absorber", 20, 0.7),
-                new MoveNormal("Látigo Cepa", 45, 0.4),
-                new MoveNormal("Ácido", 40, 0.9),
-                new MoveBurn("Rayo Solar", 15, 0.3) 
-            }, PokemonType.Type.Grass);
+                new MoveNormal("Absorber", 20, 0.7, Type.Grass),
+                new MoveNormal("Látigo Cepa", 45, 0.4, Type.Grass),
+                new MoveNormal("Ácido", 40, 0.9, Type.Poison),
+                new MoveBurn("Rayo Solar", 15, 0.3, Type.Grass)
+            }, Type.Grass);
 
-            AddPokemonToCatalog("Zangoose", new List<Move>
+            AddPokemonToCatalog("Zangoose", new Move[]
             {
-                new MoveNormal("Cuchillada", 70, 0.85),
-                new MoveNormal("Garra Brutal", 90, 0.6),
-                new MoveNormal("Despejar", 60, 0.9),
-                new MoveSleep("Danza Espada", 0, 1.0) 
-            }, PokemonType.Type.Normal);
+                new MoveNormal("Cuchillada", 70, 0.85, Type.Normal),
+                new MoveNormal("Garra Brutal", 90, 0.6, Type.Normal),
+                new MoveNormal("Despejar", 60, 0.9, Type.Normal),
+                new MoveSleep("Danza Espada", 0, 1.0, Type.Normal)
+            }, Type.Normal);
 
-            AddPokemonToCatalog("Rayquaza", new List<Move>
+            AddPokemonToCatalog("Rayquaza", new Move[]
             {
-                new MoveNormal("Ascenso Draco", 120, 0.5),
-                new MoveNormal("Pulso Dragón", 85, 0.8),
-                new MoveNormal("Rayo Hielo", 90, 0.7),
-                new MoveNormal("Hiperrayo", 40, 0.9) 
-            }, PokemonType.Type.Dragon);
+                new MoveNormal("Ascenso Draco", 120, 0.5, Type.Dragon),
+                new MoveNormal("Pulso Dragón", 85, 0.8, Type.Dragon),
+                new MoveNormal("Rayo Hielo", 90, 0.7, Type.Ice),
+                new MoveNormal("Hiperrayo", 40, 0.9, Type.Normal)
+            }, Type.Dragon);
 
-            AddPokemonToCatalog("Wailord", new List<Move>
+            AddPokemonToCatalog("Wailord", new Move[]
             {
-                new MoveNormal("Hidrobomba", 110, 0.5),
-                new MoveNormal("Cuerpo Pesado", 85, 0.8),
-                new MoveNormal("Ventisca", 110, 0.5),
-                new MovePoison("Salto Cañón", 5, 0.9) 
-            }, PokemonType.Type.Water);
+                new MoveNormal("Hidrobomba", 110, 0.5, Type.Water),
+                new MoveNormal("Cuerpo Pesado", 85, 0.8, Type.Normal),
+                new MoveNormal("Ventisca", 110, 0.5, Type.Ice),
+                new MovePoison("Salto Cañón", 5, 0.9, Type.Water)
+            }, Type.Water);
 
-            AddPokemonToCatalog("Sudowoodo", new List<Move>
+            AddPokemonToCatalog("Sudowoodo", new Move[]
             {
-                new MoveNormal("Avalancha", 75, 0.7),
-                new MoveNormal("Lanzarrocas", 50, 0.85),
-                new MoveNormal("Terremoto", 100, 0.5),
-                new MoveParalize("Maldición", 10, 0.8) 
-            }, PokemonType.Type.Rock);
+                new MoveNormal("Avalancha", 75, 0.7, Type.Rock),
+                new MoveNormal("Lanzarrocas", 50, 0.85, Type.Rock),
+                new MoveNormal("Terremoto", 100, 0.5, Type.Ground),
+                new MoveParalize("Maldición", 10, 0.8, Type.Ghost)
+            }, Type.Rock);
 
-            AddPokemonToCatalog("Mew", new List<Move>
+            AddPokemonToCatalog("Mew", new Move[]
             {
-                new MoveNormal("Psíquico", 90, 0.9),
-                new MoveNormal("Sombra Vil", 70, 0.8),
-                new MoveNormal("Corte", 50, 1.0),
-                new MoveSleep("Aurasfera", 0, 0.9) 
-            }, PokemonType.Type.Psychic);
+                new MoveNormal("Psíquico", 90, 0.9, Type.Psychic),
+                new MoveNormal("Sombra Vil", 70, 0.8, Type.Ghost),
+                new MoveNormal("Corte", 50, 1.0, Type.Normal),
+                new MoveSleep("Aurasfera", 0, 0.9, Type.Fighting)
+            }, Type.Psychic);
 
-            AddPokemonToCatalog("Azumarill", new List<Move>
+            AddPokemonToCatalog("Azumarill", new Move[]
             {
-                new MoveNormal("Rayo Burbuja", 65, 0.8),
-                new MoveNormal("Cola Férrea", 75, 0.7),
-                new MoveNormal("Carantoña", 90, 0.6),
-                new MoveBurn("Acua Jet", 5, 1.0) 
-            }, PokemonType.Type.Water);
+                new MoveNormal("Rayo Burbuja", 65, 0.8, Type.Water),
+                new MoveNormal("Cola Férrea", 75, 0.7, Type.Normal),
+                new MoveNormal("Carantoña", 90, 0.6, Type.Bug),
+                new MoveBurn("Acua Jet", 5, 1.0, Type.Water)
+            }, Type.Water);
 
-            AddPokemonToCatalog("Jigglypuff", new List<Move>
+            AddPokemonToCatalog("Jigglypuff", new Move[]
             {
-                new MoveNormal("Placaje", 40, 0.9),
-                new MoveNormal("Doble Bofetón", 30, 0.8),
-                new MoveNormal("Bostezo", 20, 0.85),
-                new MoveNormal("Hipnosis", 25, 0.6) 
-            }, PokemonType.Type.Normal);
+                new MoveNormal("Placaje", 40, 0.9, Type.Normal),
+                new MoveNormal("Doble Bofetón", 30, 0.8, Type.Normal),
+                new MoveNormal("Bostezo", 20, 0.85, Type.Normal),
+                new MoveNormal("Hipnosis", 25, 0.6, Type.Normal)
+            }, Type.Normal);
 
-            AddPokemonToCatalog("Lucario", new List<Move>
+            AddPokemonToCatalog("Lucario", new Move[]
             {
-                new MoveNormal("Esfera Aural", 80, 0.9),
-                new MoveNormal("Velocidad Extrema", 80, 0.95),
-                new MoveNormal("Puño Incremento", 50, 0.85),
-                new MovePoison("Aurasfera", 10, 1.0) 
-            }, PokemonType.Type.Fighting);
-            
-            AddPokemonToCatalog("Pikachu", new List<Move>
-            {
-                new MoveNormal("Impactrueno", 40, 0.95),
-                new MoveNormal("Rayo", 90, 0.7),
-                new MoveParalize("Onda Trueno", 0, 0.9), 
-                new MoveNormal("Voltio Cruel", 100, 0.6) 
-            }, PokemonType.Type.Electric);
+                new MoveNormal("Esfera Aural", 80, 0.9, Type.Fighting),
+                new MoveNormal("Velocidad Extrema", 80, 0.95, Type.Fighting),
+                new MoveNormal("Puño Incremento", 50, 0.85, Type.Fighting),
+                new MovePoison("Aurasfera", 10, 1.0, Type.Fighting)
+            }, Type.Fighting);
 
-            AddPokemonToCatalog("Charizard", new List<Move>
+            AddPokemonToCatalog("Pikachu", new Move[]
             {
-                new MoveNormal("Lanzallamas", 90, 0.7),
-                new MoveNormal("Garra Dragón", 80, 0.8),
-                new MoveBurn("Anillo Ígneo", 5, 0.8),     
-                new MoveNormal("Tajo Aéreo", 70, 0.9)     
-            }, PokemonType.Type.Fire);
+                new MoveNormal("Impactrueno", 40, 0.95, Type.Electric),
+                new MoveNormal("Rayo", 90, 0.7, Type.Electric),
+                new MoveParalize("Onda Trueno", 0, 0.9, Type.Electric),
+                new MoveNormal("Voltio Cruel", 100, 0.6, Type.Electric)
+            }, Type.Electric);
 
-            AddPokemonToCatalog("Gengar", new List<Move>
+            AddPokemonToCatalog("Charizard", new Move[]
             {
-                new MoveNormal("Bola Sombra", 80, 0.8),
-                new MoveNormal("Psíquico", 90, 0.7),
-                new MoveSleep("Hipnosis", 0, 0.6),        
-                new MovePoison("Bomba Lodo", 90, 0.7)     
-            }, PokemonType.Type.Ghost);
+                new MoveNormal("Lanzallamas", 90, 0.7, Type.Fire),
+                new MoveNormal("Garra Dragón", 80, 0.8, Type.Dragon),
+                new MoveBurn("Anillo Ígneo", 5, 0.8, Type.Fire),
+                new MoveNormal("Tajo Aéreo", 70, 0.9, Type.Flying)
+            }, Type.Fire);
 
-            AddPokemonToCatalog("Lapras", new List<Move>
+            AddPokemonToCatalog("Gengar", new Move[]
             {
-                new MoveNormal("Surf", 90, 0.8),
-                new MoveNormal("Ventisca", 110, 0.6),
-                new MoveBurn("Canto Helado", 5, 0.9),     
-                new MoveNormal("Cabeza de Hierro", 80, 0.8) 
-            }, PokemonType.Type.Water);
-}
+                new MoveNormal("Bola Sombra", 80, 0.8, Type.Ghost),
+                new MoveNormal("Psíquico", 90, 0.7, Type.Psychic),
+                new MoveSleep("Hipnosis", 0, 0.6, Type.Ghost),
+                new MovePoison("Bomba Lodo", 90, 0.7, Type.Poison)
+            }, Type.Ghost);
 
-        
+            AddPokemonToCatalog("Lapras", new Move[]
+            {
+                new MoveNormal("Surf", 90, 0.8, Type.Water),
+                new MoveNormal("Ventisca", 110, 0.6, Type.Ice),
+                new MoveBurn("Canto Helado", 5, 0.9, Type.Ice),
+                new MoveNormal("Cabeza de Hierro", 80, 0.8, Type.Normal)
+            }, Type.Water);
+        }
+
+
         /// <summary>
         /// Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
         /// </summary>
@@ -156,29 +159,39 @@ namespace ClassLibrary
         /// <param name="moves">Lista de movimientos del Pokémon.</param>
         /// <param name="specialNormalMove">Movimiento especial del Pokémon.</param>
         /// <param name="type">El tipo del Pokémon.</param>
-        private void AddPokemonToCatalog(string name, List<Move> moves, PokemonType.Type type)
+        private void AddPokemonToCatalog(string name, Move[] moves, Type type)
         {
-            // Validar todos los parámetros en una única condición
-            if (string.IsNullOrWhiteSpace(name) || moves == null || moves.Count == 0 || !Enum.IsDefined(typeof(PokemonType.Type), type))
+            // Validar que el nombre no sea nulo, vacío o solo espacios
+            if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException("Uno o más parámetros son inválidos. Verifique el nombre, la lista de movimientos o el tipo.");
+                throw new ArgumentException(
+                    "El nombre del Pokémon no puede estar vacío o ser solo espacios en blanco.");
             }
-            
-            // Crea una nueva instancia de un Pokémon y le asigna sus atributos.
-            Pokemon pokemon = new Pokemon();
-            pokemon.Name = name;
-            pokemon.Moves = moves;
-            pokemon.Type = type;
-            this.Pokemons.Add(pokemon); // Añade el Pokémon a la lista del catálogo.
-        }
 
-        /// <summary>
-        /// Devuelve la lista de todos los Pokémon creados en el catálogo.
-        /// </summary>
-        /// <returns>Lista de Pokémon.</returns>
-        public List<Pokemon> GetPokemonList()
-        {
-            return Pokemons; // Retorna la lista de Pokémon del catálogo.
+            // Validar que la lista de movimientos no sea nula
+            if (moves == null)
+            {
+                throw new ArgumentException("La lista de movimientos no puede ser nula.");
+            }
+
+            // Validar que la lista de movimientos tenga la cantidad exacta definida
+            if (moves.Length != Pokemon.MAX_MOVES)
+            {
+                throw new ArgumentException(
+                    $"La lista de movimientos debe contener exactamente {Pokemon.MAX_MOVES} movimientos.");
+            }
+
+            // Validar que el tipo sea un valor válido del enum PokemonType.Type
+            if (!Enum.IsDefined(typeof(Type), type))
+            {
+                throw new ArgumentException("El tipo del Pokémon no es válido.");
+            }
+
+            // Crea una nueva instancia de un Pokémon y le asigna sus atributos.
+            Pokemon pokemon = new Pokemon(moves);
+            pokemon.Name = name;
+            pokemon.PokemonType = type;
+            this._pokemonList.Add(pokemon); // Añade el Pokémon a la lista del catálogo.
         }
     }
 }

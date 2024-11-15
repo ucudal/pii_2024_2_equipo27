@@ -695,6 +695,11 @@
             Nombre del movimiento.
             </summary>
         </member>
+        <member name="F:ClassLibrary.Move._moveType">
+            <summary>
+            Obtiene o establece el tipo del Ataque.
+            </summary>
+        </member>
         <member name="F:ClassLibrary.Move._attackValue">
             <summary>
             Valor del ataque del movimiento.
@@ -705,7 +710,7 @@
             El valor de precisión define la probabilidad de que el ataque se ejecute.
             </summary>
         </member>
-        <member name="M:ClassLibrary.Move.#ctor(System.String,System.Int32,System.Double)">
+        <member name="M:ClassLibrary.Move.#ctor(System.String,System.Int32,System.Double,ClassLibrary.Type)">
             <summary>
             Constructor de la clase.
             </summary>
@@ -728,7 +733,7 @@
             </summary>
             
         </member>
-        <member name="M:ClassLibrary.MoveBurn.#ctor(System.String,System.Int32,System.Double)">
+        <member name="M:ClassLibrary.MoveBurn.#ctor(System.String,System.Int32,System.Double,ClassLibrary.Type)">
             <summary>
             Constructor de la clase <c>MoveBurn</c>. 
             </summary>
@@ -750,7 +755,7 @@
             lógica en el método `ExecuteMove`, inflingiendo daño directo al Pokémon objetivo sin efectos secundarios adicionales.
             </summary>
         </member>
-        <member name="M:ClassLibrary.MoveNormal.#ctor(System.String,System.Int32,System.Double)">
+        <member name="M:ClassLibrary.MoveNormal.#ctor(System.String,System.Int32,System.Double,ClassLibrary.Type)">
             <summary>
             Constructor de la clase <c>MoveNormal</c>. 
             </summary>
@@ -774,7 +779,7 @@
             paralizado; si no lo está, establece su estado de parálisis en verdadero.
             </summary>
         </member>
-        <member name="M:ClassLibrary.MoveParalize.#ctor(System.String,System.Int32,System.Double)">
+        <member name="M:ClassLibrary.MoveParalize.#ctor(System.String,System.Int32,System.Double,ClassLibrary.Type)">
             <summary>
             Constructor de la clase <c>MoveParalize</c>. 
             </summary>
@@ -799,7 +804,7 @@
             afecta al objetivo en el futuro. 
             </summary>
         </member>
-        <member name="M:ClassLibrary.MovePoison.#ctor(System.String,System.Int32,System.Double)">
+        <member name="M:ClassLibrary.MovePoison.#ctor(System.String,System.Int32,System.Double,ClassLibrary.Type)">
             <summary>
             Constructor de la clase <c>MovePoison</c>. 
             </summary>
@@ -826,7 +831,7 @@
             efectos de estado o tipos de movimientos.
             </summary>
         </member>
-        <member name="M:ClassLibrary.MoveSleep.#ctor(System.String,System.Int32,System.Double)">
+        <member name="M:ClassLibrary.MoveSleep.#ctor(System.String,System.Int32,System.Double,ClassLibrary.Type)">
             <summary>
             Constructor de la clase <c>MoveSleep</c>. 
             </summary>
@@ -842,6 +847,35 @@
             <param name="target">El pokemon que está siendo atacado.</param>
             <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
         </member>
+        <member name="T:ClassLibrary.Type">
+            <summary>
+            Enumeración que define los tipos de Pokémon.
+            </summary>
+        </member>
+        <member name="T:ClassLibrary.EffectivenessTable">
+            <summary>
+            La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
+            Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
+            efectividad de ataques entre tipos.
+            Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
+            entre tipos, promoviendo alta cohesión y bajo acoplamiento con otras clases.
+            Además, sigue el principio abierto/cerrado (OCP), permitiendo agregar nuevos tipos o combinaciones de efectividad
+            sin modificar la estructura de la clase.
+            La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
+            estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.EffectivenessTable.GetEffectiveness(ClassLibrary.Type,ClassLibrary.Type)">
+            <summary>
+            Método que devuelve la efectividad entre tipos.
+            </summary>
+            <param name="defendingType">Tipo del Pokémon atacante.</param>
+            <param name="attackingType">Tipo del Pokémon defensor.</param>
+            <returns>
+            El multiplicador de daño según la efectividad entre tipos. 
+            Devuelve 1.0 si no hay ventaja o desventaja.
+            </returns>
+        </member>
         <member name="T:ClassLibrary.Pokemon">
             <summary>
             La clase  <c>Pokemon</c> es responsable de encapsular los atributos y comportamientos específicos de un Pokémon.
@@ -852,7 +886,7 @@
             de estados, aseguran que el Pokémon funcione de acuerdo con las reglas del juego de manera coherente y extensible. 
             </summary>
         </member>
-        <member name="M:ClassLibrary.Pokemon.#ctor">
+        <member name="M:ClassLibrary.Pokemon.#ctor(ClassLibrary.Move[])">
             <summary>
             Inicializa una nueva instancia de la clase <c>Pokemon</c> con una lista de movimientos vacía.
             </summary>
@@ -893,7 +927,7 @@
             </summary>
             <exception cref="T:System.ArgumentOutOfRangeException">Se lanza si los puntos de salud son negativos.</exception>
         </member>
-        <member name="P:ClassLibrary.Pokemon.Type">
+        <member name="F:ClassLibrary.Pokemon._pokemonType">
             <summary>
             Obtiene o establece el tipo del Pokémon.
             </summary>
@@ -944,7 +978,7 @@
             Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
             </summary>
         </member>
-        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,System.Collections.Generic.List{ClassLibrary.Move},ClassLibrary.PokemonType.Type)">
+        <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,ClassLibrary.Move[],ClassLibrary.Type)">
             <summary>
             Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
             </summary>
@@ -952,41 +986,6 @@
             <param name="moves">Lista de movimientos del Pokémon.</param>
             <param name="specialNormalMove">Movimiento especial del Pokémon.</param>
             <param name="type">El tipo del Pokémon.</param>
-        </member>
-        <member name="M:ClassLibrary.PokemonCatalogBuilder.GetPokemonList">
-            <summary>
-            Devuelve la lista de todos los Pokémon creados en el catálogo.
-            </summary>
-            <returns>Lista de Pokémon.</returns>
-        </member>
-        <member name="T:ClassLibrary.PokemonType">
-            <summary>
-            La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
-            Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
-            efectividad de ataques entre tipos.
-            Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
-            entre tipos, promoviendo alta cohesión y bajo acoplamiento con otras clases.
-            Además, sigue el principio abierto/cerrado (OCP), permitiendo agregar nuevos tipos o combinaciones de efectividad
-            sin modificar la estructura de la clase.
-            La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
-            estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
-            </summary>
-        </member>
-        <member name="T:ClassLibrary.PokemonType.Type">
-            <summary>
-            Enumeración que define los tipos de Pokémon.
-            </summary>
-        </member>
-        <member name="M:ClassLibrary.PokemonType.GetEffectiveness(ClassLibrary.PokemonType.Type,ClassLibrary.PokemonType.Type)">
-            <summary>
-            Método que devuelve la efectividad entre tipos.
-            </summary>
-            <param name="defendingType">Tipo del Pokémon atacante.</param>
-            <param name="attackingType">Tipo del Pokémon defensor.</param>
-            <returns>
-            El multiplicador de daño según la efectividad entre tipos. 
-            Devuelve 1.0 si no hay ventaja o desventaja.
-            </returns>
         </member>
         <member name="T:ClassLibrary.Bot">
             <summary>

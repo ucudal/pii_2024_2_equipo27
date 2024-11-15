@@ -38,7 +38,14 @@ public class ItemTests
     public void Revivir_ThrowsException_WhenPokemonIsNotFainted()
     {
         // Arrange
-        var pokemon = new Pokemon { Name = "Pikachu", HealthPoints = 100 };
+        Move[] moves = new Move[]
+        {
+            new MoveNormal("Patada Ígnea", 80, 0.5, Type.Fire),
+            new MoveNormal("Llamarada", 90, 0.7, Type.Fire),
+            new MoveNormal("Tajo Aéreo", 70, 0.5, Type.Flying),
+            new MoveBurn("Anillo Ígneo", 0, 0.3, Type.Fire)
+        };
+        Pokemon pokemon = new Pokemon(moves);
 
         // Act & Assert
         var ex = Assert.Throws<Exception>(() => revivir.ApplyEffect(pokemon));
@@ -57,7 +64,14 @@ public class ItemTests
     public void CuraTotal_AppliesEffect_WhenPokemonIsValid()
     {
         // Arrange
-        var pokemon = new Pokemon { Name = "Bulbasaur", HealthPoints = 50, IsPoisoned = true };
+        Move[] moves = new Move[]
+        {
+            new MoveNormal("Patada Ígnea", 80, 0.5, Type.Fire),
+            new MoveNormal("Llamarada", 90, 0.7, Type.Fire),
+            new MoveNormal("Tajo Aéreo", 70, 0.5, Type.Flying),
+            new MoveBurn("Anillo Ígneo", 0, 0.3, Type.Fire)
+        };
+        Pokemon pokemon = new Pokemon(moves);
 
         // Act
         var message = curaTotal.ApplyEffect(pokemon);

@@ -1,5 +1,7 @@
 using ClassLibrary;
 using NUnit.Framework;
+using System.Linq;
+
 namespace ClassLibrary.Tests;
 
 public class PokemonCatalogBuilderTests
@@ -11,7 +13,7 @@ public class PokemonCatalogBuilderTests
         PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
         
         // Act
-        List<Pokemon> pokemonList = catalogBuilder.GetPokemonList();
+        IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
         
         // Assert
         Assert.That(pokemonList.Count, Is.GreaterThan(0)); 
@@ -24,7 +26,7 @@ public class PokemonCatalogBuilderTests
         PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
         
         // Act
-        List<Pokemon> pokemonList = catalogBuilder.GetPokemonList();
+        IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
 
         // Assert
         foreach (Pokemon pokemon in pokemonList)
@@ -40,7 +42,7 @@ public class PokemonCatalogBuilderTests
         PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
         
         // Act
-        List<Pokemon> pokemonList = catalogBuilder.GetPokemonList();
+        IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
 
         // Assert
         foreach (Pokemon pokemon in pokemonList)
@@ -56,8 +58,8 @@ public class PokemonCatalogBuilderTests
         PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
         
         // Act
-        List<Pokemon> pokemonList = catalogBuilder.GetPokemonList();
-        Pokemon blaziken = pokemonList.Find(p => p.Name == "Blaziken");
+        IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
+        Pokemon blaziken = pokemonList.First(p => p.Name == "Blaziken");
 
         // Assert
         Assert.That(blaziken, Is.Not.Null); 
