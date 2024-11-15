@@ -22,7 +22,7 @@ public class AttackCommand : ModuleBase<SocketCommandContext>
         //validar movename
         
         string displayName = CommandHelper.GetDisplayName(Context);
-        string result = Facade.Instance.PlayerAttack(displayName, moveName);
+        string result = Facade.Instance.PlayerAttack(displayName);
         
         
         await ReplyAsync(result);

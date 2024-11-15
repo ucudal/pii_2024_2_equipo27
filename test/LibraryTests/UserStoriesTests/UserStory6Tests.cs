@@ -39,7 +39,7 @@ public class UserStory6Tests
         Facade.Instance.ChoosePokemonAndMoveToAttack("Player2", "Llamarada", "Blaziken");
         
         // Act
-        string result = Facade.Instance.PlayerAttack("Player1", "Corte");
+        string result = Facade.Instance.PlayerAttack("Player1");
         string expected =" Jugador Player1 usa al Pokémon Mew que ataca con Corte a Blaziken de Player2";
         // Assert
         Assert.That(result, Is.EqualTo(expected));

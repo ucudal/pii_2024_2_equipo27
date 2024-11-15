@@ -36,7 +36,7 @@ namespace ClassLibrary.Tests
         public void PlayerAttack_Works_Correctly()
         {
             // Ejecutar el ataque 
-            string message = Facade.Instance.PlayerAttack(attacker, move);
+            string message = Facade.Instance.PlayerAttack(attacker);
 
             Assert.That(message, Does.Contain(
                 $"""
