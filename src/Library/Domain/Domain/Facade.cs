@@ -5,8 +5,7 @@ namespace ClassLibrary
     /// Pokémon, mostrar movimientos, activar ataques y consultar la salud de los Pokémon. Aplica el Patrón de Diseño Facade,
     /// que oculta la complejidad del sistema y simplifica la interacción con múltiples subsistemas, mejorando la usabilidad.
     /// Esta clase sigue el Principio de Responsabilidad Única (SRP) al concentrar la lógica de interacción en un solo lugar,
-    /// lo que facilita el mantenimiento y la evolución del sistema. Además, respeta el Principio de Inversión de Dependencias (DIP)
-    /// al depender de abstracciones, permitiendo una mayor flexibilidad y una mejor capacidad de prueba. Esta estructura permite a los
+    /// lo que facilita el mantenimiento y la evolución del sistema. Esta estructura permite a los
     /// desarrolladores y jugadores interactuar con el juego de manera más intuitiva, minimizando la necesidad de conocer la
     /// implementación interna.
     /// </summary>
@@ -406,13 +405,23 @@ namespace ClassLibrary
         /// <summary>
         /// Permite que un jugador use un ítem específico en su Pokémon activo dentro de una partida.
         /// La función busca al jugador por su nombre, verifica que esté en la partida y que tenga un Pokémon activo
-        /// para aplicar el ítem. Si todo es válido, aplica el efecto del ítem al Pokémon.
+        /// para aplicar el ítem. Si es válido, aplica el efecto del ítem al Pokémon.
         /// </summary>
         /// <param name="playerDisplayName">El nombre del jugador que intenta usar el ítem.</param>
         /// <param name="itemName">El nombre del ítem que el jugador intenta usar.</param>
         /// <returns>Un mensaje que indica si el jugador usó el ítem con éxito, el efecto del ítem o cualquier error.</returns>
         public string PlayerUseItem(string playerDisplayName, string itemName)
         {
+            if (string.IsNullOrEmpty(playerDisplayName))
+            {
+                throw new ArgumentNullException(); // TODO: falta mensaje
+            }   
+            
+            if (string.IsNullOrEmpty(itemName))
+            {
+                throw new ArgumentNullException(); // TODO: falta mensaje
+            } 
+            
             // Buscar el jugador por su nombre
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
@@ -424,7 +433,9 @@ namespace ClassLibrary
             try
             {
                 // Intentar usar el ítem
-                Item itemUsed = player.UseItem(itemName);
+                Item itemUsed = player.UseItem(itemName); 
+                
+                // TODO: todo lo que sigue va en Player.UseItem
 
                 // Verificar que el jugador tiene un Pokémon activo
                 if (player.ActivePokemon == null)
@@ -504,7 +515,7 @@ namespace ClassLibrary
         /// <returns>Un mensaje con el resultado.</returns>
         public string PlayerIsWaiting(string displayName)
         {
-            Player? player = this.WaitingList.FindPlayerByDisplayName(displayName);
+            Player player = this.WaitingList.FindPlayerByDisplayName(displayName);
             if (player == null)
             {
                 return $"{displayName} no está esperando";
@@ -531,9 +542,9 @@ namespace ClassLibrary
         /// <param name="playerDisplayName">El primer jugador.</param>
         /// <param name="opponentDisplayName">El oponente.</param>
         /// <returns>Un mensaje con el resultado.</returns>
-        public string StartBattle(string playerDisplayName, string? opponentDisplayName)
+        public string StartBattle(string playerDisplayName, string opponentDisplayName)
         {
-            Player? opponent;
+            Player opponent;
 
             if (!OpponentProvided() && !SomebodyIsWaiting())
             {
@@ -543,7 +554,7 @@ namespace ClassLibrary
             if (!OpponentProvided())
             {
                 opponent = this.WaitingList.GetAnyoneWaiting();
-                return this.CreateBattle(playerDisplayName, opponent!.DisplayName);
+                return this.CreateBattle(playerDisplayName, opponent.DisplayName);
             }
 
             opponent = this.WaitingList.FindPlayerByDisplayName(opponentDisplayName!);
@@ -553,7 +564,7 @@ namespace ClassLibrary
                 return $"{opponentDisplayName} no está esperando";
             }
 
-            return this.CreateBattle(playerDisplayName, opponent!.DisplayName);
+            return this.CreateBattle(playerDisplayName, opponent.DisplayName);
 
             // Funciones locales a continuación para mejorar la legibilidad
 

@@ -94,8 +94,7 @@
             Pokémon, mostrar movimientos, activar ataques y consultar la salud de los Pokémon. Aplica el Patrón de Diseño Facade,
             que oculta la complejidad del sistema y simplifica la interacción con múltiples subsistemas, mejorando la usabilidad.
             Esta clase sigue el Principio de Responsabilidad Única (SRP) al concentrar la lógica de interacción en un solo lugar,
-            lo que facilita el mantenimiento y la evolución del sistema. Además, respeta el Principio de Inversión de Dependencias (DIP)
-            al depender de abstracciones, permitiendo una mayor flexibilidad y una mejor capacidad de prueba. Esta estructura permite a los
+            lo que facilita el mantenimiento y la evolución del sistema. Esta estructura permite a los
             desarrolladores y jugadores interactuar con el juego de manera más intuitiva, minimizando la necesidad de conocer la
             implementación interna.
             </summary>
@@ -690,7 +689,7 @@
             sin modificar la estructura base, lo cual favorece un sistema extensible y polimórfico. 
             </summary>
         </member>
-        <member name="F:ClassLibrary.Move._name">
+        <member name="P:ClassLibrary.Move.Name">
             <summary>
             Nombre del movimiento.
             </summary>
@@ -950,7 +949,8 @@
             centralizadamente en esta clase, minimizando el impacto en el resto del sistema. Además, al aplicar el patrón
             Expert de GRASP, PokemonCatalog se convierte en la autoridad en la gestión del catálogo, lo que facilita la
             incorporación de nuevas características, como métodos de búsqueda adicionales o cambios en la fuente de datos,
-            sin necesidad de alteraciones significativas en otras partes del código. 
+            sin necesidad de alteraciones significativas en otras partes del código. Se utilizan distintas instancias del mismo
+            catálogo al seleccionar los pokemones, para asegurar que no compartan una misma instancia.  
             </summary>
         </member>
         <member name="M:ClassLibrary.PokemonCatalog.FindPokemonByName(System.String)">

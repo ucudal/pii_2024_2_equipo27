@@ -7,7 +7,7 @@ public static class CommandHelper
 {
     public static string GetDisplayName(
         SocketCommandContext context, 
-        string? name = null)
+        string name = null)
     {
         if (name == null)
         {
@@ -28,9 +28,9 @@ public static class CommandHelper
         return name;
     }
 
-    public static SocketGuildUser? GetUser(
+    public static SocketGuildUser GetUser(
         SocketCommandContext context,
-        string? name)
+        string name)
     {
         if (name == null)
         {

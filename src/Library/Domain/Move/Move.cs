@@ -14,18 +14,7 @@ public abstract class Move
     /// <summary>
     /// Nombre del movimiento.
     /// </summary>
-    private string _name;
-    public string Name 
-    { 
-        get { return _name; }
-        set 
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("El nombre del movimiento no puede estar vacío o ser solo espacios en blanco.");
-            _name = value;
-        }
-    }
-
+    public string Name { get; }
 
     /// <summary>
     /// Obtiene o establece el tipo del Ataque.
@@ -85,6 +74,9 @@ public abstract class Move
     /// <param name="accuracy">El valor de precisión del movimiento.</param>
     public Move(string name, int attackValue, double accuracy, Type moveType)
     {
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentException("El nombre no puede ser nulo o vacío.");
+        
         this.MoveType = moveType;
         this.Name = name;
         this.AttackValue = attackValue;
