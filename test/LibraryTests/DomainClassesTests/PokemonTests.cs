@@ -9,7 +9,14 @@ namespace ClassLibrary.Tests
         [SetUp]
         public void Setup()
         {
-            _pokemon = new Pokemon();
+            Move[] moves = new Move[]
+            {
+                new MoveNormal("Patada Ígnea", 80, 0.5, Type.Fire),
+                new MoveNormal("Llamarada", 90, 0.7, Type.Fire),
+                new MoveNormal("Tajo Aéreo", 70, 0.5, Type.Flying),
+                new MoveBurn("Anillo Ígneo", 0, 0.3, Type.Fire)
+            };
+            _pokemon = new Pokemon(moves);
         }
         
         [Test]
@@ -45,17 +52,17 @@ namespace ClassLibrary.Tests
         public void Type_SetValidType_ShouldSetType()
         {
             // Act
-            _pokemon.Type = PokemonType.Type.Electric;
+            _pokemon.PokemonType = Type.Electric;
 
             // Assert
-            Assert.That(_pokemon.Type, Is.EqualTo(PokemonType.Type.Electric));
+            Assert.That(_pokemon.PokemonType, Is.EqualTo(Type.Electric));
         }
         
         [Test]
-        public void Constructor_ShouldInitializeEmptyMovesList()
+        public void Constructor_ShouldInitializeMovesList()
         {
             // Assert
-            Assert.That(_pokemon.Moves, Is.Empty);
+            Assert.That(_pokemon.Moves.Count, Is.EqualTo(Pokemon.MAX_MOVES));
         }
     }
 }
