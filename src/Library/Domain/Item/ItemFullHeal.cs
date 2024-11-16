@@ -9,12 +9,12 @@ namespace ClassLibrary;
 /// La robustez y seguridad de esta clase se asegura al evitar estados inválidos y facilitar la detección de errores
 /// en el uso de la clase.
 /// </summary>
-public class CompleteCure : Item
+public class ItemFullHeal : Item
 {
     /// <summary>
     /// Constructor de la clase <c>CompleteCure</c> que inicializa el ítem con el nombre "Cura total".
     /// </summary>
-    public CompleteCure() : base("Cura total") { }
+    public ItemFullHeal() : base("Cura total") { }
 
     /// <summary>
     /// Aplica el efecto de curación completa y eliminación de estados alterados a un Pokémon.

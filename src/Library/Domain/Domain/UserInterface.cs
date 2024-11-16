@@ -29,7 +29,11 @@ namespace ClassLibrary
 
             foreach (Pokemon pokemon in pokemons.PokemonList)
             {
-                catalogo.AppendLine($"{pokemon.Name}");
+                catalogo.AppendLine($"{pokemon.Name}:");
+                foreach (Move move in pokemon.Moves)
+                {
+                    catalogo.AppendLine($"   -{move.Name}: attackvalue {move.AttackValue}, accuracy {move.Accuracy} , type {move.MoveType}");
+                }
             }
 
             return catalogo.ToString();
@@ -81,11 +85,14 @@ namespace ClassLibrary
             // Validar que las listas no sean nulas
             if (playerPokemons == null)
             {
-                throw new ArgumentNullException(nameof(playerPokemons), "La lista de Pokémon del jugador no puede ser nula.");
+                throw new ArgumentNullException(nameof(playerPokemons),
+                    "La lista de Pokémon del jugador no puede ser nula.");
             }
+
             if (opponentPokemons == null)
             {
-                throw new ArgumentNullException(nameof(opponentPokemons), "La lista de Pokémon del oponente no puede ser nula.");
+                throw new ArgumentNullException(nameof(opponentPokemons),
+                    "La lista de Pokémon del oponente no puede ser nula.");
             }
 
             // Usar StringBuilder para construir la cadena de manera eficiente
@@ -138,6 +145,7 @@ namespace ClassLibrary
             {
                 result.AppendLine($"{player.DisplayName}");
             }
+
             return result.ToString();
         }
 
@@ -147,6 +155,7 @@ namespace ClassLibrary
             {
                 return $"{displayName} ya está en la lista de espera";
             }
+
             return displayName;
         }
 
@@ -159,7 +168,7 @@ namespace ClassLibrary
         {
             return $"🎮 Es el turno de {currentPlayerDisplayName}.";
         }
-        
+
         /// <summary>
         /// Muestra un mensaje indicando que un ataque ha ocurrido, con detalles sobre el atacante, el defensor y el movimiento usado.
         /// </summary>
@@ -168,9 +177,11 @@ namespace ClassLibrary
         /// <param name="attacker">El jugador que controla al Pokémon atacante.</param>
         /// <param name="defender">El jugador que controla al Pokémon defensor.</param>
         /// <returns>Un mensaje formateado indicando que el ataque ocurrió.</returns>
-        public static string ShowMessageAttackOcurred(Pokemon attackingPokemon, Pokemon defendingPokemon, Player attacker, Player defender)
+        public static string ShowMessageAttackOcurred(Pokemon attackingPokemon, Pokemon defendingPokemon,
+            Player attacker, Player defender)
         {
-            return $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon.Name} de {defender.DisplayName}";
+            return
+                $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon.Name} de {defender.DisplayName}";
         }
 
         /// <summary>
@@ -181,7 +192,8 @@ namespace ClassLibrary
         /// <returns>Un mensaje formateado indicando que el ataque no ocurrió debido a un movimiento especial activo.</returns>
         public static string ShowMessageAttackDidNotOccur(Player attacker, Pokemon attackingPokemon)
         {
-            return $"$ El jugador {attacker} no puede jugar porque su Pokémon {attackingPokemon} tiene un ataque especial activo que no lo permite";
+            return
+                $"$ El jugador {attacker} no puede jugar porque su Pokémon {attackingPokemon} tiene un ataque especial activo que no lo permite";
         }
 
         /// <summary>
@@ -194,17 +206,79 @@ namespace ClassLibrary
         {
             return $"$ La efectividad del ataque es alta:  {accuaracyAttack} ";
         }
-        
+
         /// <summary>
         /// Muestra un mensaje indicando que la efectividad del mensaje fue baja.
         /// </summary>
         /// <param name="attacker">El jugador que intenta realizar el ataque.</param>
         /// <param name="attackingPokemon">El Pokémon que está intentando atacar.</param>
         /// <returns>Un mensaje formateado indicando la efectividad.</returns>
-        public static String ShowMessageLowEffectiveness(Double accuaracyAttack)
+        public static string ShowMessageLowEffectiveness(double accuaracyAttack)
         {
             return $"$ La efectividad del ataque es baja: {accuaracyAttack} ";
         }
 
+        /// <summary>
+        /// Retorna un mensaje con todos los comandos disponibles y las reglas del juego.
+        /// </summary>
+        public static string ShowMessageHelp()
+        {
+            var helpMessage = new StringBuilder();
+            
+            // Reglas del juego
+            helpMessage.AppendLine("\n=== Instrucciones del Juego ===")
+                .AppendLine("1. Cada jugador debe unirse a la lista de espera con !join, para salir de la misma se usa !leave.")
+                .AppendLine("2. Usa !waiting para ver los jugadores que están esperando")
+                .AppendLine("3. Usa !battle {username} para comenzar una batalla (el username es opcional).")
+                .AppendLine("4. Antes de la batalla, usa !catalog para ver los Pokémon disponibles.")
+                .AppendLine("5. Selecciona seis Pokémon con !choose {pokemon1 pokemon2 pokemon3 pokemon4 pokemon5 pokemon6}. Asegúrate de separar los Pokémon con espacios.")
+                .AppendLine("6. El juego elige aleatoriamente quién comienza.")
+                .AppendLine("7. Se pueden ver los movimientos disponibles de tu Pokémon activo con !moves.")
+                .AppendLine("8. Se pueden ver los items disponibles y su cantidad con !items")
+                .AppendLine("8. Se enfrentan los primeros Pokémon vivos de cada jugador.")
+                .AppendLine("9. Usa !turn para verificar de quién es el turno.")
+                .AppendLine("10. En tu turno, puedes realizar una de las siguientes acciones:")
+                .AppendLine("   - Usar un ataque con !attack {move} seleccionando un movimiento que tenga tu pokémon.")
+                .AppendLine("   - Cambiar de Pokémon con !change {pokemon}")
+                .AppendLine("   - Usar un ítem con !useitem {item}.")
+                .AppendLine("11. Usa !hp para consultar los HP de tus Pokémon y los del oponente.")
+                .AppendLine("12. La batalla termina cuando todos los Pokémon de un jugador llegan a 0 HP.")
+                .AppendLine("\n !help: Muestra los comandos disponibles y las instrucciones de juego.")
+                .AppendLine("!rules: Muestra las reglas del juego.");
+
+            return helpMessage.ToString();
+
+        }
+
+        public static string ShowMessageRules()
+        {
+            var helpMessage = new StringBuilder();
+
+            // Cómo funciona un ataque 
+            helpMessage.AppendLine("\n=== Cómo Funciona el Ataque ===")
+                .AppendLine("1. Usa !attack {move} para atacar con el movimiento seleccionado del Pokémon activo.")
+                .AppendLine("2. Los ataques tienen diferentes niveles de efectividad según los tipos de Pokémon (fuego, agua, planta, etc.).")
+                .AppendLine("3. Los ataques especiales pueden usarse cada dos turnos y tienen efectos adicionales:")
+                .AppendLine("   - Sleep: El Pokémon queda inactivo entre 1 y 4 turnos, sin poder atacar.")
+                .AppendLine("   - Paralize: El Pokémon tiene una probabilidad de fallar su turno de manera aleatoria.")
+                .AppendLine("   - Poison: El Pokémon pierde el 5% de su HP cada turno.")
+                .AppendLine("   - Burn: El Pokémon pierde el 10% de su HP cada turno.")
+                .AppendLine("4. Que se produzca un ataque o no depende de su valor de precisión y es aleatorio.")
+                .AppendLine("5. El daño infligido por los ataques depende de si es un golpe crítico")
+                .AppendLine("   - Un golpe crítico aumenta el daño en un 20% y tiene una probabilidad del 10%.")
+                .AppendLine("5. Si un pokemon alcanza 0 HP, el pokemon actual de un jugador pasa al siguiente Pokémon en la lista.");
+
+            // Cómo funcionan los Ítems
+            helpMessage.AppendLine("\n=== Cómo Funcionan los Ítems ===")
+                .AppendLine("1. Usa !useitem {item} para aplicar un efecto durante tu turno.")
+                .AppendLine("2. Los ítems pueden:")
+                .AppendLine("   - Revive: Revive a un Pokémon con el 50% de su HP total. (Cada jugador tiene 1)" )
+                .AppendLine("   - FullHeal: Elimina efectos de estados especiales como parálisis, dormir, envenenamiento o quemaduras.(Cada jugador tiene 2)")
+                .AppendLine("   - SuperPotion: Restaura 70 puntos de HP. (Cada jugador tiene 4)")
+                .AppendLine("3. Usar un ítem consume tu turno actual.");
+
+            return helpMessage.ToString();
+        }
     }
 }
+

@@ -188,14 +188,14 @@ namespace ClassLibrary
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
             {
-                throw new ArgumentException($"El jugador {playerDisplayName} no está jugando.");
+                throw new PokemonException($"El jugador {playerDisplayName} no está jugando.");
             }
 
             // Busca al oponente del jugador para obtener sus Pokémon.
             Player opponent = this.GameList.FindOpponentOfDisplayName(playerDisplayName);
             if (opponent == null)
             {
-                throw new ArgumentException($"No se encontró el oponente del jugador {playerDisplayName}.");
+                throw new PokemonException($"No se encontró el oponente del jugador {playerDisplayName}.");
             }
 
             // Devuelve la cadena formateada con la salud de los Pokémon de ambos jugadores.
@@ -528,6 +528,18 @@ namespace ClassLibrary
             game.Turn.ChangeTurn();
 
             game.CheckIfGameEnds();
+        }
+        
+        // COMANDOS Y REGLAS DEL JUEGO
+
+        public string GetHelpMessage()
+        {
+            return UserInterface.ShowMessageHelp();
+        }
+        
+        public string GetRulesMessage()
+        {
+            return UserInterface.ShowMessageRules();
         }
     }
 }

@@ -40,7 +40,7 @@ public class Pokemon
             // Verifica si el Pokémon ya está afectado por un estado especial
             if (_isBurned || _isParalyzed || _sleepTurns > 0)
             {
-                throw new InvalidOperationException(
+                throw new PokemonException(
                     "El Pokémon no puede ser envenenado si ya está afectado por otro estado (quemado, paralizado, dormido).");
             }
 
@@ -62,7 +62,7 @@ public class Pokemon
         {
             if (_isPoisoned || _isParalyzed || _sleepTurns > 0)
             {
-                throw new InvalidOperationException(
+                throw new PokemonException(
                     "El Pokémon no puede ser quemado si ya está afectado por otro estado (envenenado, paralizado, dormido).");
             }
 
@@ -83,7 +83,7 @@ public class Pokemon
         {
             if (_isPoisoned || _isBurned || _sleepTurns > 0)
             {
-                throw new InvalidOperationException(
+                throw new PokemonException(
                     "El Pokémon no puede ser paralizado si ya está afectado por otro estado (envenenado, quemado, dormido).");
             }
 
@@ -105,7 +105,7 @@ public class Pokemon
         {
             if (_isPoisoned || _isBurned || _isParalyzed)
             {
-                throw new InvalidOperationException(
+                throw new PokemonException(
                     "El Pokémon no puede dormir si ya está afectado por otro estado (envenenado, quemado, paralizado).");
             }
 
@@ -169,7 +169,7 @@ public class Pokemon
         {
             if (!Enum.IsDefined(typeof(Type), value))
             {
-                throw new ArgumentException("El tipo de Pokémon no es válido.");
+                throw new PokemonException("El tipo de Pokémon no es válido.");
             }
 
             _pokemonType = value;
@@ -183,14 +183,6 @@ public class Pokemon
     public IReadOnlyList<Move> Moves
     {
         get { return this._moves.AsReadOnly(); }
-
-        // set
-        // {
-        //     if (value != null && value.Count > MaxMoves)
-        //         throw new InvalidOperationException($"No se pueden agregar más de {MaxMoves} movimientos.");
-        //
-        //     _moves = value;
-        // }
     }
 
     public const int MAX_MOVES = 4;

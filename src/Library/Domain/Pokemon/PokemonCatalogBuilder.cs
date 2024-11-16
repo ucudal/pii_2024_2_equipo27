@@ -177,14 +177,14 @@ namespace ClassLibrary
             // Validar que la lista de movimientos tenga la cantidad exacta definida
             if (moves.Length != Pokemon.MAX_MOVES)
             {
-                throw new ArgumentException(
+                throw new PokemonException(
                     $"La lista de movimientos debe contener exactamente {Pokemon.MAX_MOVES} movimientos.");
             }
 
-            // Validar que el tipo sea un valor válido del enum PokemonType.Type
+            // Validar que el tipo sea un valor válido del enum Type
             if (!Enum.IsDefined(typeof(Type), type))
             {
-                throw new ArgumentException("El tipo del Pokémon no es válido.");
+                throw new PokemonException("El tipo del Pokémon no es válido.");
             }
 
             // Crea una nueva instancia de un Pokémon y le asigna sus atributos.

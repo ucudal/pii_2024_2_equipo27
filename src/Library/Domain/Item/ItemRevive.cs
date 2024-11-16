@@ -8,14 +8,14 @@ namespace ClassLibrary
     /// alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión. La clase asegura la robustez y
     /// seguridad de su comportamiento al prevenir estados inválidos y facilitar la detección de errores en su uso.
     /// </summary>
-    public class Revivir : Item
+    public class ItemRevive : Item
     {
         private const int ReviveHealth = 50;
 
         /// <summary>
-        /// Inicializa una nueva instancia de la clase <see cref="Revivir"/> con el nombre del ítem establecido como "Revivir".
+        /// Inicializa una nueva instancia de la clase <see cref="ItemRevive"/> con el nombre del ítem establecido como "Revivir".
         /// </summary>
-        public Revivir() : base("Revivir") { }
+        public ItemRevive() : base("Revivir") { }
 
         /// <summary>
         /// Aplica el efecto de la <c>Revivir</c> al Pokémon especificado. Si el Pokémon está debilitado (con puntos de vida iguales a cero),

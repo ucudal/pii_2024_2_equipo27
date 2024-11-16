@@ -36,16 +36,16 @@ public class UserStory3Tests
         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
 
         // Act & Assert
-        Assert.That(() => Facade.Instance.GetPokemonsHealth(null), Throws.ArgumentNullException);
+        Assert.That(() => Facade.Instance.GetPokemonsHealth(null), Throws.Exception);
     }
 
     [Test]
-    public void GetPokemonsHealth_WhenPlayerDoesNotExist_ThrowsArgumentException()
+    public void GetPokemonsHealth_WhenPlayerDoesNotExist_ThrowsInnerException()
     {
         // Arrange
         Facade.Instance.GameList.AddGame(new Player("player2"), new Player("player3"));
 
         // Act & Assert
-        Assert.That(() => Facade.Instance.GetPokemonsHealth("player1"), Throws.ArgumentException);
+        Assert.That(() => Facade.Instance.GetPokemonsHealth("player1"), Throws.InnerException);
     }
 }

@@ -33,9 +33,7 @@ public class BattleCommand : ModuleBase<SocketCommandContext>
     {
         string displayName = CommandHelper.GetDisplayName(Context);
         
-        SocketGuildUser opponentUser = CommandHelper.GetUser(
-            Context, opponentDisplayName);
-
+        SocketGuildUser opponentUser = CommandHelper.GetUser(Context, opponentDisplayName);
         string result;
         if (opponentUser != null)
         {

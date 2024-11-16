@@ -5,17 +5,17 @@ using NUnit.Framework;
 [TestFixture]
 public class ItemTests
 {
-    private CompleteCure curaTotal;
-    private Revivir revivir;
-    private SuperPocion superPocion;
+    private ItemFullHeal curaTotal;
+    private ItemRevive _itemRevive;
+    private ItemSuperPotion _itemSuperPotion;
 
     [SetUp]
     public void Setup()
     {
         // Inicializamos los objetos que vamos a probar
-        curaTotal = new CompleteCure();
-        revivir = new Revivir();
-        superPocion = new SuperPocion();
+        curaTotal = new ItemFullHeal();
+        _itemRevive = new ItemRevive();
+        _itemSuperPotion = new ItemSuperPotion();
     }
 
     [Test]
@@ -30,7 +30,7 @@ public class ItemTests
     public void Revivir_ThrowsException_WhenPokemonIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<Exception>(() => revivir.ApplyEffect(null));
+        var ex = Assert.Throws<Exception>(() => _itemRevive.ApplyEffect(null));
         Assert.That(ex.Message, Is.EqualTo("No hay un Pokémon para revivir."));
     }
 
@@ -48,7 +48,7 @@ public class ItemTests
         Pokemon pokemon = new Pokemon(moves);
 
         // Act & Assert
-        var ex = Assert.Throws<Exception>(() => revivir.ApplyEffect(pokemon));
+        var ex = Assert.Throws<Exception>(() => _itemRevive.ApplyEffect(pokemon));
         Assert.That(ex.Message, Is.EqualTo("Pikachu no puede ser revivido."));
     }
 
@@ -56,7 +56,7 @@ public class ItemTests
     public void SuperPocion_ThrowsException_WhenPokemonIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<Exception>(() => superPocion.ApplyEffect(null));
+        var ex = Assert.Throws<Exception>(() => _itemSuperPotion.ApplyEffect(null));
         Assert.That(ex.Message, Is.EqualTo("No hay un pokemon activo para curar"));
     }
 

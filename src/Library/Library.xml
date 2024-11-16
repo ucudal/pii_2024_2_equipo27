@@ -30,6 +30,41 @@
             mensaje a la lista de jugadores esperando para jugar.
             </summary>
         </member>
+        <member name="T:Library.Commands.ChangeCommand">
+            <summary>
+            Esta clase implementa el comando 'change' del bot. Este comando permite al
+            jugador cambiar su Pokémon activo por otro de su equipo.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.ChangeCommand.ExecuteAsync(System.String)">
+            <summary>
+            Implementa el comando 'change'. Este comando toma el nombre del nuevo
+            Pokémon que el jugador desea usar como activo y actualiza la selección.
+            </summary>
+        </member>
+        <member name="T:Library.Commands.ChooseCommand">
+            <summary>
+            Esta clase implementa el comando 'choose' del bot. Este comando permite al
+            jugador seleccionar seis Pokémon para la batalla, separados por espacios.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.ChooseCommand.ExecuteAsync(System.String)">
+            <summary>
+            Implementa el comando 'choose'. Este comando toma una lista de seis nombres
+            de Pokémon separados por espacios, los transforma en un array y pasa
+            la información a la fachada para registrar la selección.
+            </summary>
+        </member>
+        <member name="T:Library.Commands.HelpCommand">
+            <summary>
+            Esta clase implementa el comando 'help' del bot. 
+            </summary>
+        </member>
+        <member name="M:Library.Commands.HelpCommand.ExecuteAsync">
+            <summary>
+            Implementa el comando 'help'. Este comando muestra información sobre los comandos y cómo jugar el juego"
+            </summary>
+        </member>
         <member name="T:Library.Commands.InitCommand">
             <summary>
             Esta clase implementa el comando 'join' del bot. Este comando une al jugador
@@ -66,6 +101,16 @@
             que envía el mensaje de la lista de jugadores esperando para jugar.
             </summary>
         </member>
+        <member name="T:Library.Commands.RulesCommand">
+            <summary>
+            Esta clase implementa el comando 'rules' del bot. 
+            </summary>
+        </member>
+        <member name="M:Library.Commands.RulesCommand.ExecuteAsync">
+            <summary>
+            Implementa el comando 'rules'. Este comando muestra información sobre las reglas del juego"
+            </summary>
+        </member>
         <member name="T:Library.Commands.WaitingCommand">
             <summary>
             Esta clase implementa el comando 'waitinglist' del bot. Este comando muestra
@@ -77,6 +122,35 @@
             Implementa el comando 'waitinglist'. Este comando muestra la lista de
             jugadores esperando para jugar.
             </summary>
+        </member>
+        <member name="T:ClassLibrary.Type">
+            <summary>
+            Enumeración que define los tipos de Pokémon.
+            </summary>
+        </member>
+        <member name="T:ClassLibrary.EffectivenessTable">
+            <summary>
+            La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
+            Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
+            efectividad de ataques entre tipos.
+            Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
+            entre tipos, promoviendo alta cohesión y bajo acoplamiento con otras clases.
+            Además, sigue el principio abierto/cerrado (OCP), permitiendo agregar nuevos tipos o combinaciones de efectividad
+            sin modificar la estructura de la clase.
+            La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
+            estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.EffectivenessTable.GetEffectiveness(ClassLibrary.Type,ClassLibrary.Type)">
+            <summary>
+            Método que devuelve la efectividad entre tipos.
+            </summary>
+            <param name="defendingType">Tipo del Pokémon atacante.</param>
+            <param name="attackingType">Tipo del Pokémon defensor.</param>
+            <returns>
+            El multiplicador de daño según la efectividad entre tipos. 
+            Devuelve 1.0 si no hay ventaja o desventaja.
+            </returns>
         </member>
         <member name="T:ClassLibrary.Facade">
             <summary>
@@ -514,6 +588,11 @@
             <param name="attackingPokemon">El Pokémon que está intentando atacar.</param>
             <returns>Un mensaje formateado indicando la efectividad.</returns>
         </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageHelp">
+            <summary>
+            Retorna un mensaje con todos los comandos disponibles y las reglas del juego.
+            </summary>
+        </member>
         <member name="T:ClassLibrary.WaitingList">
             <summary>
             La clase <c>WaitingList</c> es responsable de gestionar la lista de jugadores en espera para jugar.
@@ -594,7 +673,7 @@
             <param name="pokemon">El Pokémon al que se aplicará el efecto del ítem.</param>
             <returns>Un mensaje que indica el resultado de aplicar el efecto.</returns>
         </member>
-        <member name="T:ClassLibrary.CompleteCure">
+        <member name="T:ClassLibrary.ItemFullHeal">
             <summary>
             La clase <c>CuraTotal</c> es responsable de representar un ítem que cura completamente a un Pokémon.
             Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente la lógica de curación completa
@@ -605,12 +684,12 @@
             en el uso de la clase.
             </summary>
         </member>
-        <member name="M:ClassLibrary.CompleteCure.#ctor">
+        <member name="M:ClassLibrary.ItemFullHeal.#ctor">
             <summary>
             Constructor de la clase <c>CompleteCure</c> que inicializa el ítem con el nombre "Cura total".
             </summary>
         </member>
-        <member name="M:ClassLibrary.CompleteCure.ApplyEffect(ClassLibrary.Pokemon)">
+        <member name="M:ClassLibrary.ItemFullHeal.ApplyEffect(ClassLibrary.Pokemon)">
             <summary>
             Aplica el efecto de curación completa y eliminación de estados alterados a un Pokémon.
             </summary>
@@ -618,7 +697,7 @@
             <returns>Un mensaje que indica que el Pokémon ha sido curado completamente.</returns>
             <exception cref="T:System.Exception">Se lanza una excepción si no se pasa un Pokémon válido.</exception>
         </member>
-        <member name="T:ClassLibrary.Revivir">
+        <member name="T:ClassLibrary.ItemRevive">
             <summary>
             La clase <c>Revivir</c> representa un ítem que revive a un Pokémon debilitado, restaurando parcialmente sus puntos de vida.
             Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente la lógica de revivir y curación parcial
@@ -628,12 +707,12 @@
             seguridad de su comportamiento al prevenir estados inválidos y facilitar la detección de errores en su uso.
             </summary>
         </member>
-        <member name="M:ClassLibrary.Revivir.#ctor">
+        <member name="M:ClassLibrary.ItemRevive.#ctor">
             <summary>
-            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.Revivir"/> con el nombre del ítem establecido como "Revivir".
+            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.ItemRevive"/> con el nombre del ítem establecido como "Revivir".
             </summary>
         </member>
-        <member name="M:ClassLibrary.Revivir.ApplyEffect(ClassLibrary.Pokemon)">
+        <member name="M:ClassLibrary.ItemRevive.ApplyEffect(ClassLibrary.Pokemon)">
             <summary>
             Aplica el efecto de la <c>Revivir</c> al Pokémon especificado. Si el Pokémon está debilitado (con puntos de vida iguales a cero),
             lo revive restaurando 50 puntos de vida. Si el Pokémon ya tiene puntos de vida, no se puede aplicar el efecto.
@@ -641,7 +720,7 @@
             <param name="pokemon">El Pokémon al que se le aplicará el ítem.</param>
             <returns>Un mensaje indicando el resultado de la aplicación del ítem.</returns>
         </member>
-        <member name="T:ClassLibrary.SuperPocion">
+        <member name="T:ClassLibrary.ItemSuperPotion">
             <summary>
             La clase <c>SuperPocion</c> representa un ítem que restaura puntos de vida a un Pokémon en batalla.
             Aplica el principio de responsabilidad única (SRP) al encargarse exclusivamente de la lógica de curación
@@ -650,17 +729,17 @@
             facilitando la extensión mediante la adición de otros ítems sin necesidad de modificar la clase base.
             </summary>
         </member>
-        <member name="F:ClassLibrary.SuperPocion.HealingAmount">
+        <member name="F:ClassLibrary.ItemSuperPotion.HealingAmount">
             <summary>
             Cantidad de puntos de vida que restaura la super poción.
             </summary>
         </member>
-        <member name="M:ClassLibrary.SuperPocion.#ctor">
+        <member name="M:ClassLibrary.ItemSuperPotion.#ctor">
             <summary>
             Constructor de la clase <c>SuperPocion</c> que inicializa el ítem con el nombre "SuperPocion".
             </summary>
         </member>
-        <member name="M:ClassLibrary.SuperPocion.ApplyEffect(ClassLibrary.Pokemon)">
+        <member name="M:ClassLibrary.ItemSuperPotion.ApplyEffect(ClassLibrary.Pokemon)">
             <summary>
             Aplica el efecto de la super poción, aumentando los puntos de vida del Pokémon.
             </summary>
@@ -835,35 +914,6 @@
             <param name="attacker">El pokemon que está atacando.</param>
             <param name="target">El pokemon que está siendo atacado.</param>
             <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
-        </member>
-        <member name="T:ClassLibrary.Type">
-            <summary>
-            Enumeración que define los tipos de Pokémon.
-            </summary>
-        </member>
-        <member name="T:ClassLibrary.EffectivenessTable">
-            <summary>
-            La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
-            Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
-            efectividad de ataques entre tipos.
-            Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
-            entre tipos, promoviendo alta cohesión y bajo acoplamiento con otras clases.
-            Además, sigue el principio abierto/cerrado (OCP), permitiendo agregar nuevos tipos o combinaciones de efectividad
-            sin modificar la estructura de la clase.
-            La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
-            estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
-            </summary>
-        </member>
-        <member name="M:ClassLibrary.EffectivenessTable.GetEffectiveness(ClassLibrary.Type,ClassLibrary.Type)">
-            <summary>
-            Método que devuelve la efectividad entre tipos.
-            </summary>
-            <param name="defendingType">Tipo del Pokémon atacante.</param>
-            <param name="attackingType">Tipo del Pokémon defensor.</param>
-            <returns>
-            El multiplicador de daño según la efectividad entre tipos. 
-            Devuelve 1.0 si no hay ventaja o desventaja.
-            </returns>
         </member>
         <member name="T:ClassLibrary.Pokemon">
             <summary>

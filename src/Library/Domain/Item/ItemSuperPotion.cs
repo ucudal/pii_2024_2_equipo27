@@ -7,7 +7,7 @@ namespace ClassLibrary
     /// su efecto al Pokémon. La clase también está diseñada para cumplir con el principio abierto/cerrado (OCP),
     /// facilitando la extensión mediante la adición de otros ítems sin necesidad de modificar la clase base.
     /// </summary>
-    public class SuperPocion : Item
+    public class ItemSuperPotion : Item
     {
         /// <summary>
         /// Cantidad de puntos de vida que restaura la super poción.
@@ -17,7 +17,7 @@ namespace ClassLibrary
         /// <summary>
         /// Constructor de la clase <c>SuperPocion</c> que inicializa el ítem con el nombre "SuperPocion".
         /// </summary>
-        public SuperPocion() : base("SuperPocion") { }
+        public ItemSuperPotion() : base("SuperPocion") { }
 
         /// <summary>
         /// Aplica el efecto de la super poción, aumentando los puntos de vida del Pokémon.

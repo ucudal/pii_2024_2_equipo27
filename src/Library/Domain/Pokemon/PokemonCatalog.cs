@@ -34,7 +34,7 @@ namespace ClassLibrary
             // Verifica que la string no esté vacía.
             if (string.IsNullOrWhiteSpace(pokemonName))
             {
-                throw new ArgumentException("El nombre del Pokémon no puede estar vacío.", nameof(pokemonName));
+                throw new ArgumentException("El nombre del Pokémon no puede estar vacío.");
             }
             
             // Recorre la lista de Pokémons en busca del nombre proporcionado.
