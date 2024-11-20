@@ -46,25 +46,17 @@ public class Player
     public Move ActiveMove { get; private set; }
 
     // Referencia al oponente de este jugador.
+
     private Player _opponent;
 
     /// <summary>
-    /// Establece al oponente del jugador.
+    /// El oponente del jugador.
     /// </summary>
-    /// <param name="opponent">El jugador que será el oponente.</param>
-    public void SetOpponent(Player opponent)
+    public Player Opponent
     {
-        _opponent = opponent;
+        get => _opponent;
+        set => _opponent = value;
     }
-
-    /// <summary>
-    /// Obtiene el oponente del jugador.
-    /// </summary>
-    public Player GetOpponent()
-    {
-        return _opponent;
-    }
-
 
     /// <summary>
     /// Agrega un Pokémon a la lista de Pokémon disponibles para el jugador.
