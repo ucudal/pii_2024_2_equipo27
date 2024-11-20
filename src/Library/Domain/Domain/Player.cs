@@ -164,12 +164,12 @@ public class Player
     public void CheckAndAssignNextActivePokemon()
     {
         // Verificar si el Pokémon activo está KO (HealthPoints <= 0) o dormido
-        if (ActivePokemon.HealthPoints <= 0 || ActivePokemon.SleepTurns > 0)
+        if (ActivePokemon.HealthPoints <= 0)
         {
             // Buscar el próximo Pokémon vivo y no dormido en la lista
             foreach (var pokemon in AvailablePokemons)
             {
-                if (pokemon.HealthPoints > 0 && !(pokemon.SleepTurns>0))
+                if (pokemon.HealthPoints > 0)
                 {
                     // Asignar el siguiente Pokémon válido como el activo
                     ActivePokemon = pokemon;
