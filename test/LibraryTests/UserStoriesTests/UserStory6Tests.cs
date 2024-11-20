@@ -35,18 +35,15 @@ public class UserStory6Tests
         Facade.Instance.GameList.AddGame(new Player("Player1"), new Player("Player2"));
         Facade.Instance.ChoosePokemons("Player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
         Facade.Instance.ChoosePokemons("Player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
-        Facade.Instance.ChoosePokemonAndMoveToAttack( "Player1",  "Corte", "Mew");
-        Facade.Instance.ChoosePokemonAndMoveToAttack("Player2", "Llamarada", "Blaziken");
+        Facade.Instance.ChooseMoveToAttack( "Player1",  "Corte");
+        Facade.Instance.ChooseMoveToAttack("Player2", "Psíquico");
         
         // Act
         string result = Facade.Instance.PlayerAttack("Player1");
-        string expected =" Jugador Player1 usa al Pokémon Mew que ataca con Corte a Blaziken de Player2";
+        string expected =" Jugador Player1 usa al Pokémon Mew que ataca con Corte a Mew de Player2";
         // Assert
         Assert.That(result, Is.EqualTo(expected));
 
     }
-    
-        
-        
         
 }

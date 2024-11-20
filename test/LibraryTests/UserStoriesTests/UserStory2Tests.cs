@@ -25,8 +25,8 @@ public class UserStory2Tests
             
         Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
         Facade.Instance.ChoosePokemons(defender, defenderPokemons);
-        Facade.Instance.ChoosePokemonAndMoveToAttack( attacker,  move, attackerPokemons[0]);
-        Facade.Instance.ChoosePokemonAndMoveToAttack( defender,  move2, defenderPokemons[0]);
+        Facade.Instance.ChooseMoveToAttack( attacker,  move);
+        Facade.Instance.ChooseMoveToAttack( defender,  move2);
     }
 
     [Test] 

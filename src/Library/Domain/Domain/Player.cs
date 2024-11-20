@@ -156,6 +156,34 @@ public class Player
         this.items.Remove(itemFound);
         return itemFound;
     }
+    
+    /// <summary>
+    /// Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
+    /// Si no cumple estas condiciones, asigna el próximo Pokémon disponible que las cumpla.
+    /// </summary>
+    public void CheckAndAssignNextActivePokemon()
+    {
+        // Verificar si el Pokémon activo está KO (HealthPoints <= 0) o dormido
+        if (ActivePokemon.HealthPoints <= 0 || ActivePokemon.SleepTurns > 0)
+        {
+            // Buscar el próximo Pokémon vivo y no dormido en la lista
+            foreach (var pokemon in AvailablePokemons)
+            {
+                if (pokemon.HealthPoints > 0 && !(pokemon.SleepTurns>0))
+                {
+                    // Asignar el siguiente Pokémon válido como el activo
+                    ActivePokemon = pokemon;
+                    ActiveMove = null; // Resetea el movimiento activo
+                    return;
+                }
+            }
+
+            // Si no se encuentra ningún Pokémon válido, el jugador queda sin opciones
+            ActivePokemon = null;
+            throw new InvalidOperationException("Todos los Pokémon del jugador están debilitados o dormidos.");
+        }
+    }
+
 
     public void ExecuteMove(Player defender, Player attacker)
     {

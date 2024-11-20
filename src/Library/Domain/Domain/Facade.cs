@@ -99,7 +99,10 @@ namespace ClassLibrary
                     throw new Exception($"El pokemon {pokemonName} no esta en el catalogo");
                 }
             }
-
+            
+            // Inicializa al primer pokémon de la lista como pokémon activo
+            player.ActivatePokemon(player.GetIndexOfPokemon(pokemonNames[0]));
+            
             // Llama a UserInterface para mostrar los Pokémon seleccionados
             return UserInterface.ShowMessageSelectedPokemons(selectedPokemons);
         }
@@ -144,25 +147,18 @@ namespace ClassLibrary
         /// <param name="playerDisplayName">El nombre del jugador.</param>
         /// <param name="moveName">El nombre del movimiento a utilizar.</param>
         /// <param name="pokemonName">El nombre del Pokémon que realizará el ataque.</param>
-        public void ChoosePokemonAndMoveToAttack(string playerDisplayName, string moveName, string pokemonName)
+        public void ChooseMoveToAttack(string playerDisplayName, string moveName)
         {
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
             {
                 throw new Exception($"El jugador {playerDisplayName} no está jugando");
             }
-
-            int pokemonIndex = player.GetIndexOfPokemon(pokemonName);
-            if (pokemonIndex < 0)
-            {
-                throw new Exception($"El Pokémon {pokemonName} no está disponible para el jugador {playerDisplayName}");
-            }
-            player.ActivatePokemon(pokemonIndex);
             
             int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
             if (moveIndex < 0)
             {
-                throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon {pokemonName}");
+                throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon actual, usá el comando !moves para ver los movimientos disponibles");
             }
 
             player.ActivateMoveInActivePokemon(moveIndex);
