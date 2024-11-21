@@ -27,6 +27,7 @@ public class AttackCommand : ModuleBase<SocketCommandContext>
         }
         
         string displayName = CommandHelper.GetDisplayName(Context);
+        Facade.Instance.ChooseMoveToAttack( displayName,  moveName);
         string result = Facade.Instance.PlayerAttack(displayName);
         
         await ReplyAsync(result);
