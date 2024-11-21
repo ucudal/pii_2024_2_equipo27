@@ -59,9 +59,10 @@ namespace ClassLibrary
             PlayIsOn = true; // El juego inicia en estado activo
 
             // Establecer los oponentes
-            Player1.SetOpponent(Player2);
-            Player2.SetOpponent(Player1);
         }
+
+        public Player Opponent { get; }
+      
 
         /// <summary>
         /// Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
@@ -72,7 +73,7 @@ namespace ClassLibrary
         public void CheckIfGameEnds()
         {
             // Verificamos si todos los Pokémon del jugador 1 tienen 0 puntos de vida
-            Player opponent = TurnPlayer.GetOpponent();
+            Player opponent = TurnPlayer.Opponent;
             bool todosSonCeroPlayer1 = true; // = Player1.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
             foreach (Pokemon pokemon in Player1.AvailablePokemons)
             {

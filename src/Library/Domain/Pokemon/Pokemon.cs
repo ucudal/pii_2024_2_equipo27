@@ -209,4 +209,17 @@ public class Pokemon
 
         return true;
     }
+    // Método para obtener los movimientos del Pokémon como una cadena
+    public string GetMovesString()
+    {
+        List<string> movesList = new List<string>();
+
+        foreach (Move move in Moves)
+        {
+            movesList.Add(move.Name);
+        }
+
+        return string.Join(", ", movesList);
+    }
+
 }

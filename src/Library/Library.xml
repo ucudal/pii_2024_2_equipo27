@@ -410,15 +410,9 @@
             El movimiento actualmente activo del Pokémon del jugador.
             </summary>
         </member>
-        <member name="M:ClassLibrary.Player.SetOpponent(ClassLibrary.Player)">
+        <member name="P:ClassLibrary.Player.Opponent">
             <summary>
-            Establece al oponente del jugador.
-            </summary>
-            <param name="opponent">El jugador que será el oponente.</param>
-        </member>
-        <member name="M:ClassLibrary.Player.GetOpponent">
-            <summary>
-            Obtiene el oponente del jugador.
+            El oponente del jugador.
             </summary>
         </member>
         <member name="M:ClassLibrary.Player.AddPokemon(ClassLibrary.Pokemon)">
