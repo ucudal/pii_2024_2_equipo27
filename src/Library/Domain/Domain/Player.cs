@@ -205,16 +205,6 @@ public class Player
             throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
         }
 
-        // Verificar si el ataque es efectivo aleatorio con random
-        //Enviar mensaje interfaz de que no es efectivo y sino seguir 
-
-        // double AccuaracyAttack = attacker.ActiveMove.Accuracy;
-        //
-        // if (AccuaracyAttack < 0.5)
-        // {
-        //     return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
-        // }
-
         // Genera el Golpe Crítico con random
         Random random = new Random();
 
