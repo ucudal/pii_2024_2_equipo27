@@ -30,8 +30,8 @@ public class InitCommand : ModuleBase<SocketCommandContext>
         result = result + Facade.Instance.StartBattle(displayName, "player1");
         result = result + Facade.Instance.ChoosePokemons(displayName, attackerPokemons);
         result = result + Facade.Instance.ChoosePokemons("player1", defenderPokemons);
-        Facade.Instance.ChoosePokemonAndMoveToAttack( displayName,  move, attackerPokemons[0]);
-        Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  move2, defenderPokemons[0]);
+        Facade.Instance.ChooseMoveToAttack( displayName,  move);
+        Facade.Instance.ChooseMoveToAttack( "player1",  move2);
         
         await ReplyAsync(result);
     }

@@ -12,8 +12,7 @@
         </member>
         <member name="M:Library.Commands.AttackCommand.ExecuteAsync(System.String)">
             <summary>
-            Implementa el comando 'join'. Este comando une al jugador que envía el
-            mensaje a la lista de jugadores esperando para jugar.
+            Implementa el comando 'attack'. Este comando atacka al oponente
             </summary>
         </member>
         <member name="T:Library.Commands.BattleCommand">
@@ -111,6 +110,13 @@
             Implementa el comando 'rules'. Este comando muestra información sobre las reglas del juego"
             </summary>
         </member>
+        <member name="T:Library.Commands.TurnCommand">
+            <summary>
+            Esta clase implementa el comando 'turn' del bot. Este comando muestra de 
+            quien es el turno
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Library.Commands.TurnCommand.ExecuteAsync" -->
         <member name="T:Library.Commands.WaitingCommand">
             <summary>
             Esta clase implementa el comando 'waitinglist' del bot. Este comando muestra
@@ -187,7 +193,7 @@
             <param name="playerDisplayName">El nombre del jugador.</param>
             <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
         </member>
-        <member name="M:ClassLibrary.Facade.ChoosePokemonAndMoveToAttack(System.String,System.String,System.String)">
+        <member name="M:ClassLibrary.Facade.ChooseMoveToAttack(System.String,System.String)">
             <summary>
             Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
             </summary>
@@ -448,6 +454,12 @@
             Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
             </summary>
             <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
+        </member>
+        <member name="M:ClassLibrary.Player.CheckAndAssignNextActivePokemon">
+            <summary>
+            Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
+            Si no cumple estas condiciones, asigna el próximo Pokémon disponible que las cumpla.
+            </summary>
         </member>
         <member name="T:ClassLibrary.Turn">
             <summary>
