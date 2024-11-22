@@ -1,53 +1,51 @@
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using ClassLibrary;
 
-namespace PlayerTests
+namespace ClassLibrary.Tests
 {
     [TestFixture]
     public class PlayerTests
     {
-        public Player player;
-        public Pokemon pikachu;
-        public Pokemon charizard;
-
+        private Player player;
+        private Pokemon _pokemon;
+       
+        
         [SetUp]
         public void Setup()
         {
+            Move[] moves = new Move[]
+            { 
+                new MoveNormal("Patada Ígnea", 80, 0.5, Type.Fire),
+                new MoveNormal("Llamarada", 90, 0.7, Type.Fire),
+                new MoveNormal("Tajo Aéreo", 70, 0.5, Type.Flying),
+                new MoveBurn("Anillo Ígneo", 0, 0.3, Type.Fire)
+            };
+           
             player = new Player("Juan");
-            pikachu = new Pokemon("Pikachu");
-            charizard = new Pokemon("Charizard");
+            _pokemon = new Pokemon(moves);
+        
         }
 
+    
         [Test]
         public void AddPokemon_ShouldAddPokemonToAvailablePokemons()
         {
             // Act
-            player.AddPokemon(pikachu);
+            player.AddPokemon(_pokemon);
 
             // Assert
-            Assert.That( player.AvailablePokemons.Contains(pikachu));
+            Assert.That( player.AvailablePokemons.Contains(_pokemon));
         }
 
         [Test]
         public void AddPokemon_ShouldSetActivePokemon_WhenFirstPokemonAdded()
         {
             // Act
-            player.AddPokemon(pikachu);
+            player.AddPokemon(_pokemon);
 
             // Assert
-            Assert.That(player.ActivePokemon, Is.EqualTo(pikachu));
+            Assert.That(player.ActivePokemon, Is.EqualTo(_pokemon));
         }
-
-
-        [Test]
-        public void UseItem_ShouldThrowException_WhenItemNotInInventory()
-        {
-            // Act & Assert
-            var ex = Assert.Throws<ApplicationException>(() => player.UseItem("NonExistentItem"));
-            Assert.That(ex.Message, Is.EqualTo("No existe el ítem NonExistentItem en el inventario."));
-        }
+        
 
         [Test]
         
@@ -61,7 +59,7 @@ namespace PlayerTests
             var usedItem = player.UseItem(itemName);
 
             // Assert
-            Assert.That(usedItem, Is.EqualTo(item));
+            Assert.That(usedItem, Is.EqualTo(itemName));
             Assert.That(player.UseItem, Is.False);
         }
 

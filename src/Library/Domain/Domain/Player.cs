@@ -225,6 +225,13 @@ public class Player
         Facade.Instance.ChangeTurn(attacker);
     }
 
+    /// <summary>
+    /// Actualiza el estado de los Pokémon disponibles del jugador al cambiar de turno.
+    /// </summary>
+    /// <remarks>
+    /// Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="Pokemon.IsBurned"/>),
+    /// reduce sus puntos de salud en un 10%.
+    /// </remarks>
     public void TurnChanged()
     {
         foreach (Pokemon pokemon in this.AvailablePokemons)
@@ -235,4 +242,5 @@ public class Player
             }
         }
     }
+
 }

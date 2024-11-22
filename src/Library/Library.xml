@@ -461,6 +461,15 @@
             Si no cumple estas condiciones, asigna el próximo Pokémon disponible que las cumpla.
             </summary>
         </member>
+        <member name="M:ClassLibrary.Player.TurnChanged">
+            <summary>
+            Actualiza el estado de los Pokémon disponibles del jugador al cambiar de turno.
+            </summary>
+            <remarks>
+            Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="P:ClassLibrary.Pokemon.IsBurned"/>),
+            reduce sus puntos de salud en un 10%.
+            </remarks>
+        </member>
         <member name="T:ClassLibrary.Turn">
             <summary>
             Esta clase conoce las especificaciones del turno de un jugador actual con sus correspondientes ataques.

@@ -58,11 +58,22 @@ namespace ClassLibrary
             TurnPlayer = player1; // El jugador 1 comienza con el turno
             PlayIsOn = true; // El juego inicia en estado activo
 
-            // Establecer los oponentes
+            
         }
-
+        // Establecer los oponentes
         public Player Opponent { get; }
       
+        public void StartGame()
+        {
+            this.PlayIsOn = true;
+        }
+        public void EndGame()
+        {
+            this.PlayIsOn = false;
+        }
+        
+        
+
 
         /// <summary>
         /// Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
