@@ -78,13 +78,13 @@ public class Player
         }
 
         this.AvailablePokemons.Add(pokemon);
-        if (this.AvailablePokemons.Count == 1) // Es el primer Pokémon que se agrega, lo activa por defecto
+        if (this.AvailablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
         {
             this.ActivePokemon = this.AvailablePokemons[0];
         }
     }
 
-    /// <summary>       
+    /// <summary>
     /// Obtiene el índice de un Pokémon en la lista de Pokémon disponibles
     /// según su nombre para mostrar.
     /// </summary>
@@ -190,6 +190,34 @@ public class Player
         return itemQuantities;
     }
 
+
+    
+    /// <summary>
+    /// Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
+    /// Si no cumple estas condiciones, asigna el próximo Pokémon disponible que las cumpla.
+    /// </summary>
+    public void CheckAndAssignNextActivePokemon()
+    {
+        // Verificar si el Pokémon activo está KO (HealthPoints <= 0) o dormido
+        if (ActivePokemon.HealthPoints <= 0)
+        {
+            // Buscar el próximo Pokémon vivo y no dormido en la lista
+            foreach (var pokemon in AvailablePokemons)
+            {
+                if (pokemon.HealthPoints > 0)
+                {
+                    // Asignar el siguiente Pokémon válido como el activo
+                    ActivePokemon = pokemon;
+                    ActiveMove = null; // Resetea el movimiento activo
+                    return;
+                }
+            }
+
+            // Si no se encuentra ningún Pokémon válido, el jugador queda sin opciones
+            ActivePokemon = null;
+            throw new InvalidOperationException("Todos los Pokémon del jugador están debilitados o dormidos.");
+        }
+    }
 
 
     public void ExecuteMove(Player defender, Player attacker)

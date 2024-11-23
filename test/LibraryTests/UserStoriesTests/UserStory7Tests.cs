@@ -17,7 +17,7 @@ public class UserStory7Tests
         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
         Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
         Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
-        Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
         // Act
         string result = Facade.Instance.ChangePokemon("player1", "Blaziken");
@@ -34,7 +34,7 @@ public class UserStory7Tests
         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
         Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
         Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
-        Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
         // Act Assert
         Assert.That(()=> Facade.Instance.ChangePokemon("", "Blaziken"), Throws.ArgumentNullException);
@@ -47,7 +47,7 @@ public class UserStory7Tests
         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
         Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
         Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
-        Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+        Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
         // Act & Assert
         Assert.That(()=> Facade.Instance.ChangePokemon("player1", null), Throws.ArgumentNullException);
@@ -60,7 +60,7 @@ public class UserStory7Tests
          Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
          Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
          Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
-         Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+         Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
          // Act & Assert
          Assert.That(()=> Facade.Instance.ChangePokemon("player3", "Blaziken"), Throws.ArgumentException);
@@ -73,7 +73,7 @@ public class UserStory7Tests
          Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
          Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
          Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken","Tinkaton", "Salamence", "Jigglypuff" });
-         Facade.Instance.ChoosePokemonAndMoveToAttack( "player1",  "Corte", "Mew");
+         Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
          // Act & Assert
          Assert.That(()=> Facade.Instance.ChangePokemon("player1", "Lululemon"), Throws.ArgumentException);
