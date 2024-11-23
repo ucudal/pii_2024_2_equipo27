@@ -110,18 +110,6 @@
             que envía el mensaje de la lista de jugadores esperando para jugar.
             </summary>
         </member>
-        <member name="T:Library.Commands.MovesCommand">
-            <summary>
-            Comando que muestra los movimientos disponibles de los Pokémon del jugador
-            para los Pokémon del oponente.
-            </summary>
-        </member>
-        <member name="M:Library.Commands.MovesCommand.ExecuteAsync">
-            <summary>
-            Ejecuta el comando 'moves' que muestra los movimientos disponibles de los
-            Pokémon del jugador para los Pokémon del oponente.
-            </summary>
-        </member>
         <member name="T:Library.Commands.RulesCommand">
             <summary>
             Esta clase implementa el comando 'rules' del bot. 
@@ -132,13 +120,6 @@
             Implementa el comando 'rules'. Este comando muestra información sobre las reglas del juego"
             </summary>
         </member>
-        <member name="T:Library.Commands.TurnCommand">
-            <summary>
-            Esta clase implementa el comando 'turn' del bot. Este comando muestra de 
-            quien es el turno
-            </summary>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:Library.Commands.TurnCommand.ExecuteAsync" -->
         <member name="T:Library.Commands.WaitingCommand">
             <summary>
             Esta clase implementa el comando 'waitinglist' del bot. Este comando muestra
@@ -215,7 +196,7 @@
             <param name="playerDisplayName">El nombre del jugador.</param>
             <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
         </member>
-        <member name="M:ClassLibrary.Facade.ChooseMoveToAttack(System.String,System.String)">
+        <member name="M:ClassLibrary.Facade.ChoosePokemonAndMoveToAttack(System.String,System.String,System.String)">
             <summary>
             Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
             </summary>
@@ -482,21 +463,6 @@
             Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
             </summary>
             <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
-        </member>
-        <member name="M:ClassLibrary.Player.CheckAndAssignNextActivePokemon">
-            <summary>
-            Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
-            Si no cumple estas condiciones, asigna el próximo Pokémon disponible que las cumpla.
-            </summary>
-        </member>
-        <member name="M:ClassLibrary.Player.TurnChanged">
-            <summary>
-            Actualiza el estado de los Pokémon disponibles del jugador al cambiar de turno.
-            </summary>
-            <remarks>
-            Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="P:ClassLibrary.Pokemon.IsBurned"/>),
-            reduce sus puntos de salud en un 10%.
-            </remarks>
         </member>
         <member name="T:ClassLibrary.Turn">
             <summary>

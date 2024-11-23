@@ -148,6 +148,28 @@ public class Player
         this.items.Remove(itemFound);
         return itemFound;
     }
+    /// <summary>
+    /// Devuelve los ítems disponibles y sus cantidades.
+    /// </summary>
+    /// <returns>Un diccionario con los nombres de los ítems y sus cantidades.</returns>
+    public Dictionary<string, int> GetItemsWithQuantities()
+    {
+        var itemQuantities = new Dictionary<string, int>();
+
+        foreach (var item in items)
+        {
+            if (itemQuantities.ContainsKey(item.Name))
+            {
+                itemQuantities[item.Name]++;
+            }
+            else
+            {
+                itemQuantities[item.Name] = 1;
+            }
+        }
+
+        return itemQuantities;
+    }
     
     /// <summary>
     /// Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
