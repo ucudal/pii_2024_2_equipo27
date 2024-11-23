@@ -130,29 +130,8 @@ namespace ClassLibrary
         /// <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
         public List<string> ShowMoves(string playerDisplayName)
         {
-            Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
-            if (player == null)
-            {
-                return new List<string> { $"El jugador {playerDisplayName} no está jugando" };
-            }
-
-            List<string> pokemonsWithMoves = new List<string>();
-
-            foreach (Pokemon pokemon in player.AvailablePokemons)
-            {
-                List<string> movesList = new List<string>();
-
-                foreach (Move move in pokemon.Moves)
-                {
-                    movesList.Add(move.Name);
-                }
-                
-                string pokemonMoves = $"{pokemon.Name}: {string.Join(", ", movesList)}";
-
-                pokemonsWithMoves.Add(pokemonMoves);
-            }
-
-            return pokemonsWithMoves;
+            // Pedimos a GameList que obtenga directamente los movimientos de los Pokémon del jugador
+            return this.GameList.GetPokemonsWithMovesForPlayer(playerDisplayName);
         }
         /// <summary>
         /// Muestra los ítems disponibles del jugador y sus cantidades.
@@ -316,23 +295,26 @@ namespace ClassLibrary
         /// <exception cref="ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
         public string EndGame(Game game, Player player, string playerDisplayName)
         {
-            // Verifica si el juego ha terminado (puede modificar estados internos del juego)
+            // Verifica si el juego ha terminado (modifica el estado interno del juego)
             game.CheckIfGameEnds();
-            
-            // Si el jugador no tiene Pokémon disponibles, termina la batalla y muestra el mensaje de fin de la batalla
-            if (player.AvailablePokemons.Count == 0)
+    
+            // Verificamos si el juego ha terminado
+            if (!game.PlayIsOn)
             {
+                // Si el juego ha terminado, mostramos el mensaje de fin de batalla
                 return UserInterface.ShowBattleEndMessage(playerName: playerDisplayName);
             }
-            
-            // Si el jugador tiene un Pokémon o mas  disponibles, la batalla no ha terminado
-            if (player.AvailablePokemons.Count >= 1)
+    
+            // Si el jugador no tiene Pokémon disponibles, la batalla también termina
+            if (player.AvailablePokemons.Count == 0)
             {
-                throw new ArgumentException($"La batalla continúa.");
+                // Terminamos la batalla si el jugador no tiene Pokémon disponibles
+                return UserInterface.ShowBattleEndMessage(playerName: playerDisplayName);
             }
-            return null;
+    
+            // Si el jugador tiene Pokémon disponibles y el juego no ha terminado, se lanza una excepción
+            throw new ArgumentException($"La batalla continúa.");
         }
-
 
         //HISTORIA DE USUARIO 7
         

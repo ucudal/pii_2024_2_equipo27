@@ -49,20 +49,12 @@ public class Player
     private Player _opponent;
 
     /// <summary>
-    /// Establece al oponente del jugador.
+    /// El oponente del jugador.
     /// </summary>
-    /// <param name="opponent">El jugador que será el oponente.</param>
-    public void SetOpponent(Player opponent)
+    public Player Opponent
     {
-        _opponent = opponent;
-    }
-
-    /// <summary>
-    /// Obtiene el oponente del jugador.
-    /// </summary>
-    public Player GetOpponent()
-    {
-        return _opponent;
+        get => _opponent;
+        set => _opponent = value;
     }
 
 
@@ -72,11 +64,6 @@ public class Player
     /// <param name="pokemon">El Pokémon a agregar a la lista.</param>
     public void AddPokemon(Pokemon pokemon)
     {
-        if (this.AvailablePokemons.Count >= 6)
-        {
-            throw new PokemonException("No puedes tener más de 6 Pokémon en tu equipo.");
-        }
-
         this.AvailablePokemons.Add(pokemon);
         if (this.AvailablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
         {
@@ -143,12 +130,6 @@ public class Player
 
     public Item UseItem(string itemName)
     {
-        if (string.IsNullOrWhiteSpace(itemName))
-        {
-            throw new ArgumentNullException(nameof(itemName), "El nombre del ítem no puede ser nulo o vacío.");
-        }
-
-
         Item itemFound = null;
         foreach (Item item in this.items)
         {
@@ -161,7 +142,7 @@ public class Player
 
         if (itemFound == null)
         {
-            throw new PokemonException($"No existe el ítem {itemName} en el inventario.");
+            throw new ApplicationException($"No existe el ítem {itemName} en el inventario.");
         }
 
         this.items.Remove(itemFound);
@@ -189,8 +170,6 @@ public class Player
 
         return itemQuantities;
     }
-
-
     
     /// <summary>
     /// Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
@@ -278,6 +257,13 @@ public class Player
         Facade.Instance.ChangeTurn(attacker);
     }
 
+    /// <summary>
+    /// Actualiza el estado de los Pokémon disponibles del jugador al cambiar de turno.
+    /// </summary>
+    /// <remarks>
+    /// Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="Pokemon.IsBurned"/>),
+    /// reduce sus puntos de salud en un 10%.
+    /// </remarks>
     public void TurnChanged()
     {
         foreach (Pokemon pokemon in this.AvailablePokemons)
@@ -288,4 +274,4 @@ public class Player
             }
         }
     }
-}  
+}

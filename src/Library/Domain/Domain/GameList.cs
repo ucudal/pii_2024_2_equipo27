@@ -83,5 +83,37 @@ public class GameList
         }
         return null;
     }
+    public List<string> GetPokemonsWithMovesForPlayer(string playerDisplayName)
+    {
+        // Buscar al jugador por su nombre
+        Player player = FindPlayerByDisplayName(playerDisplayName);
+        if (player == null)
+        {
+            return new List<string> { $"El jugador {playerDisplayName} no está jugando" };
+        }
+
+        // Obtener los Pokémon del jugador
+        var pokemons = player.AvailablePokemons;
+
+        // Crear una lista para almacenar los nombres de los Pokémon y sus movimientos
+        List<string> pokemonsWithMoves = new List<string>();
+
+        // Recorrer cada Pokémon y obtener sus movimientos
+        foreach (var pokemon in pokemons)
+        {
+            // Obtener los nombres de los movimientos del Pokémon
+            var moves = pokemon.Moves.Select(move => move.Name).ToList();
+
+            // Formatear la información del Pokémon y sus movimientos
+            string pokemonInfo = $"{pokemon.Name}: {string.Join(", ", moves)}";
+
+            // Agregar la información a la lista
+            pokemonsWithMoves.Add(pokemonInfo);
+        }
+
+        return pokemonsWithMoves;
+    }
+
+
 }
 
