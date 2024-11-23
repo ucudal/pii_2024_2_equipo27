@@ -72,14 +72,19 @@ public class Player
     /// <param name="pokemon">El Pokémon a agregar a la lista.</param>
     public void AddPokemon(Pokemon pokemon)
     {
+        if (this.AvailablePokemons.Count >= 6)
+        {
+            throw new PokemonException("No puedes tener más de 6 Pokémon en tu equipo.");
+        }
+
         this.AvailablePokemons.Add(pokemon);
-        if (this.AvailablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
+        if (this.AvailablePokemons.Count == 1) // Es el primer Pokémon que se agrega, lo activa por defecto
         {
             this.ActivePokemon = this.AvailablePokemons[0];
         }
     }
 
-    /// <summary>
+    /// <summary>       
     /// Obtiene el índice de un Pokémon en la lista de Pokémon disponibles
     /// según su nombre para mostrar.
     /// </summary>
@@ -138,6 +143,12 @@ public class Player
 
     public Item UseItem(string itemName)
     {
+        if (string.IsNullOrWhiteSpace(itemName))
+        {
+            throw new ArgumentNullException(nameof(itemName), "El nombre del ítem no puede ser nulo o vacío.");
+        }
+
+
         Item itemFound = null;
         foreach (Item item in this.items)
         {
@@ -150,12 +161,36 @@ public class Player
 
         if (itemFound == null)
         {
-            throw new ApplicationException($"No existe el ítem {itemName} en el inventario.");
+            throw new PokemonException($"No existe el ítem {itemName} en el inventario.");
         }
 
         this.items.Remove(itemFound);
         return itemFound;
     }
+    /// <summary>
+    /// Devuelve los ítems disponibles y sus cantidades.
+    /// </summary>
+    /// <returns>Un diccionario con los nombres de los ítems y sus cantidades.</returns>
+    public Dictionary<string, int> GetItemsWithQuantities()
+    {
+        var itemQuantities = new Dictionary<string, int>();
+
+        foreach (var item in items)
+        {
+            if (itemQuantities.ContainsKey(item.Name))
+            {
+                itemQuantities[item.Name]++;
+            }
+            else
+            {
+                itemQuantities[item.Name] = 1;
+            }
+        }
+
+        return itemQuantities;
+    }
+
+
 
     public void ExecuteMove(Player defender, Player attacker)
     {
@@ -225,4 +260,4 @@ public class Player
             }
         }
     }
-}
+}  
