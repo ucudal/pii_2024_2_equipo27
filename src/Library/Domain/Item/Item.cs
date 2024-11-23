@@ -6,7 +6,7 @@ namespace ClassLibrary
     /// Hicimos uso del patrón de diseño Strategy que permite diferentes estrategias de implementación
     /// de un mismo método, usando el polimorfismo para sobrescribir el método <c>ApplyEffect</c> para definir comportamientos específicos de los ítems.
     /// </summary>
-    public class Item
+    public abstract class Item
     {
         /// <summary>
         /// Propiedad que almacena el nombre del ítem.
@@ -30,9 +30,6 @@ namespace ClassLibrary
         /// </summary>
         /// <param name="pokemon">El Pokémon al que se aplicará el efecto del ítem.</param>
         /// <returns>Un mensaje que indica el resultado de aplicar el efecto.</returns>
-        public virtual string ApplyEffect(Pokemon pokemon)
-        {
-            return $"{Name} no tiene ningún efecto.";
-        }
+        public abstract string ApplyEffect(Pokemon pokemon);
     }
 }

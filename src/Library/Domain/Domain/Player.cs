@@ -46,7 +46,6 @@ public class Player
     public Move ActiveMove { get; private set; }
 
     // Referencia al oponente de este jugador.
-
     private Player _opponent;
 
     /// <summary>
@@ -57,6 +56,7 @@ public class Player
         get => _opponent;
         set => _opponent = value;
     }
+
 
     /// <summary>
     /// Agrega un Pokémon a la lista de Pokémon disponibles para el jugador.
@@ -197,6 +197,16 @@ public class Player
             throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
         }
 
+        // Verificar si el ataque es efectivo aleatorio con random
+        //Enviar mensaje interfaz de que no es efectivo y sino seguir 
+
+        // double AccuaracyAttack = attacker.ActiveMove.Accuracy;
+        //
+        // if (AccuaracyAttack < 0.5)
+        // {
+        //     return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
+        // }
+
         // Genera el Golpe Crítico con random
         Random random = new Random();
 
@@ -242,5 +252,4 @@ public class Player
             }
         }
     }
-
 }

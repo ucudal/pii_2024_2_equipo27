@@ -33,7 +33,6 @@ namespace ClassLibrary
         public Player TurnPlayer
         {
             get { return Turn.CurrentPlayer; }
-            set { return; }
         }
 
         /// <summary>
@@ -55,7 +54,6 @@ namespace ClassLibrary
             Player1 = player1;
             Player2 = player2;
             Turn = new Turn(player1, player2);
-            TurnPlayer = player1; // El jugador 1 comienza con el turno
             PlayIsOn = true; // El juego inicia en estado activo
 
             

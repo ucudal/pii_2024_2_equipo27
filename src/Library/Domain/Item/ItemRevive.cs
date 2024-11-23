@@ -27,7 +27,7 @@ namespace ClassLibrary
         {
             if (pokemon == null)
             {
-                throw new Exception("No hay un Pokémon para revivir.");
+                throw new ArgumentNullException(nameof(pokemon), "No hay un Pokémon para revivir.");
             }
 
             if (pokemon.HealthPoints > 0)

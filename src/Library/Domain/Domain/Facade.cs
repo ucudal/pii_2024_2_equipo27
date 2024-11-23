@@ -14,7 +14,7 @@ namespace ClassLibrary
         private WaitingList WaitingList { get; }
         public GameList GameList { get; }
         private UserInterface UserInterface { get; }
-
+ 
 
         private static Facade _instance;
 
@@ -59,7 +59,25 @@ namespace ClassLibrary
         /// <returns>Un mensaje que contiene la lista de Pokémon disponibles en el catálogo.</returns>
         public string ShowPokemonCatalog()
         {
-            return UserInterface.ShowMessagePokemonCatalog();
+            // Crear una instancia de PokemonCatalog
+            PokemonCatalog catalog = new PokemonCatalog();
+            IReadOnlyList<Pokemon> pokemons = catalog.GetAllPokemons();
+
+            // Construir el catálogo con movimientos
+            string catalogMessage = "**Catálogo de Pokémon disponibles:**\n";
+
+            foreach (Pokemon pokemon in pokemons)
+            {
+                catalogMessage += $"\n**{pokemon.Name}**\n";
+                catalogMessage += "Movimientos:\n";
+
+                foreach (Move move in pokemon.Moves)
+                {
+                    catalogMessage += $"- {move.Name}\n";
+                }
+            }
+
+            return catalogMessage;
         }
         
         /// <summary>
@@ -78,12 +96,7 @@ namespace ClassLibrary
                 return $"El jugador {playerDisplayName} no está jugando";
             }
 
-            if (pokemonNames.Length > 6)
-            {
-                return "No puedes seleccionar más de 6 Pokémon.";
-            }
-
-            List<Pokemon> selectedPokemons = new List<Pokemon>();
+           
             PokemonCatalog catalog = new PokemonCatalog();
 
             foreach (string pokemonName in pokemonNames)
@@ -92,7 +105,7 @@ namespace ClassLibrary
                 if (pokemon != null)
                 {
                     player.AddPokemon(pokemon);
-                    selectedPokemons.Add(pokemon);
+                    player.AvailablePokemons.Add(pokemon);
                 }
                 else
                 { ;
@@ -104,8 +117,9 @@ namespace ClassLibrary
             player.ActivatePokemon(player.GetIndexOfPokemon(pokemonNames[0]));
             
             // Llama a UserInterface para mostrar los Pokémon seleccionados
-            return UserInterface.ShowMessageSelectedPokemons(selectedPokemons);
+            return UserInterface.ShowMessageSelectedPokemons(player.AvailablePokemons);
         }
+        
 
         //HISTORIA DE USUARIO 2
 
@@ -119,7 +133,37 @@ namespace ClassLibrary
             // Pedimos a GameList que obtenga directamente los movimientos de los Pokémon del jugador
             return this.GameList.GetPokemonsWithMovesForPlayer(playerDisplayName);
         }
+        /// <summary>
+        /// Muestra los ítems disponibles del jugador y sus cantidades.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador.</param>
+        /// <returns>Un mensaje con la lista de ítems y sus cantidades.</returns>
+        public string ShowPlayerItems(string playerDisplayName)
+        {
+            // Obtener el jugador por su nombre
+            Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
+            if (player == null)
+            {
+                return $"El jugador {playerDisplayName} no está jugando.";
+            }
 
+            // Obtener los ítems y sus cantidades
+            var items = player.GetItemsWithQuantities();
+
+            // Construir el mensaje
+            if (items.Count == 0)
+            {
+                return "No tienes ítems disponibles.";
+            }
+
+            string result = "**Ítems disponibles:**\n";
+            foreach (var item in items)
+            {
+                result += $"- {item.Key}: {item.Value}\n";
+            }
+
+            return result;
+        }
         /// <summary>
         /// Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
         /// </summary>
@@ -324,50 +368,39 @@ namespace ClassLibrary
         /// <param name="playerDisplayName">El nombre del jugador que intenta usar el ítem.</param>
         /// <param name="itemName">El nombre del ítem que el jugador intenta usar.</param>
         /// <returns>Un mensaje que indica si el jugador usó el ítem con éxito, el efecto del ítem o cualquier error.</returns>
-        public string PlayerUseItem(string playerDisplayName, string itemName) 
+        public string PlayerUseItem(string playerDisplayName, string itemName)
         {
-            if (string.IsNullOrEmpty(playerDisplayName))
+            if (string.IsNullOrWhiteSpace(playerDisplayName))
             {
-                throw new ArgumentNullException(); // TODO: falta mensaje
-            }   
-            
-            if (string.IsNullOrEmpty(itemName))
+                throw new ArgumentNullException(nameof(playerDisplayName), "El nombre del jugador no puede ser nulo o vacío.");
+            }
+
+            if (string.IsNullOrWhiteSpace(itemName))
             {
-                throw new ArgumentNullException(); // TODO: falta mensaje
-            } 
-            
+                throw new ArgumentNullException(nameof(itemName), "El nombre del ítem no puede ser nulo o vacío.");
+            }
+
             // Buscar el jugador por su nombre
             Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
             if (player == null)
             {
-                // Retorna un mensaje indicando que el jugador no está jugando
-                throw new Exception($"El jugador {playerDisplayName} no está jugando");
+                throw new PokemonException($"El jugador {playerDisplayName} no está jugando.");
             }
 
-            try
+            // Verificar que el jugador tiene un Pokémon activo
+            if (player.ActivePokemon == null)
             {
-                // Intentar usar el ítem
-                Item itemUsed = player.UseItem(itemName); 
-                
-                // TODO: todo lo que sigue va en Player.UseItem
-
-                // Verificar que el jugador tiene un Pokémon activo
-                if (player.ActivePokemon == null)
-                {
-                    throw new Exception($"{playerDisplayName} no tiene un Pokémon activo para aplicar el ítem.");
-                }
-
-                // Aplicar el efecto del ítem en el Pokémon activo del jugador
-                string effectResult = itemUsed.ApplyEffect(player.ActivePokemon);
-
-                // Retornar un mensaje que indica el uso del ítem y el resultado de su efecto
-                return $"{playerDisplayName} ha usado {itemUsed.Name}. {effectResult}";
+                throw new PokemonException($"{playerDisplayName} no tiene un Pokémon activo para aplicar el ítem.");
             }
-            catch (ApplicationException ex)
-            {
-                // Si ocurre una excepción (por ejemplo, el ítem no existe), retorna el mensaje de error
-                return ex.Message;
-            }
+
+            // Intentar usar el ítem (la excepción se maneja en Player.UseItem)
+            Item itemUsed = player.UseItem(itemName);
+
+            // Aplicar el efecto del ítem en el Pokémon activo del jugador
+            string effectResult = itemUsed.ApplyEffect(player.ActivePokemon);
+
+            // Retornar un mensaje que indica el uso del ítem y el resultado de su efecto
+            return $"{playerDisplayName} ha usado {itemUsed.Name}. {effectResult}";
         }
 
         //HISTORIA DE USUARIO 9
