@@ -64,6 +64,16 @@
             Implementa el comando 'help'. Este comando muestra información sobre los comandos y cómo jugar el juego"
             </summary>
         </member>
+        <member name="T:Library.Commands.HpCommand">
+            <summary>
+            Comando que muestra los HP de los Pokémon de ambos jugadores.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.HpCommand.ExecuteAsync">
+            <summary>
+            Ejecuta el comando 'hp' que muestra los HP de los Pokémon de ambos jugadores.
+            </summary>
+        </member>
         <member name="T:Library.Commands.InitCommand">
             <summary>
             Esta clase implementa el comando 'join' del bot. Este comando une al jugador
@@ -98,6 +108,18 @@
             <summary>
             Implementa el comando 'leave' del bot. Este comando remueve el jugador
             que envía el mensaje de la lista de jugadores esperando para jugar.
+            </summary>
+        </member>
+        <member name="T:Library.Commands.MovesCommand">
+            <summary>
+            Comando que muestra los movimientos disponibles de los Pokémon del jugador
+            para los Pokémon del oponente.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.MovesCommand.ExecuteAsync">
+            <summary>
+            Ejecuta el comando 'moves' que muestra los movimientos disponibles de los
+            Pokémon del jugador para los Pokémon del oponente.
             </summary>
         </member>
         <member name="T:Library.Commands.RulesCommand">
