@@ -17,9 +17,15 @@ namespace Library.Commands
         [Summary("Muestra los movimientos disponibles de tus Pokémon para los Pokémon del oponente.")]
         public async Task ExecuteAsync()
         {
+            // Obtener el nombre visible del jugador desde el contexto
             string displayName = CommandHelper.GetDisplayName(Context);
-            List<string> result = Facade.Instance.ShowMoves(displayName);
-            await ReplyAsync(result.ToString());
+            List<string> moves = Facade.Instance.GameList.GetPokemonsWithMovesForPlayer(displayName);
+
+            // Obtener los movimientos asociados al jugador a través de la fachada
+            string result = string.Join(", ", moves); // Combina las cadenas en un solo string.
+
+            // Enviar el resultado al canal de Discord
+            await ReplyAsync(result);
         }
     }
 }

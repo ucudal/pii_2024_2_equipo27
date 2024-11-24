@@ -110,6 +110,18 @@
             que envía el mensaje de la lista de jugadores esperando para jugar.
             </summary>
         </member>
+        <member name="T:Library.Commands.MovesCommand">
+            <summary>
+            Comando que muestra los movimientos disponibles de los Pokémon del jugador
+            para los Pokémon del oponente.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.MovesCommand.ExecuteAsync">
+            <summary>
+            Ejecuta el comando 'moves' que muestra los movimientos disponibles de los
+            Pokémon del jugador para los Pokémon del oponente.
+            </summary>
+        </member>
         <member name="T:Library.Commands.RulesCommand">
             <summary>
             Esta clase implementa el comando 'rules' del bot. 
@@ -120,6 +132,13 @@
             Implementa el comando 'rules'. Este comando muestra información sobre las reglas del juego"
             </summary>
         </member>
+        <member name="T:Library.Commands.TurnCommand">
+            <summary>
+            Esta clase implementa el comando 'turn' del bot. Este comando muestra de 
+            quien es el turno
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Library.Commands.TurnCommand.ExecuteAsync" -->
         <member name="T:Library.Commands.WaitingCommand">
             <summary>
             Esta clase implementa el comando 'waitinglist' del bot. Este comando muestra
@@ -196,7 +215,14 @@
             <param name="playerDisplayName">El nombre del jugador.</param>
             <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
         </member>
-        <member name="M:ClassLibrary.Facade.ChoosePokemonAndMoveToAttack(System.String,System.String,System.String)">
+        <member name="M:ClassLibrary.Facade.ShowPlayerItems(System.String)">
+            <summary>
+            Muestra los ítems disponibles del jugador y sus cantidades.
+            </summary>
+            <param name="playerDisplayName">El nombre del jugador.</param>
+            <returns>Un mensaje con la lista de ítems y sus cantidades.</returns>
+        </member>
+        <member name="M:ClassLibrary.Facade.ChooseMoveToAttack(System.String,System.String)">
             <summary>
             Permite a un jugador seleccionar un Pokémon y un movimiento para atacar.
             </summary>
@@ -419,15 +445,9 @@
             El movimiento actualmente activo del Pokémon del jugador.
             </summary>
         </member>
-        <member name="M:ClassLibrary.Player.SetOpponent(ClassLibrary.Player)">
+        <member name="P:ClassLibrary.Player.Opponent">
             <summary>
-            Establece al oponente del jugador.
-            </summary>
-            <param name="opponent">El jugador que será el oponente.</param>
-        </member>
-        <member name="M:ClassLibrary.Player.GetOpponent">
-            <summary>
-            Obtiene el oponente del jugador.
+            El oponente del jugador.
             </summary>
         </member>
         <member name="M:ClassLibrary.Player.AddPokemon(ClassLibrary.Pokemon)">
@@ -463,6 +483,27 @@
             Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
             </summary>
             <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
+        </member>
+        <member name="M:ClassLibrary.Player.GetItemsWithQuantities">
+            <summary>
+            Devuelve los ítems disponibles y sus cantidades.
+            </summary>
+            <returns>Un diccionario con los nombres de los ítems y sus cantidades.</returns>
+        </member>
+        <member name="M:ClassLibrary.Player.CheckAndAssignNextActivePokemon">
+            <summary>
+            Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
+            Si no cumple estas condiciones, asigna el próximo Pokémon disponible que las cumpla.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Player.TurnChanged">
+            <summary>
+            Actualiza el estado de los Pokémon disponibles del jugador al cambiar de turno.
+            </summary>
+            <remarks>
+            Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="P:ClassLibrary.Pokemon.IsBurned"/>),
+            reduce sus puntos de salud en un 10%.
+            </remarks>
         </member>
         <member name="T:ClassLibrary.Turn">
             <summary>
@@ -600,6 +641,11 @@
         <member name="M:ClassLibrary.UserInterface.ShowMessageHelp">
             <summary>
             Retorna un mensaje con todos los comandos disponibles y las reglas del juego.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ReturnShowMoves(System.Collections.Generic.List{ClassLibrary.Move})">
+            <summary>
+            Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
             </summary>
         </member>
         <member name="T:ClassLibrary.WaitingList">
@@ -992,21 +1038,24 @@
         </member>
         <member name="T:ClassLibrary.PokemonCatalog">
             <summary>
-            La clase  <c>PokemonCatalog</c> se encarga de gestionar el acceso y la manipulación de un catálogo de Pokémon, siguiendo
-            el Principio de Responsabilidad Única (SRP), lo que significa que se especializa exclusivamente en la gestión de
-            datos de los Pokémon. Esto asegura que cualquier modificación en la forma de almacenar o buscar Pokémon se realice
-            centralizadamente en esta clase, minimizando el impacto en el resto del sistema. Además, al aplicar el patrón
-            Expert de GRASP, PokemonCatalog se convierte en la autoridad en la gestión del catálogo, lo que facilita la
-            incorporación de nuevas características, como métodos de búsqueda adicionales o cambios en la fuente de datos,
-            sin necesidad de alteraciones significativas en otras partes del código. Se utilizan distintas instancias del mismo
-            catálogo al seleccionar los pokemones, para asegurar que no compartan una misma instancia.  
+            La clase  <c>PokemonCatalog</c> se encarga de gestionar el acceso y la manipulación de un catálogo de Pokémon.
             </summary>
+        </member>
+        <member name="M:ClassLibrary.PokemonCatalog.#ctor">
+            <summary>
+            Constructor de la clase <c>PokemonCatalog</c>.
+            Inicializa la lista de Pokémon utilizando el builder.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.PokemonCatalog.GetAllPokemons">
+            <summary>
+            Devuelve una lista de todos los Pokémon en el catálogo.
+            </summary>
+            <returns>Una lista de objetos Pokémon.</returns>
         </member>
         <member name="M:ClassLibrary.PokemonCatalog.FindPokemonByName(System.String)">
             <summary>
             Encuentra un Pokémon por su nombre en el catálogo.
-            Recorre la lista de Pokémon y devuelve el objeto correspondiente si encuentra una coincidencia.
-            Si no encuentra el Pokémon, retorna null.
             </summary>
             <param name="pokemonName">Nombre del Pokémon a buscar.</param>
             <returns>El objeto Pokemon si se encuentra, de lo contrario null.</returns>

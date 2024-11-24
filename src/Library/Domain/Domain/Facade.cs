@@ -131,8 +131,16 @@ namespace ClassLibrary
         public List<string> ShowMoves(string playerDisplayName)
         {
             // Pedimos a GameList que obtenga directamente los movimientos de los Pokémon del jugador
-            return this.GameList.GetPokemonsWithMovesForPlayer(playerDisplayName);
+            return GameList.GetPokemonsWithMovesForPlayer(playerDisplayName);
+            
         }
+        public static string GetMovesMessage(List<Move> moves)
+        {
+            return UserInterface.ReturnShowMoves(moves);
+        }
+                
+
+        
         /// <summary>
         /// Muestra los ítems disponibles del jugador y sus cantidades.
         /// </summary>
