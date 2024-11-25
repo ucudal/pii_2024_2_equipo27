@@ -244,6 +244,11 @@ namespace ClassLibrary
             Player attacker = this.GameList.FindPlayerByDisplayName(attackerName);
             Player defender = this.GameList.FindOpponentOfDisplayName(attackerName);
             // Buscar el jugador por su nombre y validar que esté en el juego
+            
+            // Buscar la partida en la que está el jugador
+            Game game = this.GameList.FindGameByPlayerDisplayName(attackerName);
+            string turn = game.Turn.CurrentPlayer.DisplayName;
+            
             if (attacker == null )
             {
                 throw new ArgumentException($"El jugador '{attackerName}' no está jugando.");
@@ -258,11 +263,19 @@ namespace ClassLibrary
                 throw new PokemonException("Uno o ambos jugadores no están en el juego");
                 //return "Uno o ambos jugadores no están en el juego.";
             }
-            //Ejecuta el ataque
-            attacker.ExecuteMove(defender, attacker);
+            if (turn == attackerName)
+            {
+                //Ejecuta el ataque
+                attacker.ExecuteMove(defender, attacker);
             
-            // Construye el mensaje de resultado
-            return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker, defender);
+                // Construye el mensaje de resultado
+                return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker, defender);
+            }
+            else
+            {
+                throw new PokemonException($"No es tu turno: '{attackerName}' ");
+            }
+            
         }
         
         //HISTORIA DE USUARIO 5
