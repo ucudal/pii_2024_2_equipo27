@@ -268,6 +268,9 @@ namespace ClassLibrary
                 //Ejecuta el ataque
                 attacker.ExecuteMove(defender, attacker);
             
+                //Verifica si el juego termino
+                game.CheckIfGameEnds();
+                
                 // Construye el mensaje de resultado
                 return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker, defender);
             }
