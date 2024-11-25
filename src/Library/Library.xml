@@ -6,13 +6,13 @@
     <members>
         <member name="T:Library.Commands.AttackCommand">
             <summary>
-            Esta clase implementa el comando 'join' del bot. Este comando une al jugador
-            que envía el mensaje a la lista de jugadores esperando para jugar.
+            Esta clase implementa el comando 'attack' del bot. Este comando ejecuta un ataque
+            usando un movimiento especificado por el usuario.
             </summary>
         </member>
         <member name="M:Library.Commands.AttackCommand.ExecuteAsync(System.String)">
             <summary>
-            Implementa el comando 'attack'. Este comando atacka al oponente
+            Esta clase implementa el comando 'attack'. Este comando realiza un ataque con el movimiento especificado.
             </summary>
         </member>
         <member name="T:Library.Commands.BattleCommand">
@@ -641,6 +641,11 @@
         <member name="M:ClassLibrary.UserInterface.ShowMessageHelp">
             <summary>
             Retorna un mensaje con todos los comandos disponibles y las reglas del juego.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ReturnShowMoves(System.Collections.Generic.List{ClassLibrary.Move})">
+            <summary>
+            Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
             </summary>
         </member>
         <member name="T:ClassLibrary.WaitingList">

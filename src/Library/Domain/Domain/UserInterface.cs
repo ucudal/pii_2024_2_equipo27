@@ -279,6 +279,30 @@ namespace ClassLibrary
 
             return helpMessage.ToString();
         }
+
+        /// <summary>
+        /// Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
+        /// </summary>
+        public static string ReturnShowMoves(List<Move> pokemonMoves)
+        {
+            var movesMessage = new StringBuilder();
+
+            movesMessage.AppendLine("\n=== Lista de Movimientos ===");
+
+            if (pokemonMoves == null || pokemonMoves.Count == 0)
+            {
+                movesMessage.AppendLine("No hay movimientos disponibles.");
+            }
+            else
+            {
+                foreach (var move in pokemonMoves)
+                {
+                    movesMessage.AppendLine($"- {move.Name} (Precisión: {move.Accuracy})");
+                }
+            }
+
+            return movesMessage.ToString();
+        }
     }
 }
 
