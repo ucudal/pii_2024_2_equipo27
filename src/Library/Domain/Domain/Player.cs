@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace ClassLibrary;
 
 /// <summary>
@@ -29,11 +31,16 @@ public class Player
         this.items.Add(new ItemFullHeal());
         this.items.Add(new ItemFullHeal());
     }
+    
+    private List<Pokemon> availablePokemons = new List<Pokemon>();
 
     /// <summary>
     /// Obtiene la lista de Pokémon disponibles para el jugador.
     /// </summary>
-    public List<Pokemon> AvailablePokemons { get; } = new List<Pokemon>();
+    public ReadOnlyCollection<Pokemon> AvailablePokemons
+    {
+        get { return this.availablePokemons.AsReadOnly();  }
+    } 
 
     /// <summary>
     /// El Pokémon activo del jugador.
@@ -64,10 +71,10 @@ public class Player
     /// <param name="pokemon">El Pokémon a agregar a la lista.</param>
     public void AddPokemon(Pokemon pokemon)
     {
-        this.AvailablePokemons.Add(pokemon);
-        if (this.AvailablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
+        this.availablePokemons.Add(pokemon);
+        if (this.availablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
         {
-            this.ActivePokemon = this.AvailablePokemons[0];
+            this.ActivePokemon = this.availablePokemons[0];
         }
     }
 
@@ -79,9 +86,9 @@ public class Player
     /// <returns>Índice del Pokémon en la lista o -1 si no se encuentra.</returns>
     public int GetIndexOfPokemon(string pokemonDisplayName)
     {
-        for (int i = 0; i < this.AvailablePokemons.Count; i++)
+        for (int i = 0; i < this.availablePokemons.Count; i++)
         {
-            if (this.AvailablePokemons[i].Name == pokemonDisplayName)
+            if (this.availablePokemons[i].Name == pokemonDisplayName)
             {
                 return i;
             }

@@ -14,6 +14,9 @@ namespace ClassLibrary
         // Lista de Pokémons que serán añadidos al catálogo.
         private List<Pokemon> _pokemonList = new List<Pokemon>();
 
+        /// <summary>
+        /// Obtiene una lista de solo lectura de los Pokémon disponibles en el catálogo.
+        /// </summary>
         public IReadOnlyList<Pokemon> PokemonList => _pokemonList;
 
 
@@ -150,15 +153,24 @@ namespace ClassLibrary
                 new MoveNormal("Cabeza de Hierro", 80, 0.8, Type.Normal)
             }, Type.Water);
         }
-
-
+        
         /// <summary>
-        /// Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
+        /// Agrega un nuevo Pokémon al catálogo con un nombre, una lista de movimientos y un tipo.
         /// </summary>
-        /// <param name="name">Nombre del Pokémon.</param>
-        /// <param name="moves">Lista de movimientos del Pokémon.</param>
-        /// <param name="specialNormalMove">Movimiento especial del Pokémon.</param>
-        /// <param name="type">El tipo del Pokémon.</param>
+        /// <param name="name">El nombre del Pokémon. No puede ser nulo, vacío ni contener solo espacios.</param>
+        /// <param name="moves">
+        /// Una lista de movimientos del Pokémon. Debe contener exactamente el número de movimientos permitido 
+        /// definido por <see cref="Pokemon.MAX_MOVES"/>.
+        /// </param>
+        /// <param name="type">
+        /// El tipo del Pokémon, especificado como un valor válido del enumerador <see cref="Type"/>.
+        /// </param>
+        /// <exception cref="ArgumentException">
+        /// Se lanza si el nombre es nulo, vacío, contiene solo espacios o si la lista de movimientos es nula.
+        /// </exception>
+        /// <exception cref="PokemonException">
+        /// Se lanza si la lista de movimientos no contiene exactamente <see cref="Pokemon.MAX_MOVES"/> movimientos, o si el tipo proporcionado no es válido.
+        /// </exception>
         private void AddPokemonToCatalog(string name, Move[] moves, Type type)
         {
             // Validar que el nombre no sea nulo, vacío o solo espacios

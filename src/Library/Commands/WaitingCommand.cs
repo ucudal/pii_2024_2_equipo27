@@ -14,7 +14,7 @@ public class WaitingCommand : ModuleBase<SocketCommandContext>
     /// Implementa el comando 'waitinglist'. Este comando muestra la lista de
     /// jugadores esperando para jugar.
     /// </summary>
-    [Command("waitinglist")]
+    [Command("waiting")]
     [Summary("Muestra los usuarios en la lista de espera")]
     // ReSharper disable once UnusedMember.Global
     public async Task ExecuteAsync()

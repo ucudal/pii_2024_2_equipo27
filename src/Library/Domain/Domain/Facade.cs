@@ -105,7 +105,6 @@ namespace ClassLibrary
                 if (pokemon != null)
                 {
                     player.AddPokemon(pokemon);
-                    player.AvailablePokemons.Add(pokemon);
                 }
                 else
                 { ;
@@ -328,6 +327,17 @@ namespace ClassLibrary
         /// <exception cref="ArgumentNullException">Se lanza si <paramref name="playerDisplayName"/> o <paramref name="newPokemonName"/> son nulos o están vacíos.</exception>
         public string ChangePokemon(string playerDisplayName, string newPokemonName)
         {
+            //Encontrar el luego actual
+            Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
+            
+            //Encontrar el turno actual y verificar que sea el mismo 
+            string currentPlayerDisplayName = game.Turn.CurrentPlayer.DisplayName;
+            
+            if (currentPlayerDisplayName != playerDisplayName)
+            {
+                throw new PokemonException($"No es el turno del jugador {playerDisplayName}.");
+            }
+            
             // Validación de parámetros de entrada
             if (string.IsNullOrWhiteSpace(playerDisplayName)||string.IsNullOrWhiteSpace(newPokemonName))
             {
@@ -352,9 +362,9 @@ namespace ClassLibrary
             player.ActivatePokemon(pokemonIndex);
 
             // Penalizar el turno del jugador
-            Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
-            game.Turn.PenalizeTurn(player);
+            game.Turn.ChangeTurn();
 
+            // Mostrar el mensaje final 
             return UserInterface.ShowMessageChangePokemon(player.DisplayName, player.ActivePokemon.Name);
         }
         
@@ -370,6 +380,15 @@ namespace ClassLibrary
         /// <returns>Un mensaje que indica si el jugador usó el ítem con éxito, el efecto del ítem o cualquier error.</returns>
         public string PlayerUseItem(string playerDisplayName, string itemName)
         {
+            //Encontrar el turno actual y verificar que sea el mismo 
+            Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
+            string currentPlayerDisplayName = game.Turn.CurrentPlayer.DisplayName;
+            
+            if (currentPlayerDisplayName != playerDisplayName)
+            {
+                throw new PokemonException($"No es el turno del jugador {playerDisplayName}.");
+            }
+            
             if (string.IsNullOrWhiteSpace(playerDisplayName))
             {
                 throw new ArgumentNullException(nameof(playerDisplayName), "El nombre del jugador no puede ser nulo o vacío.");
@@ -386,7 +405,7 @@ namespace ClassLibrary
             {
                 throw new PokemonException($"El jugador {playerDisplayName} no está jugando.");
             }
-
+            
             // Verificar que el jugador tiene un Pokémon activo
             if (player.ActivePokemon == null)
             {
@@ -398,7 +417,10 @@ namespace ClassLibrary
 
             // Aplicar el efecto del ítem en el Pokémon activo del jugador
             string effectResult = itemUsed.ApplyEffect(player.ActivePokemon);
-
+            
+            // Penalizar el turno 
+            game.Turn.ChangeTurn();
+            
             // Retornar un mensaje que indica el uso del ítem y el resultado de su efecto
             return $"{playerDisplayName} ha usado {itemUsed.Name}. {effectResult}";
         }

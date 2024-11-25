@@ -6,20 +6,24 @@ namespace ClassLibrary;
 /// al centrarse en gestionar el estado y las interacciones de un Pokémon en combate. Maneja atributos como puntos de salud,
 /// movimientos y efectos de estado (veneno, quemado, parálisis y sueño), y valida que estos no se modifiquen de manera inapropiada
 /// con excepciones y restricciones implementadas. Esas restricciones son como la cantidad máxima de movimientos y la validación
-/// de estados, aseguran que el Pokémon funcione de acuerdo con las reglas del juego de manera coherente y extensible. 
+/// de estados, aseguran que el Pokémon funcione de acuerdo con las reglas del juego de manera coherente y extensible.
+/// Además, el encapsulamiento permite que las propiedades puedan ser modificadas cuando se cumplen ciertas condiciones. 
 /// </summary>
 public class Pokemon
 
 {
     /// <summary>
     /// Inicializa una nueva instancia de la clase <c>Pokemon</c> con una lista de movimientos vacía.
+    /// <param name="moves">Arreglo de movimientos del Pokémon. Debe contener exactamente 4 movimientos.</param>
+    /// <exception cref="PokemonException">Se lanza si no se proporcionan exactamente 4 movimientos.</exception>
     /// </summary>
     public Pokemon(Move[] moves)
     {
         if (moves.Length != MAX_MOVES)
         {
-            throw new ApplicationException("Tiene que haber 4 movimientos");
+            throw new PokemonException("Tiene que haber 4 movimientos");
         }
+
         this._moves = moves.ToList();
         this.SleepTurns = 0;
         this.IsParalyzed = false;
@@ -31,6 +35,7 @@ public class Pokemon
     /// <summary>
     /// Obtiene o establece si un Pokémon está envenenado.
     /// Si el Pokémon ya está envenenado, no puede ser afectado por otro estado (quemado, paralizado, dormido).
+    /// <exception cref="PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (quemado, paralizado, dormido).</exception>
     /// </summary>
     public bool IsPoisoned
     {
@@ -54,6 +59,7 @@ public class Pokemon
     /// <summary>
     /// Obtiene o establece si un Pokémon está quemado.
     /// Si el Pokémon ya está quemado, no puede ser afectado por otro estado (envenenado, paralizado, dormido).
+    /// <exception cref="PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (envenenado, paralizado, dormido).</exception>
     /// </summary>
     public bool IsBurned
     {
@@ -75,6 +81,7 @@ public class Pokemon
     /// <summary>
     /// Obtiene o establece si un Pokémon está paralizado.
     /// Si el Pokémon ya está paralizado, no puede ser afectado por otro estado (envenenado, quemado, dormido).
+    /// <exception cref="PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (envenenado, quemado, dormido).</exception>
     /// </summary>
     public bool IsParalyzed
     {
@@ -97,6 +104,7 @@ public class Pokemon
     /// <summary>
     /// Obtiene o establece los turnos durante los cuales el Pokémon queda dormido.
     /// Si el Pokémon ya está envenenado, quemado o paralizado, no puede quedarse dormido.
+    /// <exception cref="PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (envenenado, paralizado, quemado) o si los turnos de estar dormido no están entre 0 y 4.</exception>
     /// </summary>
     public int SleepTurns
     {
@@ -111,8 +119,7 @@ public class Pokemon
 
             if (value < 0 || value > 4)
             {
-                throw new ArgumentOutOfRangeException(nameof(SleepTurns),
-                    "El número de turnos de sueño debe estar entre 1 y 4.");
+                throw new PokemonException("Los turnos de dormir deben estar entre 0 y 4");
             }
 
             _sleepTurns = value;
@@ -132,7 +139,7 @@ public class Pokemon
         set
         {
             if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException(nameof(Name), "El nombre del Pokémon no puede ser nulo o vacío.");
+                throw new ArgumentNullException("El nombre del Pokémon no puede ser nulo o vacío.");
             _name = value;
         }
     }
@@ -143,7 +150,6 @@ public class Pokemon
     /// <summary>
     /// Obtiene o establece los puntos de salud del Pokémon.
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException">Se lanza si los puntos de salud son negativos.</exception>
     public int HealthPoints
     {
         get { return this._healthPoints; }
@@ -151,7 +157,10 @@ public class Pokemon
         {
             if (value < 0)
                 _healthPoints = 0;
-            _healthPoints = value;
+            else
+            {
+                _healthPoints = value;
+            }
         }
     }
 
@@ -160,8 +169,10 @@ public class Pokemon
 
     /// <summary>
     /// Obtiene o establece el tipo del Pokémon.
+    /// <exception cref="ArgumentOutOfRangeException">Se lanza si el número de turnos está fuera del rango permitido (0-4).</exception>
     /// </summary>
-    private Type _pokemonType; 
+    private Type _pokemonType;
+
     public Type PokemonType
     {
         get => _pokemonType;
@@ -175,7 +186,6 @@ public class Pokemon
             _pokemonType = value;
         }
     }
-
 
     /// <summary>
     /// Obtiene o establece la lista de movimientos regulares del Pokémon.
@@ -209,7 +219,10 @@ public class Pokemon
 
         return true;
     }
-    // Método para obtener los movimientos del Pokémon como una cadena
+
+    /// <summary>
+    /// Método para obtener los movimientos del Pokémon como una cadena.
+    /// </summary>
     public string GetMovesString()
     {
         List<string> movesList = new List<string>();
@@ -221,5 +234,4 @@ public class Pokemon
 
         return string.Join(", ", movesList);
     }
-
 }

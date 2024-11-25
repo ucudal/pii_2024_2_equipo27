@@ -50,16 +50,6 @@ public class ChooseCommand : ModuleBase<SocketCommandContext>
             // Responder con el resultado de la operación
             await ReplyAsync(result);
         }
-        catch (ArgumentNullException ex)
-        {
-            // Manejo de excepciones de argumentos nulos
-            await ReplyAsync($"Error: {ex.Message}");
-        }
-        catch (ArgumentException ex)
-        {
-            // Manejo de excepciones de argumentos inválidos
-            await ReplyAsync($"Error: {ex.Message}");
-        }
         catch (Exception ex)
         {
             // Manejo de errores genéricos

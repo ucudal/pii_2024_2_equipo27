@@ -5,7 +5,7 @@ namespace ClassLibrary;
 /// adicionalmente, aplicar un efecto de quemadura.
 /// </summary>
 /// 
-public class MoveBurn: Move
+public class MoveBurn : Move
 {
     /// <summary>
     /// Constructor de la clase <c>MoveBurn</c>. 
@@ -13,11 +13,12 @@ public class MoveBurn: Move
     /// <param name="name">El nombre del movimiento.</param>
     /// <param name="attackValue">El valor de ataque del movimiento.</param>
     /// <param name="accuracy">El valor de la precisión del movimiento.</param>
-    public MoveBurn(string name, int attackValue, double accuracy, Type moveType): base(name, attackValue, accuracy, moveType)
+    public MoveBurn(string name, int attackValue, double accuracy, Type moveType) : base(name, attackValue, accuracy,
+        moveType)
     {
         // Intencionalamente en blanco
     }
-    
+
     /// <summary>
     /// Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
     /// </summary>
@@ -33,16 +34,16 @@ public class MoveBurn: Move
             throw new ArgumentNullException(nameof(target), "El objetivo no puede ser nulo.");
         if (this.AttackValue <= 0)
             throw new InvalidOperationException("El valor de ataque debe ser mayor que cero.");
-        
+
         //Aplica el ataque común
         if (this.AttackValue > 0)
         {
             double typeEffectiveness = EffectivenessTable.GetEffectiveness(this.MoveType, target.PokemonType);
-            int calculatedDamage = (int)((this.AttackValue * typeEffectiveness)*(criticalHit));
+            int calculatedDamage = (int)((this.AttackValue * typeEffectiveness) * (criticalHit));
             target.HealthPoints -= calculatedDamage;
         }
-        
+
         //Aplica al pokemon ataque de quemado
-        target.IsBurned= true;
+        target.IsBurned = true;
     }
 }

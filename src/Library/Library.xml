@@ -532,6 +532,7 @@
             <summary>
             Cambia el turno entre el jugador actual y el jugador en espera.
             </summary>
+            <param name="player"></param>
         </member>
         <member name="M:ClassLibrary.Turn.PenalizeTurn(ClassLibrary.Player)">
             <summary>
@@ -567,14 +568,14 @@
             <param name="currentSelection">El índice actual de selección de Pokémon.</param>
             <returns>Un mensaje indicando el número de selección de Pokémon o que ya se completó la selección.</returns>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ShowMessageSelectedPokemons(System.Collections.Generic.List{ClassLibrary.Pokemon})">
+        <member name="M:ClassLibrary.UserInterface.ShowMessageSelectedPokemons(System.Collections.ObjectModel.ReadOnlyCollection{ClassLibrary.Pokemon})">
             <summary>
             Genera un mensaje con la lista de Pokémon seleccionados por el jugador.
             </summary>
             <param name="selectedPokemons">Lista de Pokémon seleccionados.</param>
             <returns>Un mensaje con los nombres de los Pokémon seleccionados.</returns>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ShowMessagePokemonHealth(System.Collections.Generic.List{ClassLibrary.Pokemon},System.Collections.Generic.List{ClassLibrary.Pokemon})">
+        <member name="M:ClassLibrary.UserInterface.ShowMessagePokemonHealth(System.Collections.ObjectModel.ReadOnlyCollection{ClassLibrary.Pokemon},System.Collections.ObjectModel.ReadOnlyCollection{ClassLibrary.Pokemon})">
             <summary>
             Genera un mensaje con la información de salud de los Pokémon del jugador y del oponente.
             </summary>
@@ -972,36 +973,43 @@
             al centrarse en gestionar el estado y las interacciones de un Pokémon en combate. Maneja atributos como puntos de salud,
             movimientos y efectos de estado (veneno, quemado, parálisis y sueño), y valida que estos no se modifiquen de manera inapropiada
             con excepciones y restricciones implementadas. Esas restricciones son como la cantidad máxima de movimientos y la validación
-            de estados, aseguran que el Pokémon funcione de acuerdo con las reglas del juego de manera coherente y extensible. 
+            de estados, aseguran que el Pokémon funcione de acuerdo con las reglas del juego de manera coherente y extensible.
+            Además, el encapsulamiento permite que las propiedades puedan ser modificadas cuando se cumplen ciertas condiciones. 
             </summary>
         </member>
         <member name="M:ClassLibrary.Pokemon.#ctor(ClassLibrary.Move[])">
             <summary>
             Inicializa una nueva instancia de la clase <c>Pokemon</c> con una lista de movimientos vacía.
+            <param name="moves">Arreglo de movimientos del Pokémon. Debe contener exactamente 4 movimientos.</param>
+            <exception cref="T:ClassLibrary.PokemonException">Se lanza si no se proporcionan exactamente 4 movimientos.</exception>
             </summary>
         </member>
         <member name="P:ClassLibrary.Pokemon.IsPoisoned">
             <summary>
             Obtiene o establece si un Pokémon está envenenado.
             Si el Pokémon ya está envenenado, no puede ser afectado por otro estado (quemado, paralizado, dormido).
+            <exception cref="T:ClassLibrary.PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (quemado, paralizado, dormido).</exception>
             </summary>
         </member>
         <member name="P:ClassLibrary.Pokemon.IsBurned">
             <summary>
             Obtiene o establece si un Pokémon está quemado.
             Si el Pokémon ya está quemado, no puede ser afectado por otro estado (envenenado, paralizado, dormido).
+            <exception cref="T:ClassLibrary.PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (envenenado, paralizado, dormido).</exception>
             </summary>
         </member>
         <member name="P:ClassLibrary.Pokemon.IsParalyzed">
             <summary>
             Obtiene o establece si un Pokémon está paralizado.
             Si el Pokémon ya está paralizado, no puede ser afectado por otro estado (envenenado, quemado, dormido).
+            <exception cref="T:ClassLibrary.PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (envenenado, quemado, dormido).</exception>
             </summary>
         </member>
         <member name="P:ClassLibrary.Pokemon.SleepTurns">
             <summary>
             Obtiene o establece los turnos durante los cuales el Pokémon queda dormido.
             Si el Pokémon ya está envenenado, quemado o paralizado, no puede quedarse dormido.
+            <exception cref="T:ClassLibrary.PokemonException">Se lanza si el Pokémon ya está afectado por otro estado (envenenado, paralizado, quemado) o si los turnos de estar dormido no están entre 0 y 4.</exception>
             </summary>
         </member>
         <member name="P:ClassLibrary.Pokemon.Name">
@@ -1014,11 +1022,11 @@
             <summary>
             Obtiene o establece los puntos de salud del Pokémon.
             </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">Se lanza si los puntos de salud son negativos.</exception>
         </member>
         <member name="F:ClassLibrary.Pokemon._pokemonType">
             <summary>
             Obtiene o establece el tipo del Pokémon.
+            <exception cref="T:System.ArgumentOutOfRangeException">Se lanza si el número de turnos está fuera del rango permitido (0-4).</exception>
             </summary>
         </member>
         <member name="P:ClassLibrary.Pokemon.Moves">
@@ -1031,9 +1039,15 @@
             Verifica si el <c>Pokemon</c>  puede atacar.
             </summary>
         </member>
+        <member name="M:ClassLibrary.Pokemon.GetMovesString">
+            <summary>
+            Método para obtener los movimientos del Pokémon como una cadena.
+            </summary>
+        </member>
         <member name="T:ClassLibrary.PokemonCatalog">
             <summary>
             La clase  <c>PokemonCatalog</c> se encarga de gestionar el acceso y la manipulación de un catálogo de Pokémon.
+            Utiliza un <c>PokemonCatalogBuilder</c> para inicializar el catálogo, permitiendo la búsqueda y recuperación de Pokémon por nombre.
             </summary>
         </member>
         <member name="M:ClassLibrary.PokemonCatalog.#ctor">
@@ -1054,6 +1068,7 @@
             </summary>
             <param name="pokemonName">Nombre del Pokémon a buscar.</param>
             <returns>El objeto Pokemon si se encuentra, de lo contrario null.</returns>
+            <exception cref="T:System.ArgumentException">Se lanza si el nombre proporcionado es nulo, vacío o contiene solo espacios en blanco.</exception>
         </member>
         <member name="T:ClassLibrary.PokemonCatalogBuilder">
             <summary>
@@ -1066,6 +1081,11 @@
             facilitando la integración de nuevas funcionalidades en el sistema.
             </summary>
         </member>
+        <member name="P:ClassLibrary.PokemonCatalogBuilder.PokemonList">
+            <summary>
+            Obtiene una lista de solo lectura de los Pokémon disponibles en el catálogo.
+            </summary>
+        </member>
         <member name="M:ClassLibrary.PokemonCatalogBuilder.#ctor">
             <summary>
             Constructor de la clase que inicializa y añade varios Pokémon al catálogo.
@@ -1073,12 +1093,22 @@
         </member>
         <member name="M:ClassLibrary.PokemonCatalogBuilder.AddPokemonToCatalog(System.String,ClassLibrary.Move[],ClassLibrary.Type)">
             <summary>
-            Método privado que añade un Pokémon al catálogo, asignando su nombre, lista de movimientos y movimiento especial.
+            Agrega un nuevo Pokémon al catálogo con un nombre, una lista de movimientos y un tipo.
             </summary>
-            <param name="name">Nombre del Pokémon.</param>
-            <param name="moves">Lista de movimientos del Pokémon.</param>
-            <param name="specialNormalMove">Movimiento especial del Pokémon.</param>
-            <param name="type">El tipo del Pokémon.</param>
+            <param name="name">El nombre del Pokémon. No puede ser nulo, vacío ni contener solo espacios.</param>
+            <param name="moves">
+            Una lista de movimientos del Pokémon. Debe contener exactamente el número de movimientos permitido 
+            definido por <see cref="F:ClassLibrary.Pokemon.MAX_MOVES"/>.
+            </param>
+            <param name="type">
+            El tipo del Pokémon, especificado como un valor válido del enumerador <see cref="T:ClassLibrary.Type"/>.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            Se lanza si el nombre es nulo, vacío, contiene solo espacios o si la lista de movimientos es nula.
+            </exception>
+            <exception cref="T:ClassLibrary.PokemonException">
+            Se lanza si la lista de movimientos no contiene exactamente <see cref="F:ClassLibrary.Pokemon.MAX_MOVES"/> movimientos, o si el tipo proporcionado no es válido.
+            </exception>
         </member>
         <member name="T:ClassLibrary.Bot">
             <summary>
