@@ -39,6 +39,16 @@ namespace ClassLibrary.Tests
         }
 
         [Test]
+        public void HealthPoints_NegativeAmount_ShouldSetToZero()
+        {
+            // Act 
+            _pokemon.HealthPoints = (-80);
+            
+            //Assert
+            Assert.That(_pokemon.HealthPoints, Is.EqualTo(0));
+        }
+        
+        [Test]
         public void HealthPoints_SetValidHealthPoints_ShouldSetHealthPoints()
         {
             // Act

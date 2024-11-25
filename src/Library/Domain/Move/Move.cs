@@ -19,7 +19,6 @@ public abstract class Move
     /// <summary>
     /// Obtiene o establece el tipo del Ataque.
     /// </summary>
-    
     private Type _moveType;
 
     public Type MoveType
@@ -36,32 +35,36 @@ public abstract class Move
         }
     }
 
-    
+
     /// <summary>
     /// Valor del ataque del movimiento.
     /// </summary>
     private int _attackValue;
-    public int AttackValue 
-    { 
+
+    public int AttackValue
+    {
         get { return _attackValue; }
-        set 
+        set
         {
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(AttackValue), "El valor de ataque no puede ser negativo.");
             _attackValue = value;
         }
     }
+
     /// <summary>
     /// El valor de precisión define la probabilidad de que el ataque se ejecute.
     /// </summary>
     private double _accuracy;
-    public double Accuracy 
-    { 
+
+    public double Accuracy
+    {
         get { return _accuracy; }
-        set 
+        set
         {
             if (value < 0 || value > 1)
-                throw new ArgumentOutOfRangeException(nameof(Accuracy), "El valor de precisión debe estar entre 0 y 1.");
+                throw new ArgumentOutOfRangeException(nameof(Accuracy),
+                    "El valor de precisión debe estar entre 0 y 1.");
             _accuracy = value;
         }
     }
@@ -76,13 +79,13 @@ public abstract class Move
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("El nombre no puede ser nulo o vacío.");
-        
+
         this.MoveType = moveType;
         this.Name = name;
         this.AttackValue = attackValue;
         this.Accuracy = accuracy;
     }
-        
+
     /// <summary>
     /// Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
     /// </summary>

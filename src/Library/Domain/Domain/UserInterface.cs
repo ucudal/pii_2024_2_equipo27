@@ -61,7 +61,7 @@ namespace ClassLibrary
         /// </summary>
         /// <param name="selectedPokemons">Lista de Pokémon seleccionados.</param>
         /// <returns>Un mensaje con los nombres de los Pokémon seleccionados.</returns>
-        public static string ShowMessageSelectedPokemons(List<Pokemon> selectedPokemons)
+        public static string ShowMessageSelectedPokemons(ReadOnlyCollection<Pokemon> selectedPokemons)
         {
             string selectedList = "⭐️ Pokémon seleccionados:\n";
 
@@ -80,7 +80,7 @@ namespace ClassLibrary
         /// <param name="opponentPokemons">Lista de Pokémon del oponente.</param>
         /// <returns>Una cadena con la información de salud de los Pokémon.</returns>
         /// <exception cref="ArgumentNullException">Se lanza si alguna de las listas es nula.</exception>
-        public static string ShowMessagePokemonHealth(List<Pokemon> playerPokemons, List<Pokemon> opponentPokemons)
+        public static string ShowMessagePokemonHealth(ReadOnlyCollection<Pokemon> playerPokemons, ReadOnlyCollection<Pokemon> opponentPokemons)
         {
             // Validar que las listas no sean nulas
             if (playerPokemons == null)

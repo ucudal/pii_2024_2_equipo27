@@ -55,22 +55,20 @@ namespace ClassLibrary
             Player2 = player2;
             Turn = new Turn(player1, player2);
             PlayIsOn = true; // El juego inicia en estado activo
-
-            
         }
+
         // Establecer los oponentes
         public Player Opponent { get; }
-      
+
         public void StartGame()
         {
             this.PlayIsOn = true;
         }
+
         public void EndGame()
         {
             this.PlayIsOn = false;
         }
-        
-        
 
 
         /// <summary>

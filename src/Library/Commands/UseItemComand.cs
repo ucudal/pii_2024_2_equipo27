@@ -28,6 +28,7 @@ namespace Library.Commands
                 // Enviar el resultado al canal
                 await ReplyAsync(result);
             }
+            
             catch (ArgumentNullException ex)
             {
                 // Manejo de errores de argumentos nulos

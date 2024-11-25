@@ -41,6 +41,7 @@ namespace ClassLibrary
         /// <summary>
         /// Cambia el turno entre el jugador actual y el jugador en espera.
         /// </summary>
+        /// <param name="player"></param>
         public void ChangeTurn()
         {
             // Intercambia los jugadores
@@ -69,54 +70,7 @@ namespace ClassLibrary
                 Console.WriteLine($"{player.DisplayName} is not currently playing.");
             }
         }
-
-        //     /// <summary>
-        //     /// Permite que un jugador ataque a otro Pokémon usando un movimiento.
-        //     /// </summary>
-        //     /// <remarks>
-        //     /// Se debe validar que move, attacker y defender no sean nulos antes de usar.
-        //     /// </remarks>
-        //     public void PlayerAttack(Pokemon attacker, Pokemon defender, Move move)
-        //     {
-        //         if (attacker == null )
-        //         {
-        //             throw new ArgumentException($"El pokemon '{attacker.Name}' no está jugando.");
-        //         }
-        //         if (defender == null )
-        //         {
-        //             throw new ArgumentException($"El pokemon '{defender.Name}' no está jugando.");
-        //         }
-        //
-        //         if (move == null )
-        //         {
-        //             throw new ArgumentException($"El movimiento '{move.Name}' no es valido.");
-        //         }
-        //         
-        //         double effectiveness = PokemonType.GetEffectiveness(attacker.Type, defender.Type);
-        //         double baseDamage = move.AttackValue;
-        //
-        //         // Calcular el daño total con la efectividad.
-        //         double totalDamage = baseDamage * effectiveness;
-        //
-        //         defender.HealthPoints -= (int)totalDamage;
-        //
-        //         Console.WriteLine($"{attacker.Name} usó {move.Name} y causó {totalDamage} de daño. ¡Es {GetEffectivenessMessage(effectiveness)}!");
-        //     }
-        //
-        //     /// <summary>
-        //     /// Obtiene un mensaje sobre la efectividad del ataque.
-        //     /// </summary>
-        //     /// <returns>Un mensaje que describe la efectividad.</returns>
-        //     private static string GetEffectivenessMessage(double effectiveness)
-        //     {
-        //         
-        //         if (effectiveness > 1.0)
-        //             return "¡súper efectivo!";
-        //         else if (effectiveness < 1.0)
-        //             return "no muy efectivo...";
-        //         return "efectivo.";
-        //     }
-        // }
+        
     }
 }
     

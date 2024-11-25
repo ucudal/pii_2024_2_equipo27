@@ -6,12 +6,17 @@ namespace ClassLibrary.Tests;
 
 public class PokemonCatalogBuilderTests
 {
+    private PokemonCatalogBuilder catalogBuilder;
+
+    [SetUp]
+    public void Setup()
+    {
+        this.catalogBuilder = new PokemonCatalogBuilder();
+    }
+
     [Test]
     public void GetPokemonList_WhenCalled_ReturnsListOfPokemons()
     {
-        // Arrange
-        PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
-        
         // Act
         IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
         
@@ -22,8 +27,6 @@ public class PokemonCatalogBuilderTests
     [Test]
     public void Pokemon_InCatalog_HasCorrectHP()
     {
-        // Arrange
-        PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
         
         // Act
         IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
@@ -38,25 +41,19 @@ public class PokemonCatalogBuilderTests
     [Test]
     public void Pokemon_InCatalog_HasAtLeastOneMove()
     {
-        // Arrange
-        PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
-        
         // Act
         IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
 
         // Assert
         foreach (Pokemon pokemon in pokemonList)
         {
-            Assert.That(pokemon.Moves.Count, Is.GreaterThan(0)); 
+            Assert.That(pokemon.Moves.Count, Is.EqualTo(4)); 
         }
     }
 
     [Test]
     public void Pokemon_InCatalog_HasCorrectName()
     {
-        // Arrange
-        PokemonCatalogBuilder catalogBuilder = new PokemonCatalogBuilder();
-        
         // Act
         IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
         Pokemon blaziken = pokemonList.First(p => p.Name == "Blaziken");
@@ -66,5 +63,4 @@ public class PokemonCatalogBuilderTests
         Assert.That(blaziken.Name, Is.EqualTo("Blaziken"));
     }
     
-
 }
