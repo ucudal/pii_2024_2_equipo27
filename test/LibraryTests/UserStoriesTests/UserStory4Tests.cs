@@ -36,9 +36,30 @@ namespace ClassLibrary.Tests
             string result = Facade.Instance.PlayerAttack(attacker);
             
             //Assert
-            Assert.That(result, Is.EqualTo(
-                $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}"));
-           
+             Assert.That(result, Is.EqualTo(
+                 $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}"));
+             //Assert.That(()=> Facade.Instance.PlayerAttack(attacker), Throws.InstanceOf<Exception>());
+        
+        }
+        [Test]
+        public void PlayerAttack_ThrowExepcion()
+        {
+            // Arrange
+            Facade.Instance.GameList.AddGame(new Player(attacker), new Player(defender));
+            Facade.Instance.AddPlayerToWaitingList(attacker);
+            Facade.Instance.AddPlayerToWaitingList(defender);
+            Facade.Instance.StartBattle(attacker, defender);
+            Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
+            Facade.Instance.ChoosePokemons(defender, defenderPokemons);
+            Facade.Instance.ChooseMoveToAttack( attacker,  move);
+            Facade.Instance.ChooseMoveToAttack( defender,  move2);
+            
+            //Act
+            string result = Facade.Instance.PlayerAttack(attacker);
+            
+            //Assert
+            Assert.That(()=> Facade.Instance.PlayerAttack(""), Throws.InstanceOf<Exception>());
+
         }
     }
 }
