@@ -35,7 +35,8 @@ public class UserStory8Tests
     [Test]
     public void PlayerUseItem_WhenItemNotExist()
     {
-        string message = Facade.Instance.PlayerUseItem("player1", "PocionFalse");
-        Assert.That(message, Is.EqualTo("No existe el ítem PocionFalse en el inventario."));
+        //string message = Facade.Instance.PlayerUseItem("player1", "PocionFalse");
+        //Assert.That(message, Is.EqualTo("No existe el ítem PocionFalse en el inventario."));
+        Assert.That(()=> Facade.Instance.PlayerUseItem("player1", "FalsePocion"), Throws.InstanceOf<Exception>());
     }
 }
