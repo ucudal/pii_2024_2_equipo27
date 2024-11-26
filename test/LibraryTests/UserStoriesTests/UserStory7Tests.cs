@@ -76,6 +76,6 @@ public class UserStory7Tests
          Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
          // Act & Assert
-         Assert.That(()=> Facade.Instance.ChangePokemon("player1", "Lululemon"), Throws.InstanceOf<Exception>());
+         Assert.That(() => Facade.Instance.ChangePokemon("player1", "Lululemon"), Throws.InstanceOf<Exception>());
      }
  }

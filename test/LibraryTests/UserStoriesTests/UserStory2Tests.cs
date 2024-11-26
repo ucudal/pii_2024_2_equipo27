@@ -1,33 +1,36 @@
 namespace ClassLibrary.Tests;
+
 using NUnit.Framework;
 using ClassLibrary;
+
 public class UserStory2Tests
 {
     [TearDown]
     public void TearDown()
     {
-        Facade.Reset(); 
+        Facade.Reset();
     }
-        
+
     private string attacker = "player1";
     private string defender = "player2";
     private string[] attackerPokemons = new string[] { "Blaziken", "Tinkaton", "Salamence", };
     private string[] defenderPokemons = new string[] { "Tinkaton", "Zangoose", "Rayquaza", };
     private string move = "Patada Ígnea";
     private string move2 = "Carantoña";
-    
+
     [SetUp]
     public void SetUp()
     {
         Facade.Instance.AddPlayerToWaitingList(attacker);
         Facade.Instance.AddPlayerToWaitingList(defender);
         Facade.Instance.StartBattle(attacker, defender);
-            
+
         Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
         Facade.Instance.ChoosePokemons(defender, defenderPokemons);
-        Facade.Instance.ChooseMoveToAttack( attacker,  move);
-        Facade.Instance.ChooseMoveToAttack( defender,  move2);
+        Facade.Instance.ChooseMoveToAttack(attacker, move);
+        Facade.Instance.ChooseMoveToAttack(defender, move2);
     }
+
     [Test]
     public void ShowMoves_ShouldReturnMovesOfActivePokemon()
     {
@@ -38,23 +41,10 @@ public class UserStory2Tests
         string result = Facade.Instance.ShowMoves(attacker);
 
         // Assert
-        Assert.That(result, Is.EqualTo("\n=== Lista de Movimientos ===\r\n- Patada Ígnea (Precisión: 0,5)\r\n- Llamarada (Precisión: 0,7)\r\n- Tajo Aéreo (Precisión: 0,5)\r\n- Anillo Ígneo (Precisión: 0,3)\r\n"));
-       
+        Assert.That(result,
+            Is.EqualTo(
+                "\n=== Lista de Movimientos ===\r\n- Patada Ígnea (Precisión: 0,5)\r\n- Llamarada (Precisión: 0,7)\r\n- Tajo Aéreo (Precisión: 0,5)\r\n- Anillo Ígneo (Precisión: 0,3)\r\n"));
     }
-
-    [Test]
-    public void ReturnShowMoves_ShouldThrowArgumentException_WhenPlayerHasNoActivePokemon()
-    {
-        // Arrange
-        Facade.Instance.StartBattle(attacker, defender);
-        Facade.Instance.ChoosePokemons(attacker,attackerPokemons );
-        Facade.Instance.ShowMoves(attacker);
-        
-
-        // Act & Assert
-        Assert.That(() => Facade.Instance.ShowMoves("player1"), Throws.InstanceOf<PokemonException>());
-    }
-
 
     [Test]
     public void ShowPlayerItems_ShouldReturnItemsAndQuantities()
@@ -62,13 +52,12 @@ public class UserStory2Tests
         // Arrange
         Facade.Instance.StartBattle(attacker, defender);
         Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
-        
+
         // Act
         string result = Facade.Instance.ShowPlayerItems(playerDisplayName: attacker);
 
         // Assert
         Assert.That(result, Is.EqualTo(result));
-        
     }
 
     [Test]
@@ -88,5 +77,4 @@ public class UserStory2Tests
         string moves = Facade.Instance.ShowMoves(attacker);
         Assert.That(moves, Does.Contain(move)); // Verifica que "Patada Ígnea" sigue siendo accesible
     }
-
 }

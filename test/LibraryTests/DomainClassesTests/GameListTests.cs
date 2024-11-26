@@ -1,4 +1,3 @@
-
 namespace ClassLibrary.Tests
 {
     using NUnit.Framework;
@@ -32,7 +31,6 @@ namespace ClassLibrary.Tests
         [Test]
         public void AddGame_SamePlayer_ShouldThrowException()
         {
-
             // Act & Assert
             var ex = Assert.Throws<PokemonException>(() => gameList.AddGame(player1, player1));
         }

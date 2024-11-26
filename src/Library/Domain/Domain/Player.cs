@@ -76,6 +76,9 @@ public class Player
     /// <returns>Índice del Pokémon en la lista o -1 si no se encuentra.</returns>
     public int GetIndexOfPokemon(string pokemonDisplayName)
     {
+        if (string.IsNullOrWhiteSpace(pokemonDisplayName))
+            throw new ArgumentNullException("El nombre del jugador no puede ser nulo.");
+
         for (int i = 0; i < this.AvailablePokemons.Count; i++)
         {
             if (this.AvailablePokemons[i].Name == pokemonDisplayName)
@@ -105,6 +108,9 @@ public class Player
     /// <returns>Índice del movimiento en la lista de movimientos del Pokémon activo o -1 si no se encuentra.</returns>
     public int GetIndexOfMoveInActivePokemon(string moveDisplayName)
     {
+        if (string.IsNullOrWhiteSpace(moveDisplayName))
+            throw new ArgumentNullException("El nombre del movimiento no puede ser nulo.");
+
         for (int i = 0; i < this.ActivePokemon.Moves.Count; i++)
         {
             if (this.ActivePokemon.Moves[i].Name == moveDisplayName)
@@ -203,10 +209,10 @@ public class Player
     /// </summary>
     public void CheckAndAssignNextActivePokemon()
     {
-        // Verificar si el Pokémon activo está KO (HealthPoints <= 0) o dormido
+        // Verificar si el Pokémon activo está vivo
         if (ActivePokemon.HealthPoints <= 0)
         {
-            // Buscar el próximo Pokémon vivo y no dormido en la lista
+            // Buscar el próximo Pokémon vivo 
             foreach (var pokemon in AvailablePokemons)
             {
                 if (pokemon.HealthPoints > 0)
@@ -243,50 +249,34 @@ public class Player
             throw new ArgumentException($"El Pókemon '{defender.ActivePokemon}' no está activo para la defensa.");
         }
 
-        // Verificar si el ataque es efectivo aleatorio con random
-        //Enviar mensaje interfaz de que no es efectivo y sino seguir 
-        
-        double AccuaracyAttack = attacker.ActiveMove.Accuracy;
-        
         // Genera el Golpe Crítico con random
         Random random = new Random();
-        
-        double randomNumber2 = random.NextDouble(); // Genera un número entre 0.0 y 1.0
 
-        if (AccuaracyAttack < randomNumber2)
+        // Generar un número aleatorio entre 1 y 100
+        int randomNumber = random.Next(1, 101);
+        double criticalHit = 1;
+        if (randomNumber <= 10)
         {
-            
-            // Generar un número aleatorio entre 1 y 100
-            int randomNumber = random.Next(1, 101);
-            double criticalHit = 1;
-            if (randomNumber <= 10)
-            {
-                criticalHit = 1.20;
-            }
-
-            // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
-            if (defendingPokemon.IsPoisoned)
-            {
-                defendingPokemon.HealthPoints -= (int)0.05 * (attackingPokemon.HealthPoints);
-            }
-
-            if (defendingPokemon.IsBurned)
-            {
-                defendingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
-            }
-            
-            //Ejecuta el movimiento
-            this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
-
-            //Cambia el turno del jugador
-            Facade.Instance.ChangeTurn(attacker);
+            criticalHit = 1.20;
         }
-        else
+
+        // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
+        if (defendingPokemon.IsPoisoned)
         {
-            //Cambia el turno del jugador
-            Facade.Instance.ChangeTurn(attacker);
+            defendingPokemon.HealthPoints -= (int)0.05 * (attackingPokemon.HealthPoints);
         }
-        
+
+        if (defendingPokemon.IsBurned)
+        {
+            defendingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
+        }
+
+
+        //Ejecuta el movimiento
+        this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
+
+        //Cambia el turno del jugador
+        Facade.Instance.ChangeTurn(attacker);
     }
 
     /// <summary>
@@ -310,7 +300,7 @@ public class Player
     public IReadOnlyList<Move> GetPokemonsWithMovesForPlayer()
     {
         // Verificar si el Pokémon activo del jugador está definido
-        if (this.ActivePokemon.Clone() == null)
+        if (this.ActivePokemon == null)
         {
             throw new ArgumentException($"El jugador {this.DisplayName} no tiene un Pokémon activo.");
         }

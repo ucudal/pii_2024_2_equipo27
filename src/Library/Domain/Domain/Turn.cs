@@ -50,24 +50,5 @@ namespace ClassLibrary
 
             CurrentPlayer.TurnChanged();
         }
-
-        /// <summary>
-        /// Penaliza el turno de un jugador. Si el jugador penalizado es el actual, se cambia el turno.
-        /// </summary>
-        /// <remarks>
-        /// Se debe validar que el parámetro no sea nulo antes de usarlo.
-        /// </remarks>
-        public void PenalizeTurn(Player player)
-        {
-            if (player == CurrentPlayer)
-            {
-                // PenalizedPlayer = CurrentPlayer; // Descomentado si se necesita usar
-                ChangeTurn();
-            }
-            else if (WaitingPlayer == player)
-            {
-                Console.WriteLine($"{player.DisplayName} is not currently playing.");
-            }
-        }
     }
 }

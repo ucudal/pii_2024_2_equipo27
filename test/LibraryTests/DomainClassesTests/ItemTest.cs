@@ -33,7 +33,7 @@ public class ItemTests
         var ex = Assert.Throws<ArgumentNullException>(() => _itemRevive.ApplyEffect(null));
         Assert.That(ex.Message, Does.Contain("No hay un Pokémon para revivir"));
     }
-    
+
     [Test]
     public void Revivir_ThrowsException_WhenPokemonIsNotFainted()
     {
