@@ -245,42 +245,48 @@ public class Player
 
         // Verificar si el ataque es efectivo aleatorio con random
         //Enviar mensaje interfaz de que no es efectivo y sino seguir 
-
-        // double AccuaracyAttack = attacker.ActiveMove.Accuracy;
-        //
-        // if (AccuaracyAttack < 0.5)
-        // {
-        //     return UserInterface.ShowMessageLowEffectiveness(AccuaracyAttack); 
-        // }
-
+        
+        double AccuaracyAttack = attacker.ActiveMove.Accuracy;
+        
         // Genera el Golpe Crítico con random
         Random random = new Random();
+        
+        double randomNumber2 = random.NextDouble(); // Genera un número entre 0.0 y 1.0
 
-        // Generar un número aleatorio entre 1 y 100
-        int randomNumber = random.Next(1, 101);
-        double criticalHit = 1;
-        if (randomNumber <= 10)
+        if (AccuaracyAttack < randomNumber2)
         {
-            criticalHit = 1.20;
-        }
+            
+            // Generar un número aleatorio entre 1 y 100
+            int randomNumber = random.Next(1, 101);
+            double criticalHit = 1;
+            if (randomNumber <= 10)
+            {
+                criticalHit = 1.20;
+            }
 
-        // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
-        if (defendingPokemon.IsPoisoned)
+            // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
+            if (defendingPokemon.IsPoisoned)
+            {
+                defendingPokemon.HealthPoints -= (int)0.05 * (attackingPokemon.HealthPoints);
+            }
+
+            if (defendingPokemon.IsBurned)
+            {
+                defendingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
+            }
+            
+            //Ejecuta el movimiento
+            this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
+
+            //Cambia el turno del jugador
+            Facade.Instance.ChangeTurn(attacker);
+        }
+        else
         {
-            defendingPokemon.HealthPoints -= (int)0.05 * (attackingPokemon.HealthPoints);
+            //Cambia el turno del jugador
+            Facade.Instance.ChangeTurn(attacker);
         }
-
-        if (defendingPokemon.IsBurned)
-        {
-            defendingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
-        }
-
-
-        //Ejecuta el movimiento
-        this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
-
-        //Cambia el turno del jugador
-        Facade.Instance.ChangeTurn(attacker);
+        
     }
 
     /// <summary>
