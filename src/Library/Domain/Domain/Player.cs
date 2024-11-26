@@ -20,6 +20,7 @@ public class Player
     /// Inicializa una nueva instancia de la clase Player con el nombre especificado.
     /// </summary>
     /// <param name="displayName">Nombre del jugador para mostrar en el juego.</param>
+    /// <param name="moves"></param>
     public Player(string displayName)
     {
         DisplayName = displayName;
@@ -71,7 +72,7 @@ public class Player
     /// <param name="pokemon">El Pokémon a agregar a la lista.</param>
     public void AddPokemon(Pokemon pokemon)
     {
-        this.availablePokemons.Add(pokemon);
+        this.availablePokemons.Add(pokemon.Clone());
         if (this.availablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
         {
             this.ActivePokemon = this.availablePokemons[0];
@@ -297,6 +298,4 @@ public class Player
         return this.ActivePokemon.Moves;
         
     }
-
-    
 }

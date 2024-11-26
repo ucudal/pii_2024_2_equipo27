@@ -329,17 +329,16 @@
         </member>
         <member name="T:ClassLibrary.Game">
             <summary>
-             La clase <c>Game</c> tiene la responsabilidad de conocer a los jugadores y verificar si el juego está activo o ha terminado.
-             Esto sigue el principio de responsabilidad única (SRP) ya que su única función es gestionar el estado del juego.
-             Además, según el principio de "experto" (Expert), la clase <c>Game</c> es la más adecuada para gestionar estas tareas,
-             ya que contiene toda la información sobre los jugadores y el estado del juego.
+             La clase <c>Game</c> aplica principios GRASP y SOLID para asegurar un diseño robusto y cohesivo. Sigue el principio de responsabilidad
+            única (SRP) al encargarse exclusivamente de gestionar el estado del juego, respetando también el principio GRASP de "experto", ya
+            que toma decisiones basadas en la información que posee, como verificar el fin del juego y determinar el ganador. Además, delega la
+            gestión de turnos a la clase <c>Turn</c>, alineándose con el principio abierto/cerrado (OCP), lo que facilita futuras extensiones sin modificar
+            la clase base. Su diseño encapsula correctamente propiedades críticas como <c>PlayIsOn</c> y <c>Winner</c>, garantizando la integridad del estado del objeto.
             </summary>
         </member>
         <member name="M:ClassLibrary.Game.#ctor(ClassLibrary.Player,ClassLibrary.Player)">
             <summary>
              Constructor de la clase <c>Game</c>. Inicializa los jugadores y el estado del juego.
-             El constructor asigna las propiedades adecuadamente siguiendo el principio de Liskov Substitution Principle (LSP),
-             lo cual permite que cualquier clase derivada de <c>Player</c> funcione correctamente en la lógica del juego.
             </summary>
             <param name="player1">El primer jugador.</param>
             <param name="player2">El segundo jugador.</param>
@@ -367,17 +366,17 @@
         <member name="P:ClassLibrary.Game.PlayIsOn">
             <summary>
             Propiedad que indica si el juego sigue activo (true) o ha terminado (false).
-            Esto también sigue el SRP, ya que la clase <c>Game</c> es la responsable de gestionar el estado del juego,
-            y no otros objetos, respetando el principio de segregación de responsabilidades.
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Game.Winner">
+            <summary>
+            Propiedad que indica el jugdor que ganó la partida. 
             </summary>
         </member>
         <member name="M:ClassLibrary.Game.CheckIfGameEnds">
             <summary>
             Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
             Si un jugador pierde todos sus Pokémon, el juego termina y se declara un ganador.
-            Este método puede ser fácilmente extendido o modificado con otras reglas de fin de juego,
-            alineado con el principio de Polimorfismo, donde nuevas reglas de finalización pueden ser añadidas sin alterar la
-            estructura básica.
             </summary>
         </member>
         <member name="T:ClassLibrary.GameList">
@@ -452,6 +451,7 @@
             Inicializa una nueva instancia de la clase Player con el nombre especificado.
             </summary>
             <param name="displayName">Nombre del jugador para mostrar en el juego.</param>
+            <param name="moves"></param>
         </member>
         <member name="P:ClassLibrary.Player.AvailablePokemons">
             <summary>
