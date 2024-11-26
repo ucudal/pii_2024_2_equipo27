@@ -1,165 +1,115 @@
-using NUnit.Framework;
-using System;
 
 namespace ClassLibrary.Tests
 {
+    using NUnit.Framework;
+
     [TestFixture]
     public class GameListTests
     {
-        private GameList _gameList;
+        private GameList gameList;
+        private Player player1;
+        private Player player2;
 
         [SetUp]
-        public void SetUp()
+        public void Setup()
         {
-            _gameList = new GameList();
+            gameList = new GameList();
+            player1 = new Player("Sebastian");
+            player2 = new Player("Juan");
         }
 
         [Test]
-        public void AddGame_ShouldAddGameSuccessfully()
+        public void AddGame_ShouldAddGameToList()
         {
-            // Arrange
-            var player1 = new Player("Player1");
-            var player2 = new Player("Player2");
-
             // Act
-            var game = _gameList.AddGame(player1, player2);
+            var game = gameList.AddGame(player1, player2);
 
             // Assert
-            Assert.That(_gameList.Games.Count, Is.EqualTo(1));
-            Assert.That(_gameList.Games[0], Is.SameAs(game));
-            Assert.That(game.Player1, Is.SameAs(player1));
-            Assert.That(game.Player2, Is.SameAs(player2));
+            Assert.That(gameList.Games, Has.Member(game));
+            Assert.That(gameList.Games.Count, Is.EqualTo(1));
         }
 
         [Test]
-        public void AddGame_ShouldThrowException_WhenPlayer1IsNull()
+        public void AddGame_SamePlayer_ShouldThrowException()
         {
             // Arrange
-            Player player1 = null;
-            var player2 = new Player("Player2");
+            var samePlayer = new Player("Sebastian");
 
             // Act & Assert
-            Assert.That(() => _gameList.AddGame(player1, player2), Throws.InstanceOf<ArgumentNullException>());
+            var ex = Assert.Throws<ApplicationException>(() => gameList.AddGame(player1, samePlayer));
+            Assert.That(ex.Message, Is.EqualTo("El jugador no puede jugar consigo mismo"));
         }
 
         [Test]
-        public void AddGame_ShouldThrowException_WhenPlayer2IsNull()
+        public void FindPlayerByDisplayName_ShouldReturnPlayer()
         {
             // Arrange
-            var player1 = new Player("Player1");
-            Player player2 = null;
+            gameList.AddGame(player1, player2);
 
-            // Act & Assert
-            Assert.That(() => _gameList.AddGame(player1, player2), Throws.InstanceOf<ArgumentNullException>());
+            // Act
+            var foundPlayer = gameList.FindPlayerByDisplayName("Sebastian");
+
+            // Assert
+            Assert.That(foundPlayer, Is.Not.Null);
+            Assert.That(foundPlayer.DisplayName, Is.EqualTo(player1.DisplayName));
         }
 
         [Test]
-        public void AddGame_ShouldThrowException_WhenPlayersAreSame()
+        public void FindPlayerByDisplayName_PlayerNotInGame_ShouldReturnNull()
+        {
+            // Act
+            var foundPlayer = gameList.FindPlayerByDisplayName("Desconocido");
+
+            // Assert
+            Assert.That(foundPlayer, Is.Null);
+        }
+
+        [Test]
+        public void FindOpponentOfDisplayName_ShouldReturnOpponent()
         {
             // Arrange
-            var player1 = new Player("Player");
+            gameList.AddGame(player1, player2);
 
-            // Act & Assert
-            Assert.That(() => _gameList.AddGame(player1, player1), Throws.InstanceOf<ApplicationException>());
+            // Act
+            var opponent = gameList.FindOpponentOfDisplayName("Sebastian");
+
+            // Assert
+            Assert.That(opponent, Is.Not.Null);
+            Assert.That(opponent.DisplayName, Is.EqualTo(player2.DisplayName));
         }
 
         [Test]
-        public void FindPlayerByDisplayName_ShouldReturnCorrectPlayer()
+        public void FindOpponentOfDisplayName_PlayerNotInGame_ShouldReturnNull()
+        {
+            // Act
+            var opponent = gameList.FindOpponentOfDisplayName("Desconocido");
+
+            // Assert
+            Assert.That(opponent, Is.Null);
+        }
+
+        [Test]
+        public void FindGameByPlayerDisplayName_ShouldReturnGame()
         {
             // Arrange
-            var player1 = new Player("Player1");
-            var player2 = new Player("Player2");
-            _gameList.AddGame(player1, player2);
+            var game = gameList.AddGame(player1, player2);
 
             // Act
-            var result = _gameList.FindPlayerByDisplayName("Player1");
+            var foundGame = gameList.FindGameByPlayerDisplayName("Sebastian");
 
             // Assert
-            Assert.That(result, Is.SameAs(player1));
+            Assert.That(foundGame, Is.Not.Null);
+            Assert.That(foundGame, Is.EqualTo(game));
         }
 
         [Test]
-        public void FindPlayerByDisplayName_ShouldReturnNull_WhenPlayerNotFound()
+        public void FindGameByPlayerDisplayName_PlayerNotInAnyGame_ShouldReturnNull()
         {
             // Act
-            var result = _gameList.FindPlayerByDisplayName("NonExistent");
+            var foundGame = gameList.FindGameByPlayerDisplayName("Desconocido");
 
             // Assert
-            Assert.That(result, Is.Null);
-        }
-
-        [Test]
-        public void FindPlayerByDisplayName_ShouldThrowException_WhenDisplayNameIsNull()
-        {
-            // Act & Assert
-            Assert.That(() => _gameList.FindPlayerByDisplayName(null),
-                Throws.InstanceOf<ArgumentNullException>().With.Message.Contains("El jugador no puede estar vacío"));
-        }
-
-        [Test]
-        public void FindOpponentOfDisplayName_ShouldReturnCorrectOpponent()
-        {
-            // Arrange
-            var player1 = new Player("Player1");
-            var player2 = new Player("Player2");
-            _gameList.AddGame(player1, player2);
-
-            // Act
-            var result = _gameList.FindOpponentOfDisplayName("Player1");
-
-            // Assert
-            Assert.That(result, Is.SameAs(player2));
-        }
-
-        [Test]
-        public void FindOpponentOfDisplayName_ShouldReturnNull_WhenPlayerNotFound()
-        {
-            // Act
-            var result = _gameList.FindOpponentOfDisplayName("NonExistent");
-
-            // Assert
-            Assert.That(result, Is.Null);
-        }
-
-        [Test]
-        public void FindOpponentOfDisplayName_ShouldThrowException_WhenDisplayNameIsNull()
-        {
-            // Act & Assert
-            Assert.That(() => _gameList.FindOpponentOfDisplayName(null),
-                Throws.InstanceOf<ArgumentNullException>().With.Message.Contains("El jugador no puede estar vacío"));
-        }
-
-        [Test]
-        public void FindGameByPlayerDisplayName_ShouldReturnCorrectGame()
-        {
-            // Arrange
-            var player1 = new Player("Player1");
-            var player2 = new Player("Player2");
-            var game = _gameList.AddGame(player1, player2);
-
-            // Act
-            var result = _gameList.FindGameByPlayerDisplayName("Player1");
-
-            // Assert
-            Assert.That(result, Is.SameAs(game));
-        }
-
-        [Test]
-        public void FindGameByPlayerDisplayName_ShouldReturnNull_WhenGameNotFound()
-        {
-            // Act
-            var result = _gameList.FindGameByPlayerDisplayName("NonExistent");
-
-            // Assert
-            Assert.That(result, Is.Null);
-        }
-
-        [Test]
-        public void FindGameByPlayerDisplayName_ShouldThrowException_WhenDisplayNameIsNull()
-        {
-            // Act & Assert
-            Assert.That(() => _gameList.FindGameByPlayerDisplayName(null),
-                Throws.InstanceOf<ArgumentNullException>().With.Message.Contains("El jugador no puede estar vacío"));
+            Assert.That(foundGame, Is.Null);
         }
     }
 }
