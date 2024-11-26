@@ -1186,10 +1186,14 @@
         </member>
         <member name="T:ClassLibrary.IRandom">
             <summary>
+<<<<<<< HEAD
+            Define una interfaz para generar números, que puede ser aleatorio o constante.
+=======
             Define una interfaz para generar números, que puede ser aleatorio o constante. La interfaz `IRandom` y sus
             implementaciones (`RandomGenerator` y `ConstantGenerator`) siguen el patrón Strategy para definir una estrategia flexible
             de generación de valores, utilizando Adapter para integrar `System.Random` y respetando el principio DIP
             al depender de abstracciones, facilitando pruebas y desacoplamiento.
+>>>>>>> e1bdda8b18648596034279a61a9870c7bff4b571
             </summary>
         </member>
         <member name="M:ClassLibrary.IRandom.Generate">
@@ -1200,6 +1204,11 @@
         </member>
         <member name="T:ClassLibrary.RandomGenerator">
             <summary>
+<<<<<<< HEAD
+            Implementación de IRandom que genera números aleatorios.
+            </summary>
+        </member>
+=======
             Implementación de IRandom que genera números aleatorios. La interfaz `IRandom` y sus
             implementaciones (`RandomGenerator` y `ConstantGenerator`) siguen el patrón Strategy para definir una estrategia flexible
             de generación de valores, utilizando Adapter para integrar `System.Random` y respetando el principio DIP
@@ -1218,6 +1227,7 @@
             </summary>
             <returns>El valor constante especificado en la inicialización.</returns>
         </member>
+>>>>>>> e1bdda8b18648596034279a61a9870c7bff4b571
         <member name="T:ClassLibrary.Bot">
             <summary>
             Esta clase implementa el bot de Discord.
