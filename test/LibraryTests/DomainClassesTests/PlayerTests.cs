@@ -8,6 +8,7 @@ namespace ClassLibrary.Tests
         private Player player;
         private Pokemon _pokemon;
        
+       
         
         [SetUp]
         public void Setup()
@@ -22,7 +23,7 @@ namespace ClassLibrary.Tests
            
             player = new Player("Juan");
             _pokemon = new Pokemon(moves);
-        
+
         }
 
     
@@ -48,20 +49,20 @@ namespace ClassLibrary.Tests
         
 
         [Test]
-        
         public void UseItem_ShouldRemoveItemFromInventory_WhenItemExists()
         {
             // Arrange
-            var itemName = "SuperPotion";
-            var item = new ItemSuperPotion();
+            Player player = new Player("TestPlayer");
+            Item item = new ItemRevive();
 
             // Act
-            var usedItem = player.UseItem(itemName);
+            player.UseItem(item.Name);
 
             // Assert
-            Assert.That(usedItem, Is.EqualTo(itemName));
-            Assert.That(player.UseItem, Is.False);
+            Assert.That(player.UseItem(item.Name),Is.False);
+            Assert.That(() => player.UseItem(null), Throws.ArgumentNullException);
         }
+
 
     }
 }
