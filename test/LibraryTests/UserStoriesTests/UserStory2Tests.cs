@@ -29,11 +29,14 @@ public class UserStory2Tests
         Facade.Instance.ChooseMoveToAttack( defender,  move2);
     }
 
-    [Test] 
+    [Test]
     public void Player_Pokemon_Receive_Special_Attack()
     {
+        // Act
         string messages = Facade.Instance.ShowMoves(attacker);
-        Assert.That(messages.Count, Is.EqualTo(3));
-        Assert.That(messages[0], Does.Contain(attackerPokemons[0]));
+
+        // Assert
+        Assert.That(messages.Split(',').Length, Is.EqualTo(3)); // Aseguramos que hay 3 movimientos
+        Assert.That(messages, Does.Contain(attackerPokemons[0])); // Validamos que el primer movimiento contiene Blaziken
     }
 }

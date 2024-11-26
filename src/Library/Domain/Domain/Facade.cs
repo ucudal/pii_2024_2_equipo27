@@ -225,7 +225,7 @@ namespace ClassLibrary
             }
 
             // Devuelve la cadena formateada con la salud de los Pokémon de ambos jugadores.
-            return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons, opponent.AvailablePokemons);
+            return UserInterface.ShowMessagePokemonHealth(player.AvailablePokemons,opponent.AvailablePokemons);
         }
         
         // HISTORIA DE USUARIO 4
