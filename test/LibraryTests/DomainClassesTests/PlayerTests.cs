@@ -53,14 +53,12 @@ namespace ClassLibrary.Tests
         {
             // Arrange
             Player player = new Player("TestPlayer");
-            Item item = new ItemRevive();
 
             // Act
-            player.UseItem(item.Name);
+            player.UseItem("Revivir");
 
             // Assert
-            Assert.That(player.UseItem(item.Name),Is.False);
-            Assert.That(() => player.UseItem(null), Throws.ArgumentNullException);
+            Assert.That(() => player.UseItem("Revivir"), Throws.InstanceOf<ApplicationException>());
         }
 
 

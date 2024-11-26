@@ -56,6 +56,47 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 10. Como jugador, quiero ver la lista de jugadores esperando por un oponente.
 11. Como jugador, quiero iniciar una ballata con un jugador que está esperando por un oponente.
 
+## Instrucciones del Juego(Comandos)
+Cada jugador debe unirse a la lista de espera con !join, para salir de la misma se usa !leave.
+Usa !waiting para ver los jugadores que están esperando
+Usa !battle {username} para comenzar una batalla (el username es opcional).
+Antes de la batalla, usa !catalog para ver los Pokémon disponibles.
+Selecciona seis Pokémon con !choose {pokemon1 pokemon2 pokemon3 pokemon4 pokemon5 pokemon6}. Asegúrate de separar los Pokémon con espacios.
+El juego elige aleatoriamente quién comienza.
+Se pueden ver los movimientos disponibles de tu Pokémon activo con !moves.
+Se pueden ver los items disponibles y su cantidad con !items
+Se enfrentan los primeros Pokémon vivos de cada jugador.
+Usa !turn para verificar de quién es el turno.
+En tu turno, puedes realizar una de las siguientes acciones:
+Usar un ataque con !attack {move} seleccionando un movimiento que tenga tu pokémon.
+Cambiar de Pokémon con !change {pokemon}
+Usar un ítem con !useitem {item}.
+Usa !hp para consultar los HP de tus Pokémon y los del oponente.
+La batalla termina cuando todos los Pokémon de un jugador llegan a 0 HP.
+
+!help: Muestra los comandos disponibles y las instrucciones de juego.
+!rules: Muestra las reglas del juego.
+
+## Cómo Funciona el Ataque 
+Usa !attack {move} para atacar con el movimiento seleccionado del Pokémon activo.
+Los ataques tienen diferentes niveles de efectividad según los tipos de Pokémon (fuego, agua, planta, etc.).
+Los ataques especiales pueden usarse cada dos turnos y tienen efectos adicionales:
+Sleep: El Pokémon queda inactivo entre 1 y 4 turnos, sin poder atacar.
+Paralize: El Pokémon tiene una probabilidad de fallar su turno de manera aleatoria.
+Poison: El Pokémon pierde el 5% de su HP cada turno.
+Burn: El Pokémon pierde el 10% de su HP cada turno.
+Que se produzca un ataque o no depende de su valor de precisión y es aleatorio.
+El daño infligido por los ataques depende de si es un golpe crítico
+Un golpe crítico aumenta el daño en un 20% y tiene una probabilidad del 10%.
+Si un pokemon alcanza 0 HP, el pokemon actual de un jugador pasa al siguiente Pokémon en la lista.
+
+## Cómo Funcionan los Ítems 
+Usa !useitem {item} para aplicar un efecto durante tu turno.
+Los ítems pueden:
+Revive: Revive a un Pokémon con el 50% de su HP total. (Cada jugador tiene 1)
+FullHeal: Elimina efectos de estados especiales como parálisis, dormir, envenenamiento o quemaduras.(Cada jugador tiene 2)
+SuperPotion: Restaura 70 puntos de HP. (Cada jugador tiene 4)
+Usar un ítem consume tu turno actual.
 
 ## Notas de Reflexión
 
@@ -70,3 +111,6 @@ El uso de principios como SRP (Single Responsibility Principle) fue fundamental 
 Trabajar con estos principios nos ayudó a estructurar el proyecto de forma escalable. Por ejemplo, asignar la responsabilidad de la efectividad de los ataques a la clase `Pokemon` respetó el principio de Expert, ya que esta clase tenía toda la información necesaria para cumplir esa tarea. Este enfoque iterativo nos permitió refactorizar y priorizar funcionalidades clave mientras manteníamos la cohesión en el diseño.
 
 Al final, logramos desarrollar un sistema coherente que respetaba estos principios, asegurando la calidad y funcionalidad del producto.
+
+
+

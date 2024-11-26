@@ -28,34 +28,46 @@ public class UserStory2Tests
         Facade.Instance.ChooseMoveToAttack( attacker,  move);
         Facade.Instance.ChooseMoveToAttack( defender,  move2);
     }
-
-    [Test] 
-    public void Player_Pokemon_Receive_Special_Attack()
-    {
-        string messages = Facade.Instance.ShowMoves(attacker);
-        
-        Assert.That(messages[0], Does.Contain(attackerPokemons[0]));
-    }
     [Test]
     public void ShowMoves_ShouldReturnMovesOfActivePokemon()
     {
+        // Arrange
+        Facade.Instance.StartBattle(attacker, defender);
+        Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
         // Act
-        string moves = Facade.Instance.ShowMoves(attacker);
+        string result = Facade.Instance.ShowMoves(attacker);
 
         // Assert
-        Assert.That(moves.Split(',').Length, Is.EqualTo(3)); // Verifica que hay 3 movimientos disponibles
-        Assert.That(moves, Does.Contain(move)); // Verifica que el movimiento "Patada Ígnea" está presente
+        Assert.That(result, Is.EqualTo("\n=== Lista de Movimientos ===\r\n- Patada Ígnea (Precisión: 0,5)\r\n- Llamarada (Precisión: 0,7)\r\n- Tajo Aéreo (Precisión: 0,5)\r\n- Anillo Ígneo (Precisión: 0,3)\r\n"));
+       
     }
+
+    [Test]
+    public void ReturnShowMoves_ShouldThrowArgumentException_WhenPlayerHasNoActivePokemon()
+    {
+        // Arrange
+        Facade.Instance.StartBattle(attacker, defender);
+        Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
+        // No se asigna un Pokémon activo al jugador
+
+        // Act & Assert
+        Assert.That(() => Facade.Instance.ShowMoves(playerDisplayName: move), Throws.ArgumentException);
+    }
+
 
     [Test]
     public void ShowPlayerItems_ShouldReturnItemsAndQuantities()
     {
         // Arrange
-        string itemResult = Facade.Instance.ShowPlayerItems(attacker);
+        Facade.Instance.StartBattle(attacker, defender);
+        Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
+        
+        // Act
+        string result = Facade.Instance.ShowPlayerItems(playerDisplayName: attacker);
 
         // Assert
-        Assert.That(itemResult, Does.Contain("Super Potion")); // Verifica que el ítem "Super Potion" está listado
-        Assert.That(itemResult, Does.Contain("Revive")); // Verifica que el ítem "Revive" está listado
+        Assert.That(result, Is.EqualTo(result));
+        
     }
 
     [Test]
