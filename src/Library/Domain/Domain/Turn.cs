@@ -1,4 +1,3 @@
-
 namespace ClassLibrary
 {
     /// <summary>
@@ -70,7 +69,5 @@ namespace ClassLibrary
                 Console.WriteLine($"{player.DisplayName} is not currently playing.");
             }
         }
-        
     }
 }
-    

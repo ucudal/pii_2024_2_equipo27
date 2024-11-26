@@ -6,8 +6,8 @@ namespace ClassLibrary.Tests
 
     public class UserStory4Tests
     {
-        [TearDown]
-        public void TearDown()
+        [SetUp]
+        public void SetUp()
         {
             Facade.Reset(); 
         }
@@ -19,29 +19,47 @@ namespace ClassLibrary.Tests
         private string move = "Patada Ígnea";
         private string move2 = "Carantoña";
 
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void PlayerAttack_Works_Correctly()
         {
+            // Arrange
+            Facade.Instance.GameList.AddGame(new Player(attacker), new Player(defender));
             Facade.Instance.AddPlayerToWaitingList(attacker);
             Facade.Instance.AddPlayerToWaitingList(defender);
             Facade.Instance.StartBattle(attacker, defender);
-            
             Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
             Facade.Instance.ChoosePokemons(defender, defenderPokemons);
             Facade.Instance.ChooseMoveToAttack( attacker,  move);
             Facade.Instance.ChooseMoveToAttack( defender,  move2);
+            
+            //Act
+            string result = Facade.Instance.PlayerAttack(attacker);
+            
+            //Assert
+             Assert.That(result, Is.EqualTo(
+                 $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}"));
+             //Assert.That(()=> Facade.Instance.PlayerAttack(attacker), Throws.InstanceOf<Exception>());
+        
         }
-
         [Test]
-        public void PlayerAttack_Works_Correctly()
+        public void PlayerAttack_ThrowExepcion()
         {
-            // Ejecutar el ataque 
-            string message = Facade.Instance.PlayerAttack(attacker);
+            // Arrange
+            Facade.Instance.GameList.AddGame(new Player(attacker), new Player(defender));
+            Facade.Instance.AddPlayerToWaitingList(attacker);
+            Facade.Instance.AddPlayerToWaitingList(defender);
+            Facade.Instance.StartBattle(attacker, defender);
+            Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
+            Facade.Instance.ChoosePokemons(defender, defenderPokemons);
+            Facade.Instance.ChooseMoveToAttack( attacker,  move);
+            Facade.Instance.ChooseMoveToAttack( defender,  move2);
+            
+            //Act
+            string result = Facade.Instance.PlayerAttack(attacker);
+            
+            //Assert
+            Assert.That(()=> Facade.Instance.PlayerAttack(""), Throws.InstanceOf<Exception>());
 
-            Assert.That(message, Does.Contain(
-                $"""
-                 Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}
-                 """));
         }
     }
 }

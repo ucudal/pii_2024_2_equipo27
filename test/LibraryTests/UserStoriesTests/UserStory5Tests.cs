@@ -24,7 +24,7 @@ public class UserStory5Tests
     public void GetCurrentTurnPlayer_WhenPlayerIsInGame_ReturnsCurrentTurnPlayer()
     {
         // Act
-        string message = Facade.Instance.GetCurrentTurnPlayer("player1");
+        string message = Facade.Instance.GetCurrentTurnPlayer("player2");
         
         Assert.That(message, Is.EqualTo("\ud83c\udfae Es el turno de player1."));
     }

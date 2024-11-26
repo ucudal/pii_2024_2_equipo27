@@ -26,7 +26,7 @@ public class WaitingList
     {
         return this.players.AsReadOnly();
     }
-    
+
     /// <summary>
     /// Agrega un jugador a la lista de espera.
     /// </summary>
@@ -42,6 +42,7 @@ public class WaitingList
         {
             throw new ArgumentException(nameof(DisplayName));
         }
+
         // Verifica que el nombre no esté vacío o nulo
         if (this.FindPlayerByDisplayName(DisplayName) != null) return false;
         players.Add(new Player(DisplayName));
@@ -63,6 +64,7 @@ public class WaitingList
         {
             throw new ArgumentException("El nombre de usuario no puede estar vacío o nulo.", nameof(DisplayName));
         }
+
         Player player = this.FindPlayerByDisplayName(DisplayName);
         if (player == null) return false;
         players.Remove(player);
@@ -85,7 +87,7 @@ public class WaitingList
         {
             throw new ArgumentException("El nombre de usuario no puede estar vacío o nulo.", nameof(DisplayName));
         }
-        
+
         // Busca en la lista de jugadores
         foreach (Player player in this.players)
         {
@@ -94,6 +96,7 @@ public class WaitingList
                 return player;
             }
         }
+
         return null;
     }
 

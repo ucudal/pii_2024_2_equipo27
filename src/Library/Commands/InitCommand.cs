@@ -23,16 +23,16 @@ public class InitCommand : ModuleBase<SocketCommandContext>
         string[] defenderPokemons = new string[] { "Tinkaton", "Zangoose", "Rayquaza", };
         string move = "Patada Ígnea";
         string move2 = "Carantoña";
-    
+
         string displayName = CommandHelper.GetDisplayName(Context);
         string result = Facade.Instance.AddPlayerToWaitingList(displayName);
         result = result + Facade.Instance.AddPlayerToWaitingList("player1");
         result = result + Facade.Instance.StartBattle(displayName, "player1");
         result = result + Facade.Instance.ChoosePokemons(displayName, attackerPokemons);
         result = result + Facade.Instance.ChoosePokemons("player1", defenderPokemons);
-        Facade.Instance.ChooseMoveToAttack( displayName,  move);
-        Facade.Instance.ChooseMoveToAttack( "player1",  move2);
-        
+        Facade.Instance.ChooseMoveToAttack(displayName, move);
+        Facade.Instance.ChooseMoveToAttack("player1", move2);
+
         await ReplyAsync(result);
     }
 }

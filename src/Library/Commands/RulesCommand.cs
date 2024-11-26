@@ -9,7 +9,6 @@ namespace Library.Commands;
 /// Esta clase implementa el comando 'rules' del bot. 
 /// </summary>
 // ReSharper disable once UnusedType.Global
-
 public class RulesCommand : ModuleBase<SocketCommandContext>
 {
     /// <summary>

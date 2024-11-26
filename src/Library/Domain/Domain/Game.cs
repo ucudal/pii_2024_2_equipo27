@@ -1,10 +1,11 @@
 namespace ClassLibrary;
 
 /// <summary>
-///  La clase <c>Game</c> tiene la responsabilidad de conocer a los jugadores y verificar si el juego está activo o ha terminado.
-///  Esto sigue el principio de responsabilidad única (SRP) ya que su única función es gestionar el estado del juego.
-///  Además, según el principio de "experto" (Expert), la clase <c>Game</c> es la más adecuada para gestionar estas tareas,
-///  ya que contiene toda la información sobre los jugadores y el estado del juego.
+///  La clase <c>Game</c> aplica principios GRASP y SOLID para asegurar un diseño robusto y cohesivo. Sigue el principio de responsabilidad
+/// única (SRP) al encargarse exclusivamente de gestionar el estado del juego, respetando también el principio GRASP de "experto", ya
+/// que toma decisiones basadas en la información que posee, como verificar el fin del juego y determinar el ganador. Además, delega la
+/// gestión de turnos a la clase <c>Turn</c>, alineándose con el principio abierto/cerrado (OCP), lo que facilita futuras extensiones sin modificar
+/// la clase base. Su diseño encapsula correctamente propiedades críticas como <c>PlayIsOn</c> y <c>Winner</c>, garantizando la integridad del estado del objeto.
 /// </summary>
 public class Game
 {
@@ -58,6 +59,12 @@ public class Game
     /// </summary>
     public void CheckIfGameEnds()
     {
+        // Verificar que los jugadores tengan Pokémon seleccionados
+        if (Player1.AvailablePokemons == null || Player2.AvailablePokemons == null)
+        {
+            throw new ArgumentNullException("Los jugadores deben tener a sus Pokémon seleccionados");
+        }
+        
         // Inicializamos una variable p
         var todosSonCeroPlayer1 = true; 
         var todosSonCeroPlayer2 = true;
@@ -72,13 +79,17 @@ public class Game
                 todosSonCeroPlayer2 = false;
 
         // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
-        if (todosSonCeroPlayer1)
+        if (todosSonCeroPlayer1 && todosSonCeroPlayer2)
+        {
+            PlayIsOn = false; // El juego termina en empate
+            Winner = null; // Sin ganador
+        }
+        else if (todosSonCeroPlayer1)
         {
             PlayIsOn = false; // El juego termina
             Winner = Player2;
         }
-
-        if (todosSonCeroPlayer2)
+        else if (todosSonCeroPlayer2)
         {
             PlayIsOn = false; // El juego termina
             Winner = Player1;

@@ -23,8 +23,7 @@ public class AttackCommand : ModuleBase<SocketCommandContext>
         """)]
     // ReSharper disable once UnusedMember.Global
     public async Task ExecuteAsync(
-        [Remainder]
-        [Summary("El nombre del movimiento que deseas usar para atacar.")]
+        [Remainder] [Summary("El nombre del movimiento que deseas usar para atacar.")]
         string moveName)
     {
         try
@@ -32,10 +31,12 @@ public class AttackCommand : ModuleBase<SocketCommandContext>
             // Validar que el usuario ingresó un movimiento
             if (string.IsNullOrWhiteSpace(moveName))
             {
-                await ReplyAsync("Debes especificar el nombre de un movimiento para atacar. Ejemplo: `!attack Thunderbolt`");
+                await ReplyAsync(
+                    "Debes especificar el nombre de un movimiento para atacar. Ejemplo: `!attack Thunderbolt`");
                 return;
             }
-             // Obtener el nombre del jugador
+
+            // Obtener el nombre del jugador
             string displayName = CommandHelper.GetDisplayName(Context);
 
             // Elegir el movimiento para atacar
