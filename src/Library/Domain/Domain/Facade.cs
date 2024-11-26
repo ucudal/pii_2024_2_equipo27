@@ -281,8 +281,7 @@ public class Facade
                 game.CheckIfGameEnds();
 
                 // Construye el mensaje de resultado
-                return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker,
-                    defender, healthPointsBefore, healthPointsAfter);
+                return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker, defender, healthPointsBefore, healthPointsAfter);
             }
             else
             {

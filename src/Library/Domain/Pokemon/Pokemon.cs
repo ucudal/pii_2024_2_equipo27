@@ -161,6 +161,11 @@ public class Pokemon
             {
                 _healthPoints = value;
             }
+
+            if (value > 100)
+            {
+                _healthPoints = 100;
+            }
         }
     }
 

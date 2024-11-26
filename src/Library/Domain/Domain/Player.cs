@@ -304,7 +304,7 @@ public class Player
     public IReadOnlyList<Move> GetPokemonsWithMovesForPlayer()
     {
         // Verificar si el Pokémon activo del jugador está definido
-        if (this.ActivePokemon == null)
+        if (this.ActivePokemon.Clone() == null)
         {
             throw new ArgumentException($"El jugador {this.DisplayName} no tiene un Pokémon activo.");
         }

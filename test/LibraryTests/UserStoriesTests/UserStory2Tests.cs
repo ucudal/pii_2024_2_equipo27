@@ -47,11 +47,12 @@ public class UserStory2Tests
     {
         // Arrange
         Facade.Instance.StartBattle(attacker, defender);
-        Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
-        // No se asigna un Pokémon activo al jugador
+        Facade.Instance.ChoosePokemons(attacker,attackerPokemons );
+        Facade.Instance.ShowMoves(attacker);
+        
 
         // Act & Assert
-        Assert.That(() => Facade.Instance.ShowMoves(playerDisplayName: move), Throws.ArgumentException);
+        Assert.That(() => Facade.Instance.ShowMoves("player1"), Throws.InstanceOf<PokemonException>());
     }
 
 
