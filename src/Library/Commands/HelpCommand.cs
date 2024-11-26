@@ -9,7 +9,6 @@ namespace Library.Commands;
 /// Esta clase implementa el comando 'help' del bot. 
 /// </summary>
 // ReSharper disable once UnusedType.Global
-
 public class HelpCommand : ModuleBase<SocketCommandContext>
 {
     /// <summary>

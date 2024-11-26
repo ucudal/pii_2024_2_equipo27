@@ -27,12 +27,11 @@ public class BattleCommand : ModuleBase<SocketCommandContext>
         """)]
     // ReSharper disable once UnusedMember.Global
     public async Task ExecuteAsync(
-        [Remainder]
-        [Summary("Display name del oponente, opcional")]
+        [Remainder] [Summary("Display name del oponente, opcional")]
         string opponentDisplayName = null)
     {
         string displayName = CommandHelper.GetDisplayName(Context);
-        
+
         SocketGuildUser opponentUser = CommandHelper.GetUser(Context, opponentDisplayName);
         string result;
         if (opponentUser != null)

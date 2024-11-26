@@ -6,14 +6,14 @@ namespace Library.Commands;
 public static class CommandHelper
 {
     public static string GetDisplayName(
-        SocketCommandContext context, 
+        SocketCommandContext context,
         string name = null)
     {
         if (name == null)
         {
             name = context.Message.Author.Username;
         }
-        
+
         foreach (SocketGuildUser user in context.Guild.Users)
         {
             if (user.Username == name
@@ -36,7 +36,7 @@ public static class CommandHelper
         {
             return null;
         }
-        
+
         foreach (SocketGuildUser user in context.Guild.Users)
         {
             if (user.Username == name

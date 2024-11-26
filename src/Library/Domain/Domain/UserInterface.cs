@@ -32,7 +32,8 @@ namespace ClassLibrary
                 catalogo.AppendLine($"{pokemon.Name}:");
                 foreach (Move move in pokemon.Moves)
                 {
-                    catalogo.AppendLine($"   -{move.Name}: attackvalue {move.AttackValue}, accuracy {move.Accuracy} , type {move.MoveType}");
+                    catalogo.AppendLine(
+                        $"   -{move.Name}: attackvalue {move.AttackValue}, accuracy {move.Accuracy} , type {move.MoveType}");
                 }
             }
 
@@ -80,7 +81,8 @@ namespace ClassLibrary
         /// <param name="opponentPokemons">Lista de Pokémon del oponente.</param>
         /// <returns>Una cadena con la información de salud de los Pokémon.</returns>
         /// <exception cref="ArgumentNullException">Se lanza si alguna de las listas es nula.</exception>
-        public static string ShowMessagePokemonHealth(ReadOnlyCollection<Pokemon> playerPokemons, ReadOnlyCollection<Pokemon> opponentPokemons)
+        public static string ShowMessagePokemonHealth(ReadOnlyCollection<Pokemon> playerPokemons,
+            ReadOnlyCollection<Pokemon> opponentPokemons)
         {
             // Validar que las listas no sean nulas
             if (playerPokemons == null)
@@ -163,7 +165,7 @@ namespace ClassLibrary
         {
             return $"{playerName} ha ganado la batalla";
         }
-        
+
         public static string ShowBattleContinuesMessage(Player turnPlayer)
         {
             return $"El juego continúa, es el turno de {turnPlayer.DisplayName}.";
@@ -229,14 +231,16 @@ namespace ClassLibrary
         public static string ShowMessageHelp()
         {
             var helpMessage = new StringBuilder();
-            
+
             // Reglas del juego
             helpMessage.AppendLine("\n=== Instrucciones del Juego ===")
-                .AppendLine("1. Cada jugador debe unirse a la lista de espera con !join, para salir de la misma se usa !leave.")
+                .AppendLine(
+                    "1. Cada jugador debe unirse a la lista de espera con !join, para salir de la misma se usa !leave.")
                 .AppendLine("2. Usa !waiting para ver los jugadores que están esperando")
                 .AppendLine("3. Usa !battle {username} para comenzar una batalla (el username es opcional).")
                 .AppendLine("4. Antes de la batalla, usa !catalog para ver los Pokémon disponibles.")
-                .AppendLine("5. Selecciona seis Pokémon con !choose {pokemon1 pokemon2 pokemon3 pokemon4 pokemon5 pokemon6}. Asegúrate de separar los Pokémon con espacios.")
+                .AppendLine(
+                    "5. Selecciona seis Pokémon con !choose {pokemon1 pokemon2 pokemon3 pokemon4 pokemon5 pokemon6}. Asegúrate de separar los Pokémon con espacios.")
                 .AppendLine("6. El juego elige aleatoriamente quién comienza.")
                 .AppendLine("7. Se pueden ver los movimientos disponibles de tu Pokémon activo con !moves.")
                 .AppendLine("8. Se pueden ver los items disponibles y su cantidad con !items")
@@ -252,7 +256,6 @@ namespace ClassLibrary
                 .AppendLine("!rules: Muestra las reglas del juego.");
 
             return helpMessage.ToString();
-
         }
 
         public static string ShowMessageRules()
@@ -262,7 +265,8 @@ namespace ClassLibrary
             // Cómo funciona un ataque 
             helpMessage.AppendLine("\n=== Cómo Funciona el Ataque ===")
                 .AppendLine("1. Usa !attack {move} para atacar con el movimiento seleccionado del Pokémon activo.")
-                .AppendLine("2. Los ataques tienen diferentes niveles de efectividad según los tipos de Pokémon (fuego, agua, planta, etc.).")
+                .AppendLine(
+                    "2. Los ataques tienen diferentes niveles de efectividad según los tipos de Pokémon (fuego, agua, planta, etc.).")
                 .AppendLine("3. Los ataques especiales pueden usarse cada dos turnos y tienen efectos adicionales:")
                 .AppendLine("   - Sleep: El Pokémon queda inactivo entre 1 y 4 turnos, sin poder atacar.")
                 .AppendLine("   - Paralize: El Pokémon tiene una probabilidad de fallar su turno de manera aleatoria.")
@@ -271,14 +275,16 @@ namespace ClassLibrary
                 .AppendLine("4. Que se produzca un ataque o no depende de su valor de precisión y es aleatorio.")
                 .AppendLine("5. El daño infligido por los ataques depende de si es un golpe crítico")
                 .AppendLine("   - Un golpe crítico aumenta el daño en un 20% y tiene una probabilidad del 10%.")
-                .AppendLine("5. Si un pokemon alcanza 0 HP, el pokemon actual de un jugador pasa al siguiente Pokémon en la lista.");
+                .AppendLine(
+                    "5. Si un pokemon alcanza 0 HP, el pokemon actual de un jugador pasa al siguiente Pokémon en la lista.");
 
             // Cómo funcionan los Ítems
             helpMessage.AppendLine("\n=== Cómo Funcionan los Ítems ===")
                 .AppendLine("1. Usa !useitem {item} para aplicar un efecto durante tu turno.")
                 .AppendLine("2. Los ítems pueden:")
-                .AppendLine("   - Revive: Revive a un Pokémon con el 50% de su HP total. (Cada jugador tiene 1)" )
-                .AppendLine("   - FullHeal: Elimina efectos de estados especiales como parálisis, dormir, envenenamiento o quemaduras.(Cada jugador tiene 2)")
+                .AppendLine("   - Revive: Revive a un Pokémon con el 50% de su HP total. (Cada jugador tiene 1)")
+                .AppendLine(
+                    "   - FullHeal: Elimina efectos de estados especiales como parálisis, dormir, envenenamiento o quemaduras.(Cada jugador tiene 2)")
                 .AppendLine("   - SuperPotion: Restaura 70 puntos de HP. (Cada jugador tiene 4)")
                 .AppendLine("3. Usar un ítem consume tu turno actual.");
 
@@ -288,7 +294,7 @@ namespace ClassLibrary
         /// <summary>
         /// Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
         /// </summary>
-        public static string ReturnShowMoves(IReadOnlyList <Move> moves, Player player)
+        public static string ReturnShowMoves(IReadOnlyList<Move> moves, Player player)
         {
             if (player == null)
             {
@@ -315,7 +321,5 @@ namespace ClassLibrary
 
             return movesMessage.ToString();
         }
-
     }
 }
-
