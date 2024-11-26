@@ -188,8 +188,7 @@ public class Facade
         int moveIndex = player.GetIndexOfMoveInActivePokemon(moveName);
         if (moveIndex < 0)
         {
-            throw new Exception(
-                $"El movimiento {moveName} no está disponible para el Pokémon actual, usá el comando !moves para ver los movimientos disponibles");
+            throw new Exception($"El movimiento {moveName} no está disponible para el Pokémon actual, usá el comando !moves para ver los movimientos disponibles");
         }
 
         player.ActivateMoveInActivePokemon(moveIndex);
@@ -281,7 +280,7 @@ public class Facade
                 game.CheckIfGameEnds();
 
                 // Construye el mensaje de resultado
-                return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker, defender, healthPointsBefore, healthPointsAfter);
+                return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker, defender);
             }
             else
             {
