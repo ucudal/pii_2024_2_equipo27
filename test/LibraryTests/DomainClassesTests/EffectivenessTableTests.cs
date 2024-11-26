@@ -17,8 +17,8 @@ namespace ClassLibrary.Tests
             var effectiveness = EffectivenessTable.GetEffectiveness(defendingType, attackingType);
 
             // Assert
-            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
-                        "Fire vs Grass should return an effectiveness of 2.0.");
+            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness),
+                "Fire vs Grass should return an effectiveness of 2.0.");
         }
 
         [Test]
@@ -33,8 +33,8 @@ namespace ClassLibrary.Tests
             var effectiveness = EffectivenessTable.GetEffectiveness(defendingType, attackingType);
 
             // Assert
-            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
-                        "Water vs Fire should return an effectiveness of 2.0.");
+            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness),
+                "Water vs Fire should return an effectiveness of 2.0.");
         }
 
         [Test]
@@ -49,8 +49,8 @@ namespace ClassLibrary.Tests
             var effectiveness = EffectivenessTable.GetEffectiveness(defendingType, attackingType);
 
             // Assert
-            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
-                        "Fire vs Water should return an effectiveness of 0.5.");
+            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness),
+                "Fire vs Water should return an effectiveness of 0.5.");
         }
 
         [Test]
@@ -65,8 +65,8 @@ namespace ClassLibrary.Tests
             var effectiveness = EffectivenessTable.GetEffectiveness(defendingType, attackingType);
 
             // Assert
-            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
-                        "Fire vs Fire should return an effectiveness of 0.5.");
+            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness),
+                "Fire vs Fire should return an effectiveness of 0.5.");
         }
 
         [Test]
@@ -81,8 +81,8 @@ namespace ClassLibrary.Tests
             var effectiveness = EffectivenessTable.GetEffectiveness(defendingType, attackingType);
 
             // Assert
-            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
-                        "Water vs Steel should return an effectiveness of 1.0 (no advantage).");
+            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness),
+                "Water vs Steel should return an effectiveness of 1.0 (no advantage).");
         }
 
         [Test]
@@ -97,8 +97,8 @@ namespace ClassLibrary.Tests
             var effectiveness = EffectivenessTable.GetEffectiveness(defendingType, attackingType);
 
             // Assert
-            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness), 
-                        "Dragon vs Dragon should return an effectiveness of 2.0.");
+            Assert.That(effectiveness, Is.EqualTo(expectedEffectiveness),
+                "Dragon vs Dragon should return an effectiveness of 2.0.");
         }
     }
 }

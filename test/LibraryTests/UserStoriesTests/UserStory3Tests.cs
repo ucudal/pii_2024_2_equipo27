@@ -1,4 +1,5 @@
 namespace ClassLibrary.Tests;
+
 using NUnit.Framework;
 using ClassLibrary;
 
@@ -15,8 +16,10 @@ public class UserStory3Tests
     {
         // Arrange
         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
-        Facade.Instance.ChoosePokemons("player1", new string[] { "Mew", "Blaziken", "Tinkaton", "Salamence", "Jigglypuff" });
-        Facade.Instance.ChoosePokemons("player2", new string[] { "Mew", "Blaziken", "Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemons("player1",
+            new string[] { "Mew", "Blaziken", "Tinkaton", "Salamence", "Jigglypuff" });
+        Facade.Instance.ChoosePokemons("player2",
+            new string[] { "Mew", "Blaziken", "Tinkaton", "Salamence", "Jigglypuff" });
 
         // Act
         string result = Facade.Instance.GetPokemonsHealth("player1");

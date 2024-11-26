@@ -106,6 +106,7 @@ namespace ClassLibrary.Tests
                 new MoveNormal("Tajo Aéreo", 70, 0.5, Type.Flying),
                 new MoveBurn("Anillo Ígneo", 0, 0.3, Type.Fire)
             };
+
             var move = new MoveSleep("Dormir", 30, 1.0, Type.Ground);
             var attacker = new Pokemon(moves);
             var target = new Pokemon(moves);
@@ -115,7 +116,7 @@ namespace ClassLibrary.Tests
             Assert.That(target.SleepTurns, Is.GreaterThanOrEqualTo(1).And.LessThanOrEqualTo(5));
             Assert.That(target.HealthPoints, Is.LessThan(100));
         }
-        
+
 
         [Test]
         public void MoveBurnConstructor_ValidParameters_ShouldSetProperties()

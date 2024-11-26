@@ -77,6 +77,7 @@ public class Game
         foreach (var pokemon in Player2.AvailablePokemons)
             if (pokemon.HealthPoints > 0)
                 todosSonCeroPlayer2 = false;
+        
 
         // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
         if (todosSonCeroPlayer1 && todosSonCeroPlayer2)

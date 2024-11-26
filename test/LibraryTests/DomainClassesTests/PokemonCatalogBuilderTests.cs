@@ -19,15 +19,14 @@ public class PokemonCatalogBuilderTests
     {
         // Act
         IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
-        
+
         // Assert
-        Assert.That(pokemonList.Count, Is.GreaterThan(0)); 
+        Assert.That(pokemonList.Count, Is.GreaterThan(0));
     }
 
     [Test]
     public void Pokemon_InCatalog_HasCorrectHP()
     {
-        
         // Act
         IReadOnlyList<Pokemon> pokemonList = catalogBuilder.PokemonList;
 
@@ -47,7 +46,7 @@ public class PokemonCatalogBuilderTests
         // Assert
         foreach (Pokemon pokemon in pokemonList)
         {
-            Assert.That(pokemon.Moves.Count, Is.EqualTo(4)); 
+            Assert.That(pokemon.Moves.Count, Is.EqualTo(4));
         }
     }
 
@@ -59,8 +58,7 @@ public class PokemonCatalogBuilderTests
         Pokemon blaziken = pokemonList.First(p => p.Name == "Blaziken");
 
         // Assert
-        Assert.That(blaziken, Is.Not.Null); 
+        Assert.That(blaziken, Is.Not.Null);
         Assert.That(blaziken.Name, Is.EqualTo("Blaziken"));
     }
-    
 }

@@ -18,7 +18,7 @@ namespace ClassLibrary.Tests
             };
             _pokemon = new Pokemon(moves);
         }
-        
+
         [Test]
         public void Name_SetNullOrEmptyName_ShouldThrowArgumentNullException()
         {
@@ -26,9 +26,9 @@ namespace ClassLibrary.Tests
             Assert.That(() => _pokemon.Name = null, Throws.ArgumentNullException);
             Assert.That(() => _pokemon.Name = "", Throws.ArgumentNullException);
         }
-        
 
-       [Test]
+
+        [Test]
         public void Name_SetValidName_ShouldSetName()
         {
             // Act
@@ -43,11 +43,11 @@ namespace ClassLibrary.Tests
         {
             // Act 
             _pokemon.HealthPoints = (-80);
-            
+
             //Assert
             Assert.That(_pokemon.HealthPoints, Is.EqualTo(0));
         }
-        
+
         [Test]
         public void HealthPoints_SetValidHealthPoints_ShouldSetHealthPoints()
         {
@@ -67,7 +67,7 @@ namespace ClassLibrary.Tests
             // Assert
             Assert.That(_pokemon.PokemonType, Is.EqualTo(Type.Electric));
         }
-        
+
         [Test]
         public void Constructor_ShouldInitializeMovesList()
         {
@@ -76,4 +76,3 @@ namespace ClassLibrary.Tests
         }
     }
 }
-

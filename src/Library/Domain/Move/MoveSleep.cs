@@ -56,8 +56,8 @@ public class MoveSleep : Move
         }
 
         //Aplica al pokemon ataque de dormir
-        Random random = new Random();
-        int sleepTurns = random.Next(1, 5);
+        RandomGenerator random = new RandomGenerator(1, 5);
+        int sleepTurns = random.Generate();
         target.SleepTurns = sleepTurns;
     }
 }
