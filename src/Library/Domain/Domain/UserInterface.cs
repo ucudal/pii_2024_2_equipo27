@@ -288,26 +288,34 @@ namespace ClassLibrary
         /// <summary>
         /// Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
         /// </summary>
-        public static string ReturnShowMoves(List<Move> pokemonMoves)
+        public static string ReturnShowMoves(IReadOnlyList <Move> moves, Player player)
         {
-            var movesMessage = new StringBuilder();
+            if (player == null)
+            {
+                return "El jugador no está definido.";
+            }
 
+            if (player.ActivePokemon == null)
+            {
+                return $"El jugador {player.DisplayName} no tiene un Pokémon activo.";
+            }
+
+            if (moves == null || moves.Count == 0)
+            {
+                return $"El Pokémon activo de {player.DisplayName} no tiene movimientos disponibles.";
+            }
+
+            var movesMessage = new StringBuilder();
             movesMessage.AppendLine("\n=== Lista de Movimientos ===");
 
-            if (pokemonMoves == null || pokemonMoves.Count == 0)
+            foreach (var move in moves)
             {
-                movesMessage.AppendLine("No hay movimientos disponibles.");
-            }
-            else
-            {
-                foreach (var move in pokemonMoves)
-                {
-                    movesMessage.AppendLine($"- {move.Name} (Precisión: {move.Accuracy})");
-                }
+                movesMessage.AppendLine($"- {move.Name} (Precisión: {move.Accuracy})");
             }
 
             return movesMessage.ToString();
         }
+
     }
 }
 
