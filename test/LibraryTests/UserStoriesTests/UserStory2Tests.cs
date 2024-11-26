@@ -29,14 +29,51 @@ public class UserStory2Tests
         Facade.Instance.ChooseMoveToAttack( defender,  move2);
     }
 
-    [Test]
+    [Test] 
     public void Player_Pokemon_Receive_Special_Attack()
     {
-        // Act
         string messages = Facade.Instance.ShowMoves(attacker);
+        
+        Assert.That(messages[0], Does.Contain(attackerPokemons[0]));
+    }
+    [Test]
+    public void ShowMoves_ShouldReturnMovesOfActivePokemon()
+    {
+        // Act
+        string moves = Facade.Instance.ShowMoves(attacker);
 
         // Assert
-        Assert.That(messages.Split(',').Length, Is.EqualTo(3)); // Aseguramos que hay 3 movimientos
-        Assert.That(messages, Does.Contain(attackerPokemons[0])); // Validamos que el primer movimiento contiene Blaziken
+        Assert.That(moves.Split(',').Length, Is.EqualTo(3)); // Verifica que hay 3 movimientos disponibles
+        Assert.That(moves, Does.Contain(move)); // Verifica que el movimiento "Patada Ígnea" está presente
     }
+
+    [Test]
+    public void ShowPlayerItems_ShouldReturnItemsAndQuantities()
+    {
+        // Arrange
+        string itemResult = Facade.Instance.ShowPlayerItems(attacker);
+
+        // Assert
+        Assert.That(itemResult, Does.Contain("Super Potion")); // Verifica que el ítem "Super Potion" está listado
+        Assert.That(itemResult, Does.Contain("Revive")); // Verifica que el ítem "Revive" está listado
+    }
+
+    [Test]
+    public void ChooseMoveToAttack_ShouldThrowException_WhenMoveDoesNotExist()
+    {
+        // Act & Assert
+        var ex = Assert.Throws<Exception>(() => Facade.Instance.ChooseMoveToAttack(attacker, "NonExistentMove"));
+        Assert.That(ex.Message, Does.Contain("no está disponible para el Pokémon actual"));
+    }
+
+    [Test]
+    public void ChooseMoveToAttack_ShouldActivateMove_WhenMoveExists()
+    {
+        // Act
+        Facade.Instance.ChooseMoveToAttack(attacker, move);
+        // Assert
+        string moves = Facade.Instance.ShowMoves(attacker);
+        Assert.That(moves, Does.Contain(move)); // Verifica que "Patada Ígnea" sigue siendo accesible
+    }
+
 }
