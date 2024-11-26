@@ -267,8 +267,8 @@ public class Facade
 
             if (turn == attackerName)
             {
-
                 int healthPointsBefore = defender.ActivePokemon.HealthPoints;
+                
                 //Ejecuta el ataque
                 attacker.ExecuteMove(defender, attacker);
                 int healthPointsAfter = defender.ActivePokemon.HealthPoints;
