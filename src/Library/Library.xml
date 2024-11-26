@@ -113,13 +113,11 @@
         <member name="T:Library.Commands.MovesCommand">
             <summary>
             Comando que muestra los movimientos disponibles de los Pokémon del jugador
-            para los Pokémon del oponente.
             </summary>
         </member>
         <member name="M:Library.Commands.MovesCommand.ExecuteAsync">
             <summary>
-            Ejecuta el comando 'moves' que muestra los movimientos disponibles de los
-            Pokémon del jugador para los Pokémon del oponente.
+            Implementa el comando 'moves'. Este comando muestra los movimientos disponibles del Pokémon actual del jugador.
             </summary>
         </member>
         <member name="T:Library.Commands.RulesCommand">
@@ -412,6 +410,22 @@
             <param name="displayName">El nombre del jugador.</param>
             <returns> El objeto Game si se encuentra; de lo contrario, null.</returns>
         </member>
+        <member name="T:ClassLibrary.IRandom">
+            <summary>
+            Define una interfaz para generar números, que puede ser aleatorio o constante.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.IRandom.Generate">
+            <summary>
+            Genera un número según la implementación.
+            </summary>
+            <returns>Un número generado.</returns>
+        </member>
+        <member name="T:ClassLibrary.RandomGenerator">
+            <summary>
+            Implementación de IRandom que genera números aleatorios.
+            </summary>
+        </member>
         <member name="T:ClassLibrary.Player">
             <summary>
             La clase  <c>Player</c> representa a un jugador en el juego, 
@@ -643,7 +657,7 @@
             Retorna un mensaje con todos los comandos disponibles y las reglas del juego.
             </summary>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ReturnShowMoves(System.Collections.Generic.List{ClassLibrary.Move})">
+        <member name="M:ClassLibrary.UserInterface.ReturnShowMoves(System.Collections.Generic.IReadOnlyList{ClassLibrary.Move},ClassLibrary.Player)">
             <summary>
             Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
             </summary>
@@ -848,6 +862,12 @@
             <param name="attacker">El pokemon que está atacando.</param>
             <param name="target">El pokemon que está siendo atacado.</param>
             <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
+        </member>
+        <member name="M:ClassLibrary.Move.GenerateNumber">
+            <summary>
+            Genera un número usando el generador asociado a este movimiento.
+            </summary>
+            <returns>Un número generado.</returns>
         </member>
         <member name="T:ClassLibrary.MoveBurn">
             <summary>

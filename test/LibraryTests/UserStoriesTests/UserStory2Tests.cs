@@ -32,7 +32,7 @@ public class UserStory2Tests
     [Test] 
     public void Player_Pokemon_Receive_Special_Attack()
     {
-        List<string> messages = Facade.Instance.ShowMoves(attacker);
+        string messages = Facade.Instance.ShowMoves(attacker);
         Assert.That(messages.Count, Is.EqualTo(3));
         Assert.That(messages[0], Does.Contain(attackerPokemons[0]));
     }

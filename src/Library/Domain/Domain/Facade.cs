@@ -14,6 +14,7 @@ namespace ClassLibrary
         private WaitingList WaitingList { get; }
         public GameList GameList { get; }
         private UserInterface UserInterface { get; }
+        
  
 
         private static Facade _instance;
@@ -128,15 +129,13 @@ namespace ClassLibrary
         /// </summary>
         /// <param name="playerDisplayName">El nombre del jugador.</param>
         /// <returns>Una lista de cadenas con los Pokémon y sus movimientos.</returns>
-        public List<string> ShowMoves(string playerDisplayName)
+        public string ShowMoves(string playerDisplayName)
         {
-            // Pedimos a GameList que obtenga directamente los movimientos de los Pokémon del jugador
-            return GameList.GetPokemonsWithMovesForPlayer(playerDisplayName);
+            Player player = this.GameList.FindPlayerByDisplayName(playerDisplayName);
+            IReadOnlyList<Move> moves = player.GetPokemonsWithMovesForPlayer();
+                
+            return UserInterface.ReturnShowMoves(moves, player);
             
-        }
-        public static string GetMovesMessage(List<Move> moves)
-        {
-            return UserInterface.ReturnShowMoves(moves);
         }
                 
 
