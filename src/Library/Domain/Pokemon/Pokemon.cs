@@ -234,4 +234,16 @@ public class Pokemon
 
         return string.Join(", ", movesList);
     }
+
+    public Pokemon Clone()
+    {
+        Pokemon result = new Pokemon(this._moves.ToArray());
+        result._name = this._name;
+        result._sleepTurns = this.SleepTurns ;
+        result._isParalyzed = this._isParalyzed;
+        result._isPoisoned = this._isPoisoned;
+        result._isBurned = this._isBurned;
+        result._healthPoints = this._healthPoints;
+        return result;
+    }
 }
