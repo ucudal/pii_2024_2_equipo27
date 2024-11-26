@@ -23,8 +23,7 @@ public class ChangeCommand : ModuleBase<SocketCommandContext>
         """)]
     // ReSharper disable once UnusedMember.Global
     public async Task ExecuteAsync(
-        [Remainder]
-        [Summary("Nombre del Pokémon que se desea activar")]
+        [Remainder] [Summary("Nombre del Pokémon que se desea activar")]
         string newPokemonName)
     {
         try
@@ -32,7 +31,8 @@ public class ChangeCommand : ModuleBase<SocketCommandContext>
             // Validar que el usuario proporcionó un nombre de Pokémon
             if (string.IsNullOrWhiteSpace(newPokemonName))
             {
-                await ReplyAsync("Debes especificar el nombre de un Pokémon para cambiar. Ejemplo: `!change Charizard`");
+                await ReplyAsync(
+                    "Debes especificar el nombre de un Pokémon para cambiar. Ejemplo: `!change Charizard`");
                 return;
             }
 
@@ -45,7 +45,7 @@ public class ChangeCommand : ModuleBase<SocketCommandContext>
             // Responder con el resultado de la operación
             await ReplyAsync(result);
         }
-       
+
         catch (Exception ex)
         {
             // Manejo de errores genéricos

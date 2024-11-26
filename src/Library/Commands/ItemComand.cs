@@ -43,6 +43,7 @@ namespace Library.Commands
                 result.Add(message.Substring(currentIndex, length));
                 currentIndex += length;
             }
+
             return result;
         }
     }

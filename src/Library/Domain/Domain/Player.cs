@@ -40,8 +40,8 @@ public class Player
     /// </summary>
     public ReadOnlyCollection<Pokemon> AvailablePokemons
     {
-        get { return this.availablePokemons.AsReadOnly();  }
-    } 
+        get { return this.availablePokemons.AsReadOnly(); }
+    }
 
     /// <summary>
     /// El Pokémon activo del jugador.
@@ -156,6 +156,7 @@ public class Player
         this.items.Remove(itemFound);
         return itemFound;
     }
+
     /// <summary>
     /// Devuelve los ítems disponibles y sus cantidades.
     /// </summary>
@@ -178,7 +179,7 @@ public class Player
 
         return itemQuantities;
     }
-    
+
     /// <summary>
     /// Verifica si el Pokémon activo está vivo (HealthPoints > 0) y no está dormido.
     /// Si no cumple estas condiciones, asigna el próximo Pokémon disponible que las cumpla.
@@ -259,10 +260,10 @@ public class Player
             defendingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
         }
 
-        
+
         //Ejecuta el movimiento
         this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
-        
+
         //Cambia el turno del jugador
         Facade.Instance.ChangeTurn(attacker);
     }
@@ -287,15 +288,13 @@ public class Player
 
     public IReadOnlyList<Move> GetPokemonsWithMovesForPlayer()
     {
-
         // Verificar si el Pokémon activo del jugador está definido
         if (this.ActivePokemon == null)
         {
-           throw new ArgumentException($"El jugador {this.DisplayName} no tiene un Pokémon activo.");
+            throw new ArgumentException($"El jugador {this.DisplayName} no tiene un Pokémon activo.");
         }
 
         // Obtener los movimientos del Pokémon activo
         return this.ActivePokemon.Moves;
-        
     }
 }
