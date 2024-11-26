@@ -381,7 +381,12 @@
         </member>
         <member name="T:ClassLibrary.GameList">
             <summary>
-            Esta clase representa la lista de batallas en curso.
+            Esta clase representa la lista de batallas en curso. La clase GameList representa y gestiona la lista de
+            batallas en curso, permitiendo crear nuevas partidas, buscar jugadores, oponentes y juegos activos por nombre.
+            Aplica principios GRASP y el principio de responsabilidad única (SRP) al encargarse exclusivamente de estas tareas.
+            Además, su método AddGame asegura la consistencia del sistema al validar que un jugador no pueda enfrentarse a sí mismo.
+            El diseño también respeta el principio abierto/cerrado (OCP), facilitando futuras extensiones sin modificar su
+            estructura base, manteniendo así la cohesión y adaptabilidad.
             </summary>
         </member>
         <member name="P:ClassLibrary.GameList.Games">
@@ -417,17 +422,6 @@
             </summary>
             <param name="displayName">El nombre del jugador.</param>
             <returns> El objeto Game si se encuentra; de lo contrario, null.</returns>
-        </member>
-        <member name="T:ClassLibrary.IRandom">
-            <summary>
-            Define una interfaz para generar números, que puede ser aleatorio o constante.
-            </summary>
-        </member>
-        <member name="M:ClassLibrary.IRandom.Generate">
-            <summary>
-            Genera un número según la implementación.
-            </summary>
-            <returns>Un número generado.</returns>
         </member>
         <member name="T:ClassLibrary.Player">
             <summary>
@@ -522,11 +516,6 @@
             Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="P:ClassLibrary.Pokemon.IsBurned"/>),
             reduce sus puntos de salud en un 10%.
             </remarks>
-        </member>
-        <member name="T:ClassLibrary.RandomGenerator">
-            <summary>
-            Implementación de IRandom que genera números aleatorios.
-            </summary>
         </member>
         <member name="T:ClassLibrary.Turn">
             <summary>
@@ -1191,6 +1180,22 @@
             <exception cref="T:ClassLibrary.PokemonException">
             Se lanza si la lista de movimientos no contiene exactamente <see cref="F:ClassLibrary.Pokemon.MAX_MOVES"/> movimientos, o si el tipo proporcionado no es válido.
             </exception>
+        </member>
+        <member name="T:ClassLibrary.IRandom">
+            <summary>
+            Define una interfaz para generar números, que puede ser aleatorio o constante.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.IRandom.Generate">
+            <summary>
+            Genera un número según la implementación.
+            </summary>
+            <returns>Un número generado.</returns>
+        </member>
+        <member name="T:ClassLibrary.RandomGenerator">
+            <summary>
+            Implementación de IRandom que genera números aleatorios.
+            </summary>
         </member>
         <member name="T:ClassLibrary.Bot">
             <summary>
