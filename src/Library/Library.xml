@@ -158,7 +158,7 @@
         </member>
         <member name="T:ClassLibrary.EffectivenessTable">
             <summary>
-            La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
+            La clase <c>EffectivenessTable</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
             Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
             efectividad de ataques entre tipos.
             Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
@@ -167,6 +167,13 @@
             sin modificar la estructura de la clase.
             La robustez y seguridad de esta clase se aseguran al validar la existencia de combinaciones de tipos y evitar
             estados inválidos, facilitando la detección y manejo de errores en el uso de esta clase.
+            </summary>
+        </member>
+        <member name="F:ClassLibrary.EffectivenessTable.typeEffectiveness">
+            <summary>
+            Diccionario que almacena la efectividad de los ataques entre tipos de Pokémon.
+            La clave es una tupla que contiene el tipo del defensor y el tipo del atacante,
+            y el valor es el multiplicador de daño asociado a esa combinación de tipos.
             </summary>
         </member>
         <member name="M:ClassLibrary.EffectivenessTable.GetEffectiveness(ClassLibrary.Type,ClassLibrary.Type)">
@@ -255,7 +262,7 @@
             <param name="playerDisplayName">El nombre del jugador para buscar su partida.</param>
             <returns>Un mensaje que indica el nombre del jugador con el turno actual o un mensaje de error si el jugador no está en una partida.</returns>
         </member>
-        <member name="M:ClassLibrary.Facade.EndGame(ClassLibrary.Game,ClassLibrary.Player,System.String)">
+        <member name="M:ClassLibrary.Facade.EndGame(ClassLibrary.Game)">
             <summary>
             Finaliza la batalla y muestra un mensaje indicando si el juego ha terminado o si la batalla sigue en curso.
             Verifica el estado de los Pokémon disponibles del jugador y maneja el flujo de finalización de la batalla.
@@ -324,63 +331,65 @@
         </member>
         <member name="T:ClassLibrary.Game">
             <summary>
-            La clase <c>Game</c> tiene la responsabilidad de conocer a los jugadores y verificar si el juego está activo o ha terminado.
-            Esto sigue el principio de responsabilidad única (SRP) ya que su única función es gestionar el estado del juego.
-            Además, según el principio de "experto" (Expert), la clase <c>Game</c> es la más adecuada para gestionar estas tareas, 
-            ya que contiene toda la información sobre los jugadores y el estado del juego.
+             La clase <c>Game</c> tiene la responsabilidad de conocer a los jugadores y verificar si el juego está activo o ha terminado.
+             Esto sigue el principio de responsabilidad única (SRP) ya que su única función es gestionar el estado del juego.
+             Además, según el principio de "experto" (Expert), la clase <c>Game</c> es la más adecuada para gestionar estas tareas,
+             ya que contiene toda la información sobre los jugadores y el estado del juego.
             </summary>
+        </member>
+        <member name="M:ClassLibrary.Game.#ctor(ClassLibrary.Player,ClassLibrary.Player)">
+            <summary>
+             Constructor de la clase <c>Game</c>. Inicializa los jugadores y el estado del juego.
+             El constructor asigna las propiedades adecuadamente siguiendo el principio de Liskov Substitution Principle (LSP),
+             lo cual permite que cualquier clase derivada de <c>Player</c> funcione correctamente en la lógica del juego.
+            </summary>
+            <param name="player1">El primer jugador.</param>
+            <param name="player2">El segundo jugador.</param>
         </member>
         <member name="P:ClassLibrary.Game.Player1">
             <summary>
-            Propiedad que almacena al jugador 1 del juego.
-            La clase <c>Game</c> sigue el principio de "experto" (Expert), ya que tiene la responsabilidad de manejar los jugadores
-            y su relación dentro del juego.
+             Propiedad que almacena al jugador 1 del juego.
             </summary>
         </member>
         <member name="P:ClassLibrary.Game.Player2">
             <summary>
-            Propiedad que almacena al jugador 2 del juego.
-            Similar a Player1, sigue el principio de "experto" (Expert) porque la clase <c>Game</c> necesita conocer los jugadores
-            para controlar el flujo del juego.
+             Propiedad que almacena al jugador 2 del juego.
             </summary>
         </member>
         <member name="P:ClassLibrary.Game.Turn">
             <summary>
-            Instancia de la clase Turn para gestionar el turno actual del juego.
+             Instancia de la clase Turn para gestionar el turno actual del juego.
             </summary>
         </member>
         <member name="P:ClassLibrary.Game.TurnPlayer">
             <summary>
-            Propiedad que indica el jugador que actualmente tiene el turno.
+             Propiedad que indica el jugador que actualmente tiene el turno.
             </summary>
         </member>
         <member name="P:ClassLibrary.Game.PlayIsOn">
             <summary>
             Propiedad que indica si el juego sigue activo (true) o ha terminado (false).
-            Esto también sigue el SRP, ya que la clase <c>Game</c> es la responsable de gestionar el estado del juego, 
+            Esto también sigue el SRP, ya que la clase <c>Game</c> es la responsable de gestionar el estado del juego,
             y no otros objetos, respetando el principio de segregación de responsabilidades.
             </summary>
-        </member>
-        <member name="M:ClassLibrary.Game.#ctor(ClassLibrary.Player,ClassLibrary.Player)">
-            <summary>
-            Constructor de la clase <c>Game</c>. Inicializa los jugadores y el estado del juego.
-            El constructor asigna las propiedades adecuadamente siguiendo el principio de Liskov Substitution Principle (LSP),
-            lo cual permite que cualquier clase derivada de <c>Player</c> funcione correctamente en la lógica del juego.
-            </summary>
-            <param name="player1">El primer jugador.</param>
-            <param name="player2">El segundo jugador.</param>
         </member>
         <member name="M:ClassLibrary.Game.CheckIfGameEnds">
             <summary>
             Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
             Si un jugador pierde todos sus Pokémon, el juego termina y se declara un ganador.
-            Este método puede ser fácilmente extendido o modificado con otras reglas de fin de juego, 
-            alineado con el principio de Polimorfismo, donde nuevas reglas de finalización pueden ser añadidas sin alterar la estructura básica.
+            Este método puede ser fácilmente extendido o modificado con otras reglas de fin de juego,
+            alineado con el principio de Polimorfismo, donde nuevas reglas de finalización pueden ser añadidas sin alterar la
+            estructura básica.
             </summary>
         </member>
         <member name="T:ClassLibrary.GameList">
             <summary>
             Esta clase representa la lista de batallas en curso.
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.GameList.Games">
+            <summary>
+            Obtiene una lista de juegos como solo lectura.
             </summary>
         </member>
         <member name="M:ClassLibrary.GameList.AddGame(ClassLibrary.Player,ClassLibrary.Player)">
@@ -702,10 +711,16 @@
         </member>
         <member name="T:ClassLibrary.Item">
             <summary>
-            La clase <c>Item</c> representa un ítem genérico que puede ser utilizado en el contexto del juego.
-            Sigue el principio de responsabilidad única ya que se encarga exclusivamente de modelar las propiedades y el comportamiento básico de un ítem.
-            Hicimos uso del patrón de diseño Strategy que permite diferentes estrategias de implementación
-            de un mismo método, usando el polimorfismo para sobrescribir el método <c>ApplyEffect</c> para definir comportamientos específicos de los ítems.
+            La clase <c>Item</c> representa un ítem genérico utilizado en el contexto del juego y se enfoca exclusivamente
+            en modelar las propiedades y el comportamiento básico de un ítem, cumpliendo así con el principio de
+            Responsabilidad Única (SRP). Actúa como una clase base abstracta que establece una estructura común para
+            todos los ítems, permitiendo que las subclases definan comportamientos específicos mediante la sobrescritura
+            del método abstracto <c>ApplyEffect</c>. Este método aplica el efecto del ítem a un Pokémon determinado, y su diseño
+            sigue el principio de Sustitución de Liskov (LSP), ya que las subclases pueden extenderlo sin alterar el contrato
+            general de la clase. Además, el diseño de la clase refleja el patrón de Template Method, ya que el método abstracto
+            sirve como una plantilla que las subclases deben implementar según su funcionalidad específica. Con estas
+            características, la clase <c>Item</c> proporciona una base sólida y extensible para la creación de diferentes tipos
+            de ítems en el juego.
             </summary>
         </member>
         <member name="P:ClassLibrary.Item.Name">
@@ -724,20 +739,19 @@
             <summary>
             Aplica el efecto del ítem en el Pokémon especificado.
             Este método está diseñado para ser sobrescrito por subclases que implementen efectos específicos.
-            - Principio de Sustitución de Liskov (LSP): Las subclases pueden proporcionar su propia implementación de este método sin alterar su comportamiento general.
             </summary>
             <param name="pokemon">El Pokémon al que se aplicará el efecto del ítem.</param>
             <returns>Un mensaje que indica el resultado de aplicar el efecto.</returns>
         </member>
         <member name="T:ClassLibrary.ItemFullHeal">
             <summary>
-            La clase <c>CuraTotal</c> es responsable de representar un ítem que cura completamente a un Pokémon.
-            Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente la lógica de curación completa
-            y eliminación de efectos de estado de un Pokémon. Utiliza el patrón Expert, ya que posee toda la información
-            necesaria para aplicar su efecto al Pokémon. Además, facilita la extensión de la clase para añadir nuevos
-            ítems sin modificar la clase base, alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión.
-            La robustez y seguridad de esta clase se asegura al evitar estados inválidos y facilitar la detección de errores
-            en el uso de la clase.
+            La clase <c>ItemFullHeal</c> hereda de <c>Item</c> y representa un ítem que cura completamente a un Pokémon,
+            restaurando sus puntos de salud y eliminando cualquier estado alterado.
+            Cumple con el principio de responsabilidad única (SRP), ya que su única función es manejar la lógica relacionada
+            con la curación total de un Pokémon.
+            La implementación del método <c>ApplyEffect</c> utiliza el patrón de diseño Strategy, permitiendo la personalización
+            del comportamiento del ítem sin afectar otras partes del sistema. También sigue el principio de Sustitución de Liskov (LSP),
+            ya que sobrescribe el comportamiento de la clase base <c>Item</c> respetando su contrato.
             </summary>
         </member>
         <member name="M:ClassLibrary.ItemFullHeal.#ctor">
@@ -755,12 +769,13 @@
         </member>
         <member name="T:ClassLibrary.ItemRevive">
             <summary>
-            La clase <c>Revivir</c> representa un ítem que revive a un Pokémon debilitado, restaurando parcialmente sus puntos de vida.
-            Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente la lógica de revivir y curación parcial
-            para Pokémon debilitados. Utiliza el patrón Expert, ya que posee toda la información necesaria para aplicar su efecto
-            al Pokémon. Además, facilita la extensión de la clase para añadir nuevos ítems sin modificar la clase base,
-            alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión. La clase asegura la robustez y
-            seguridad de su comportamiento al prevenir estados inválidos y facilitar la detección de errores en su uso.
+            La clase <c>ItemRevive</c> hereda de <c>Item</c> y representa un ítem que revive a un Pokémon debilitado,
+            restaurándole una cantidad limitada de puntos de vida.
+            Cumple con el principio de responsabilidad única (SRP) ya que su única tarea es manejar la lógica específica
+            de revivir un Pokémon. Este diseño encapsula esta funcionalidad de manera clara y separada.
+            La implementación del método <c>ApplyEffect</c> utiliza el patrón de diseño Strategy para definir un comportamiento
+            personalizado en comparación con otros ítems. Además, sigue el principio de Sustitución de Liskov (LSP),
+            sobrescribiendo el método de la clase base <c>Item</c> respetando su contrato.
             </summary>
         </member>
         <member name="M:ClassLibrary.ItemRevive.#ctor">
@@ -770,7 +785,7 @@
         </member>
         <member name="M:ClassLibrary.ItemRevive.ApplyEffect(ClassLibrary.Pokemon)">
             <summary>
-            Aplica el efecto de la <c>Revivir</c> al Pokémon especificado. Si el Pokémon está debilitado (con puntos de vida iguales a cero),
+            Aplica el efecto de la <c>ItemRevive</c> al Pokémon especificado. Si el Pokémon está debilitado (con puntos de vida iguales a cero),
             lo revive restaurando 50 puntos de vida. Si el Pokémon ya tiene puntos de vida, no se puede aplicar el efecto.
             </summary>
             <param name="pokemon">El Pokémon al que se le aplicará el ítem.</param>
@@ -778,11 +793,13 @@
         </member>
         <member name="T:ClassLibrary.ItemSuperPotion">
             <summary>
-            La clase <c>SuperPocion</c> representa un ítem que restaura puntos de vida a un Pokémon en batalla.
-            Aplica el principio de responsabilidad única (SRP) al encargarse exclusivamente de la lógica de curación
-            parcial de un Pokémon. Utiliza el patrón Expert, ya que posee toda la información necesaria para aplicar
-            su efecto al Pokémon. La clase también está diseñada para cumplir con el principio abierto/cerrado (OCP),
-            facilitando la extensión mediante la adición de otros ítems sin necesidad de modificar la clase base.
+            La clase <c>ItemSuperPotion</c> hereda de <c>Item</c> y representa un ítem que restaura puntos de vida
+            a un Pokémon, utilizando una cantidad fija de curación.
+            Cumple con el principio de responsabilidad única (SRP) al encargarse exclusivamente de modelar el efecto de curación
+            proporcionado por la super poción. Este diseño facilita su mantenimiento y reutilización.
+            La implementación sobrescribe el método <c>ApplyEffect</c>, utilizando el patrón de diseño Strategy para definir
+            un comportamiento específico para este ítem en comparación con otros. Además, sigue el principio de Sustitución de Liskov (LSP),
+            permitiendo que las subclases puedan ser usadas donde se espere un <c>Item</c> sin romper el comportamiento del sistema.
             </summary>
         </member>
         <member name="F:ClassLibrary.ItemSuperPotion.HealingAmount">
@@ -867,11 +884,19 @@
         </member>
         <member name="M:ClassLibrary.MoveBurn.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
             <summary>
-            Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
+            Ejecuta un movimiento de ataque de un Pokémon a otro, infligiendo daño y aplicando efectos secundarios.
             </summary>
-            <param name="attacker">El pokemon que está atacando.</param>
-            <param name="target">El pokemon que está siendo atacado.</param>
-            <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
+            <param name="attacker">El Pokémon que realiza el ataque.</param>
+            <param name="target">El Pokémon que recibe el ataque.</param>
+            <param name="criticalHit">
+            Factor de golpe crítico aplicado al daño base. Usualmente es 1.20 para golpes críticos o 1 por defecto.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Se lanza si <paramref name="attacker"/> o <paramref name="target"/> es nulo.
+            </exception>
+            <exception cref="T:ClassLibrary.PokemonException">
+            Se lanza si el valor de ataque del movimiento (<see cref="!:AttackValue"/>) es menor o igual a cero.
+            </exception>
         </member>
         <member name="T:ClassLibrary.MoveNormal">
             <summary>
@@ -889,11 +914,19 @@
         </member>
         <member name="M:ClassLibrary.MoveNormal.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
             <summary>
-            Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
+            Ejecuta un movimiento de ataque de un Pokémon a otro, infligiendo daño y aplicando efectos secundarios.
             </summary>
-            <param name="attacker">El pokemon que está atacando.</param>
-            <param name="target">El pokemon que está siendo atacado.</param>
-            <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
+            <param name="attacker">El Pokémon que realiza el ataque.</param>
+            <param name="target">El Pokémon que recibe el ataque.</param>
+            <param name="criticalHit">
+            Factor de golpe crítico aplicado al daño base. Usualmente es 1.20 para golpes críticos o 1 por defecto.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Se lanza si <paramref name="attacker"/> o <paramref name="target"/> es nulo.
+            </exception>
+            <exception cref="T:ClassLibrary.PokemonException">
+            Se lanza si el valor de ataque del movimiento (<see cref="!:AttackValue"/>) es menor o igual a cero.
+            </exception>
         </member>
         <member name="T:ClassLibrary.MoveParalize">
             <summary>
@@ -913,11 +946,19 @@
         </member>
         <member name="M:ClassLibrary.MoveParalize.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
             <summary>
-            Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
+            Ejecuta un movimiento de ataque de un Pokémon a otro, infligiendo daño y aplicando efectos secundarios.
             </summary>
-            <param name="attacker">El pokemon que está atacando.</param>
-            <param name="target">El pokemon que está siendo atacado.</param>
-            <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
+            <param name="attacker">El Pokémon que realiza el ataque.</param>
+            <param name="target">El Pokémon que recibe el ataque.</param>
+            <param name="criticalHit">
+            Factor de golpe crítico aplicado al daño base. Usualmente es 1.20 para golpes críticos o 1 por defecto.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Se lanza si <paramref name="attacker"/> o <paramref name="target"/> es nulo.
+            </exception>
+            <exception cref="T:ClassLibrary.PokemonException">
+            Se lanza si el valor de ataque del movimiento (<see cref="!:AttackValue"/>) es menor o igual a cero.
+            </exception>
         </member>
         <member name="T:ClassLibrary.MovePoison">
             <summary>
@@ -938,11 +979,19 @@
         </member>
         <member name="M:ClassLibrary.MovePoison.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
             <summary>
-            Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
+            Ejecuta un movimiento de ataque de un Pokémon a otro, infligiendo daño y aplicando efectos secundarios.
             </summary>
-            <param name="attacker">El pokemon que está atacando.</param>
-            <param name="target">El pokemon que está siendo atacado.</param>
-            <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
+            <param name="attacker">El Pokémon que realiza el ataque.</param>
+            <param name="target">El Pokémon que recibe el ataque.</param>
+            <param name="criticalHit">
+            Factor de golpe crítico aplicado al daño base. Usualmente es 1.20 para golpes críticos o 1 por defecto.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Se lanza si <paramref name="attacker"/> o <paramref name="target"/> es nulo.
+            </exception>
+            <exception cref="T:ClassLibrary.PokemonException">
+            Se lanza si el valor de ataque del movimiento (<see cref="!:AttackValue"/>) es menor o igual a cero.
+            </exception>
         </member>
         <member name="T:ClassLibrary.MoveSleep">
             <summary>
@@ -965,11 +1014,19 @@
         </member>
         <member name="M:ClassLibrary.MoveSleep.ExecuteMove(ClassLibrary.Pokemon,ClassLibrary.Pokemon,System.Double)">
             <summary>
-            Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
+            Ejecuta un movimiento de ataque de un Pokémon a otro, infligiendo daño y aplicando efectos secundarios.
             </summary>
-            <param name="attacker">El pokemon que está atacando.</param>
-            <param name="target">El pokemon que está siendo atacado.</param>
-            <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
+            <param name="attacker">El Pokémon que realiza el ataque.</param>
+            <param name="target">El Pokémon que recibe el ataque.</param>
+            <param name="criticalHit">
+            Factor de golpe crítico aplicado al daño base. Usualmente es 1.20 para golpes críticos o 1 por defecto.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Se lanza si <paramref name="attacker"/> o <paramref name="target"/> es nulo.
+            </exception>
+            <exception cref="T:ClassLibrary.PokemonException">
+            Se lanza si el valor de ataque del movimiento (<see cref="!:AttackValue"/>) es menor o igual a cero.
+            </exception>
         </member>
         <member name="T:ClassLibrary.Pokemon">
             <summary>

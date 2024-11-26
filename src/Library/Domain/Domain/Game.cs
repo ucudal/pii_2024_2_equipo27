@@ -21,6 +21,7 @@ public class Game
         Player2 = player2;
         Turn = new Turn(player1, player2);
         PlayIsOn = true; // El juego inicia en estado activo
+        Winner = null;
     }
 
     /// <summary>
@@ -49,13 +50,8 @@ public class Game
     /// y no otros objetos, respetando el principio de segregación de responsabilidades.
     /// </summary>
     public bool PlayIsOn { get; private set; }
-
-    // Establecer los oponentes
-
-    public void StartGame()
-    {
-        PlayIsOn = true;
-    }
+    
+    public Player Winner { get; private set; }
 
     /// <summary>
     /// Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
@@ -66,23 +62,30 @@ public class Game
     /// </summary>
     public void CheckIfGameEnds()
     {
-        // Verificamos si todos los Pokémon del jugador 1 tienen 0 puntos de vida
-        var opponent = TurnPlayer.Opponent;
-        var todosSonCeroPlayer1 = true; // = Player1.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
+        // Inicializamos una variable p
+        var todosSonCeroPlayer1 = true; 
+        var todosSonCeroPlayer2 = true;
+
         foreach (var pokemon in Player1.AvailablePokemons)
             if (pokemon.HealthPoints > 0)
                 todosSonCeroPlayer1 = false;
 
         // Verificamos si todos los Pokémon del jugador 2 tienen 0 puntos de vida
-        var todosSonCeroPlayer2 = true; // Player2.AvailablePokemons.All(pokemon => pokemon.HealthPoints == 0);
         foreach (var pokemon in Player2.AvailablePokemons)
             if (pokemon.HealthPoints > 0)
                 todosSonCeroPlayer2 = false;
 
         // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
         if (todosSonCeroPlayer1)
+        {
             PlayIsOn = false; // El juego termina
-        // Si todos los Pokémon de Player 2 tienen 0 puntos de vida, Player 1 gana
-        else if (todosSonCeroPlayer2) PlayIsOn = false; // El juego termina
+            Winner = Player2;
+        }
+
+        if (todosSonCeroPlayer2)
+        {
+            PlayIsOn = false; // El juego termina
+            Winner = Player1;
+        }
     }
 }

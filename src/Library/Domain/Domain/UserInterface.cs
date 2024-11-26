@@ -163,6 +163,11 @@ namespace ClassLibrary
         {
             return $"{playerName} ha ganado la batalla";
         }
+        
+        public static string ShowBattleContinuesMessage(Player turnPlayer)
+        {
+            return $"El juego continúa, es el turno de {turnPlayer.DisplayName}.";
+        }
 
         public static string ShowMessageCurrentTurnPlayer(string currentPlayerDisplayName)
         {

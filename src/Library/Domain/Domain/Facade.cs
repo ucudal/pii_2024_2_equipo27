@@ -321,8 +321,18 @@ public class Facade
     /// <param name="playerDisplayName">El nombre para mostrar del jugador, usado para personalizar los mensajes.</param>
     /// <returns>Un mensaje que indica si la batalla ha terminado o si la batalla continúa.</returns>
     /// <exception cref="ArgumentException">Se lanza si la batalla continúa y el jugador tiene solo un Pokémon disponible.</exception>
-    public string EndGame(Game game, Player player, string playerDisplayName)
+    public string EndGame(Game game)
     {
+        if (game == null)
+        {
+            throw new ArgumentException("El Juego no puede ser null.");
+        }
+
+        if (!GameList.Games.Contains(game))
+        {
+            throw new PokemonException("El juego no está emn la lista de juegos");
+        }
+            
         // Verifica si el juego ha terminado (modifica el estado interno del juego)
         game.CheckIfGameEnds();
 
@@ -330,18 +340,9 @@ public class Facade
         if (!game.PlayIsOn)
         {
             // Si el juego ha terminado, mostramos el mensaje de fin de batalla
-            return UserInterface.ShowBattleEndMessage(playerName: playerDisplayName);
+            return UserInterface.ShowBattleEndMessage(game.Winner.DisplayName);
         }
-
-        // Si el jugador no tiene Pokémon disponibles, la batalla también termina
-        if (player.AvailablePokemons.Count == 0)
-        {
-            // Terminamos la batalla si el jugador no tiene Pokémon disponibles
-            return UserInterface.ShowBattleEndMessage(playerName: playerDisplayName);
-        }
-
-        // Si el jugador tiene Pokémon disponibles y el juego no ha terminado, se lanza una excepción
-        throw new ArgumentException($"La batalla continúa.");
+        return UserInterface.ShowBattleContinuesMessage(game.TurnPlayer);
     }
 
     //HISTORIA DE USUARIO 7

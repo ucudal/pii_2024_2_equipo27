@@ -25,16 +25,6 @@ using NUnit.Framework;
             Assert.That(game.Player1, Is.EqualTo(player1));
             Assert.That(game.Player2, Is.EqualTo(player2));
         }
-
-        [Test]
-        public void StartGame_ShouldSetPlayIsOnToTrue()
-        {
-            // Act
-            game.StartGame();
-
-            // Assert
-            Assert.That(game.PlayIsOn, Is.True);
-        }
         
     }
 

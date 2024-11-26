@@ -6,7 +6,12 @@ namespace ClassLibrary;
 public class GameList
 {
     private List<Game> games = new List<Game>();
-
+    
+    /// <summary>
+    /// Obtiene una lista de juegos como solo lectura.
+    /// </summary>
+    public IReadOnlyList<Game> Games => games.AsReadOnly();
+    
     /// <summary>
     /// Crea una nueva batalla entre dos jugadores.
     /// </summary>
