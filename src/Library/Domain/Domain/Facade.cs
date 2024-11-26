@@ -267,15 +267,22 @@ public class Facade
 
             if (turn == attackerName)
             {
+
+                int healthPointsBefore = defender.ActivePokemon.HealthPoints;
                 //Ejecuta el ataque
                 attacker.ExecuteMove(defender, attacker);
+                int healthPointsAfter = defender.ActivePokemon.HealthPoints;
+                
+                
+                //Verificar si el pokemon murio, si es asi se cambia
+                defender.CheckAndAssignNextActivePokemon();
 
                 //Verifica si el juego termino
                 game.CheckIfGameEnds();
 
                 // Construye el mensaje de resultado
                 return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker,
-                    defender);
+                    defender, healthPointsBefore, healthPointsAfter);
             }
             else
             {

@@ -242,21 +242,21 @@ public class Player
 
         // Generar un número aleatorio entre 1 y 100
         int randomNumber = random.Next(1, 101);
-        double criticalHit = 0;
+        double criticalHit = 1;
         if (randomNumber <= 10)
         {
             criticalHit = 1.20;
         }
 
         // Ejecuta el efecto de los ataques especiales que reducen el HP por turno
-        if (attackingPokemon.IsPoisoned)
+        if (defendingPokemon.IsPoisoned)
         {
-            attackingPokemon.HealthPoints -= (int)0.05 * (attackingPokemon.HealthPoints);
+            defendingPokemon.HealthPoints -= (int)0.05 * (attackingPokemon.HealthPoints);
         }
 
-        if (attackingPokemon.IsBurned)
+        if (defendingPokemon.IsBurned)
         {
-            attackingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
+            defendingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
         }
 
         
