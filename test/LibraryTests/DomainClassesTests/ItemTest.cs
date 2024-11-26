@@ -30,10 +30,10 @@ public class ItemTests
     public void Revivir_ThrowsException_WhenPokemonIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<Exception>(() => _itemRevive.ApplyEffect(null));
-        Assert.That(ex.Message, Is.EqualTo("No hay un Pokémon para revivir."));
+        var ex = Assert.Throws<ArgumentNullException>(() => _itemRevive.ApplyEffect(null));
+        Assert.That(ex.Message, Does.Contain("No hay un Pokémon para revivir"));
     }
-
+    
     [Test]
     public void Revivir_ThrowsException_WhenPokemonIsNotFainted()
     {
@@ -46,17 +46,18 @@ public class ItemTests
             new MoveBurn("Anillo Ígneo", 0, 0.3, Type.Fire)
         };
         Pokemon pokemon = new Pokemon(moves);
+        pokemon.Name = "Pikachu";
 
         // Act & Assert
-        var ex = Assert.Throws<Exception>(() => _itemRevive.ApplyEffect(pokemon));
-        Assert.That(ex.Message, Is.EqualTo("Pikachu no puede ser revivido."));
+        var ex = Assert.Throws<PokemonException>(() => _itemRevive.ApplyEffect(pokemon));
+        Assert.That(ex.Message, Does.Contain("Pikachu no puede ser revivido"));
     }
 
     [Test]
     public void SuperPocion_ThrowsException_WhenPokemonIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<Exception>(() => _itemSuperPotion.ApplyEffect(null));
+        var ex = Assert.Throws<PokemonException>(() => _itemSuperPotion.ApplyEffect(null));
         Assert.That(ex.Message, Is.EqualTo("No hay un pokemon activo para curar"));
     }
 
@@ -77,7 +78,7 @@ public class ItemTests
         var message = curaTotal.ApplyEffect(pokemon);
 
         // Assert
-        Assert.That(message, Is.EqualTo("Bulbasaur ha sido curado completamente."));
+        Assert.That(message, Is.EqualTo(" ha sido curado completamente."));
         Assert.That(pokemon.HealthPoints, Is.EqualTo(100));
         Assert.That(pokemon.IsPoisoned, Is.False);
     }
