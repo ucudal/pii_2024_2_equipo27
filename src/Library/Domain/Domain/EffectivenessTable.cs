@@ -1,7 +1,5 @@
 namespace ClassLibrary;
-
 using System.Collections.Generic;
-
 
 /// <summary>
 /// Enumeración que define los tipos de Pokémon.
@@ -13,8 +11,9 @@ public enum Type
     Ground, Poison, Flying
 }
 
+
 /// <summary>
-/// La clase <c>PokemonType</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
+/// La clase <c>EffectivenessTable</c> es responsable de gestionar los tipos de Pokémon y su efectividad en combates.
 /// Aplica el principio de responsabilidad única (SRP) al enfocarse exclusivamente en la lógica de tipos y 
 /// efectividad de ataques entre tipos.
 /// Utiliza el patrón Expert, ya que posee toda la información necesaria para determinar la efectividad de los ataques
@@ -26,6 +25,11 @@ public enum Type
 /// </summary>
 public static class EffectivenessTable
 {
+    /// <summary>
+    /// Diccionario que almacena la efectividad de los ataques entre tipos de Pokémon.
+    /// La clave es una tupla que contiene el tipo del defensor y el tipo del atacante,
+    /// y el valor es el multiplicador de daño asociado a esa combinación de tipos.
+    /// </summary>
     private static Dictionary<(Type, Type), double> typeEffectiveness = new Dictionary<(Type, Type), double>() 
     {
     // Water defender
@@ -154,7 +158,7 @@ public static class EffectivenessTable
         // Comprobación de argumentos
         if (!Enum.IsDefined(typeof(Type), defendingType) || !Enum.IsDefined(typeof(Type), attackingType))
         {
-            throw new ArgumentException("Los tipos de Pokémon proporcionados no son válidos.");
+            throw new PokemonException("El o los tipos de Pokémon proporcionados no son válidos.");
         }
         
         // Verifica si la combinación de tipos está definida en el diccionario

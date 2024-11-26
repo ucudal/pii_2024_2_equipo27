@@ -37,7 +37,7 @@ public class ChooseCommand : ModuleBase<SocketCommandContext>
             // Validar que el usuario haya ingresado exactamente seis nombres
             if (pokemonNames.Length != 6)
             {
-                await ReplyAsync("Debes seleccionar exactamente 6 Pokémon, separados por espacios. Ejemplo: `!choose Pikachu Charizard Bulbasaur Squirtle Jigglypuff Meowth`");
+                await ReplyAsync("Debes seleccionar exactamente 6 Pokémon, separados por espacios. Ejemplo: `!choose Lapras Gengar Charizard Pikachu Lucario Jigglypuff`");
                 return;
             }
 

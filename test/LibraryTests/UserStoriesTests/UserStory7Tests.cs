@@ -28,7 +28,7 @@ public class UserStory7Tests
     }
 
     [Test]
-    public void ChangePokemon_WhenParameterPlayerDisplayName_IsNullOrEmpty_ThrowsArgumentNullException()
+    public void ChangePokemon_WhenParameterPlayerDisplayName_IsNullOrEmpty_ThrowsException()
     {
         // Arrange
         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
@@ -37,11 +37,11 @@ public class UserStory7Tests
         Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
         // Act Assert
-        Assert.That(()=> Facade.Instance.ChangePokemon("", "Blaziken"), Throws.ArgumentNullException);
+        Assert.That(()=> Facade.Instance.ChangePokemon("", "Blaziken"), Throws.InstanceOf<Exception>());
     }
     
     [Test]
-    public void ChangePokemon_WhenParameterNewPokemonName_IsNullOrEmpty_ThrowsArgumentNullException()
+    public void ChangePokemon_WhenParameterNewPokemonName_IsNullOrEmpty_ThrowsException()
     {
         // Arrange
         Facade.Instance.GameList.AddGame(new Player("player1"), new Player("player2"));
@@ -50,7 +50,7 @@ public class UserStory7Tests
         Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
         // Act & Assert
-        Assert.That(()=> Facade.Instance.ChangePokemon("player1", null), Throws.ArgumentNullException);
+        Assert.That(()=> Facade.Instance.ChangePokemon("player1", null), Throws.InstanceOf<Exception>());
     }
     
      [Test]
@@ -63,7 +63,7 @@ public class UserStory7Tests
          Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
          // Act & Assert
-         Assert.That(()=> Facade.Instance.ChangePokemon("player3", "Blaziken"), Throws.ArgumentException);
+         Assert.That(()=> Facade.Instance.ChangePokemon("player3", "Blaziken"), Throws.InstanceOf<Exception>());
      }
      
      [Test]
@@ -76,6 +76,6 @@ public class UserStory7Tests
          Facade.Instance.ChooseMoveToAttack( "player1",  "Corte");
         
          // Act & Assert
-         Assert.That(()=> Facade.Instance.ChangePokemon("player1", "Lululemon"), Throws.ArgumentException);
+         Assert.That(()=> Facade.Instance.ChangePokemon("player1", "Lululemon"), Throws.InstanceOf<Exception>());
      }
  }

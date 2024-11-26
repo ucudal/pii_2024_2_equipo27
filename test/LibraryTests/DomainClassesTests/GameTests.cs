@@ -35,16 +35,6 @@ using NUnit.Framework;
             // Assert
             Assert.That(game.PlayIsOn, Is.True);
         }
-
-        [Test]
-        public void EndGame_ShouldSetPlayIsOnToFalse()
-        {
-            // Act
-            game.StartGame();
-
-            // Assert
-            Assert.That(game.PlayIsOn, Is.True);
-        }
         
     }
 

@@ -20,11 +20,19 @@ public class MoveBurn : Move
     }
 
     /// <summary>
-    /// Método para aplicar el ataque considerando ambos pokemones y el valor de golpe crítico.
+    /// Ejecuta un movimiento de ataque de un Pokémon a otro, infligiendo daño y aplicando efectos secundarios.
     /// </summary>
-    /// <param name="attacker">El pokemon que está atacando.</param>
-    /// <param name="target">El pokemon que está siendo atacado.</param>
-    /// <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
+    /// <param name="attacker">El Pokémon que realiza el ataque.</param>
+    /// <param name="target">El Pokémon que recibe el ataque.</param>
+    /// <param name="criticalHit">
+    /// Factor de golpe crítico aplicado al daño base. Usualmente es 1.20 para golpes críticos o 1 por defecto.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// Se lanza si <paramref name="attacker"/> o <paramref name="target"/> es nulo.
+    /// </exception>
+    /// <exception cref="PokemonException">
+    /// Se lanza si el valor de ataque del movimiento (<see cref="AttackValue"/>) es menor o igual a cero.
+    /// </exception>
     public override void ExecuteMove(Pokemon attacker, Pokemon target, double criticalHit)
     {
         //Verifica que los parámetros sean correctos
@@ -33,7 +41,7 @@ public class MoveBurn : Move
         if (target == null)
             throw new ArgumentNullException(nameof(target), "El objetivo no puede ser nulo.");
         if (this.AttackValue <= 0)
-            throw new InvalidOperationException("El valor de ataque debe ser mayor que cero.");
+            throw new PokemonException("El valor de ataque debe ser mayor que cero.");
 
         //Aplica el ataque común
         if (this.AttackValue > 0)

@@ -1,20 +1,22 @@
-namespace ClassLibrary; 
+namespace ClassLibrary;
 
 /// <summary>
-/// La clase <c>CuraTotal</c> es responsable de representar un ítem que cura completamente a un Pokémon.
-/// Aplica el principio de responsabilidad única (SRP) al gestionar exclusivamente la lógica de curación completa
-/// y eliminación de efectos de estado de un Pokémon. Utiliza el patrón Expert, ya que posee toda la información
-/// necesaria para aplicar su efecto al Pokémon. Además, facilita la extensión de la clase para añadir nuevos
-/// ítems sin modificar la clase base, alineándose con el principio abierto/cerrado (OCP) y promoviendo una alta cohesión.
-/// La robustez y seguridad de esta clase se asegura al evitar estados inválidos y facilitar la detección de errores
-/// en el uso de la clase.
+/// La clase <c>ItemFullHeal</c> hereda de <c>Item</c> y representa un ítem que cura completamente a un Pokémon,
+/// restaurando sus puntos de salud y eliminando cualquier estado alterado.
+/// Cumple con el principio de responsabilidad única (SRP), ya que su única función es manejar la lógica relacionada
+/// con la curación total de un Pokémon.
+/// La implementación del método <c>ApplyEffect</c> utiliza el patrón de diseño Strategy, permitiendo la personalización
+/// del comportamiento del ítem sin afectar otras partes del sistema. También sigue el principio de Sustitución de Liskov (LSP),
+/// ya que sobrescribe el comportamiento de la clase base <c>Item</c> respetando su contrato.
 /// </summary>
 public class ItemFullHeal : Item
 {
     /// <summary>
     /// Constructor de la clase <c>CompleteCure</c> que inicializa el ítem con el nombre "Cura total".
     /// </summary>
-    public ItemFullHeal() : base("Cura total") { }
+    public ItemFullHeal() : base("Cura total")
+    {
+    }
 
     /// <summary>
     /// Aplica el efecto de curación completa y eliminación de estados alterados a un Pokémon.
@@ -29,7 +31,7 @@ public class ItemFullHeal : Item
             throw new Exception("No hay un Pokémon activo para curar.");
         }
 
-        pokemon.HealthPoints = 100; 
+        pokemon.HealthPoints = 100;
         pokemon.IsPoisoned = false;
         pokemon.IsBurned = false;
         pokemon.SleepTurns = 0;
