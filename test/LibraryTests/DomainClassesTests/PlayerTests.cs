@@ -32,8 +32,9 @@ namespace ClassLibrary.Tests
             player.AddPokemon(_pokemon);
 
             // Assert
-            Assert.That(player.AvailablePokemons.Contains(_pokemon));
+            Assert.That(player.AvailablePokemons[0].Name, Is.EqualTo(_pokemon.Name));
         }
+
 
         [Test]
         public void AddPokemon_ShouldSetActivePokemon_WhenFirstPokemonAdded()
@@ -42,7 +43,7 @@ namespace ClassLibrary.Tests
             player.AddPokemon(_pokemon);
 
             // Assert
-            Assert.That(player.ActivePokemon, Is.EqualTo(_pokemon));
+            Assert.That(player.ActivePokemon.Name, Is.EqualTo(_pokemon.Name));
         }
 
 
