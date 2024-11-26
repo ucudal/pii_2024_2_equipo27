@@ -12,7 +12,7 @@ public class UserStory1Tests
     // }
     //
     // [Test]
-    // public void ChoosePokemons_WhenCalled_AddsPokemonsToPlayer()
+    // public voidgi ChoosePokemons_WhenCalled_AddsPokemonsToPlayer()
     // {
     //     // Arrange
     //      pokemonNames = { "Blaziken", "Tinkaton" };
