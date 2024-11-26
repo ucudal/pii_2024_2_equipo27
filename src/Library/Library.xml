@@ -381,7 +381,12 @@
         </member>
         <member name="T:ClassLibrary.GameList">
             <summary>
-            Esta clase representa la lista de batallas en curso.
+            Esta clase representa la lista de batallas en curso. La clase GameList representa y gestiona la lista de
+            batallas en curso, permitiendo crear nuevas partidas, buscar jugadores, oponentes y juegos activos por nombre.
+            Aplica principios GRASP y el principio de responsabilidad única (SRP) al encargarse exclusivamente de estas tareas.
+            Además, su método AddGame asegura la consistencia del sistema al validar que un jugador no pueda enfrentarse a sí mismo.
+            El diseño también respeta el principio abierto/cerrado (OCP), facilitando futuras extensiones sin modificar su
+            estructura base, manteniendo así la cohesión y adaptabilidad.
             </summary>
         </member>
         <member name="P:ClassLibrary.GameList.Games">
@@ -395,44 +400,38 @@
             </summary>
             <param name="player1">El primer jugador.</param>
             <param name="player2">El oponente.</param>
+            <exception cref="T:System.ArgumentNullException">El primer jugador no puede ser nulo.</exception>
+            <exception cref="T:System.ArgumentNullException">El segundo jugador no puede ser nulo.</exception>
+            <exception cref="T:ClassLibrary.PokemonException">El jugador no puede jugar consigo mismo.</exception>
             <returns>La batalla creada.</returns>
         </member>
         <member name="M:ClassLibrary.GameList.FindPlayerByDisplayName(System.String)">
             <summary>
             Encuentra un jugador por su nombre para una batalla en curso.
             </summary>
-            <param name="displayName">El nombre del jugador.</param>
+            <param name="playerDisplayName">El nombre del jugador.</param>
+            <exception cref="T:System.ArgumentNullException">El primer jugador no puede ser nulo.</exception>
             <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
         <member name="M:ClassLibrary.GameList.FindOpponentOfDisplayName(System.String)">
             <summary>
             Encuentra un jugador por el nombre de su oponente para una batalla en curso.
             </summary>
-            <param name="displayName">El nombre del jugador.</param>
+            <param name="playerDisplayName">El nombre del jugador.</param>
+            <exception cref="T:System.ArgumentNullException">El primer jugador no puede ser nulo.</exception>
             <returns>El objeto Player si se encuentra; de lo contrario, null.</returns>
         </member>
         <member name="M:ClassLibrary.GameList.FindGameByPlayerDisplayName(System.String)">
             <summary>
             Encuentra una battala por el nombre de uno de sus jugadores.
             </summary>
-            <param name="displayName">El nombre del jugador.</param>
+            <param name="playerDisplayName">El nombre del jugador.</param>
+            <exception cref="T:System.ArgumentNullException">El primer jugador no puede ser nulo.</exception>
             <returns> El objeto Game si se encuentra; de lo contrario, null.</returns>
-        </member>
-        <member name="T:ClassLibrary.IRandom">
-            <summary>
-            Define una interfaz para generar números, que puede ser aleatorio o constante.
-            </summary>
-        </member>
-        <member name="M:ClassLibrary.IRandom.Generate">
-            <summary>
-            Genera un número según la implementación.
-            </summary>
-            <returns>Un número generado.</returns>
         </member>
         <member name="T:ClassLibrary.Player">
             <summary>
-            La clase  <c>Player</c> representa a un jugador en el juego, 
-            responsable de gestionar los Pokémon disponibles, el Pokémon activo
+            La clase  <c>Player</c> representa a un jugador en el juego, responsable de gestionar los Pokémon disponibles, el Pokémon activo
             y el movimiento activo del jugador.
             </summary>
         </member>
@@ -461,11 +460,6 @@
         <member name="P:ClassLibrary.Player.ActiveMove">
             <summary>
             El movimiento actualmente activo del Pokémon del jugador.
-            </summary>
-        </member>
-        <member name="P:ClassLibrary.Player.Opponent">
-            <summary>
-            El oponente del jugador.
             </summary>
         </member>
         <member name="M:ClassLibrary.Player.AddPokemon(ClassLibrary.Pokemon)">
@@ -501,6 +495,20 @@
             Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
             </summary>
             <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
+            <exception cref="T:ClassLibrary.PokemonException">Se lanza si no hay un Pokémon activo.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Se lanza si el índice proporcionado está fuera del rango permitido para los movimientos del Pokémon activo.
+            </exception>
+        </member>
+        <member name="M:ClassLibrary.Player.UseItem(System.String)">
+            <summary>
+            Usa el Ítem del jugador.
+            </summary>
+            <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
+            <exception cref="T:ClassLibrary.PokemonException">Se lanza si no hay un Pokémon activo.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Se lanza si el índice proporcionado está fuera del rango permitido para los movimientos del Pokémon activo.
+            </exception>
         </member>
         <member name="M:ClassLibrary.Player.GetItemsWithQuantities">
             <summary>
@@ -522,11 +530,6 @@
             Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="P:ClassLibrary.Pokemon.IsBurned"/>),
             reduce sus puntos de salud en un 10%.
             </remarks>
-        </member>
-        <member name="T:ClassLibrary.RandomGenerator">
-            <summary>
-            Implementación de IRandom que genera números aleatorios.
-            </summary>
         </member>
         <member name="T:ClassLibrary.Turn">
             <summary>
@@ -1191,6 +1194,22 @@
             <exception cref="T:ClassLibrary.PokemonException">
             Se lanza si la lista de movimientos no contiene exactamente <see cref="F:ClassLibrary.Pokemon.MAX_MOVES"/> movimientos, o si el tipo proporcionado no es válido.
             </exception>
+        </member>
+        <member name="T:ClassLibrary.IRandom">
+            <summary>
+            Define una interfaz para generar números, que puede ser aleatorio o constante.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.IRandom.Generate">
+            <summary>
+            Genera un número según la implementación.
+            </summary>
+            <returns>Un número generado.</returns>
+        </member>
+        <member name="T:ClassLibrary.RandomGenerator">
+            <summary>
+            Implementación de IRandom que genera números aleatorios.
+            </summary>
         </member>
         <member name="T:ClassLibrary.Bot">
             <summary>

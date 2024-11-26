@@ -3,8 +3,7 @@ using System.Collections.ObjectModel;
 namespace ClassLibrary;
 
 /// <summary>
-/// La clase  <c>Player</c> representa a un jugador en el juego, 
-/// responsable de gestionar los Pokémon disponibles, el Pokémon activo
+/// La clase  <c>Player</c> representa a un jugador en el juego, responsable de gestionar los Pokémon disponibles, el Pokémon activo
 /// y el movimiento activo del jugador.
 /// </summary>
 public class Player
@@ -53,18 +52,6 @@ public class Player
     /// </summary>
     public Move ActiveMove { get; private set; }
 
-    // Referencia al oponente de este jugador.
-    private Player _opponent;
-
-    /// <summary>
-    /// El oponente del jugador.
-    /// </summary>
-    public Player Opponent
-    {
-        get => _opponent;
-        set => _opponent = value;
-    }
-
 
     /// <summary>
     /// Agrega un Pokémon a la lista de Pokémon disponibles para el jugador.
@@ -72,6 +59,8 @@ public class Player
     /// <param name="pokemon">El Pokémon a agregar a la lista.</param>
     public void AddPokemon(Pokemon pokemon)
     {
+        if (pokemon == null)
+            throw new ArgumentNullException(nameof(pokemon), "Player 1 no puede ser null");
         this.availablePokemons.Add(pokemon.Clone());
         if (this.availablePokemons.Count == 1) // Es el primer pokemon que se agrega, lo activa por defecto
         {
@@ -131,13 +120,41 @@ public class Player
     /// Activa un movimiento en el Pokémon activo en base a su índice en la lista de movimientos.
     /// </summary>
     /// <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
+    /// <exception cref="PokemonException">Se lanza si no hay un Pokémon activo.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Se lanza si el índice proporcionado está fuera del rango permitido para los movimientos del Pokémon activo.
+    /// </exception>
     public void ActivateMoveInActivePokemon(int index)
     {
+        if (ActivePokemon == null)
+        {
+            throw new PokemonException("No hay un Pokémon activo.");
+        }
+
+        if (index < 0 || index >= ActivePokemon.Moves.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index),
+                "El índice del movimiento está fuera del rango permitido.");
+        }
+
         this.ActiveMove = this.ActivePokemon.Moves[index];
     }
 
+    /// <summary>
+    /// Usa el Ítem del jugador.
+    /// </summary>
+    /// <param name="index">Índice del movimiento en la lista de movimientos del Pokémon activo.</param>
+    /// <exception cref="PokemonException">Se lanza si no hay un Pokémon activo.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Se lanza si el índice proporcionado está fuera del rango permitido para los movimientos del Pokémon activo.
+    /// </exception>
     public Item UseItem(string itemName)
     {
+        if (string.IsNullOrWhiteSpace(itemName))
+        {
+            throw new ArgumentNullException("El nombre del item no puede estar vacío");
+        }
+
         Item itemFound = null;
         foreach (Item item in this.items)
         {
@@ -210,8 +227,6 @@ public class Player
 
     public void ExecuteMove(Player defender, Player attacker)
     {
-        /////////////////////////////
-
         //Encontrar los pokemones activos
         Pokemon attackingPokemon = attacker.ActivePokemon;
         Pokemon defendingPokemon = defender.ActivePokemon;

@@ -53,6 +53,7 @@ namespace ClassLibrary.Tests
         {
             // Arrange
             Player player = new Player("TestPlayer");
+            Item item = new ItemRevive();
 
             // Act
             player.UseItem("Revivir");
