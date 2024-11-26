@@ -10,8 +10,6 @@ public class Game
 {
     /// <summary>
     ///  Constructor de la clase <c>Game</c>. Inicializa los jugadores y el estado del juego.
-    ///  El constructor asigna las propiedades adecuadamente siguiendo el principio de Liskov Substitution Principle (LSP),
-    ///  lo cual permite que cualquier clase derivada de <c>Player</c> funcione correctamente en la lógica del juego.
     /// </summary>
     /// <param name="player1">El primer jugador.</param>
     /// <param name="player2">El segundo jugador.</param>
@@ -46,19 +44,17 @@ public class Game
 
     /// <summary>
     /// Propiedad que indica si el juego sigue activo (true) o ha terminado (false).
-    /// Esto también sigue el SRP, ya que la clase <c>Game</c> es la responsable de gestionar el estado del juego,
-    /// y no otros objetos, respetando el principio de segregación de responsabilidades.
     /// </summary>
     public bool PlayIsOn { get; private set; }
     
+    /// <summary>
+    /// Propiedad que indica el jugdor que ganó la partida. 
+    /// </summary>
     public Player Winner { get; private set; }
 
     /// <summary>
     /// Verifica si el juego debe terminar revisando si todos los Pokémon de alguno de los jugadores tienen 0 puntos de vida.
     /// Si un jugador pierde todos sus Pokémon, el juego termina y se declara un ganador.
-    /// Este método puede ser fácilmente extendido o modificado con otras reglas de fin de juego,
-    /// alineado con el principio de Polimorfismo, donde nuevas reglas de finalización pueden ser añadidas sin alterar la
-    /// estructura básica.
     /// </summary>
     public void CheckIfGameEnds()
     {
