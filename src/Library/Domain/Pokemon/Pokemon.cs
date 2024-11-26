@@ -205,8 +205,8 @@ public class Pokemon
     {
         if (IsParalyzed)
         {
-            Random random = new Random();
-            int randomNumber = random.Next(0, 1);
+            RandomGenerator random= new RandomGenerator(0,2);
+            int randomNumber = random.Generate();
             if (randomNumber == 0)
                 return false;
         }

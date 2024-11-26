@@ -192,8 +192,22 @@
             que oculta la complejidad del sistema y simplifica la interacción con múltiples subsistemas, mejorando la usabilidad.
             Esta clase sigue el Principio de Responsabilidad Única (SRP) al concentrar la lógica de interacción en un solo lugar,
             lo que facilita el mantenimiento y la evolución del sistema. Esta estructura permite a los
-            desarrolladores y jugadores interactuar con el juego de manera más intuitiva, minimizando la necesidad de conocer la
-            implementación interna.
+            comandos ser implementados con facilidad, minimizando la necesidad de conocer la implementación interna del juego.
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Facade.WaitingList">
+            <summary>
+            Obtiene la lista de espera para los jugadores.
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Facade.GameList">
+            <summary>
+            Obtiene la lista de juegos activos o disponibles.
+            </summary>
+        </member>
+        <member name="P:ClassLibrary.Facade.UserInterface">
+            <summary>
+            Obtiene la interfaz de usuario para interactuar con el jugador.
             </summary>
         </member>
         <member name="P:ClassLibrary.Facade.Instance">
@@ -560,14 +574,6 @@
             </summary>
             <param name="player"></param>
         </member>
-        <member name="M:ClassLibrary.Turn.PenalizeTurn(ClassLibrary.Player)">
-            <summary>
-            Penaliza el turno de un jugador. Si el jugador penalizado es el actual, se cambia el turno.
-            </summary>
-            <remarks>
-            Se debe validar que el parámetro no sea nulo antes de usarlo.
-            </remarks>
-        </member>
         <member name="T:ClassLibrary.UserInterface">
             <summary>
             La clase <c>UserInterface</c> es responsable de construir y devolver mensajes 
@@ -581,18 +587,12 @@
             por lo que sigue el patrón Expert.
             </summary>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ShowMessagePokemonCatalog">
+        <member name="M:ClassLibrary.UserInterface.ShowMessagePokemonCatalog(System.Collections.Generic.IReadOnlyList{ClassLibrary.Pokemon})">
             <summary>
-            Genera un mensaje con el catálogo de todos los Pokémon disponibles.
+            Genera un mensaje con la lista de Pokémon seleccionados por el jugador.
             </summary>
-            <returns>Una cadena con el catálogo de nombres de Pokémon.</returns>
-        </member>
-        <member name="M:ClassLibrary.UserInterface.ShowMessageToAddPokemons(System.Int32)">
-            <summary>
-            Genera un mensaje indicando el número del Pokémon a seleccionar o informa que ya se han seleccionado los 6 Pokémon.
-            </summary>
-            <param name="currentSelection">El índice actual de selección de Pokémon.</param>
-            <returns>Un mensaje indicando el número de selección de Pokémon o que ya se completó la selección.</returns>
+            <param name="selectedPokemons">Lista de Pokémon seleccionados.</param>
+            <returns>Un mensaje con los nombres de los Pokémon seleccionados.</returns>
         </member>
         <member name="M:ClassLibrary.UserInterface.ShowMessageSelectedPokemons(System.Collections.ObjectModel.ReadOnlyCollection{ClassLibrary.Pokemon})">
             <summary>
@@ -657,7 +657,7 @@
             <param name="attackingPokemon">El Pokémon que está intentando atacar.</param>
             <returns>Un mensaje formateado indicando la efectividad.</returns>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ShowMessageLowEffectiveness(System.Double)">
+        <member name="M:ClassLibrary.UserInterface.ShowMessageLowEffectiveness">
             <summary>
             Muestra un mensaje indicando que la efectividad del mensaje fue baja.
             </summary>
@@ -670,7 +670,7 @@
             Retorna un mensaje con todos los comandos disponibles y las reglas del juego.
             </summary>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ReturnShowMoves(System.Collections.Generic.IReadOnlyList{ClassLibrary.Move},ClassLibrary.Player)">
+        <member name="M:ClassLibrary.UserInterface.ShowMessageMovesInCurrentPlayer(System.Collections.Generic.IReadOnlyList{ClassLibrary.Move},ClassLibrary.Player)">
             <summary>
             Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
             </summary>
@@ -883,12 +883,6 @@
             <param name="attacker">El pokemon que está atacando.</param>
             <param name="target">El pokemon que está siendo atacado.</param>
             <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
-        </member>
-        <member name="M:ClassLibrary.Move.GenerateNumber">
-            <summary>
-            Genera un número usando el generador asociado a este movimiento.
-            </summary>
-            <returns>Un número generado.</returns>
         </member>
         <member name="T:ClassLibrary.MoveBurn">
             <summary>
@@ -1197,7 +1191,10 @@
         </member>
         <member name="T:ClassLibrary.IRandom">
             <summary>
-            Define una interfaz para generar números, que puede ser aleatorio o constante.
+            Define una interfaz para generar números, que puede ser aleatorio o constante. La interfaz `IRandom` y sus
+            implementaciones (`RandomGenerator` y `ConstantGenerator`) siguen el patrón Strategy para definir una estrategia flexible
+            de generación de valores, utilizando Adapter para integrar `System.Random` y respetando el principio DIP
+            al depender de abstracciones, facilitando pruebas y desacoplamiento.
             </summary>
         </member>
         <member name="M:ClassLibrary.IRandom.Generate">
@@ -1208,8 +1205,23 @@
         </member>
         <member name="T:ClassLibrary.RandomGenerator">
             <summary>
-            Implementación de IRandom que genera números aleatorios.
+            Implementación de IRandom que genera números aleatorios. La interfaz `IRandom` y sus
+            implementaciones (`RandomGenerator` y `ConstantGenerator`) siguen el patrón Strategy para definir una estrategia flexible
+            de generación de valores, utilizando Adapter para integrar `System.Random` y respetando el principio DIP
+            al depender de abstracciones, facilitando pruebas y desacoplamiento.
             </summary>
+        </member>
+        <member name="M:ClassLibrary.RandomGenerator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Inicializa una nueva instancia de la clase <see cref="T:ClassLibrary.RandomGenerator"/> con un valor random en un rango específico.
+            </summary>
+            <param name="value">El valor constante que será generado.</param>
+        </member>
+        <member name="M:ClassLibrary.RandomGenerator.Generate">
+            <summary>
+            Genera un número entero en base al numero random previamente definido.
+            </summary>
+            <returns>El valor constante especificado en la inicialización.</returns>
         </member>
         <member name="T:ClassLibrary.Bot">
             <summary>
@@ -1226,6 +1238,26 @@
             <summary>
             La interfaz del Bot de Discord para usar con inyección de dependencias.
             </summary>
+        </member>
+        <member name="T:ConstantGenerator">
+            <summary>
+            Implementación de IRandom que genera números constantes. La interfaz `IRandom` y sus
+            implementaciones (`RandomGenerator` y `ConstantGenerator`) siguen el patrón Strategy para definir una estrategia flexible
+            de generación de valores, utilizando Adapter para integrar `System.Random` y respetando el principio DIP
+            al depender de abstracciones, facilitando pruebas y desacoplamiento.
+            </summary>
+        </member>
+        <member name="M:ConstantGenerator.#ctor(System.Int32)">
+            <summary>
+            Inicializa una nueva instancia de la clase <see cref="T:ConstantGenerator"/> con un valor constante específico.
+            </summary>
+            <param name="value">El valor constante que será generado.</param>
+        </member>
+        <member name="M:ConstantGenerator.Generate">
+            <summary>
+            Genera un número entero constante previamente definido.
+            </summary>
+            <returns>El valor constante especificado en la inicialización.</returns>
         </member>
     </members>
 </doc>

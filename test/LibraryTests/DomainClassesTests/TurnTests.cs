@@ -49,44 +49,5 @@ namespace ClassLibrary.Tests
             Assert.That(turn.CurrentPlayer, Is.EqualTo(_player2));
             Assert.That(turn.WaitingPlayer, Is.EqualTo(_player1));
         }
-
-        [Test]
-        public void PenalizeTurn_CurrentPlayer_ChangesTurn()
-        {
-            // Arrange
-            var initialCurrentPlayer = turn.CurrentPlayer;
-
-            // Act
-            turn.PenalizeTurn(turn.CurrentPlayer);
-
-            // Assert
-            Assert.That(turn.CurrentPlayer, Is.Not.EqualTo(initialCurrentPlayer));
-        }
-
-        [Test]
-        public void PenalizeTurn_WaitingPlayer_DoesNotChangeTurn()
-        {
-            // Arrange
-            var initialCurrentPlayer = turn.CurrentPlayer;
-
-            // Act
-            turn.PenalizeTurn(turn.WaitingPlayer);
-
-            // Assert
-            Assert.That(turn.CurrentPlayer, Is.EqualTo(initialCurrentPlayer));
-        }
-
-        [Test]
-        public void PenalizeTurn_NullPlayer_DoesNotChangeTurn()
-        {
-            // Arrange
-            var initialCurrentPlayer = turn.CurrentPlayer;
-
-            // Act
-            turn.PenalizeTurn(null);
-
-            // Assert
-            Assert.That(turn.CurrentPlayer, Is.EqualTo(initialCurrentPlayer));
-        }
     }
 }

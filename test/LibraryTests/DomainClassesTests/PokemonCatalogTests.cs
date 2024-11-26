@@ -5,13 +5,12 @@ namespace ClassLibrary.Tests
 {
     public class PokemonCatalogTests
     {
-        
         [Test]
         public void FindPokemonByName_NameWithSpaces_ReturnsCorrectPokemon()
         {
             // Arrange
             PokemonCatalog catalog = new PokemonCatalog();
-    
+
             // Act
             Pokemon pokemon = catalog.FindPokemonByName("Rayquaza");
 
@@ -25,20 +24,20 @@ namespace ClassLibrary.Tests
         {
             // Arrange
             PokemonCatalog catalog = new PokemonCatalog();
-    
+
             // Act
             Pokemon pokemon = catalog.FindPokemonByName("Hulalu");
 
             // Assert
             Assert.That(pokemon, Is.Null);
         }
-        
+
         [Test]
         public void FindPokemonByName_CaseInsensitive_ReturnsCorrectPokemon()
         {
             // Arrange
             PokemonCatalog catalog = new PokemonCatalog();
-    
+
             // Act
             Pokemon pokemon = catalog.FindPokemonByName("blaziken");
 
@@ -46,13 +45,13 @@ namespace ClassLibrary.Tests
             Assert.That(pokemon, Is.Not.Null);
             Assert.That(pokemon.Name, Is.EqualTo("Blaziken"));
         }
-        
+
         [Test]
         public void FindPokemonByName_ExactMatchWithCase_ReturnsCorrectPokemon()
         {
             // Arrange
             PokemonCatalog catalog = new PokemonCatalog();
-    
+
             // Act
             Pokemon pokemon = catalog.FindPokemonByName("Blaziken");
 
@@ -66,10 +65,9 @@ namespace ClassLibrary.Tests
         {
             // Arrange
             PokemonCatalog catalog = new PokemonCatalog();
-            
+
             // Act & Assert
             Assert.That(() => catalog.FindPokemonByName(""), Throws.ArgumentException);
         }
-        
     }
 }

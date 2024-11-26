@@ -90,20 +90,18 @@ public abstract class Move
     /// <param name="target">El pokemon que está siendo atacado.</param>
     /// <param name="criticalHit">El valor de golpe crítico, que es 1.20 o 1 por default.</param>
     public abstract void ExecuteMove(Pokemon attacker, Pokemon target, double criticalHit);
+    
 
-    private readonly IRandom _randomGenerator;
-
-    protected Move(IRandom randomGenerator)
+    public static bool TryAccuracy(double activeMoveAccuracy)
     {
-        _randomGenerator = randomGenerator;
-    }
+        int accuracy = (int) (100*(activeMoveAccuracy));
+        RandomGenerator random = new RandomGenerator(0, 101);
+        int comparisonValue = random.Generate();
+        if (comparisonValue <= accuracy)
+        {
+            return true;
+        }
 
-    /// <summary>
-    /// Genera un número usando el generador asociado a este movimiento.
-    /// </summary>
-    /// <returns>Un número generado.</returns>
-    public int GenerateNumber()
-    {
-        return _randomGenerator.Generate();
+        return false;
     }
 }

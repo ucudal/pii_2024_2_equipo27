@@ -1,4 +1,5 @@
 namespace ClassLibrary.Tests;
+
 using NUnit.Framework;
 using ClassLibrary;
 
