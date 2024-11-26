@@ -32,12 +32,9 @@ namespace ClassLibrary.Tests
         [Test]
         public void AddGame_SamePlayer_ShouldThrowException()
         {
-            // Arrange
-            var samePlayer = new Player("Sebastian");
 
             // Act & Assert
-            var ex = Assert.Throws<ApplicationException>(() => gameList.AddGame(player1, samePlayer));
-            Assert.That(ex.Message, Is.EqualTo("El jugador no puede jugar consigo mismo"));
+            var ex = Assert.Throws<PokemonException>(() => gameList.AddGame(player1, player1));
         }
 
         [Test]

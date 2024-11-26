@@ -9,9 +9,9 @@ namespace ClassLibrary.Tests
         [SetUp]
         public void SetUp()
         {
-            Facade.Reset(); 
+            Facade.Reset();
         }
-        
+
         private string attacker = "player1";
         private string defender = "player2";
         private string[] attackerPokemons = new string[] { "Blaziken", "Tinkaton", "Salamence", };
@@ -29,18 +29,25 @@ namespace ClassLibrary.Tests
             Facade.Instance.StartBattle(attacker, defender);
             Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
             Facade.Instance.ChoosePokemons(defender, defenderPokemons);
-            Facade.Instance.ChooseMoveToAttack( attacker,  move);
-            Facade.Instance.ChooseMoveToAttack( defender,  move2);
+            Facade.Instance.ChooseMoveToAttack(attacker, move);
+            Facade.Instance.ChooseMoveToAttack(defender, move2);
+
+            // Obtener el defensor y su Pokémon activo antes del ataque
+            Player defenderPlayer = Facade.Instance.GameList.FindPlayerByDisplayName(defender);
             
-            //Act
+            int healthPointsBefore = defenderPlayer.ActivePokemon.HealthPoints;
+
+            // Act
             string result = Facade.Instance.PlayerAttack(attacker);
-            
-            //Assert
-             Assert.That(result, Is.EqualTo(
-                 $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}"));
-             //Assert.That(()=> Facade.Instance.PlayerAttack(attacker), Throws.InstanceOf<Exception>());
-        
+
+            // Obtener los puntos de salud después del ataque
+            int healthPointsAfter = defenderPlayer.ActivePokemon.HealthPoints;
+
+            // Assert
+            Assert.That(result, Is.EqualTo(
+                $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}, HP pasa de {healthPointsBefore} a {healthPointsAfter}"));
         }
+
         [Test]
         public void PlayerAttack_ThrowExepcion()
         {
@@ -51,15 +58,21 @@ namespace ClassLibrary.Tests
             Facade.Instance.StartBattle(attacker, defender);
             Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
             Facade.Instance.ChoosePokemons(defender, defenderPokemons);
-            Facade.Instance.ChooseMoveToAttack( attacker,  move);
-            Facade.Instance.ChooseMoveToAttack( defender,  move2);
-            
+            Facade.Instance.ChooseMoveToAttack(attacker, move);
+            Facade.Instance.ChooseMoveToAttack(defender, move2);
+
             //Act
+
             string result = Facade.Instance.PlayerAttack(attacker);
-            
+
             //Assert
-            Assert.That(()=> Facade.Instance.PlayerAttack(""), Throws.InstanceOf<Exception>());
+            Assert.That(() => Facade.Instance.PlayerAttack(""), Throws.InstanceOf<Exception>());
 
         }
     }
-}
+}    
+    
+
+
+
+      
