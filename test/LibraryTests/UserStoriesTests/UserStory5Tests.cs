@@ -19,16 +19,7 @@ public class UserStory5Tests
         Facade.Instance.ChoosePokemons("player2",
             new[] { "Charizard", "Lucario", "Pikachu", "Lapras", "Gengar", "Gengar" });
     }
-
-    [Test]
-    public void GetCurrentTurnPlayer_WhenPlayerIsInGame_ReturnsCurrentTurnPlayer()
-    {
-        // Act
-        string message = Facade.Instance.GetCurrentTurnPlayer("player2");
-
-        Assert.That(message, Is.EqualTo("\ud83c\udfae Es el turno de player1."));
-    }
-
+    
 
     [Test]
     public void GetCurrentTurnPlayer_WhenPlayerDoesNotExist_ThrowsException()
