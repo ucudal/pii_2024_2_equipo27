@@ -70,9 +70,9 @@ El objetivo del proyecto es crear un chatbot que permita a dos o más jugadores 
 - Se enfrentan los primeros Pokémon vivos de cada jugador.
 - Usa !turn para verificar de quién es el turno.
 - En tu turno, puedes realizar una de las siguientes acciones:
-1. Usar un ataque con !attack {move} seleccionando un movimiento que tenga tu pokémon.
-2. Cambiar de Pokémon con !change {pokemon}
-3. Usar un ítem con !useitem {item}.
+  - Usar un ataque con !attack {move} seleccionando un movimiento que tenga tu pokémon.
+  - Cambiar de Pokémon con !change {pokemon}
+  - Usar un ítem con !useitem {item}.
 - Usa !hp para consultar los HP de tus Pokémon y los del oponente.
 - La batalla termina cuando todos los Pokémon de un jugador llegan a 0 HP.
 
