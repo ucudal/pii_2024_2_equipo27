@@ -238,7 +238,7 @@ public class Player
         
         double randomNumber2 = random.NextDouble(); // Genera un número entre 0.0 y 1.0
 
-        if (AccuaracyAttack < randomNumber2)
+        if (AccuaracyAttack > randomNumber2)
         {
             
             // Generar un número aleatorio entre 1 y 100
