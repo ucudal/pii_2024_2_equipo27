@@ -47,7 +47,7 @@ public class Game
     /// Propiedad que indica si el juego sigue activo (true) o ha terminado (false).
     /// </summary>
     public bool PlayIsOn { get; private set; }
-    
+
     /// <summary>
     /// Propiedad que indica el jugdor que ganó la partida. 
     /// </summary>
@@ -64,9 +64,9 @@ public class Game
         {
             throw new ArgumentNullException("Los jugadores deben tener a sus Pokémon seleccionados");
         }
-        
+
         // Inicializamos una variable p
-        var todosSonCeroPlayer1 = true; 
+        var todosSonCeroPlayer1 = true;
         var todosSonCeroPlayer2 = true;
 
         foreach (var pokemon in Player1.AvailablePokemons)

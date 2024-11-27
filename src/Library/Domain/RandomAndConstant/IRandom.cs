@@ -11,4 +11,3 @@ public interface IRandom
     /// <returns>Un número generado.</returns>
     int Generate();
 }
-

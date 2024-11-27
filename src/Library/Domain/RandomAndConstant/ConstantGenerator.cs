@@ -14,4 +14,3 @@ public class ConstantGenerator : RandomGenerator
         return _constantValue;
     }
 }
-

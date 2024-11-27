@@ -40,10 +40,10 @@ public static class BotLoader
                 var keyInfo = Console.ReadKey();
 
                 if (keyInfo.Key != ConsoleKey.Q) continue;
-                
+
                 Console.WriteLine("\nFinalizado");
                 await bot.StopAsync();
-                
+
                 return;
             } while (true);
         }

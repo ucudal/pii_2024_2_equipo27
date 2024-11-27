@@ -230,17 +230,16 @@ public class Player
 
         // Verificar si el ataque es efectivo aleatorio con random
         //Enviar mensaje interfaz de que no es efectivo y sino seguir 
-        
+
         double AccuaracyAttack = attacker.ActiveMove.Accuracy;
-        
+
         // Genera el Golpe Crítico con random
         Random random = new Random();
-        
+
         double randomNumber2 = random.NextDouble(); // Genera un número entre 0.0 y 1.0
 
         if (AccuaracyAttack > randomNumber2)
         {
-            
             // Generar un número aleatorio entre 1 y 100
             int randomNumber = random.Next(1, 101);
             double criticalHit = 1;
@@ -259,7 +258,7 @@ public class Player
             {
                 defendingPokemon.HealthPoints -= (int)0.10 * (attackingPokemon.HealthPoints);
             }
-            
+
             //Ejecuta el movimiento
             this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
 
@@ -269,12 +268,11 @@ public class Player
         else
         {
             //Mensaje de que el golpe no aserto 
-            UserInterface.ShowMessageAttackDidNotOccur(attacker, attacker.ActivePokemon );
-            
+            UserInterface.ShowMessageAttackDidNotOccur(attacker, attacker.ActivePokemon);
+
             //Cambia el turno del jugador
             Facade.Instance.ChangeTurn(attacker);
         }
-        
     }
 
     /// <summary>

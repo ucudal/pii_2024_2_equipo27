@@ -27,9 +27,9 @@ public class Bot : IBot
         DiscordSocketConfig config = new()
         {
             AlwaysDownloadUsers = true,
-            GatewayIntents = 
+            GatewayIntents =
                 GatewayIntents.AllUnprivileged
-                | GatewayIntents.MessageContent/*
+                | GatewayIntents.MessageContent /*
                 | GatewayIntents.GuildMembers*/
         };
 
@@ -42,7 +42,7 @@ public class Bot : IBot
         string discordToken = configuration["DiscordToken"] ?? throw new Exception("Falta el token");
 
         logger.LogInformation("Iniciando el con token {Token}", discordToken);
-        
+
         serviceProvider = services;
 
         await commands.AddModulesAsync(Assembly.GetExecutingAssembly(), serviceProvider);
@@ -66,7 +66,7 @@ public class Bot : IBot
         {
             return;
         }
-        
+
         int position = 0;
         bool messageIsCommand = message.HasCharPrefix('!', ref position);
 

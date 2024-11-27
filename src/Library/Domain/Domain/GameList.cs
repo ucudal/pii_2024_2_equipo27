@@ -46,7 +46,7 @@ public class GameList
         {
             throw new ArgumentNullException("El jugador no puede estar vacío");
         }
-        
+
         foreach (var game in games)
         {
             if (game.Player1.DisplayName == displayName)
@@ -73,7 +73,7 @@ public class GameList
         {
             throw new ArgumentNullException("El jugador no puede estar vacío");
         }
-            
+
         foreach (var game in games)
         {
             if (game.Player1.DisplayName == playerDisplayName)
