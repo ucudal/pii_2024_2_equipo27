@@ -47,4 +47,17 @@ namespace ClassLibrary.Tests
             Assert.That(message, Is.Not.Empty);
         }
     }
+=======
+
+namespace ClassLibrary.Tests;
+
+using NUnit.Framework;
+using ClassLibrary;
+using System.Collections.Generic;
+using System;
+
+public class UserStory1Tests
+{
+    
+>>>>>>> e1bdda8b18648596034279a61a9870c7bff4b571
 }
