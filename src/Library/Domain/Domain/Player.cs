@@ -268,6 +268,9 @@ public class Player
         }
         else
         {
+            //Mensaje de que el golpe no aserto 
+            UserInterface.ShowMessageAttackDidNotOccur(attacker, attacker.ActivePokemon );
+            
             //Cambia el turno del jugador
             Facade.Instance.ChangeTurn(attacker);
         }
