@@ -89,4 +89,21 @@ public class GameTests
         Assert.That(() => new Game(_player1, null),
             Throws.InstanceOf<ArgumentNullException>());
     }
+    
+    [Test]
+    public void CheckWhoisWinning_ReturnsNull_WhenEmpate()
+    {
+        Assert.That(_game.CheckWhoIsWinning(), Is.EqualTo(null));
+    }
+    
+    [Test]
+    public void CheckWhoisWinning_ReturnsPlayer1_WhenLowerHealthPercentage()
+    {
+        foreach (var pokemon in _player1.AvailablePokemons)
+        {
+            pokemon.HealthPoints = 0;
+        }        
+        
+        Assert.That(_game.CheckWhoIsWinning(), Is.EqualTo(_player2));
+    }
 }

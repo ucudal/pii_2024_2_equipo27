@@ -22,6 +22,7 @@ namespace ClassLibrary.Tests
 
             player = new Player("Juan");
             _pokemon = new Pokemon(moves);
+            _pokemon.Name = "Pikachu";
         }
 
 
@@ -59,6 +60,35 @@ namespace ClassLibrary.Tests
 
             // Assert
             Assert.That(() => player.UseItem("Revivir"), Throws.InstanceOf<ApplicationException>());
+        }
+
+        [Test]
+        public void GetHealthPercentageSum_ShouldReturnRightPercentage_WhenHealthDiminished()
+        {
+            // Arrange
+            Player player = new Player("TestPlayer");
+            _pokemon.HealthPoints = 80;
+            player.AddPokemon(_pokemon);
+
+            // Act
+            double total = player.GetHealthPercentageSum();
+
+            // Assert
+            Assert.That(total, Is.EqualTo(80));
+        }
+
+        [Test]
+        public void GetHealthPercentageSum_ShouldReturn100ForEachPokemon_WhenThereAreNoChanges()
+        {
+            // Arrange
+            Player player = new Player("TestPlayer");
+            player.AddPokemon(_pokemon);
+
+            // Act
+            double total = player.GetHealthPercentageSum();
+
+            // Assert
+            Assert.That(total, Is.EqualTo(100));
         }
     }
 }

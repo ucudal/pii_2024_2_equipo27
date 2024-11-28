@@ -293,6 +293,10 @@ public class Player
         }
     }
 
+    /// <summary>
+    /// Muestra la lista de movimientos del Pokémon activo.
+    /// <returns> IReadOnlyList de los movimientos del jugador. </returns>
+    /// </summary>
     public IReadOnlyList<Move> GetPokemonsWithMovesForPlayer()
     {
         // Verificar si el Pokémon activo del jugador está definido
@@ -303,5 +307,27 @@ public class Player
 
         // Obtener los movimientos del Pokémon activo
         return this.ActivePokemon.Moves;
+    }
+
+    /// <summary>
+    /// Calcula la suma del porcentaje de salud total de todos los Pokémon del jugador.
+    /// Este método está ne la clase Player porque la misma Conoce a los Pokémon disponibles de cada jugador, por
+    /// lo que puede calcular su salud de forma directa.
+    /// <returns> La suma de porcentajes de cada Pokémon </returns>
+    /// </summary>
+    public double GetHealthPercentageSum()
+    {
+        //Crea una instancia de PokemonCatalog
+        PokemonCatalog pokemonCatalog = new PokemonCatalog();
+        double totalHealthPercentage = 0;
+
+        // Recorremos todos los Pokémon del jugador para calcular el porcentaje de HP, comparando el actual con el HP del pokemon en el catálogo.
+        foreach (var pokemon in AvailablePokemons)
+        {
+            Pokemon pokemonInCatalog= pokemonCatalog.FindPokemonByName(pokemon.Name);
+            totalHealthPercentage += (pokemon.HealthPoints*100)/pokemonInCatalog.HealthPoints;
+        }
+
+        return totalHealthPercentage;
     }
 }

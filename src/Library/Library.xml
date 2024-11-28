@@ -4,6 +4,18 @@
         <name>Library</name>
     </assembly>
     <members>
+        <member name="T:Library.Commands.AdvantageCommand">
+            <summary>
+            Esta clase implementa el comando 'change' del bot. Este comando permite al
+            jugador cambiar su Pokémon activo por otro de su equipo.
+            </summary>
+        </member>
+        <member name="M:Library.Commands.AdvantageCommand.ExecuteAsync">
+            <summary>
+            Implementa el comando 'change'. Este comando toma el nombre del nuevo
+            Pokémon que el jugador desea usar como activo y actualiza la selección.
+            </summary>
+        </member>
         <member name="T:Library.Commands.AttackCommand">
             <summary>
             Esta clase implementa el comando 'attack' del bot. Este comando ejecuta un ataque
@@ -379,6 +391,12 @@
             Si un jugador pierde todos sus Pokémon, el juego termina y se declara un ganador.
             </summary>
         </member>
+        <member name="M:ClassLibrary.Game.CheckWhoIsWinning">
+            <summary>
+            Verifica que jugador tiene ventaja en cualquier momento de la partida.
+            <returns> El jugador que va ganando o null si hay un empate. </returns>
+            </summary>
+        </member>
         <member name="T:ClassLibrary.GameList">
             <summary>
             Esta clase representa la lista de batallas en curso. La clase GameList representa y gestiona la lista de
@@ -659,6 +677,16 @@
         <member name="M:ClassLibrary.UserInterface.ReturnShowMoves(System.Collections.Generic.IReadOnlyList{ClassLibrary.Move},ClassLibrary.Player)">
             <summary>
             Devuelve un string que muestra los movimientos de los Pokémon de forma detallada.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageEmpate">
+            <summary>
+            Devuelve un string que muestra que los jugadores por ahora van empatados.
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.UserInterface.ShowMessageCurrentWinner(ClassLibrary.Player)">
+            <summary>
+            Devuelve un string que muestra que jugador tiene la ventaja actualmente.
             </summary>
         </member>
         <member name="T:ClassLibrary.WaitingList">

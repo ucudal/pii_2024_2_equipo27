@@ -95,4 +95,35 @@ public class Game
             Winner = Player1;
         }
     }
+
+    /// <summary>
+    /// Verifica que jugador tiene ventaja en cualquier momento de la partida.
+    /// Este método está en Game, porque la clase tiene la responsabilidad de conocer a los dos jugadores enfrentados, y por lo tanto
+    /// puede conocer cuál de los dos está ganando. Esta clase es experta en el estado del juego y sus componentes.
+    /// <returns> El jugador que va ganando o null si hay un empate. </returns>
+    /// </summary>
+    public Player CheckWhoIsWinning()
+    {
+        // Verificar que los jugadores tengan Pokémon seleccionados
+        if (Player1.AvailablePokemons == null || Player2.AvailablePokemons == null)
+        {
+            throw new ArgumentNullException("Los jugadores deben tener a sus Pokémon seleccionados");
+        }
+
+        double totalHealthPlayer1 = Player1.GetHealthPercentageSum();
+        double totalHealthPlayer2 = Player2.GetHealthPercentageSum();
+
+        // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
+        if (totalHealthPlayer1 > totalHealthPlayer2)
+        {
+            return Player1;
+        }
+
+        if (totalHealthPlayer2 > totalHealthPlayer1)
+        {
+            return Player2;
+        }
+
+        return null;
+    }
 }

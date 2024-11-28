@@ -591,6 +591,10 @@ public class Facade
         }
     }
 
+    /// <summary>
+    /// Cambia el turno entre los jugadores.
+    /// </summary>
+    /// <param name="attacker"> Un jugador.</param>
     public void ChangeTurn(Player attacker)
     {
         Game game = GameList.FindGameByPlayerDisplayName(attacker.DisplayName);
@@ -598,6 +602,51 @@ public class Facade
 
         game.CheckIfGameEnds();
     }
+
+    // HISTORIA DE USUARIO 12
+    
+    /// <summary>
+    /// Muestra el jugador que va con ventaja actualmenete. Esta responsabilidad está en la fachada porque la misma tiene
+    /// es la experta en simplificar la lógica de todas las historias de usuario con strings como entrada y salida, para facilitar la interacción en el juego.
+    /// </summary>
+    /// <param name="playerDisplayName"> Un jugador.</param>
+    public string ShowCurrentWinner(string playerDisplayName)
+    {
+        //Encuentra el juego
+        Game game = GameList.FindGameByPlayerDisplayName(playerDisplayName);
+
+        //CVerifica que el parámetro no sea nulo ni vacío.
+        if (string.IsNullOrWhiteSpace(playerDisplayName))
+        {
+            throw new ArgumentNullException(nameof(playerDisplayName),
+                "El nombre del jugador no puede ser nulo o vacío.");
+        }
+
+        //Verifica que el juego no sea nulo.
+        if (game == null)
+        {
+            throw new ArgumentException("El Juego no puede ser null.");
+        }
+
+        //Verifica que el juego esté en la lsita de juegos.
+        if (!GameList.Games.Contains(game))
+        {
+            throw new PokemonException("El juego no está en la lista de juegos");
+        }
+
+        // Verifica quien en el juego está ganando. 
+        Player player = game.CheckWhoIsWinning();
+
+        // Verifica si el  jugador es nulo (que hay un empate) y retorna el mensaje de empate.
+        if (player == null)
+        {
+            return UserInterface.ShowMessageEmpate();
+        }
+
+        //Retorna el mensaje de el jugador ganador.
+        return UserInterface.ShowMessageCurrentWinner(player);
+    }
+
 
     // COMANDOS Y REGLAS DEL JUEGO
 

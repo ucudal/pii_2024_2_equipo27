@@ -321,5 +321,23 @@ namespace ClassLibrary
 
             return movesMessage.ToString();
         }
+
+        /// <summary>
+        /// Devuelve un string que muestra que los jugadores por ahora van empatados. Este método está en esta
+        /// clase porque la misma tiene la responsabilidad de devolver todos los mensajes que ve el usuario al ejecutar los comandos.
+        /// </summary>
+        public string ShowMessageEmpate()
+        {
+            return "Los jugadores van empatados, la salud de sus Pokémon es la misma";
+        }
+
+        /// <summary>
+        /// Devuelve un string que muestra que jugador tiene la ventaja actualmente. Este método está en esta
+        /// clase porque la misma tiene la responsabilidad de devolver todos los mensajes que ve el usuario al ejecutar los comandos.
+        /// </summary>
+        public string ShowMessageCurrentWinner(Player player)
+        {
+            return $"El jugador con ventaja actualmente es {player.DisplayName}";
+        }
     }
 }
