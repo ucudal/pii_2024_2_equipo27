@@ -6,14 +6,12 @@
     <members>
         <member name="T:Library.Commands.AdvantageCommand">
             <summary>
-            Esta clase implementa el comando 'change' del bot. Este comando permite al
-            jugador cambiar su Pokémon activo por otro de su equipo.
+            Esta clase implementa el comando 'advantage' del bot. Este comando muestra quien va ganando en el turno actual.
             </summary>
         </member>
         <member name="M:Library.Commands.AdvantageCommand.ExecuteAsync">
             <summary>
-            Implementa el comando 'change'. Este comando toma el nombre del nuevo
-            Pokémon que el jugador desea usar como activo y actualiza la selección.
+            Implementa el comando 'advantage'. Muestra quien va ganando en el turno actual.
             </summary>
         </member>
         <member name="T:Library.Commands.AttackCommand">
@@ -339,6 +337,19 @@
             <param name="opponentDisplayName">El oponente.</param>
             <returns>Un mensaje con el resultado.</returns>
         </member>
+        <member name="M:ClassLibrary.Facade.ChangeTurn(ClassLibrary.Player)">
+            <summary>
+            Cambia el turno entre los jugadores.
+            </summary>
+            <param name="attacker"> Un jugador.</param>
+        </member>
+        <member name="M:ClassLibrary.Facade.ShowCurrentWinner(System.String)">
+            <summary>
+            Muestra el jugador que va con ventaja actualmenete. Esta responsabilidad está en la fachada porque la misma tiene
+            es la experta en simplificar la lógica de todas las historias de usuario con strings como entrada y salida, para facilitar la interacción en el juego.
+            </summary>
+            <param name="playerDisplayName"> Un jugador.</param>
+        </member>
         <member name="T:ClassLibrary.Game">
             <summary>
              La clase <c>Game</c> aplica principios GRASP y SOLID para asegurar un diseño robusto y cohesivo. Sigue el principio de responsabilidad
@@ -394,6 +405,8 @@
         <member name="M:ClassLibrary.Game.CheckWhoIsWinning">
             <summary>
             Verifica que jugador tiene ventaja en cualquier momento de la partida.
+            Este método está en Game, porque la clase tiene la responsabilidad de conocer a los dos jugadores enfrentados, y por lo tanto
+            puede conocer cuál de los dos está ganando. Esta clase es experta en el estado del juego y sus componentes.
             <returns> El jugador que va ganando o null si hay un empate. </returns>
             </summary>
         </member>
@@ -534,6 +547,20 @@
             Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="P:ClassLibrary.Pokemon.IsBurned"/>),
             reduce sus puntos de salud en un 10%.
             </remarks>
+        </member>
+        <member name="M:ClassLibrary.Player.GetPokemonsWithMovesForPlayer">
+            <summary>
+            Muestra la lista de movimientos del Pokémon activo.
+            <returns> IReadOnlyList de los movimientos del jugador. </returns>
+            </summary>
+        </member>
+        <member name="M:ClassLibrary.Player.GetHealthPercentageSum">
+            <summary>
+            Calcula la suma del porcentaje de salud total de todos los Pokémon del jugador.
+            Este método está ne la clase Player porque la misma Conoce a los Pokémon disponibles de cada jugador, por
+            lo que puede calcular su salud de forma directa.
+            <returns> La suma de porcentajes de cada Pokémon </returns>
+            </summary>
         </member>
         <member name="T:ClassLibrary.Turn">
             <summary>
@@ -681,12 +708,14 @@
         </member>
         <member name="M:ClassLibrary.UserInterface.ShowMessageEmpate">
             <summary>
-            Devuelve un string que muestra que los jugadores por ahora van empatados.
+            Devuelve un string que muestra que los jugadores por ahora van empatados. Este método está en esta
+            clase porque la misma tiene la responsabilidad de devolver todos los mensajes que ve el usuario al ejecutar los comandos.
             </summary>
         </member>
         <member name="M:ClassLibrary.UserInterface.ShowMessageCurrentWinner(ClassLibrary.Player)">
             <summary>
-            Devuelve un string que muestra que jugador tiene la ventaja actualmente.
+            Devuelve un string que muestra que jugador tiene la ventaja actualmente. Este método está en esta
+            clase porque la misma tiene la responsabilidad de devolver todos los mensajes que ve el usuario al ejecutar los comandos.
             </summary>
         </member>
         <member name="T:ClassLibrary.WaitingList">

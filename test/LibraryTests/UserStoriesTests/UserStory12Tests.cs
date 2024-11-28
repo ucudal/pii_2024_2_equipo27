@@ -57,4 +57,11 @@ public class UserStory12Tests
         Assert.That(() => Facade.Instance.ShowCurrentWinner("player1"),
             Is.EqualTo("El jugador con ventaja actualmente es player1"));
     }
+    
+    [Test]
+    public void ShowCurrentWinner_WhenHealthIsTheSame_ReturnsMessage()
+    {
+        Assert.That(() => Facade.Instance.ShowCurrentWinner("player1"),
+            Is.EqualTo("Los jugadores van empatados, la salud de sus Pokémon es la misma"));
+    }
 }

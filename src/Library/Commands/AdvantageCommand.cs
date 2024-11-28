@@ -5,15 +5,13 @@ using ClassLibrary;
 namespace Library.Commands;
 
 /// <summary>
-/// Esta clase implementa el comando 'change' del bot. Este comando permite al
-/// jugador cambiar su Pokémon activo por otro de su equipo.
+/// Esta clase implementa el comando 'advantage' del bot. Este comando muestra quien va ganando en el turno actual.
 /// </summary>
 // ReSharper disable once UnusedType.Global
 public class AdvantageCommand : ModuleBase<SocketCommandContext>
 {
     /// <summary>
-    /// Implementa el comando 'change'. Este comando toma el nombre del nuevo
-    /// Pokémon que el jugador desea usar como activo y actualiza la selección.
+    /// Implementa el comando 'advantage'. Muestra quien va ganando en el turno actual.
     /// </summary>
     [Command("advantage")]
     [Summary(
