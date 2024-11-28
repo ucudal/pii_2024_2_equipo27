@@ -185,12 +185,13 @@ namespace ClassLibrary
         /// <param name="defender">El jugador que controla al Pokémon defensor.</param>
         /// <returns>Un mensaje formateado indicando que el ataque ocurrió.</returns>
         public static string ShowMessageAttackOcurred(Pokemon attackingPokemon, Pokemon defendingPokemon,
-            Player attacker, Player defender, int healthPointsBefore, int healthPointsAfter)
+            Player attacker, Player defender, int healthPointsBefore, int healthPointsAfter, string battleProgres)
         {
             return
-                $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon.Name} de {defender.DisplayName}, HP pasa de {healthPointsBefore} a {healthPointsAfter}";
+                $" Jugador {attacker.DisplayName} usa al Pokémon {attackingPokemon.Name} que ataca con {attacker.ActiveMove.Name} a {defendingPokemon.Name} de {defender.DisplayName}, HP pasa de {healthPointsBefore} a {healthPointsAfter}, {battleProgres}";
         }
 
+       
         /// <summary>
         /// Muestra un mensaje indicando que el ataque no ocurrió, debido a que el Pokémon del jugador tiene un ataque especial activo que lo impide.
         /// </summary>

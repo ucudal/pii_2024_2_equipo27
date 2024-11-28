@@ -273,6 +273,8 @@ public class Facade
                 attacker.ExecuteMove(defender, attacker);
                 int healthPointsAfter = defender.ActivePokemon.HealthPoints;
                 
+                //Determina quien va ganando la batalla
+                string battleProgres = defender.DetermineBattleProgress(defender);
                 
                 //Verificar si el pokemon murio, si es asi se cambia
                 defender.CheckAndAssignNextActivePokemon();
@@ -282,7 +284,7 @@ public class Facade
 
                 // Construye el mensaje de resultado
                 return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker,
-                    defender, healthPointsBefore, healthPointsAfter);
+                    defender, healthPointsBefore, healthPointsAfter, battleProgres);
             }
             else
             {

@@ -517,6 +517,19 @@
             reduce sus puntos de salud en un 10%.
             </remarks>
         </member>
+        <member name="F:ClassLibrary.Player.MaxHealthPoints">
+            <summary>
+            Calcula el porcentaje total de vida restante de todos los Pokémon del jugador.
+            </summary>
+            <returns>Un valor decimal entre 0 y 100 representando el porcentaje total de vida restante.</returns>
+        </member>
+        <member name="M:ClassLibrary.Player.DetermineBattleProgress(ClassLibrary.Player)">
+            <summary>
+            Determina quién está ganando la pelea basándose en el porcentaje total de vida restante.
+            </summary>
+            <param name="opponent">El oponente del jugador.</param>
+            <returns>Un mensaje indicando quién va ganando.</returns>
+        </member>
         <member name="T:ClassLibrary.Turn">
             <summary>
             Esta clase conoce las especificaciones del turno de un jugador actual con sus correspondientes ataques.
@@ -617,7 +630,7 @@
             <param name="waitingPlayers">Lista de jugadores en espera.</param>
             <returns>Un mensaje con los nombres de los jugadores en espera.</returns>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ShowMessageAttackOcurred(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Player,ClassLibrary.Player,System.Int32,System.Int32)">
+        <member name="M:ClassLibrary.UserInterface.ShowMessageAttackOcurred(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Player,ClassLibrary.Player,System.Int32,System.Int32,System.String)">
             <summary>
             Muestra un mensaje indicando que un ataque ha ocurrido, con detalles sobre el atacante, el defensor y el movimiento usado.
             </summary>

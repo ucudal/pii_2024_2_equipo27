@@ -262,7 +262,7 @@ public class Player
             
             //Ejecuta el movimiento
             this.ActiveMove.ExecuteMove(this.ActivePokemon, defender.ActivePokemon, criticalHit);
-
+            
             //Cambia el turno del jugador
             Facade.Instance.ChangeTurn(attacker);
         }
@@ -306,4 +306,45 @@ public class Player
         // Obtener los movimientos del Pokémon activo
         return this.ActivePokemon.Moves;
     }
+
+    /// <summary>
+    /// Calcula el porcentaje total de vida restante de todos los Pokémon del jugador.
+    /// </summary>
+    /// <returns>Un valor decimal entre 0 y 100 representando el porcentaje total de vida restante.</returns>
+    private int MaxHealthPoints = 100;
+    private double CalculateTotalHealthPercentage()
+    {
+        if (availablePokemons.Count == 0)
+        {
+            return 0;
+        }
+        
+        double totalMaxHealth = availablePokemons.Sum(pokemon => MaxHealthPoints);
+        double totalCurrentHealth = availablePokemons.Sum(pokemon => pokemon.HealthPoints);
+        return (totalCurrentHealth / totalMaxHealth) * 100;
+    }
+    /// <summary>
+    /// Determina quién está ganando la pelea basándose en el porcentaje total de vida restante.
+    /// </summary>
+    /// <param name="opponent">El oponente del jugador.</param>
+    /// <returns>Un mensaje indicando quién va ganando.</returns>
+    public string DetermineBattleProgress(Player opponent)
+    {
+        double myHealthPercentage = this.CalculateTotalHealthPercentage();
+        double opponentHealthPercentage = opponent.CalculateTotalHealthPercentage();
+
+        if (myHealthPercentage > opponentHealthPercentage)
+        {
+            return $"{this.DisplayName} está ganando con {myHealthPercentage}% de vida restante.";
+        }
+        else if (myHealthPercentage < opponentHealthPercentage)
+        {
+            return $"{opponent.DisplayName} está ganando con {opponentHealthPercentage}% de vida restante.";
+        }
+        else
+        {
+            return "La pelea está empatada.";
+        }
+    }
+    
 }
