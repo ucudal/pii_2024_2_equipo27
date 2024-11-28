@@ -102,7 +102,7 @@ namespace ClassLibrary.Tests
         
              // Assert
              Assert.That(result, Is.EqualTo(
-                 $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}, HP pasa de {healthPointsBefore} a {healthPointsAfter}{battleProgres}"));
+                 $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}, HP pasa de {healthPointsBefore} a {healthPointsAfter}, {battleProgres}"));
          }
     }
 }
