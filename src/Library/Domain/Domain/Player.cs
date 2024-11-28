@@ -323,6 +323,7 @@ public class Player
         double totalCurrentHealth = availablePokemons.Sum(pokemon => pokemon.HealthPoints);
         return (totalCurrentHealth / totalMaxHealth) * 100;
     }
+    
     /// <summary>
     /// Determina quién está ganando la pelea basándose en el porcentaje total de vida restante.
     /// </summary>
