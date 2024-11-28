@@ -1,0 +1,104 @@
+Subject: [PATCH] cambios en player
+---
+Index: src/Library/Domain/Domain/Facade.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Library/Domain/Domain/Facade.cs b/src/Library/Domain/Domain/Facade.cs
+--- a/src/Library/Domain/Domain/Facade.cs	(revision ff966feee9939f345aa98df7943031a6d43b2637)
++++ b/src/Library/Domain/Domain/Facade.cs	(revision 85d62dbfb307463a654adddd1528bf06fd2fbdea)
+@@ -267,8 +267,8 @@
+ 
+             if (turn == attackerName)
+             {
+-
+                 int healthPointsBefore = defender.ActivePokemon.HealthPoints;
++                
+                 //Ejecuta el ataque
+                 attacker.ExecuteMove(defender, attacker);
+                 int healthPointsAfter = defender.ActivePokemon.HealthPoints;
+Index: test/LibraryTests/UserStoriesTests/UserStory4Tests.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/test/LibraryTests/UserStoriesTests/UserStory4Tests.cs b/test/LibraryTests/UserStoriesTests/UserStory4Tests.cs
+--- a/test/LibraryTests/UserStoriesTests/UserStory4Tests.cs	(revision ff966feee9939f345aa98df7943031a6d43b2637)
++++ b/test/LibraryTests/UserStoriesTests/UserStory4Tests.cs	(revision 85d62dbfb307463a654adddd1528bf06fd2fbdea)
+@@ -9,9 +9,9 @@
+         [SetUp]
+         public void SetUp()
+         {
+-            Facade.Reset(); 
++            Facade.Reset();
+         }
+-        
++
+         private string attacker = "player1";
+         private string defender = "player2";
+         private string[] attackerPokemons = new string[] { "Blaziken", "Tinkaton", "Salamence", };
+@@ -29,18 +29,25 @@
+             Facade.Instance.StartBattle(attacker, defender);
+             Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
+             Facade.Instance.ChoosePokemons(defender, defenderPokemons);
+-            Facade.Instance.ChooseMoveToAttack( attacker,  move);
+-            Facade.Instance.ChooseMoveToAttack( defender,  move2);
++            Facade.Instance.ChooseMoveToAttack(attacker, move);
++            Facade.Instance.ChooseMoveToAttack(defender, move2);
++
++            // Obtener el defensor y su Pokémon activo antes del ataque
++            Player defenderPlayer = Facade.Instance.GameList.FindPlayerByDisplayName(defender);
+             
+-            //Act
++            int healthPointsBefore = defenderPlayer.ActivePokemon.HealthPoints;
++
++            // Act
+             string result = Facade.Instance.PlayerAttack(attacker);
+-            
+-            //Assert
+-             Assert.That(result, Is.EqualTo(
+-                 $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}"));
+-             //Assert.That(()=> Facade.Instance.PlayerAttack(attacker), Throws.InstanceOf<Exception>());
+-        
++
++            // Obtener los puntos de salud después del ataque
++            int healthPointsAfter = defenderPlayer.ActivePokemon.HealthPoints;
++
++            // Assert
++            Assert.That(result, Is.EqualTo(
++                $" Jugador {attacker} usa al Pokémon {attackerPokemons[0]} que ataca con {move} a {defenderPokemons[0]} de {defender}, HP pasa de {healthPointsBefore} a {healthPointsAfter}"));
+         }
++
+         [Test]
+         public void PlayerAttack_ThrowExepcion()
+         {
+@@ -51,15 +58,21 @@
+             Facade.Instance.StartBattle(attacker, defender);
+             Facade.Instance.ChoosePokemons(attacker, attackerPokemons);
+             Facade.Instance.ChoosePokemons(defender, defenderPokemons);
+-            Facade.Instance.ChooseMoveToAttack( attacker,  move);
+-            Facade.Instance.ChooseMoveToAttack( defender,  move2);
+-            
++            Facade.Instance.ChooseMoveToAttack(attacker, move);
++            Facade.Instance.ChooseMoveToAttack(defender, move2);
++
+             //Act
++
+             string result = Facade.Instance.PlayerAttack(attacker);
+-            
++
+             //Assert
+-            Assert.That(()=> Facade.Instance.PlayerAttack(""), Throws.InstanceOf<Exception>());
++            Assert.That(() => Facade.Instance.PlayerAttack(""), Throws.InstanceOf<Exception>());
+ 
+         }
+     }
+-}
++}    
++    
++
++
++
++      
+\ No newline at end of file

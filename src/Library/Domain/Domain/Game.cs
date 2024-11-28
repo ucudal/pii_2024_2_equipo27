@@ -47,7 +47,7 @@ public class Game
     /// Propiedad que indica si el juego sigue activo (true) o ha terminado (false).
     /// </summary>
     public bool PlayIsOn { get; private set; }
-    
+
     /// <summary>
     /// Propiedad que indica el jugdor que ganó la partida. 
     /// </summary>
@@ -64,9 +64,9 @@ public class Game
         {
             throw new ArgumentNullException("Los jugadores deben tener a sus Pokémon seleccionados");
         }
-        
+
         // Inicializamos una variable p
-        var todosSonCeroPlayer1 = true; 
+        var todosSonCeroPlayer1 = true;
         var todosSonCeroPlayer2 = true;
 
         foreach (var pokemon in Player1.AvailablePokemons)
@@ -77,7 +77,7 @@ public class Game
         foreach (var pokemon in Player2.AvailablePokemons)
             if (pokemon.HealthPoints > 0)
                 todosSonCeroPlayer2 = false;
-        
+
 
         // Si todos los Pokémon de Player 1 tienen 0 puntos de vida, Player 2 gana
         if (todosSonCeroPlayer1 && todosSonCeroPlayer2)
@@ -96,4 +96,47 @@ public class Game
             Winner = Player1;
         }
     }
-}
+
+
+    /// <summary>
+    /// Obtiene el jugador en el juego según su nombre de usuario.
+    /// </summary>
+    /// <param name="playerDisplayName">Nombre del jugador.</param>
+    /// <returns>El jugador correspondiente o null si no se encuentra.</returns>
+    public Player GetPlayer(string playerDisplayName)
+    {
+        if (Player1.DisplayName == playerDisplayName)
+        {
+            return Player1;
+        }
+        else if (Player2.DisplayName == playerDisplayName)
+        {
+            return Player2;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Obtiene el oponente del jugador dado en el juego.
+    /// </summary>
+    /// <param name="playerDisplayName">Nombre del jugador.</param>
+    /// <returns>El jugador oponente o null si no se encuentra.</returns>
+    public Player GetOpponent(string playerDisplayName)
+    {
+        if (Player1.DisplayName == playerDisplayName)
+        {
+            return Player2;
+        }
+        else if (Player2.DisplayName == playerDisplayName)
+        {
+            return Player1;
+        }
+        else
+        {
+            return null;
+        }
+    }
+}        

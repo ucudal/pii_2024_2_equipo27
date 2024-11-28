@@ -38,6 +38,33 @@ public class UserInterface
 
         return catalogMessage;
     }
+    
+
+       //metodo para ver quien va ganando
+        public static string ShowCurrentBattleStatus(string playerName, string opponentName, double playerHealthPercentage, double opponentHealthPercentage)
+        {
+            string message;
+
+            if (playerHealthPercentage > opponentHealthPercentage)
+            {
+                message = $" {playerName} va ganando la pelea en este momento.";
+            }
+            else if (playerHealthPercentage < opponentHealthPercentage)
+            {
+                message = $" {opponentName} va ganando la pelea en este momento.";
+            }
+            else
+            {
+                message = " La batalla está empatada en este momento.";
+            }
+
+            message += $"\n{playerName}: {playerHealthPercentage:F2}% de vida restante.\n{opponentName}: {opponentHealthPercentage:F2}% de vida restante.";
+
+            return message;
+        }  
+
+        
+    
 
     /// <summary>
     /// Genera un mensaje con la lista de Pokémon seleccionados por el jugador.

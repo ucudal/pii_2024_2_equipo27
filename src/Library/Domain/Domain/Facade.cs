@@ -59,6 +59,38 @@ public class Facade
         _instance = null;
     }
 
+    //HISTORIA DEFENSA
+    
+       
+
+        /// <summary>
+        /// Determina quién va ganando la pelea basándose en el porcentaje de vida restante de los Pokémon de ambos jugadores.
+        /// </summary>
+        /// <param name="playerDisplayName">El nombre del jugador que solicita la información.</param>
+        /// <returns>Un mensaje indicando quién va ganando la pelea en ese momento.</returns>
+        public string GetCurrentBattleStatus(string playerDisplayName)
+        {
+            // Buscar el juego en el que está el jugador
+            Game game = this.GameList.FindGameByPlayerDisplayName(playerDisplayName);
+            if (game == null)
+            {
+                return $"El jugador {playerDisplayName} no está en una partida.";
+            }
+
+            // Obtener ambos jugadores
+            Player player = game.GetPlayer(playerDisplayName);
+            Player opponent = game.GetOpponent(playerDisplayName);
+
+            // Calcular los porcentajes de vida
+            double playerHealthPercentage = player.GetTotalHealthPercentage();
+            double opponentHealthPercentage = opponent.GetTotalHealthPercentage();
+
+            // Generar el mensaje utilizando UserInterface
+            string message = UserInterface.ShowCurrentBattleStatus(player.DisplayName, opponent.DisplayName, playerHealthPercentage, opponentHealthPercentage);
+
+            return message;
+        }
+    
 
     //HISTORIA DE USUARIO 1
 
@@ -297,8 +329,21 @@ public class Facade
         }
 
         // Construye el mensaje de resultado
-        return UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker,
+        string attackResult = UserInterface.ShowMessageAttackOcurred(attacker.ActivePokemon, defender.ActivePokemon, attacker,
             defender, healthPointsBefore, healthPointsAfter);
+        // Verifica si el juego ha terminado
+        if (!game.PlayIsOn)
+        {
+            // Si el juego ha terminado, mostramos el mensaje de fin de batalla
+            return attackResult + "\n" + UserInterface.ShowBattleEndMessage(game.Winner.DisplayName);
+        }
+
+        // Determina quién va ganando
+        string battleStatus = GetCurrentBattleStatus(attackerName);
+
+        // Combina ambos mensajes
+        return attackResult + "\n" + battleStatus;
+    
     }
 
     //HISTORIA DE USUARIO 5

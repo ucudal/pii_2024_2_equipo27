@@ -41,6 +41,26 @@ public class Player
     {
         get { return this.availablePokemons.AsReadOnly(); }
     }
+   
+    
+        
+
+        
+        public double GetTotalHealthPercentage()
+        {
+            int totalHealth = 0;
+            int maxTotalHealth = this.AvailablePokemons.Count * 100;
+
+            foreach (var pokemon in this.AvailablePokemons)
+            {
+                totalHealth += pokemon.HealthPoints;
+            }
+
+            if (maxTotalHealth == 0) return 0;
+
+            return (double)totalHealth / maxTotalHealth * 100;
+        }
+    
 
     /// <summary>
     /// El Pokémon activo del jugador.
