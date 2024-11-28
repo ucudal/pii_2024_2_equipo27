@@ -299,15 +299,19 @@ public class Player
     /// Recorre la lista de Pokémon disponibles y, si un Pokémon está quemado (<see cref="Pokemon.IsBurned"/>),
     /// reduce sus puntos de salud en un 10%.
     /// </remarks>
-    public void TurnChanged()
+    public string TurnChanged()
     {
         foreach (Pokemon pokemon in this.AvailablePokemons)
         {
             if (pokemon.IsBurned)
             {
                 pokemon.HealthPoints = (int)(pokemon.HealthPoints * 0.9);
+                
             }
         }
+        // devuelva la vida del pokemon cuando se cambia el turno
+        string result = Facade.Instance.GetPokemonsHealth(playerDisplayName: this.ActivePokemon.Name);
+        return result;
     }
 
     public IReadOnlyList<Move> GetPokemonsWithMovesForPlayer()

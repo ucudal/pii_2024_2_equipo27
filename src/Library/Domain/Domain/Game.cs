@@ -95,4 +95,15 @@ public class Game
             Winner = Player1;
         }
     }
+    public string BattleProgress(string pokemonsHp)
+    {
+        foreach (Pokemon pokemon in this.Player1.AvailablePokemons)
+        {
+            if (TurnPlayer.AvailablePokemons.Contains(pokemon))
+            {
+                return pokemonsHp + "-" + pokemon.Name;
+            }
+        }
+        return pokemonsHp;
+    }
 }

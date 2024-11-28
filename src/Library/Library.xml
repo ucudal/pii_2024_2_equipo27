@@ -631,7 +631,7 @@
             <param name="waitingPlayers">Lista de jugadores en espera.</param>
             <returns>Un mensaje con los nombres de los jugadores en espera.</returns>
         </member>
-        <member name="M:ClassLibrary.UserInterface.ShowMessageAttackOcurred(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Player,ClassLibrary.Player,System.Int32,System.Int32)">
+        <member name="M:ClassLibrary.UserInterface.ShowMessageAttackOcurred(ClassLibrary.Pokemon,ClassLibrary.Pokemon,ClassLibrary.Player,ClassLibrary.Player)">
             <summary>
             Muestra un mensaje indicando que un ataque ha ocurrido, con detalles sobre el atacante, el defensor y el movimiento usado.
             </summary>

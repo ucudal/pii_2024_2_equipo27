@@ -315,7 +315,12 @@ namespace ClassLibrary
 
             return movesMessage.ToString();
         }
+        public static string ReturnMessageWhoIsWinningWhenFinishedTurn( Player player)
+        {
+            return $"El jugador{player.DisplayName} va ganando la battala.";
+        }
 
     }
+        
 }
 
